@@ -29,7 +29,10 @@ export class SupabaseAuthGuard implements CanActivate {
 
     const usuario = await this.prisma.usuario.findUnique({
       where: { supabaseUserId: data.user.id },
-      include: { permisos: true }, // clave: traemos sus permisos por módulo
+      // clave: traemos permisos normales + accesos de KPIs/ISO,
+      // porque request.usuario alimenta tanto usePermiso() como
+      // useAccesoKpisIso() en el frontend (vía GET /usuarios/me)
+      include: { permisos: true, accesosIndicador: true, accesoIso: true },
     });
 
     if (!usuario) {

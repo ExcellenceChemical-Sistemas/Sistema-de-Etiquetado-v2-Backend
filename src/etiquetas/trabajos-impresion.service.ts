@@ -70,12 +70,30 @@ export class TrabajosImpresionService {
     });
   }
 
-  async obtenerEstado(id: number) {
+  /**
+   * Solo lo consulta quien lo creo, o un `esAdmin`. Sin este chequeo cualquier
+   * autenticado podia recorrer ids ajenos y leer el estado de trabajos que no
+   * son suyos. No le saca nada al flujo real: el frontend hace polling del
+   * trabajo que el mismo acaba de encolar.
+   *
+   * Un trabajo ajeno responde 404, no 403: un 403 confirmaria que ese id
+   * existe, que es justo lo que no queremos filtrar. Desde afuera, ajeno e
+   * inexistente quedan indistinguibles.
+   */
+  async obtenerEstado(id: number, usuario: { id: number; esAdmin: boolean }) {
     const trabajo = await this.prisma.trabajoImpresion.findUnique({
       where: { id },
-      select: { id: true, estado: true, mensajeError: true },
+      select: { id: true, estado: true, mensajeError: true, creadoPorId: true },
     });
     if (!trabajo) throw new NotFoundException(`Trabajo ${id} no encontrado`);
-    return trabajo;
+    if (!usuario.esAdmin && trabajo.creadoPorId !== usuario.id) {
+      throw new NotFoundException(`Trabajo ${id} no encontrado`);
+    }
+
+    // Se arma la respuesta campo por campo en vez de devolver `trabajo`:
+    // `creadoPorId` se trajo solo para el chequeo de pertenencia y no tiene que
+    // salir. La forma queda igual que antes del fix, asi que el frontend no
+    // necesita ningun ajuste.
+    return { id: trabajo.id, estado: trabajo.estado, mensajeError: trabajo.mensajeError };
   }
 }

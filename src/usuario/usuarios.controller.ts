@@ -3,8 +3,11 @@ import { UsuariosService } from './usuarios.service';
 import { crearUsuarioSchema, CrearUsuarioDto } from './dto/usuarios.dto';
 import { actualizarPermisosSchema, ActualizarPermisosDto } from './dto/actualizar-permisos.dto';
 import { actualizarPerfilSchema, ActualizarPerfilDto } from './dto/actualizar-perfil.dto';
+import { actualizarAccesosKpisIsoSchema, ActualizarAccesosKpisIsoDto } from './dto/actualizar-accesos-kpis-iso.dto';
+import { actualizarRolKpisSchema, ActualizarRolKpisDto } from './dto/actualizar-rol-kpis.dto';
 import { SupabaseAuthGuard } from '../common/guards/supabase-auth.guard';
 import { EsAdminGuard } from '../common/guards/es-admin.guard';
+import { EsAdminKpisGuard } from '../common/guards/es-admin-kpis.guard';
 
 // NOTA: los guards ahora se aplican por método, no a nivel de clase.
 // Motivo: /me debe ser accesible para cualquier usuario autenticado
@@ -47,11 +50,48 @@ export class UsuariosController {
     return { success: true, data: usuarios };
   }
 
+  // Vista reducida (id, nombre, avatarUrl) para el panel de accesos KPIs/ISO.
+  // Accesible también por esAdminKpis; el GET / completo sigue solo para esAdmin.
+  @Get('lista-basica')
+  @UseGuards(SupabaseAuthGuard, EsAdminKpisGuard)
+  async listarBasico() {
+    const usuarios = await this.usuariosService.listarBasico();
+    return { success: true, data: usuarios };
+  }
+
   @Patch(':id/permisos')
   @UseGuards(SupabaseAuthGuard, EsAdminGuard)
   async actualizarPermisos(@Param('id', ParseIntPipe) id: number, @Body() body: unknown) {
     const dto: ActualizarPermisosDto = actualizarPermisosSchema.parse(body);
     const usuario = await this.usuariosService.actualizarPermisos(id, dto.permisos);
+    return { success: true, data: usuario };
+  }
+
+  // Asignar/quitar el rol de Admin de KPIs: exclusivo del Admin general.
+  // A propósito NO usa EsAdminKpisGuard — el Admin de KPIs no reparte su propio rol.
+  @Patch(':id/rol-kpis')
+  @UseGuards(SupabaseAuthGuard, EsAdminGuard)
+  async actualizarRolKpis(@Param('id', ParseIntPipe) id: number, @Body() body: unknown) {
+    const dto: ActualizarRolKpisDto = actualizarRolKpisSchema.parse(body);
+    const usuario = await this.usuariosService.actualizarRolKpis(id, dto);
+    return { success: true, data: usuario };
+  }
+
+  // Lectura de accesos de KPIs/ISO para precargar el panel de la Admin de KPIs.
+  // Mismo guard que el PATCH de abajo a propósito: quien puede escribir estos
+  // accesos es exactamente quien puede leerlos, ni más ni menos.
+  @Get(':id/accesos-kpis-iso')
+  @UseGuards(SupabaseAuthGuard, EsAdminKpisGuard)
+  async obtenerAccesosKpisIso(@Param('id', ParseIntPipe) id: number) {
+    const usuario = await this.usuariosService.obtenerAccesosKpisIso(id);
+    return { success: true, data: usuario };
+  }
+
+  @Patch(':id/accesos-kpis-iso')
+  @UseGuards(SupabaseAuthGuard, EsAdminKpisGuard)
+  async actualizarAccesosKpisIso(@Param('id', ParseIntPipe) id: number, @Body() body: unknown) {
+    const dto: ActualizarAccesosKpisIsoDto = actualizarAccesosKpisIsoSchema.parse(body);
+    const usuario = await this.usuariosService.actualizarAccesosKpisIso(id, dto);
     return { success: true, data: usuario };
   }
 }

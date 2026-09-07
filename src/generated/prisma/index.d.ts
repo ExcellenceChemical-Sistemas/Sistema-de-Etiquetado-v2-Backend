@@ -48,6 +48,26 @@ export type Lote = $Result.DefaultSelection<Prisma.$LotePayload>
  * 
  */
 export type TrabajoImpresion = $Result.DefaultSelection<Prisma.$TrabajoImpresionPayload>
+/**
+ * Model Carpeta
+ * 
+ */
+export type Carpeta = $Result.DefaultSelection<Prisma.$CarpetaPayload>
+/**
+ * Model Archivo
+ * 
+ */
+export type Archivo = $Result.DefaultSelection<Prisma.$ArchivoPayload>
+/**
+ * Model AccesoIndicador
+ * 
+ */
+export type AccesoIndicador = $Result.DefaultSelection<Prisma.$AccesoIndicadorPayload>
+/**
+ * Model AccesoISO
+ * 
+ */
+export type AccesoISO = $Result.DefaultSelection<Prisma.$AccesoISOPayload>
 
 /**
  * Enums
@@ -74,6 +94,50 @@ export const EstadoTrabajoImpresion: {
 
 export type EstadoTrabajoImpresion = (typeof EstadoTrabajoImpresion)[keyof typeof EstadoTrabajoImpresion]
 
+
+export const ModuloDocumentos: {
+  KPIS: 'KPIS',
+  ISO: 'ISO'
+};
+
+export type ModuloDocumentos = (typeof ModuloDocumentos)[keyof typeof ModuloDocumentos]
+
+
+export const TipoCarpeta: {
+  ANIO: 'ANIO',
+  PROCESO: 'PROCESO',
+  PERIODO: 'PERIODO',
+  RI: 'RI',
+  DS: 'DS',
+  OBSOLETO: 'OBSOLETO'
+};
+
+export type TipoCarpeta = (typeof TipoCarpeta)[keyof typeof TipoCarpeta]
+
+
+export const ProcesoIndicador: {
+  COMERCIAL: 'COMERCIAL',
+  COMPRAS: 'COMPRAS',
+  ALMACEN_DISTRIBUCION: 'ALMACEN_DISTRIBUCION',
+  CONTROL_CALIDAD: 'CONTROL_CALIDAD',
+  SGC: 'SGC',
+  DIRECCION_PLANEAMIENTO: 'DIRECCION_PLANEAMIENTO',
+  RRHH: 'RRHH',
+  SERVICIOS_GENERALES: 'SERVICIOS_GENERALES'
+};
+
+export type ProcesoIndicador = (typeof ProcesoIndicador)[keyof typeof ProcesoIndicador]
+
+
+export const TipoArchivoDocumento: {
+  PDF: 'PDF',
+  WORD: 'WORD',
+  EXCEL: 'EXCEL',
+  POWERPOINT: 'POWERPOINT'
+};
+
+export type TipoArchivoDocumento = (typeof TipoArchivoDocumento)[keyof typeof TipoArchivoDocumento]
+
 }
 
 export type Recurso = $Enums.Recurso
@@ -83,6 +147,22 @@ export const Recurso: typeof $Enums.Recurso
 export type EstadoTrabajoImpresion = $Enums.EstadoTrabajoImpresion
 
 export const EstadoTrabajoImpresion: typeof $Enums.EstadoTrabajoImpresion
+
+export type ModuloDocumentos = $Enums.ModuloDocumentos
+
+export const ModuloDocumentos: typeof $Enums.ModuloDocumentos
+
+export type TipoCarpeta = $Enums.TipoCarpeta
+
+export const TipoCarpeta: typeof $Enums.TipoCarpeta
+
+export type ProcesoIndicador = $Enums.ProcesoIndicador
+
+export const ProcesoIndicador: typeof $Enums.ProcesoIndicador
+
+export type TipoArchivoDocumento = $Enums.TipoArchivoDocumento
+
+export const TipoArchivoDocumento: typeof $Enums.TipoArchivoDocumento
 
 /**
  * ##  Prisma Client ʲˢ
@@ -274,6 +354,46 @@ export class PrismaClient<
     * ```
     */
   get trabajoImpresion(): Prisma.TrabajoImpresionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.carpeta`: Exposes CRUD operations for the **Carpeta** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Carpetas
+    * const carpetas = await prisma.carpeta.findMany()
+    * ```
+    */
+  get carpeta(): Prisma.CarpetaDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.archivo`: Exposes CRUD operations for the **Archivo** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Archivos
+    * const archivos = await prisma.archivo.findMany()
+    * ```
+    */
+  get archivo(): Prisma.ArchivoDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.accesoIndicador`: Exposes CRUD operations for the **AccesoIndicador** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AccesoIndicadors
+    * const accesoIndicadors = await prisma.accesoIndicador.findMany()
+    * ```
+    */
+  get accesoIndicador(): Prisma.AccesoIndicadorDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.accesoISO`: Exposes CRUD operations for the **AccesoISO** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AccesoISOS
+    * const accesoISOS = await prisma.accesoISO.findMany()
+    * ```
+    */
+  get accesoISO(): Prisma.AccesoISODelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -727,7 +847,11 @@ export namespace Prisma {
     Producto: 'Producto',
     Plantilla: 'Plantilla',
     Lote: 'Lote',
-    TrabajoImpresion: 'TrabajoImpresion'
+    TrabajoImpresion: 'TrabajoImpresion',
+    Carpeta: 'Carpeta',
+    Archivo: 'Archivo',
+    AccesoIndicador: 'AccesoIndicador',
+    AccesoISO: 'AccesoISO'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -743,7 +867,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "usuario" | "permiso" | "fabricante" | "producto" | "plantilla" | "lote" | "trabajoImpresion"
+      modelProps: "usuario" | "permiso" | "fabricante" | "producto" | "plantilla" | "lote" | "trabajoImpresion" | "carpeta" | "archivo" | "accesoIndicador" | "accesoISO"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1265,6 +1389,302 @@ export namespace Prisma {
           }
         }
       }
+      Carpeta: {
+        payload: Prisma.$CarpetaPayload<ExtArgs>
+        fields: Prisma.CarpetaFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CarpetaFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CarpetaPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CarpetaFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CarpetaPayload>
+          }
+          findFirst: {
+            args: Prisma.CarpetaFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CarpetaPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CarpetaFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CarpetaPayload>
+          }
+          findMany: {
+            args: Prisma.CarpetaFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CarpetaPayload>[]
+          }
+          create: {
+            args: Prisma.CarpetaCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CarpetaPayload>
+          }
+          createMany: {
+            args: Prisma.CarpetaCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CarpetaCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CarpetaPayload>[]
+          }
+          delete: {
+            args: Prisma.CarpetaDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CarpetaPayload>
+          }
+          update: {
+            args: Prisma.CarpetaUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CarpetaPayload>
+          }
+          deleteMany: {
+            args: Prisma.CarpetaDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CarpetaUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.CarpetaUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CarpetaPayload>[]
+          }
+          upsert: {
+            args: Prisma.CarpetaUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CarpetaPayload>
+          }
+          aggregate: {
+            args: Prisma.CarpetaAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCarpeta>
+          }
+          groupBy: {
+            args: Prisma.CarpetaGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CarpetaGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CarpetaCountArgs<ExtArgs>
+            result: $Utils.Optional<CarpetaCountAggregateOutputType> | number
+          }
+        }
+      }
+      Archivo: {
+        payload: Prisma.$ArchivoPayload<ExtArgs>
+        fields: Prisma.ArchivoFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ArchivoFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ArchivoPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ArchivoFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ArchivoPayload>
+          }
+          findFirst: {
+            args: Prisma.ArchivoFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ArchivoPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ArchivoFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ArchivoPayload>
+          }
+          findMany: {
+            args: Prisma.ArchivoFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ArchivoPayload>[]
+          }
+          create: {
+            args: Prisma.ArchivoCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ArchivoPayload>
+          }
+          createMany: {
+            args: Prisma.ArchivoCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ArchivoCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ArchivoPayload>[]
+          }
+          delete: {
+            args: Prisma.ArchivoDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ArchivoPayload>
+          }
+          update: {
+            args: Prisma.ArchivoUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ArchivoPayload>
+          }
+          deleteMany: {
+            args: Prisma.ArchivoDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ArchivoUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ArchivoUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ArchivoPayload>[]
+          }
+          upsert: {
+            args: Prisma.ArchivoUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ArchivoPayload>
+          }
+          aggregate: {
+            args: Prisma.ArchivoAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateArchivo>
+          }
+          groupBy: {
+            args: Prisma.ArchivoGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ArchivoGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ArchivoCountArgs<ExtArgs>
+            result: $Utils.Optional<ArchivoCountAggregateOutputType> | number
+          }
+        }
+      }
+      AccesoIndicador: {
+        payload: Prisma.$AccesoIndicadorPayload<ExtArgs>
+        fields: Prisma.AccesoIndicadorFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AccesoIndicadorFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccesoIndicadorPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AccesoIndicadorFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccesoIndicadorPayload>
+          }
+          findFirst: {
+            args: Prisma.AccesoIndicadorFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccesoIndicadorPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AccesoIndicadorFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccesoIndicadorPayload>
+          }
+          findMany: {
+            args: Prisma.AccesoIndicadorFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccesoIndicadorPayload>[]
+          }
+          create: {
+            args: Prisma.AccesoIndicadorCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccesoIndicadorPayload>
+          }
+          createMany: {
+            args: Prisma.AccesoIndicadorCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AccesoIndicadorCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccesoIndicadorPayload>[]
+          }
+          delete: {
+            args: Prisma.AccesoIndicadorDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccesoIndicadorPayload>
+          }
+          update: {
+            args: Prisma.AccesoIndicadorUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccesoIndicadorPayload>
+          }
+          deleteMany: {
+            args: Prisma.AccesoIndicadorDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AccesoIndicadorUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AccesoIndicadorUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccesoIndicadorPayload>[]
+          }
+          upsert: {
+            args: Prisma.AccesoIndicadorUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccesoIndicadorPayload>
+          }
+          aggregate: {
+            args: Prisma.AccesoIndicadorAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAccesoIndicador>
+          }
+          groupBy: {
+            args: Prisma.AccesoIndicadorGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AccesoIndicadorGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AccesoIndicadorCountArgs<ExtArgs>
+            result: $Utils.Optional<AccesoIndicadorCountAggregateOutputType> | number
+          }
+        }
+      }
+      AccesoISO: {
+        payload: Prisma.$AccesoISOPayload<ExtArgs>
+        fields: Prisma.AccesoISOFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AccesoISOFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccesoISOPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AccesoISOFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccesoISOPayload>
+          }
+          findFirst: {
+            args: Prisma.AccesoISOFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccesoISOPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AccesoISOFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccesoISOPayload>
+          }
+          findMany: {
+            args: Prisma.AccesoISOFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccesoISOPayload>[]
+          }
+          create: {
+            args: Prisma.AccesoISOCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccesoISOPayload>
+          }
+          createMany: {
+            args: Prisma.AccesoISOCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AccesoISOCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccesoISOPayload>[]
+          }
+          delete: {
+            args: Prisma.AccesoISODeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccesoISOPayload>
+          }
+          update: {
+            args: Prisma.AccesoISOUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccesoISOPayload>
+          }
+          deleteMany: {
+            args: Prisma.AccesoISODeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AccesoISOUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AccesoISOUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccesoISOPayload>[]
+          }
+          upsert: {
+            args: Prisma.AccesoISOUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccesoISOPayload>
+          }
+          aggregate: {
+            args: Prisma.AccesoISOAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAccesoISO>
+          }
+          groupBy: {
+            args: Prisma.AccesoISOGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AccesoISOGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AccesoISOCountArgs<ExtArgs>
+            result: $Utils.Optional<AccesoISOCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1395,6 +1815,10 @@ export namespace Prisma {
     plantilla?: PlantillaOmit
     lote?: LoteOmit
     trabajoImpresion?: TrabajoImpresionOmit
+    carpeta?: CarpetaOmit
+    archivo?: ArchivoOmit
+    accesoIndicador?: AccesoIndicadorOmit
+    accesoISO?: AccesoISOOmit
   }
 
   /* Types for Logging */
@@ -1477,11 +1901,15 @@ export namespace Prisma {
   export type UsuarioCountOutputType = {
     permisos: number
     trabajosImpresion: number
+    archivosSubidos: number
+    accesosIndicador: number
   }
 
   export type UsuarioCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     permisos?: boolean | UsuarioCountOutputTypeCountPermisosArgs
     trabajosImpresion?: boolean | UsuarioCountOutputTypeCountTrabajosImpresionArgs
+    archivosSubidos?: boolean | UsuarioCountOutputTypeCountArchivosSubidosArgs
+    accesosIndicador?: boolean | UsuarioCountOutputTypeCountAccesosIndicadorArgs
   }
 
   // Custom InputTypes
@@ -1507,6 +1935,20 @@ export namespace Prisma {
    */
   export type UsuarioCountOutputTypeCountTrabajosImpresionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: TrabajoImpresionWhereInput
+  }
+
+  /**
+   * UsuarioCountOutputType without action
+   */
+  export type UsuarioCountOutputTypeCountArchivosSubidosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ArchivoWhereInput
+  }
+
+  /**
+   * UsuarioCountOutputType without action
+   */
+  export type UsuarioCountOutputTypeCountAccesosIndicadorArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AccesoIndicadorWhereInput
   }
 
 
@@ -1635,6 +2077,46 @@ export namespace Prisma {
 
 
   /**
+   * Count Type CarpetaCountOutputType
+   */
+
+  export type CarpetaCountOutputType = {
+    hijos: number
+    archivos: number
+  }
+
+  export type CarpetaCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    hijos?: boolean | CarpetaCountOutputTypeCountHijosArgs
+    archivos?: boolean | CarpetaCountOutputTypeCountArchivosArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * CarpetaCountOutputType without action
+   */
+  export type CarpetaCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CarpetaCountOutputType
+     */
+    select?: CarpetaCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * CarpetaCountOutputType without action
+   */
+  export type CarpetaCountOutputTypeCountHijosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CarpetaWhereInput
+  }
+
+  /**
+   * CarpetaCountOutputType without action
+   */
+  export type CarpetaCountOutputTypeCountArchivosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ArchivoWhereInput
+  }
+
+
+  /**
    * Models
    */
 
@@ -1663,6 +2145,7 @@ export namespace Prisma {
     supabaseUserId: string | null
     nombre: string | null
     esAdmin: boolean | null
+    esAdminKpis: boolean | null
     avatarUrl: string | null
     createdAt: Date | null
   }
@@ -1672,6 +2155,7 @@ export namespace Prisma {
     supabaseUserId: string | null
     nombre: string | null
     esAdmin: boolean | null
+    esAdminKpis: boolean | null
     avatarUrl: string | null
     createdAt: Date | null
   }
@@ -1681,6 +2165,7 @@ export namespace Prisma {
     supabaseUserId: number
     nombre: number
     esAdmin: number
+    esAdminKpis: number
     avatarUrl: number
     createdAt: number
     _all: number
@@ -1700,6 +2185,7 @@ export namespace Prisma {
     supabaseUserId?: true
     nombre?: true
     esAdmin?: true
+    esAdminKpis?: true
     avatarUrl?: true
     createdAt?: true
   }
@@ -1709,6 +2195,7 @@ export namespace Prisma {
     supabaseUserId?: true
     nombre?: true
     esAdmin?: true
+    esAdminKpis?: true
     avatarUrl?: true
     createdAt?: true
   }
@@ -1718,6 +2205,7 @@ export namespace Prisma {
     supabaseUserId?: true
     nombre?: true
     esAdmin?: true
+    esAdminKpis?: true
     avatarUrl?: true
     createdAt?: true
     _all?: true
@@ -1814,6 +2302,7 @@ export namespace Prisma {
     supabaseUserId: string
     nombre: string
     esAdmin: boolean
+    esAdminKpis: boolean
     avatarUrl: string | null
     createdAt: Date
     _count: UsuarioCountAggregateOutputType | null
@@ -1842,10 +2331,14 @@ export namespace Prisma {
     supabaseUserId?: boolean
     nombre?: boolean
     esAdmin?: boolean
+    esAdminKpis?: boolean
     avatarUrl?: boolean
     createdAt?: boolean
     permisos?: boolean | Usuario$permisosArgs<ExtArgs>
     trabajosImpresion?: boolean | Usuario$trabajosImpresionArgs<ExtArgs>
+    archivosSubidos?: boolean | Usuario$archivosSubidosArgs<ExtArgs>
+    accesosIndicador?: boolean | Usuario$accesosIndicadorArgs<ExtArgs>
+    accesoIso?: boolean | Usuario$accesoIsoArgs<ExtArgs>
     _count?: boolean | UsuarioCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["usuario"]>
 
@@ -1854,6 +2347,7 @@ export namespace Prisma {
     supabaseUserId?: boolean
     nombre?: boolean
     esAdmin?: boolean
+    esAdminKpis?: boolean
     avatarUrl?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["usuario"]>
@@ -1863,6 +2357,7 @@ export namespace Prisma {
     supabaseUserId?: boolean
     nombre?: boolean
     esAdmin?: boolean
+    esAdminKpis?: boolean
     avatarUrl?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["usuario"]>
@@ -1872,14 +2367,18 @@ export namespace Prisma {
     supabaseUserId?: boolean
     nombre?: boolean
     esAdmin?: boolean
+    esAdminKpis?: boolean
     avatarUrl?: boolean
     createdAt?: boolean
   }
 
-  export type UsuarioOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "supabaseUserId" | "nombre" | "esAdmin" | "avatarUrl" | "createdAt", ExtArgs["result"]["usuario"]>
+  export type UsuarioOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "supabaseUserId" | "nombre" | "esAdmin" | "esAdminKpis" | "avatarUrl" | "createdAt", ExtArgs["result"]["usuario"]>
   export type UsuarioInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     permisos?: boolean | Usuario$permisosArgs<ExtArgs>
     trabajosImpresion?: boolean | Usuario$trabajosImpresionArgs<ExtArgs>
+    archivosSubidos?: boolean | Usuario$archivosSubidosArgs<ExtArgs>
+    accesosIndicador?: boolean | Usuario$accesosIndicadorArgs<ExtArgs>
+    accesoIso?: boolean | Usuario$accesoIsoArgs<ExtArgs>
     _count?: boolean | UsuarioCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UsuarioIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1890,12 +2389,16 @@ export namespace Prisma {
     objects: {
       permisos: Prisma.$PermisoPayload<ExtArgs>[]
       trabajosImpresion: Prisma.$TrabajoImpresionPayload<ExtArgs>[]
+      archivosSubidos: Prisma.$ArchivoPayload<ExtArgs>[]
+      accesosIndicador: Prisma.$AccesoIndicadorPayload<ExtArgs>[]
+      accesoIso: Prisma.$AccesoISOPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       supabaseUserId: string
       nombre: string
       esAdmin: boolean
+      esAdminKpis: boolean
       avatarUrl: string | null
       createdAt: Date
     }, ExtArgs["result"]["usuario"]>
@@ -2294,6 +2797,9 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     permisos<T extends Usuario$permisosArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$permisosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PermisoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     trabajosImpresion<T extends Usuario$trabajosImpresionArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$trabajosImpresionArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TrabajoImpresionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    archivosSubidos<T extends Usuario$archivosSubidosArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$archivosSubidosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ArchivoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    accesosIndicador<T extends Usuario$accesosIndicadorArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$accesosIndicadorArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccesoIndicadorPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    accesoIso<T extends Usuario$accesoIsoArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$accesoIsoArgs<ExtArgs>>): Prisma__AccesoISOClient<$Result.GetResult<Prisma.$AccesoISOPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2327,6 +2833,7 @@ export namespace Prisma {
     readonly supabaseUserId: FieldRef<"Usuario", 'String'>
     readonly nombre: FieldRef<"Usuario", 'String'>
     readonly esAdmin: FieldRef<"Usuario", 'Boolean'>
+    readonly esAdminKpis: FieldRef<"Usuario", 'Boolean'>
     readonly avatarUrl: FieldRef<"Usuario", 'String'>
     readonly createdAt: FieldRef<"Usuario", 'DateTime'>
   }
@@ -2767,6 +3274,73 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: TrabajoImpresionScalarFieldEnum | TrabajoImpresionScalarFieldEnum[]
+  }
+
+  /**
+   * Usuario.archivosSubidos
+   */
+  export type Usuario$archivosSubidosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Archivo
+     */
+    select?: ArchivoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Archivo
+     */
+    omit?: ArchivoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ArchivoInclude<ExtArgs> | null
+    where?: ArchivoWhereInput
+    orderBy?: ArchivoOrderByWithRelationInput | ArchivoOrderByWithRelationInput[]
+    cursor?: ArchivoWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ArchivoScalarFieldEnum | ArchivoScalarFieldEnum[]
+  }
+
+  /**
+   * Usuario.accesosIndicador
+   */
+  export type Usuario$accesosIndicadorArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccesoIndicador
+     */
+    select?: AccesoIndicadorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccesoIndicador
+     */
+    omit?: AccesoIndicadorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccesoIndicadorInclude<ExtArgs> | null
+    where?: AccesoIndicadorWhereInput
+    orderBy?: AccesoIndicadorOrderByWithRelationInput | AccesoIndicadorOrderByWithRelationInput[]
+    cursor?: AccesoIndicadorWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AccesoIndicadorScalarFieldEnum | AccesoIndicadorScalarFieldEnum[]
+  }
+
+  /**
+   * Usuario.accesoIso
+   */
+  export type Usuario$accesoIsoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccesoISO
+     */
+    select?: AccesoISOSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccesoISO
+     */
+    omit?: AccesoISOOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccesoISOInclude<ExtArgs> | null
+    where?: AccesoISOWhereInput
   }
 
   /**
@@ -5057,6 +5631,7 @@ export namespace Prisma {
     nfpaSalud: number | null
     nfpaInflamabilidad: number | null
     nfpaReactividad: number | null
+    fichaSeguridadUrl: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -5068,6 +5643,7 @@ export namespace Prisma {
     nfpaSalud: number | null
     nfpaInflamabilidad: number | null
     nfpaReactividad: number | null
+    fichaSeguridadUrl: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -5079,6 +5655,7 @@ export namespace Prisma {
     nfpaSalud: number
     nfpaInflamabilidad: number
     nfpaReactividad: number
+    fichaSeguridadUrl: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -5106,6 +5683,7 @@ export namespace Prisma {
     nfpaSalud?: true
     nfpaInflamabilidad?: true
     nfpaReactividad?: true
+    fichaSeguridadUrl?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -5117,6 +5695,7 @@ export namespace Prisma {
     nfpaSalud?: true
     nfpaInflamabilidad?: true
     nfpaReactividad?: true
+    fichaSeguridadUrl?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -5128,6 +5707,7 @@ export namespace Prisma {
     nfpaSalud?: true
     nfpaInflamabilidad?: true
     nfpaReactividad?: true
+    fichaSeguridadUrl?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -5226,6 +5806,7 @@ export namespace Prisma {
     nfpaSalud: number | null
     nfpaInflamabilidad: number | null
     nfpaReactividad: number | null
+    fichaSeguridadUrl: string | null
     createdAt: Date
     updatedAt: Date
     _count: ProductoCountAggregateOutputType | null
@@ -5256,6 +5837,7 @@ export namespace Prisma {
     nfpaSalud?: boolean
     nfpaInflamabilidad?: boolean
     nfpaReactividad?: boolean
+    fichaSeguridadUrl?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     lotes?: boolean | Producto$lotesArgs<ExtArgs>
@@ -5269,6 +5851,7 @@ export namespace Prisma {
     nfpaSalud?: boolean
     nfpaInflamabilidad?: boolean
     nfpaReactividad?: boolean
+    fichaSeguridadUrl?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["producto"]>
@@ -5280,6 +5863,7 @@ export namespace Prisma {
     nfpaSalud?: boolean
     nfpaInflamabilidad?: boolean
     nfpaReactividad?: boolean
+    fichaSeguridadUrl?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["producto"]>
@@ -5291,11 +5875,12 @@ export namespace Prisma {
     nfpaSalud?: boolean
     nfpaInflamabilidad?: boolean
     nfpaReactividad?: boolean
+    fichaSeguridadUrl?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type ProductoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nombre" | "nombreNormalizado" | "nfpaSalud" | "nfpaInflamabilidad" | "nfpaReactividad" | "createdAt" | "updatedAt", ExtArgs["result"]["producto"]>
+  export type ProductoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nombre" | "nombreNormalizado" | "nfpaSalud" | "nfpaInflamabilidad" | "nfpaReactividad" | "fichaSeguridadUrl" | "createdAt" | "updatedAt", ExtArgs["result"]["producto"]>
   export type ProductoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     lotes?: boolean | Producto$lotesArgs<ExtArgs>
     _count?: boolean | ProductoCountOutputTypeDefaultArgs<ExtArgs>
@@ -5315,6 +5900,7 @@ export namespace Prisma {
       nfpaSalud: number | null
       nfpaInflamabilidad: number | null
       nfpaReactividad: number | null
+      fichaSeguridadUrl: string | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["producto"]>
@@ -5747,6 +6333,7 @@ export namespace Prisma {
     readonly nfpaSalud: FieldRef<"Producto", 'Int'>
     readonly nfpaInflamabilidad: FieldRef<"Producto", 'Int'>
     readonly nfpaReactividad: FieldRef<"Producto", 'Int'>
+    readonly fichaSeguridadUrl: FieldRef<"Producto", 'String'>
     readonly createdAt: FieldRef<"Producto", 'DateTime'>
     readonly updatedAt: FieldRef<"Producto", 'DateTime'>
   }
@@ -9757,6 +10344,4642 @@ export namespace Prisma {
 
 
   /**
+   * Model Carpeta
+   */
+
+  export type AggregateCarpeta = {
+    _count: CarpetaCountAggregateOutputType | null
+    _avg: CarpetaAvgAggregateOutputType | null
+    _sum: CarpetaSumAggregateOutputType | null
+    _min: CarpetaMinAggregateOutputType | null
+    _max: CarpetaMaxAggregateOutputType | null
+  }
+
+  export type CarpetaAvgAggregateOutputType = {
+    id: number | null
+    carpetaPadreId: number | null
+  }
+
+  export type CarpetaSumAggregateOutputType = {
+    id: number | null
+    carpetaPadreId: number | null
+  }
+
+  export type CarpetaMinAggregateOutputType = {
+    id: number | null
+    nombre: string | null
+    carpetaPadreId: number | null
+    modulo: $Enums.ModuloDocumentos | null
+    tipo: $Enums.TipoCarpeta | null
+    proceso: $Enums.ProcesoIndicador | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type CarpetaMaxAggregateOutputType = {
+    id: number | null
+    nombre: string | null
+    carpetaPadreId: number | null
+    modulo: $Enums.ModuloDocumentos | null
+    tipo: $Enums.TipoCarpeta | null
+    proceso: $Enums.ProcesoIndicador | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type CarpetaCountAggregateOutputType = {
+    id: number
+    nombre: number
+    carpetaPadreId: number
+    modulo: number
+    tipo: number
+    proceso: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type CarpetaAvgAggregateInputType = {
+    id?: true
+    carpetaPadreId?: true
+  }
+
+  export type CarpetaSumAggregateInputType = {
+    id?: true
+    carpetaPadreId?: true
+  }
+
+  export type CarpetaMinAggregateInputType = {
+    id?: true
+    nombre?: true
+    carpetaPadreId?: true
+    modulo?: true
+    tipo?: true
+    proceso?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type CarpetaMaxAggregateInputType = {
+    id?: true
+    nombre?: true
+    carpetaPadreId?: true
+    modulo?: true
+    tipo?: true
+    proceso?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type CarpetaCountAggregateInputType = {
+    id?: true
+    nombre?: true
+    carpetaPadreId?: true
+    modulo?: true
+    tipo?: true
+    proceso?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type CarpetaAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Carpeta to aggregate.
+     */
+    where?: CarpetaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Carpetas to fetch.
+     */
+    orderBy?: CarpetaOrderByWithRelationInput | CarpetaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CarpetaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Carpetas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Carpetas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Carpetas
+    **/
+    _count?: true | CarpetaCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: CarpetaAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: CarpetaSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CarpetaMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CarpetaMaxAggregateInputType
+  }
+
+  export type GetCarpetaAggregateType<T extends CarpetaAggregateArgs> = {
+        [P in keyof T & keyof AggregateCarpeta]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCarpeta[P]>
+      : GetScalarType<T[P], AggregateCarpeta[P]>
+  }
+
+
+
+
+  export type CarpetaGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CarpetaWhereInput
+    orderBy?: CarpetaOrderByWithAggregationInput | CarpetaOrderByWithAggregationInput[]
+    by: CarpetaScalarFieldEnum[] | CarpetaScalarFieldEnum
+    having?: CarpetaScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CarpetaCountAggregateInputType | true
+    _avg?: CarpetaAvgAggregateInputType
+    _sum?: CarpetaSumAggregateInputType
+    _min?: CarpetaMinAggregateInputType
+    _max?: CarpetaMaxAggregateInputType
+  }
+
+  export type CarpetaGroupByOutputType = {
+    id: number
+    nombre: string
+    carpetaPadreId: number | null
+    modulo: $Enums.ModuloDocumentos
+    tipo: $Enums.TipoCarpeta | null
+    proceso: $Enums.ProcesoIndicador | null
+    createdAt: Date
+    updatedAt: Date
+    _count: CarpetaCountAggregateOutputType | null
+    _avg: CarpetaAvgAggregateOutputType | null
+    _sum: CarpetaSumAggregateOutputType | null
+    _min: CarpetaMinAggregateOutputType | null
+    _max: CarpetaMaxAggregateOutputType | null
+  }
+
+  type GetCarpetaGroupByPayload<T extends CarpetaGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CarpetaGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CarpetaGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CarpetaGroupByOutputType[P]>
+            : GetScalarType<T[P], CarpetaGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CarpetaSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    nombre?: boolean
+    carpetaPadreId?: boolean
+    modulo?: boolean
+    tipo?: boolean
+    proceso?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    carpetaPadre?: boolean | Carpeta$carpetaPadreArgs<ExtArgs>
+    hijos?: boolean | Carpeta$hijosArgs<ExtArgs>
+    archivos?: boolean | Carpeta$archivosArgs<ExtArgs>
+    _count?: boolean | CarpetaCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["carpeta"]>
+
+  export type CarpetaSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    nombre?: boolean
+    carpetaPadreId?: boolean
+    modulo?: boolean
+    tipo?: boolean
+    proceso?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    carpetaPadre?: boolean | Carpeta$carpetaPadreArgs<ExtArgs>
+  }, ExtArgs["result"]["carpeta"]>
+
+  export type CarpetaSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    nombre?: boolean
+    carpetaPadreId?: boolean
+    modulo?: boolean
+    tipo?: boolean
+    proceso?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    carpetaPadre?: boolean | Carpeta$carpetaPadreArgs<ExtArgs>
+  }, ExtArgs["result"]["carpeta"]>
+
+  export type CarpetaSelectScalar = {
+    id?: boolean
+    nombre?: boolean
+    carpetaPadreId?: boolean
+    modulo?: boolean
+    tipo?: boolean
+    proceso?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type CarpetaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nombre" | "carpetaPadreId" | "modulo" | "tipo" | "proceso" | "createdAt" | "updatedAt", ExtArgs["result"]["carpeta"]>
+  export type CarpetaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    carpetaPadre?: boolean | Carpeta$carpetaPadreArgs<ExtArgs>
+    hijos?: boolean | Carpeta$hijosArgs<ExtArgs>
+    archivos?: boolean | Carpeta$archivosArgs<ExtArgs>
+    _count?: boolean | CarpetaCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type CarpetaIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    carpetaPadre?: boolean | Carpeta$carpetaPadreArgs<ExtArgs>
+  }
+  export type CarpetaIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    carpetaPadre?: boolean | Carpeta$carpetaPadreArgs<ExtArgs>
+  }
+
+  export type $CarpetaPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Carpeta"
+    objects: {
+      carpetaPadre: Prisma.$CarpetaPayload<ExtArgs> | null
+      hijos: Prisma.$CarpetaPayload<ExtArgs>[]
+      archivos: Prisma.$ArchivoPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      nombre: string
+      carpetaPadreId: number | null
+      modulo: $Enums.ModuloDocumentos
+      tipo: $Enums.TipoCarpeta | null
+      proceso: $Enums.ProcesoIndicador | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["carpeta"]>
+    composites: {}
+  }
+
+  type CarpetaGetPayload<S extends boolean | null | undefined | CarpetaDefaultArgs> = $Result.GetResult<Prisma.$CarpetaPayload, S>
+
+  type CarpetaCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CarpetaFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CarpetaCountAggregateInputType | true
+    }
+
+  export interface CarpetaDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Carpeta'], meta: { name: 'Carpeta' } }
+    /**
+     * Find zero or one Carpeta that matches the filter.
+     * @param {CarpetaFindUniqueArgs} args - Arguments to find a Carpeta
+     * @example
+     * // Get one Carpeta
+     * const carpeta = await prisma.carpeta.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CarpetaFindUniqueArgs>(args: SelectSubset<T, CarpetaFindUniqueArgs<ExtArgs>>): Prisma__CarpetaClient<$Result.GetResult<Prisma.$CarpetaPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Carpeta that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CarpetaFindUniqueOrThrowArgs} args - Arguments to find a Carpeta
+     * @example
+     * // Get one Carpeta
+     * const carpeta = await prisma.carpeta.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CarpetaFindUniqueOrThrowArgs>(args: SelectSubset<T, CarpetaFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CarpetaClient<$Result.GetResult<Prisma.$CarpetaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Carpeta that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CarpetaFindFirstArgs} args - Arguments to find a Carpeta
+     * @example
+     * // Get one Carpeta
+     * const carpeta = await prisma.carpeta.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CarpetaFindFirstArgs>(args?: SelectSubset<T, CarpetaFindFirstArgs<ExtArgs>>): Prisma__CarpetaClient<$Result.GetResult<Prisma.$CarpetaPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Carpeta that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CarpetaFindFirstOrThrowArgs} args - Arguments to find a Carpeta
+     * @example
+     * // Get one Carpeta
+     * const carpeta = await prisma.carpeta.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CarpetaFindFirstOrThrowArgs>(args?: SelectSubset<T, CarpetaFindFirstOrThrowArgs<ExtArgs>>): Prisma__CarpetaClient<$Result.GetResult<Prisma.$CarpetaPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Carpetas that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CarpetaFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Carpetas
+     * const carpetas = await prisma.carpeta.findMany()
+     * 
+     * // Get first 10 Carpetas
+     * const carpetas = await prisma.carpeta.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const carpetaWithIdOnly = await prisma.carpeta.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CarpetaFindManyArgs>(args?: SelectSubset<T, CarpetaFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CarpetaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Carpeta.
+     * @param {CarpetaCreateArgs} args - Arguments to create a Carpeta.
+     * @example
+     * // Create one Carpeta
+     * const Carpeta = await prisma.carpeta.create({
+     *   data: {
+     *     // ... data to create a Carpeta
+     *   }
+     * })
+     * 
+     */
+    create<T extends CarpetaCreateArgs>(args: SelectSubset<T, CarpetaCreateArgs<ExtArgs>>): Prisma__CarpetaClient<$Result.GetResult<Prisma.$CarpetaPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Carpetas.
+     * @param {CarpetaCreateManyArgs} args - Arguments to create many Carpetas.
+     * @example
+     * // Create many Carpetas
+     * const carpeta = await prisma.carpeta.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CarpetaCreateManyArgs>(args?: SelectSubset<T, CarpetaCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Carpetas and returns the data saved in the database.
+     * @param {CarpetaCreateManyAndReturnArgs} args - Arguments to create many Carpetas.
+     * @example
+     * // Create many Carpetas
+     * const carpeta = await prisma.carpeta.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Carpetas and only return the `id`
+     * const carpetaWithIdOnly = await prisma.carpeta.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CarpetaCreateManyAndReturnArgs>(args?: SelectSubset<T, CarpetaCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CarpetaPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Carpeta.
+     * @param {CarpetaDeleteArgs} args - Arguments to delete one Carpeta.
+     * @example
+     * // Delete one Carpeta
+     * const Carpeta = await prisma.carpeta.delete({
+     *   where: {
+     *     // ... filter to delete one Carpeta
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CarpetaDeleteArgs>(args: SelectSubset<T, CarpetaDeleteArgs<ExtArgs>>): Prisma__CarpetaClient<$Result.GetResult<Prisma.$CarpetaPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Carpeta.
+     * @param {CarpetaUpdateArgs} args - Arguments to update one Carpeta.
+     * @example
+     * // Update one Carpeta
+     * const carpeta = await prisma.carpeta.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CarpetaUpdateArgs>(args: SelectSubset<T, CarpetaUpdateArgs<ExtArgs>>): Prisma__CarpetaClient<$Result.GetResult<Prisma.$CarpetaPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Carpetas.
+     * @param {CarpetaDeleteManyArgs} args - Arguments to filter Carpetas to delete.
+     * @example
+     * // Delete a few Carpetas
+     * const { count } = await prisma.carpeta.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CarpetaDeleteManyArgs>(args?: SelectSubset<T, CarpetaDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Carpetas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CarpetaUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Carpetas
+     * const carpeta = await prisma.carpeta.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CarpetaUpdateManyArgs>(args: SelectSubset<T, CarpetaUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Carpetas and returns the data updated in the database.
+     * @param {CarpetaUpdateManyAndReturnArgs} args - Arguments to update many Carpetas.
+     * @example
+     * // Update many Carpetas
+     * const carpeta = await prisma.carpeta.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Carpetas and only return the `id`
+     * const carpetaWithIdOnly = await prisma.carpeta.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends CarpetaUpdateManyAndReturnArgs>(args: SelectSubset<T, CarpetaUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CarpetaPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Carpeta.
+     * @param {CarpetaUpsertArgs} args - Arguments to update or create a Carpeta.
+     * @example
+     * // Update or create a Carpeta
+     * const carpeta = await prisma.carpeta.upsert({
+     *   create: {
+     *     // ... data to create a Carpeta
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Carpeta we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CarpetaUpsertArgs>(args: SelectSubset<T, CarpetaUpsertArgs<ExtArgs>>): Prisma__CarpetaClient<$Result.GetResult<Prisma.$CarpetaPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Carpetas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CarpetaCountArgs} args - Arguments to filter Carpetas to count.
+     * @example
+     * // Count the number of Carpetas
+     * const count = await prisma.carpeta.count({
+     *   where: {
+     *     // ... the filter for the Carpetas we want to count
+     *   }
+     * })
+    **/
+    count<T extends CarpetaCountArgs>(
+      args?: Subset<T, CarpetaCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CarpetaCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Carpeta.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CarpetaAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CarpetaAggregateArgs>(args: Subset<T, CarpetaAggregateArgs>): Prisma.PrismaPromise<GetCarpetaAggregateType<T>>
+
+    /**
+     * Group by Carpeta.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CarpetaGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CarpetaGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CarpetaGroupByArgs['orderBy'] }
+        : { orderBy?: CarpetaGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CarpetaGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCarpetaGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Carpeta model
+   */
+  readonly fields: CarpetaFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Carpeta.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CarpetaClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    carpetaPadre<T extends Carpeta$carpetaPadreArgs<ExtArgs> = {}>(args?: Subset<T, Carpeta$carpetaPadreArgs<ExtArgs>>): Prisma__CarpetaClient<$Result.GetResult<Prisma.$CarpetaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    hijos<T extends Carpeta$hijosArgs<ExtArgs> = {}>(args?: Subset<T, Carpeta$hijosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CarpetaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    archivos<T extends Carpeta$archivosArgs<ExtArgs> = {}>(args?: Subset<T, Carpeta$archivosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ArchivoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Carpeta model
+   */
+  interface CarpetaFieldRefs {
+    readonly id: FieldRef<"Carpeta", 'Int'>
+    readonly nombre: FieldRef<"Carpeta", 'String'>
+    readonly carpetaPadreId: FieldRef<"Carpeta", 'Int'>
+    readonly modulo: FieldRef<"Carpeta", 'ModuloDocumentos'>
+    readonly tipo: FieldRef<"Carpeta", 'TipoCarpeta'>
+    readonly proceso: FieldRef<"Carpeta", 'ProcesoIndicador'>
+    readonly createdAt: FieldRef<"Carpeta", 'DateTime'>
+    readonly updatedAt: FieldRef<"Carpeta", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Carpeta findUnique
+   */
+  export type CarpetaFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Carpeta
+     */
+    select?: CarpetaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Carpeta
+     */
+    omit?: CarpetaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CarpetaInclude<ExtArgs> | null
+    /**
+     * Filter, which Carpeta to fetch.
+     */
+    where: CarpetaWhereUniqueInput
+  }
+
+  /**
+   * Carpeta findUniqueOrThrow
+   */
+  export type CarpetaFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Carpeta
+     */
+    select?: CarpetaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Carpeta
+     */
+    omit?: CarpetaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CarpetaInclude<ExtArgs> | null
+    /**
+     * Filter, which Carpeta to fetch.
+     */
+    where: CarpetaWhereUniqueInput
+  }
+
+  /**
+   * Carpeta findFirst
+   */
+  export type CarpetaFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Carpeta
+     */
+    select?: CarpetaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Carpeta
+     */
+    omit?: CarpetaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CarpetaInclude<ExtArgs> | null
+    /**
+     * Filter, which Carpeta to fetch.
+     */
+    where?: CarpetaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Carpetas to fetch.
+     */
+    orderBy?: CarpetaOrderByWithRelationInput | CarpetaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Carpetas.
+     */
+    cursor?: CarpetaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Carpetas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Carpetas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Carpetas.
+     */
+    distinct?: CarpetaScalarFieldEnum | CarpetaScalarFieldEnum[]
+  }
+
+  /**
+   * Carpeta findFirstOrThrow
+   */
+  export type CarpetaFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Carpeta
+     */
+    select?: CarpetaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Carpeta
+     */
+    omit?: CarpetaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CarpetaInclude<ExtArgs> | null
+    /**
+     * Filter, which Carpeta to fetch.
+     */
+    where?: CarpetaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Carpetas to fetch.
+     */
+    orderBy?: CarpetaOrderByWithRelationInput | CarpetaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Carpetas.
+     */
+    cursor?: CarpetaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Carpetas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Carpetas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Carpetas.
+     */
+    distinct?: CarpetaScalarFieldEnum | CarpetaScalarFieldEnum[]
+  }
+
+  /**
+   * Carpeta findMany
+   */
+  export type CarpetaFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Carpeta
+     */
+    select?: CarpetaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Carpeta
+     */
+    omit?: CarpetaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CarpetaInclude<ExtArgs> | null
+    /**
+     * Filter, which Carpetas to fetch.
+     */
+    where?: CarpetaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Carpetas to fetch.
+     */
+    orderBy?: CarpetaOrderByWithRelationInput | CarpetaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Carpetas.
+     */
+    cursor?: CarpetaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Carpetas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Carpetas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Carpetas.
+     */
+    distinct?: CarpetaScalarFieldEnum | CarpetaScalarFieldEnum[]
+  }
+
+  /**
+   * Carpeta create
+   */
+  export type CarpetaCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Carpeta
+     */
+    select?: CarpetaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Carpeta
+     */
+    omit?: CarpetaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CarpetaInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Carpeta.
+     */
+    data: XOR<CarpetaCreateInput, CarpetaUncheckedCreateInput>
+  }
+
+  /**
+   * Carpeta createMany
+   */
+  export type CarpetaCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Carpetas.
+     */
+    data: CarpetaCreateManyInput | CarpetaCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Carpeta createManyAndReturn
+   */
+  export type CarpetaCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Carpeta
+     */
+    select?: CarpetaSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Carpeta
+     */
+    omit?: CarpetaOmit<ExtArgs> | null
+    /**
+     * The data used to create many Carpetas.
+     */
+    data: CarpetaCreateManyInput | CarpetaCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CarpetaIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Carpeta update
+   */
+  export type CarpetaUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Carpeta
+     */
+    select?: CarpetaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Carpeta
+     */
+    omit?: CarpetaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CarpetaInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Carpeta.
+     */
+    data: XOR<CarpetaUpdateInput, CarpetaUncheckedUpdateInput>
+    /**
+     * Choose, which Carpeta to update.
+     */
+    where: CarpetaWhereUniqueInput
+  }
+
+  /**
+   * Carpeta updateMany
+   */
+  export type CarpetaUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Carpetas.
+     */
+    data: XOR<CarpetaUpdateManyMutationInput, CarpetaUncheckedUpdateManyInput>
+    /**
+     * Filter which Carpetas to update
+     */
+    where?: CarpetaWhereInput
+    /**
+     * Limit how many Carpetas to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Carpeta updateManyAndReturn
+   */
+  export type CarpetaUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Carpeta
+     */
+    select?: CarpetaSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Carpeta
+     */
+    omit?: CarpetaOmit<ExtArgs> | null
+    /**
+     * The data used to update Carpetas.
+     */
+    data: XOR<CarpetaUpdateManyMutationInput, CarpetaUncheckedUpdateManyInput>
+    /**
+     * Filter which Carpetas to update
+     */
+    where?: CarpetaWhereInput
+    /**
+     * Limit how many Carpetas to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CarpetaIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Carpeta upsert
+   */
+  export type CarpetaUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Carpeta
+     */
+    select?: CarpetaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Carpeta
+     */
+    omit?: CarpetaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CarpetaInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Carpeta to update in case it exists.
+     */
+    where: CarpetaWhereUniqueInput
+    /**
+     * In case the Carpeta found by the `where` argument doesn't exist, create a new Carpeta with this data.
+     */
+    create: XOR<CarpetaCreateInput, CarpetaUncheckedCreateInput>
+    /**
+     * In case the Carpeta was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CarpetaUpdateInput, CarpetaUncheckedUpdateInput>
+  }
+
+  /**
+   * Carpeta delete
+   */
+  export type CarpetaDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Carpeta
+     */
+    select?: CarpetaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Carpeta
+     */
+    omit?: CarpetaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CarpetaInclude<ExtArgs> | null
+    /**
+     * Filter which Carpeta to delete.
+     */
+    where: CarpetaWhereUniqueInput
+  }
+
+  /**
+   * Carpeta deleteMany
+   */
+  export type CarpetaDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Carpetas to delete
+     */
+    where?: CarpetaWhereInput
+    /**
+     * Limit how many Carpetas to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Carpeta.carpetaPadre
+   */
+  export type Carpeta$carpetaPadreArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Carpeta
+     */
+    select?: CarpetaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Carpeta
+     */
+    omit?: CarpetaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CarpetaInclude<ExtArgs> | null
+    where?: CarpetaWhereInput
+  }
+
+  /**
+   * Carpeta.hijos
+   */
+  export type Carpeta$hijosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Carpeta
+     */
+    select?: CarpetaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Carpeta
+     */
+    omit?: CarpetaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CarpetaInclude<ExtArgs> | null
+    where?: CarpetaWhereInput
+    orderBy?: CarpetaOrderByWithRelationInput | CarpetaOrderByWithRelationInput[]
+    cursor?: CarpetaWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CarpetaScalarFieldEnum | CarpetaScalarFieldEnum[]
+  }
+
+  /**
+   * Carpeta.archivos
+   */
+  export type Carpeta$archivosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Archivo
+     */
+    select?: ArchivoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Archivo
+     */
+    omit?: ArchivoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ArchivoInclude<ExtArgs> | null
+    where?: ArchivoWhereInput
+    orderBy?: ArchivoOrderByWithRelationInput | ArchivoOrderByWithRelationInput[]
+    cursor?: ArchivoWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ArchivoScalarFieldEnum | ArchivoScalarFieldEnum[]
+  }
+
+  /**
+   * Carpeta without action
+   */
+  export type CarpetaDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Carpeta
+     */
+    select?: CarpetaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Carpeta
+     */
+    omit?: CarpetaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CarpetaInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Archivo
+   */
+
+  export type AggregateArchivo = {
+    _count: ArchivoCountAggregateOutputType | null
+    _avg: ArchivoAvgAggregateOutputType | null
+    _sum: ArchivoSumAggregateOutputType | null
+    _min: ArchivoMinAggregateOutputType | null
+    _max: ArchivoMaxAggregateOutputType | null
+  }
+
+  export type ArchivoAvgAggregateOutputType = {
+    id: number | null
+    carpetaId: number | null
+    subidoPorId: number | null
+  }
+
+  export type ArchivoSumAggregateOutputType = {
+    id: number | null
+    carpetaId: number | null
+    subidoPorId: number | null
+  }
+
+  export type ArchivoMinAggregateOutputType = {
+    id: number | null
+    carpetaId: number | null
+    nombre: string | null
+    tipo: $Enums.TipoArchivoDocumento | null
+    storagePath: string | null
+    subidoPorId: number | null
+    fechaSubida: Date | null
+  }
+
+  export type ArchivoMaxAggregateOutputType = {
+    id: number | null
+    carpetaId: number | null
+    nombre: string | null
+    tipo: $Enums.TipoArchivoDocumento | null
+    storagePath: string | null
+    subidoPorId: number | null
+    fechaSubida: Date | null
+  }
+
+  export type ArchivoCountAggregateOutputType = {
+    id: number
+    carpetaId: number
+    nombre: number
+    tipo: number
+    storagePath: number
+    subidoPorId: number
+    fechaSubida: number
+    _all: number
+  }
+
+
+  export type ArchivoAvgAggregateInputType = {
+    id?: true
+    carpetaId?: true
+    subidoPorId?: true
+  }
+
+  export type ArchivoSumAggregateInputType = {
+    id?: true
+    carpetaId?: true
+    subidoPorId?: true
+  }
+
+  export type ArchivoMinAggregateInputType = {
+    id?: true
+    carpetaId?: true
+    nombre?: true
+    tipo?: true
+    storagePath?: true
+    subidoPorId?: true
+    fechaSubida?: true
+  }
+
+  export type ArchivoMaxAggregateInputType = {
+    id?: true
+    carpetaId?: true
+    nombre?: true
+    tipo?: true
+    storagePath?: true
+    subidoPorId?: true
+    fechaSubida?: true
+  }
+
+  export type ArchivoCountAggregateInputType = {
+    id?: true
+    carpetaId?: true
+    nombre?: true
+    tipo?: true
+    storagePath?: true
+    subidoPorId?: true
+    fechaSubida?: true
+    _all?: true
+  }
+
+  export type ArchivoAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Archivo to aggregate.
+     */
+    where?: ArchivoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Archivos to fetch.
+     */
+    orderBy?: ArchivoOrderByWithRelationInput | ArchivoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ArchivoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Archivos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Archivos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Archivos
+    **/
+    _count?: true | ArchivoCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ArchivoAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ArchivoSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ArchivoMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ArchivoMaxAggregateInputType
+  }
+
+  export type GetArchivoAggregateType<T extends ArchivoAggregateArgs> = {
+        [P in keyof T & keyof AggregateArchivo]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateArchivo[P]>
+      : GetScalarType<T[P], AggregateArchivo[P]>
+  }
+
+
+
+
+  export type ArchivoGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ArchivoWhereInput
+    orderBy?: ArchivoOrderByWithAggregationInput | ArchivoOrderByWithAggregationInput[]
+    by: ArchivoScalarFieldEnum[] | ArchivoScalarFieldEnum
+    having?: ArchivoScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ArchivoCountAggregateInputType | true
+    _avg?: ArchivoAvgAggregateInputType
+    _sum?: ArchivoSumAggregateInputType
+    _min?: ArchivoMinAggregateInputType
+    _max?: ArchivoMaxAggregateInputType
+  }
+
+  export type ArchivoGroupByOutputType = {
+    id: number
+    carpetaId: number
+    nombre: string
+    tipo: $Enums.TipoArchivoDocumento
+    storagePath: string
+    subidoPorId: number
+    fechaSubida: Date
+    _count: ArchivoCountAggregateOutputType | null
+    _avg: ArchivoAvgAggregateOutputType | null
+    _sum: ArchivoSumAggregateOutputType | null
+    _min: ArchivoMinAggregateOutputType | null
+    _max: ArchivoMaxAggregateOutputType | null
+  }
+
+  type GetArchivoGroupByPayload<T extends ArchivoGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ArchivoGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ArchivoGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ArchivoGroupByOutputType[P]>
+            : GetScalarType<T[P], ArchivoGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ArchivoSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    carpetaId?: boolean
+    nombre?: boolean
+    tipo?: boolean
+    storagePath?: boolean
+    subidoPorId?: boolean
+    fechaSubida?: boolean
+    carpeta?: boolean | CarpetaDefaultArgs<ExtArgs>
+    subidoPor?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["archivo"]>
+
+  export type ArchivoSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    carpetaId?: boolean
+    nombre?: boolean
+    tipo?: boolean
+    storagePath?: boolean
+    subidoPorId?: boolean
+    fechaSubida?: boolean
+    carpeta?: boolean | CarpetaDefaultArgs<ExtArgs>
+    subidoPor?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["archivo"]>
+
+  export type ArchivoSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    carpetaId?: boolean
+    nombre?: boolean
+    tipo?: boolean
+    storagePath?: boolean
+    subidoPorId?: boolean
+    fechaSubida?: boolean
+    carpeta?: boolean | CarpetaDefaultArgs<ExtArgs>
+    subidoPor?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["archivo"]>
+
+  export type ArchivoSelectScalar = {
+    id?: boolean
+    carpetaId?: boolean
+    nombre?: boolean
+    tipo?: boolean
+    storagePath?: boolean
+    subidoPorId?: boolean
+    fechaSubida?: boolean
+  }
+
+  export type ArchivoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "carpetaId" | "nombre" | "tipo" | "storagePath" | "subidoPorId" | "fechaSubida", ExtArgs["result"]["archivo"]>
+  export type ArchivoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    carpeta?: boolean | CarpetaDefaultArgs<ExtArgs>
+    subidoPor?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }
+  export type ArchivoIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    carpeta?: boolean | CarpetaDefaultArgs<ExtArgs>
+    subidoPor?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }
+  export type ArchivoIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    carpeta?: boolean | CarpetaDefaultArgs<ExtArgs>
+    subidoPor?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }
+
+  export type $ArchivoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Archivo"
+    objects: {
+      carpeta: Prisma.$CarpetaPayload<ExtArgs>
+      subidoPor: Prisma.$UsuarioPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      carpetaId: number
+      nombre: string
+      tipo: $Enums.TipoArchivoDocumento
+      storagePath: string
+      subidoPorId: number
+      fechaSubida: Date
+    }, ExtArgs["result"]["archivo"]>
+    composites: {}
+  }
+
+  type ArchivoGetPayload<S extends boolean | null | undefined | ArchivoDefaultArgs> = $Result.GetResult<Prisma.$ArchivoPayload, S>
+
+  type ArchivoCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ArchivoFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ArchivoCountAggregateInputType | true
+    }
+
+  export interface ArchivoDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Archivo'], meta: { name: 'Archivo' } }
+    /**
+     * Find zero or one Archivo that matches the filter.
+     * @param {ArchivoFindUniqueArgs} args - Arguments to find a Archivo
+     * @example
+     * // Get one Archivo
+     * const archivo = await prisma.archivo.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ArchivoFindUniqueArgs>(args: SelectSubset<T, ArchivoFindUniqueArgs<ExtArgs>>): Prisma__ArchivoClient<$Result.GetResult<Prisma.$ArchivoPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Archivo that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ArchivoFindUniqueOrThrowArgs} args - Arguments to find a Archivo
+     * @example
+     * // Get one Archivo
+     * const archivo = await prisma.archivo.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ArchivoFindUniqueOrThrowArgs>(args: SelectSubset<T, ArchivoFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ArchivoClient<$Result.GetResult<Prisma.$ArchivoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Archivo that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ArchivoFindFirstArgs} args - Arguments to find a Archivo
+     * @example
+     * // Get one Archivo
+     * const archivo = await prisma.archivo.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ArchivoFindFirstArgs>(args?: SelectSubset<T, ArchivoFindFirstArgs<ExtArgs>>): Prisma__ArchivoClient<$Result.GetResult<Prisma.$ArchivoPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Archivo that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ArchivoFindFirstOrThrowArgs} args - Arguments to find a Archivo
+     * @example
+     * // Get one Archivo
+     * const archivo = await prisma.archivo.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ArchivoFindFirstOrThrowArgs>(args?: SelectSubset<T, ArchivoFindFirstOrThrowArgs<ExtArgs>>): Prisma__ArchivoClient<$Result.GetResult<Prisma.$ArchivoPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Archivos that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ArchivoFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Archivos
+     * const archivos = await prisma.archivo.findMany()
+     * 
+     * // Get first 10 Archivos
+     * const archivos = await prisma.archivo.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const archivoWithIdOnly = await prisma.archivo.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ArchivoFindManyArgs>(args?: SelectSubset<T, ArchivoFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ArchivoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Archivo.
+     * @param {ArchivoCreateArgs} args - Arguments to create a Archivo.
+     * @example
+     * // Create one Archivo
+     * const Archivo = await prisma.archivo.create({
+     *   data: {
+     *     // ... data to create a Archivo
+     *   }
+     * })
+     * 
+     */
+    create<T extends ArchivoCreateArgs>(args: SelectSubset<T, ArchivoCreateArgs<ExtArgs>>): Prisma__ArchivoClient<$Result.GetResult<Prisma.$ArchivoPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Archivos.
+     * @param {ArchivoCreateManyArgs} args - Arguments to create many Archivos.
+     * @example
+     * // Create many Archivos
+     * const archivo = await prisma.archivo.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ArchivoCreateManyArgs>(args?: SelectSubset<T, ArchivoCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Archivos and returns the data saved in the database.
+     * @param {ArchivoCreateManyAndReturnArgs} args - Arguments to create many Archivos.
+     * @example
+     * // Create many Archivos
+     * const archivo = await prisma.archivo.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Archivos and only return the `id`
+     * const archivoWithIdOnly = await prisma.archivo.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ArchivoCreateManyAndReturnArgs>(args?: SelectSubset<T, ArchivoCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ArchivoPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Archivo.
+     * @param {ArchivoDeleteArgs} args - Arguments to delete one Archivo.
+     * @example
+     * // Delete one Archivo
+     * const Archivo = await prisma.archivo.delete({
+     *   where: {
+     *     // ... filter to delete one Archivo
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ArchivoDeleteArgs>(args: SelectSubset<T, ArchivoDeleteArgs<ExtArgs>>): Prisma__ArchivoClient<$Result.GetResult<Prisma.$ArchivoPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Archivo.
+     * @param {ArchivoUpdateArgs} args - Arguments to update one Archivo.
+     * @example
+     * // Update one Archivo
+     * const archivo = await prisma.archivo.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ArchivoUpdateArgs>(args: SelectSubset<T, ArchivoUpdateArgs<ExtArgs>>): Prisma__ArchivoClient<$Result.GetResult<Prisma.$ArchivoPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Archivos.
+     * @param {ArchivoDeleteManyArgs} args - Arguments to filter Archivos to delete.
+     * @example
+     * // Delete a few Archivos
+     * const { count } = await prisma.archivo.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ArchivoDeleteManyArgs>(args?: SelectSubset<T, ArchivoDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Archivos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ArchivoUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Archivos
+     * const archivo = await prisma.archivo.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ArchivoUpdateManyArgs>(args: SelectSubset<T, ArchivoUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Archivos and returns the data updated in the database.
+     * @param {ArchivoUpdateManyAndReturnArgs} args - Arguments to update many Archivos.
+     * @example
+     * // Update many Archivos
+     * const archivo = await prisma.archivo.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Archivos and only return the `id`
+     * const archivoWithIdOnly = await prisma.archivo.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ArchivoUpdateManyAndReturnArgs>(args: SelectSubset<T, ArchivoUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ArchivoPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Archivo.
+     * @param {ArchivoUpsertArgs} args - Arguments to update or create a Archivo.
+     * @example
+     * // Update or create a Archivo
+     * const archivo = await prisma.archivo.upsert({
+     *   create: {
+     *     // ... data to create a Archivo
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Archivo we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ArchivoUpsertArgs>(args: SelectSubset<T, ArchivoUpsertArgs<ExtArgs>>): Prisma__ArchivoClient<$Result.GetResult<Prisma.$ArchivoPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Archivos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ArchivoCountArgs} args - Arguments to filter Archivos to count.
+     * @example
+     * // Count the number of Archivos
+     * const count = await prisma.archivo.count({
+     *   where: {
+     *     // ... the filter for the Archivos we want to count
+     *   }
+     * })
+    **/
+    count<T extends ArchivoCountArgs>(
+      args?: Subset<T, ArchivoCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ArchivoCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Archivo.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ArchivoAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ArchivoAggregateArgs>(args: Subset<T, ArchivoAggregateArgs>): Prisma.PrismaPromise<GetArchivoAggregateType<T>>
+
+    /**
+     * Group by Archivo.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ArchivoGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ArchivoGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ArchivoGroupByArgs['orderBy'] }
+        : { orderBy?: ArchivoGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ArchivoGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetArchivoGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Archivo model
+   */
+  readonly fields: ArchivoFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Archivo.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ArchivoClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    carpeta<T extends CarpetaDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CarpetaDefaultArgs<ExtArgs>>): Prisma__CarpetaClient<$Result.GetResult<Prisma.$CarpetaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    subidoPor<T extends UsuarioDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UsuarioDefaultArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Archivo model
+   */
+  interface ArchivoFieldRefs {
+    readonly id: FieldRef<"Archivo", 'Int'>
+    readonly carpetaId: FieldRef<"Archivo", 'Int'>
+    readonly nombre: FieldRef<"Archivo", 'String'>
+    readonly tipo: FieldRef<"Archivo", 'TipoArchivoDocumento'>
+    readonly storagePath: FieldRef<"Archivo", 'String'>
+    readonly subidoPorId: FieldRef<"Archivo", 'Int'>
+    readonly fechaSubida: FieldRef<"Archivo", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Archivo findUnique
+   */
+  export type ArchivoFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Archivo
+     */
+    select?: ArchivoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Archivo
+     */
+    omit?: ArchivoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ArchivoInclude<ExtArgs> | null
+    /**
+     * Filter, which Archivo to fetch.
+     */
+    where: ArchivoWhereUniqueInput
+  }
+
+  /**
+   * Archivo findUniqueOrThrow
+   */
+  export type ArchivoFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Archivo
+     */
+    select?: ArchivoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Archivo
+     */
+    omit?: ArchivoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ArchivoInclude<ExtArgs> | null
+    /**
+     * Filter, which Archivo to fetch.
+     */
+    where: ArchivoWhereUniqueInput
+  }
+
+  /**
+   * Archivo findFirst
+   */
+  export type ArchivoFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Archivo
+     */
+    select?: ArchivoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Archivo
+     */
+    omit?: ArchivoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ArchivoInclude<ExtArgs> | null
+    /**
+     * Filter, which Archivo to fetch.
+     */
+    where?: ArchivoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Archivos to fetch.
+     */
+    orderBy?: ArchivoOrderByWithRelationInput | ArchivoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Archivos.
+     */
+    cursor?: ArchivoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Archivos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Archivos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Archivos.
+     */
+    distinct?: ArchivoScalarFieldEnum | ArchivoScalarFieldEnum[]
+  }
+
+  /**
+   * Archivo findFirstOrThrow
+   */
+  export type ArchivoFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Archivo
+     */
+    select?: ArchivoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Archivo
+     */
+    omit?: ArchivoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ArchivoInclude<ExtArgs> | null
+    /**
+     * Filter, which Archivo to fetch.
+     */
+    where?: ArchivoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Archivos to fetch.
+     */
+    orderBy?: ArchivoOrderByWithRelationInput | ArchivoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Archivos.
+     */
+    cursor?: ArchivoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Archivos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Archivos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Archivos.
+     */
+    distinct?: ArchivoScalarFieldEnum | ArchivoScalarFieldEnum[]
+  }
+
+  /**
+   * Archivo findMany
+   */
+  export type ArchivoFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Archivo
+     */
+    select?: ArchivoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Archivo
+     */
+    omit?: ArchivoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ArchivoInclude<ExtArgs> | null
+    /**
+     * Filter, which Archivos to fetch.
+     */
+    where?: ArchivoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Archivos to fetch.
+     */
+    orderBy?: ArchivoOrderByWithRelationInput | ArchivoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Archivos.
+     */
+    cursor?: ArchivoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Archivos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Archivos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Archivos.
+     */
+    distinct?: ArchivoScalarFieldEnum | ArchivoScalarFieldEnum[]
+  }
+
+  /**
+   * Archivo create
+   */
+  export type ArchivoCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Archivo
+     */
+    select?: ArchivoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Archivo
+     */
+    omit?: ArchivoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ArchivoInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Archivo.
+     */
+    data: XOR<ArchivoCreateInput, ArchivoUncheckedCreateInput>
+  }
+
+  /**
+   * Archivo createMany
+   */
+  export type ArchivoCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Archivos.
+     */
+    data: ArchivoCreateManyInput | ArchivoCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Archivo createManyAndReturn
+   */
+  export type ArchivoCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Archivo
+     */
+    select?: ArchivoSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Archivo
+     */
+    omit?: ArchivoOmit<ExtArgs> | null
+    /**
+     * The data used to create many Archivos.
+     */
+    data: ArchivoCreateManyInput | ArchivoCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ArchivoIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Archivo update
+   */
+  export type ArchivoUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Archivo
+     */
+    select?: ArchivoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Archivo
+     */
+    omit?: ArchivoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ArchivoInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Archivo.
+     */
+    data: XOR<ArchivoUpdateInput, ArchivoUncheckedUpdateInput>
+    /**
+     * Choose, which Archivo to update.
+     */
+    where: ArchivoWhereUniqueInput
+  }
+
+  /**
+   * Archivo updateMany
+   */
+  export type ArchivoUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Archivos.
+     */
+    data: XOR<ArchivoUpdateManyMutationInput, ArchivoUncheckedUpdateManyInput>
+    /**
+     * Filter which Archivos to update
+     */
+    where?: ArchivoWhereInput
+    /**
+     * Limit how many Archivos to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Archivo updateManyAndReturn
+   */
+  export type ArchivoUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Archivo
+     */
+    select?: ArchivoSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Archivo
+     */
+    omit?: ArchivoOmit<ExtArgs> | null
+    /**
+     * The data used to update Archivos.
+     */
+    data: XOR<ArchivoUpdateManyMutationInput, ArchivoUncheckedUpdateManyInput>
+    /**
+     * Filter which Archivos to update
+     */
+    where?: ArchivoWhereInput
+    /**
+     * Limit how many Archivos to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ArchivoIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Archivo upsert
+   */
+  export type ArchivoUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Archivo
+     */
+    select?: ArchivoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Archivo
+     */
+    omit?: ArchivoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ArchivoInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Archivo to update in case it exists.
+     */
+    where: ArchivoWhereUniqueInput
+    /**
+     * In case the Archivo found by the `where` argument doesn't exist, create a new Archivo with this data.
+     */
+    create: XOR<ArchivoCreateInput, ArchivoUncheckedCreateInput>
+    /**
+     * In case the Archivo was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ArchivoUpdateInput, ArchivoUncheckedUpdateInput>
+  }
+
+  /**
+   * Archivo delete
+   */
+  export type ArchivoDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Archivo
+     */
+    select?: ArchivoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Archivo
+     */
+    omit?: ArchivoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ArchivoInclude<ExtArgs> | null
+    /**
+     * Filter which Archivo to delete.
+     */
+    where: ArchivoWhereUniqueInput
+  }
+
+  /**
+   * Archivo deleteMany
+   */
+  export type ArchivoDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Archivos to delete
+     */
+    where?: ArchivoWhereInput
+    /**
+     * Limit how many Archivos to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Archivo without action
+   */
+  export type ArchivoDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Archivo
+     */
+    select?: ArchivoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Archivo
+     */
+    omit?: ArchivoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ArchivoInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model AccesoIndicador
+   */
+
+  export type AggregateAccesoIndicador = {
+    _count: AccesoIndicadorCountAggregateOutputType | null
+    _avg: AccesoIndicadorAvgAggregateOutputType | null
+    _sum: AccesoIndicadorSumAggregateOutputType | null
+    _min: AccesoIndicadorMinAggregateOutputType | null
+    _max: AccesoIndicadorMaxAggregateOutputType | null
+  }
+
+  export type AccesoIndicadorAvgAggregateOutputType = {
+    id: number | null
+    usuarioId: number | null
+  }
+
+  export type AccesoIndicadorSumAggregateOutputType = {
+    id: number | null
+    usuarioId: number | null
+  }
+
+  export type AccesoIndicadorMinAggregateOutputType = {
+    id: number | null
+    usuarioId: number | null
+    proceso: $Enums.ProcesoIndicador | null
+    puedeVer: boolean | null
+    puedeDescargar: boolean | null
+    puedeAdjuntar: boolean | null
+    puedeEditar: boolean | null
+    puedeEliminar: boolean | null
+  }
+
+  export type AccesoIndicadorMaxAggregateOutputType = {
+    id: number | null
+    usuarioId: number | null
+    proceso: $Enums.ProcesoIndicador | null
+    puedeVer: boolean | null
+    puedeDescargar: boolean | null
+    puedeAdjuntar: boolean | null
+    puedeEditar: boolean | null
+    puedeEliminar: boolean | null
+  }
+
+  export type AccesoIndicadorCountAggregateOutputType = {
+    id: number
+    usuarioId: number
+    proceso: number
+    puedeVer: number
+    puedeDescargar: number
+    puedeAdjuntar: number
+    puedeEditar: number
+    puedeEliminar: number
+    _all: number
+  }
+
+
+  export type AccesoIndicadorAvgAggregateInputType = {
+    id?: true
+    usuarioId?: true
+  }
+
+  export type AccesoIndicadorSumAggregateInputType = {
+    id?: true
+    usuarioId?: true
+  }
+
+  export type AccesoIndicadorMinAggregateInputType = {
+    id?: true
+    usuarioId?: true
+    proceso?: true
+    puedeVer?: true
+    puedeDescargar?: true
+    puedeAdjuntar?: true
+    puedeEditar?: true
+    puedeEliminar?: true
+  }
+
+  export type AccesoIndicadorMaxAggregateInputType = {
+    id?: true
+    usuarioId?: true
+    proceso?: true
+    puedeVer?: true
+    puedeDescargar?: true
+    puedeAdjuntar?: true
+    puedeEditar?: true
+    puedeEliminar?: true
+  }
+
+  export type AccesoIndicadorCountAggregateInputType = {
+    id?: true
+    usuarioId?: true
+    proceso?: true
+    puedeVer?: true
+    puedeDescargar?: true
+    puedeAdjuntar?: true
+    puedeEditar?: true
+    puedeEliminar?: true
+    _all?: true
+  }
+
+  export type AccesoIndicadorAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AccesoIndicador to aggregate.
+     */
+    where?: AccesoIndicadorWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AccesoIndicadors to fetch.
+     */
+    orderBy?: AccesoIndicadorOrderByWithRelationInput | AccesoIndicadorOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AccesoIndicadorWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AccesoIndicadors from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AccesoIndicadors.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AccesoIndicadors
+    **/
+    _count?: true | AccesoIndicadorCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: AccesoIndicadorAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: AccesoIndicadorSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AccesoIndicadorMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AccesoIndicadorMaxAggregateInputType
+  }
+
+  export type GetAccesoIndicadorAggregateType<T extends AccesoIndicadorAggregateArgs> = {
+        [P in keyof T & keyof AggregateAccesoIndicador]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAccesoIndicador[P]>
+      : GetScalarType<T[P], AggregateAccesoIndicador[P]>
+  }
+
+
+
+
+  export type AccesoIndicadorGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AccesoIndicadorWhereInput
+    orderBy?: AccesoIndicadorOrderByWithAggregationInput | AccesoIndicadorOrderByWithAggregationInput[]
+    by: AccesoIndicadorScalarFieldEnum[] | AccesoIndicadorScalarFieldEnum
+    having?: AccesoIndicadorScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AccesoIndicadorCountAggregateInputType | true
+    _avg?: AccesoIndicadorAvgAggregateInputType
+    _sum?: AccesoIndicadorSumAggregateInputType
+    _min?: AccesoIndicadorMinAggregateInputType
+    _max?: AccesoIndicadorMaxAggregateInputType
+  }
+
+  export type AccesoIndicadorGroupByOutputType = {
+    id: number
+    usuarioId: number
+    proceso: $Enums.ProcesoIndicador
+    puedeVer: boolean
+    puedeDescargar: boolean
+    puedeAdjuntar: boolean
+    puedeEditar: boolean
+    puedeEliminar: boolean
+    _count: AccesoIndicadorCountAggregateOutputType | null
+    _avg: AccesoIndicadorAvgAggregateOutputType | null
+    _sum: AccesoIndicadorSumAggregateOutputType | null
+    _min: AccesoIndicadorMinAggregateOutputType | null
+    _max: AccesoIndicadorMaxAggregateOutputType | null
+  }
+
+  type GetAccesoIndicadorGroupByPayload<T extends AccesoIndicadorGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AccesoIndicadorGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AccesoIndicadorGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AccesoIndicadorGroupByOutputType[P]>
+            : GetScalarType<T[P], AccesoIndicadorGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AccesoIndicadorSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    usuarioId?: boolean
+    proceso?: boolean
+    puedeVer?: boolean
+    puedeDescargar?: boolean
+    puedeAdjuntar?: boolean
+    puedeEditar?: boolean
+    puedeEliminar?: boolean
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["accesoIndicador"]>
+
+  export type AccesoIndicadorSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    usuarioId?: boolean
+    proceso?: boolean
+    puedeVer?: boolean
+    puedeDescargar?: boolean
+    puedeAdjuntar?: boolean
+    puedeEditar?: boolean
+    puedeEliminar?: boolean
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["accesoIndicador"]>
+
+  export type AccesoIndicadorSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    usuarioId?: boolean
+    proceso?: boolean
+    puedeVer?: boolean
+    puedeDescargar?: boolean
+    puedeAdjuntar?: boolean
+    puedeEditar?: boolean
+    puedeEliminar?: boolean
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["accesoIndicador"]>
+
+  export type AccesoIndicadorSelectScalar = {
+    id?: boolean
+    usuarioId?: boolean
+    proceso?: boolean
+    puedeVer?: boolean
+    puedeDescargar?: boolean
+    puedeAdjuntar?: boolean
+    puedeEditar?: boolean
+    puedeEliminar?: boolean
+  }
+
+  export type AccesoIndicadorOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "usuarioId" | "proceso" | "puedeVer" | "puedeDescargar" | "puedeAdjuntar" | "puedeEditar" | "puedeEliminar", ExtArgs["result"]["accesoIndicador"]>
+  export type AccesoIndicadorInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }
+  export type AccesoIndicadorIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }
+  export type AccesoIndicadorIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }
+
+  export type $AccesoIndicadorPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AccesoIndicador"
+    objects: {
+      usuario: Prisma.$UsuarioPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      usuarioId: number
+      proceso: $Enums.ProcesoIndicador
+      puedeVer: boolean
+      puedeDescargar: boolean
+      puedeAdjuntar: boolean
+      puedeEditar: boolean
+      puedeEliminar: boolean
+    }, ExtArgs["result"]["accesoIndicador"]>
+    composites: {}
+  }
+
+  type AccesoIndicadorGetPayload<S extends boolean | null | undefined | AccesoIndicadorDefaultArgs> = $Result.GetResult<Prisma.$AccesoIndicadorPayload, S>
+
+  type AccesoIndicadorCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AccesoIndicadorFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AccesoIndicadorCountAggregateInputType | true
+    }
+
+  export interface AccesoIndicadorDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AccesoIndicador'], meta: { name: 'AccesoIndicador' } }
+    /**
+     * Find zero or one AccesoIndicador that matches the filter.
+     * @param {AccesoIndicadorFindUniqueArgs} args - Arguments to find a AccesoIndicador
+     * @example
+     * // Get one AccesoIndicador
+     * const accesoIndicador = await prisma.accesoIndicador.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AccesoIndicadorFindUniqueArgs>(args: SelectSubset<T, AccesoIndicadorFindUniqueArgs<ExtArgs>>): Prisma__AccesoIndicadorClient<$Result.GetResult<Prisma.$AccesoIndicadorPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one AccesoIndicador that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AccesoIndicadorFindUniqueOrThrowArgs} args - Arguments to find a AccesoIndicador
+     * @example
+     * // Get one AccesoIndicador
+     * const accesoIndicador = await prisma.accesoIndicador.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AccesoIndicadorFindUniqueOrThrowArgs>(args: SelectSubset<T, AccesoIndicadorFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AccesoIndicadorClient<$Result.GetResult<Prisma.$AccesoIndicadorPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AccesoIndicador that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccesoIndicadorFindFirstArgs} args - Arguments to find a AccesoIndicador
+     * @example
+     * // Get one AccesoIndicador
+     * const accesoIndicador = await prisma.accesoIndicador.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AccesoIndicadorFindFirstArgs>(args?: SelectSubset<T, AccesoIndicadorFindFirstArgs<ExtArgs>>): Prisma__AccesoIndicadorClient<$Result.GetResult<Prisma.$AccesoIndicadorPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AccesoIndicador that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccesoIndicadorFindFirstOrThrowArgs} args - Arguments to find a AccesoIndicador
+     * @example
+     * // Get one AccesoIndicador
+     * const accesoIndicador = await prisma.accesoIndicador.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AccesoIndicadorFindFirstOrThrowArgs>(args?: SelectSubset<T, AccesoIndicadorFindFirstOrThrowArgs<ExtArgs>>): Prisma__AccesoIndicadorClient<$Result.GetResult<Prisma.$AccesoIndicadorPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more AccesoIndicadors that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccesoIndicadorFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AccesoIndicadors
+     * const accesoIndicadors = await prisma.accesoIndicador.findMany()
+     * 
+     * // Get first 10 AccesoIndicadors
+     * const accesoIndicadors = await prisma.accesoIndicador.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const accesoIndicadorWithIdOnly = await prisma.accesoIndicador.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AccesoIndicadorFindManyArgs>(args?: SelectSubset<T, AccesoIndicadorFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccesoIndicadorPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a AccesoIndicador.
+     * @param {AccesoIndicadorCreateArgs} args - Arguments to create a AccesoIndicador.
+     * @example
+     * // Create one AccesoIndicador
+     * const AccesoIndicador = await prisma.accesoIndicador.create({
+     *   data: {
+     *     // ... data to create a AccesoIndicador
+     *   }
+     * })
+     * 
+     */
+    create<T extends AccesoIndicadorCreateArgs>(args: SelectSubset<T, AccesoIndicadorCreateArgs<ExtArgs>>): Prisma__AccesoIndicadorClient<$Result.GetResult<Prisma.$AccesoIndicadorPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many AccesoIndicadors.
+     * @param {AccesoIndicadorCreateManyArgs} args - Arguments to create many AccesoIndicadors.
+     * @example
+     * // Create many AccesoIndicadors
+     * const accesoIndicador = await prisma.accesoIndicador.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AccesoIndicadorCreateManyArgs>(args?: SelectSubset<T, AccesoIndicadorCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AccesoIndicadors and returns the data saved in the database.
+     * @param {AccesoIndicadorCreateManyAndReturnArgs} args - Arguments to create many AccesoIndicadors.
+     * @example
+     * // Create many AccesoIndicadors
+     * const accesoIndicador = await prisma.accesoIndicador.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AccesoIndicadors and only return the `id`
+     * const accesoIndicadorWithIdOnly = await prisma.accesoIndicador.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AccesoIndicadorCreateManyAndReturnArgs>(args?: SelectSubset<T, AccesoIndicadorCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccesoIndicadorPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a AccesoIndicador.
+     * @param {AccesoIndicadorDeleteArgs} args - Arguments to delete one AccesoIndicador.
+     * @example
+     * // Delete one AccesoIndicador
+     * const AccesoIndicador = await prisma.accesoIndicador.delete({
+     *   where: {
+     *     // ... filter to delete one AccesoIndicador
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AccesoIndicadorDeleteArgs>(args: SelectSubset<T, AccesoIndicadorDeleteArgs<ExtArgs>>): Prisma__AccesoIndicadorClient<$Result.GetResult<Prisma.$AccesoIndicadorPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one AccesoIndicador.
+     * @param {AccesoIndicadorUpdateArgs} args - Arguments to update one AccesoIndicador.
+     * @example
+     * // Update one AccesoIndicador
+     * const accesoIndicador = await prisma.accesoIndicador.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AccesoIndicadorUpdateArgs>(args: SelectSubset<T, AccesoIndicadorUpdateArgs<ExtArgs>>): Prisma__AccesoIndicadorClient<$Result.GetResult<Prisma.$AccesoIndicadorPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more AccesoIndicadors.
+     * @param {AccesoIndicadorDeleteManyArgs} args - Arguments to filter AccesoIndicadors to delete.
+     * @example
+     * // Delete a few AccesoIndicadors
+     * const { count } = await prisma.accesoIndicador.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AccesoIndicadorDeleteManyArgs>(args?: SelectSubset<T, AccesoIndicadorDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AccesoIndicadors.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccesoIndicadorUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AccesoIndicadors
+     * const accesoIndicador = await prisma.accesoIndicador.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AccesoIndicadorUpdateManyArgs>(args: SelectSubset<T, AccesoIndicadorUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AccesoIndicadors and returns the data updated in the database.
+     * @param {AccesoIndicadorUpdateManyAndReturnArgs} args - Arguments to update many AccesoIndicadors.
+     * @example
+     * // Update many AccesoIndicadors
+     * const accesoIndicador = await prisma.accesoIndicador.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more AccesoIndicadors and only return the `id`
+     * const accesoIndicadorWithIdOnly = await prisma.accesoIndicador.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AccesoIndicadorUpdateManyAndReturnArgs>(args: SelectSubset<T, AccesoIndicadorUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccesoIndicadorPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one AccesoIndicador.
+     * @param {AccesoIndicadorUpsertArgs} args - Arguments to update or create a AccesoIndicador.
+     * @example
+     * // Update or create a AccesoIndicador
+     * const accesoIndicador = await prisma.accesoIndicador.upsert({
+     *   create: {
+     *     // ... data to create a AccesoIndicador
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AccesoIndicador we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AccesoIndicadorUpsertArgs>(args: SelectSubset<T, AccesoIndicadorUpsertArgs<ExtArgs>>): Prisma__AccesoIndicadorClient<$Result.GetResult<Prisma.$AccesoIndicadorPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of AccesoIndicadors.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccesoIndicadorCountArgs} args - Arguments to filter AccesoIndicadors to count.
+     * @example
+     * // Count the number of AccesoIndicadors
+     * const count = await prisma.accesoIndicador.count({
+     *   where: {
+     *     // ... the filter for the AccesoIndicadors we want to count
+     *   }
+     * })
+    **/
+    count<T extends AccesoIndicadorCountArgs>(
+      args?: Subset<T, AccesoIndicadorCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AccesoIndicadorCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AccesoIndicador.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccesoIndicadorAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AccesoIndicadorAggregateArgs>(args: Subset<T, AccesoIndicadorAggregateArgs>): Prisma.PrismaPromise<GetAccesoIndicadorAggregateType<T>>
+
+    /**
+     * Group by AccesoIndicador.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccesoIndicadorGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AccesoIndicadorGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AccesoIndicadorGroupByArgs['orderBy'] }
+        : { orderBy?: AccesoIndicadorGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AccesoIndicadorGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAccesoIndicadorGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AccesoIndicador model
+   */
+  readonly fields: AccesoIndicadorFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AccesoIndicador.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AccesoIndicadorClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    usuario<T extends UsuarioDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UsuarioDefaultArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AccesoIndicador model
+   */
+  interface AccesoIndicadorFieldRefs {
+    readonly id: FieldRef<"AccesoIndicador", 'Int'>
+    readonly usuarioId: FieldRef<"AccesoIndicador", 'Int'>
+    readonly proceso: FieldRef<"AccesoIndicador", 'ProcesoIndicador'>
+    readonly puedeVer: FieldRef<"AccesoIndicador", 'Boolean'>
+    readonly puedeDescargar: FieldRef<"AccesoIndicador", 'Boolean'>
+    readonly puedeAdjuntar: FieldRef<"AccesoIndicador", 'Boolean'>
+    readonly puedeEditar: FieldRef<"AccesoIndicador", 'Boolean'>
+    readonly puedeEliminar: FieldRef<"AccesoIndicador", 'Boolean'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AccesoIndicador findUnique
+   */
+  export type AccesoIndicadorFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccesoIndicador
+     */
+    select?: AccesoIndicadorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccesoIndicador
+     */
+    omit?: AccesoIndicadorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccesoIndicadorInclude<ExtArgs> | null
+    /**
+     * Filter, which AccesoIndicador to fetch.
+     */
+    where: AccesoIndicadorWhereUniqueInput
+  }
+
+  /**
+   * AccesoIndicador findUniqueOrThrow
+   */
+  export type AccesoIndicadorFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccesoIndicador
+     */
+    select?: AccesoIndicadorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccesoIndicador
+     */
+    omit?: AccesoIndicadorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccesoIndicadorInclude<ExtArgs> | null
+    /**
+     * Filter, which AccesoIndicador to fetch.
+     */
+    where: AccesoIndicadorWhereUniqueInput
+  }
+
+  /**
+   * AccesoIndicador findFirst
+   */
+  export type AccesoIndicadorFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccesoIndicador
+     */
+    select?: AccesoIndicadorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccesoIndicador
+     */
+    omit?: AccesoIndicadorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccesoIndicadorInclude<ExtArgs> | null
+    /**
+     * Filter, which AccesoIndicador to fetch.
+     */
+    where?: AccesoIndicadorWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AccesoIndicadors to fetch.
+     */
+    orderBy?: AccesoIndicadorOrderByWithRelationInput | AccesoIndicadorOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AccesoIndicadors.
+     */
+    cursor?: AccesoIndicadorWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AccesoIndicadors from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AccesoIndicadors.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AccesoIndicadors.
+     */
+    distinct?: AccesoIndicadorScalarFieldEnum | AccesoIndicadorScalarFieldEnum[]
+  }
+
+  /**
+   * AccesoIndicador findFirstOrThrow
+   */
+  export type AccesoIndicadorFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccesoIndicador
+     */
+    select?: AccesoIndicadorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccesoIndicador
+     */
+    omit?: AccesoIndicadorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccesoIndicadorInclude<ExtArgs> | null
+    /**
+     * Filter, which AccesoIndicador to fetch.
+     */
+    where?: AccesoIndicadorWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AccesoIndicadors to fetch.
+     */
+    orderBy?: AccesoIndicadorOrderByWithRelationInput | AccesoIndicadorOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AccesoIndicadors.
+     */
+    cursor?: AccesoIndicadorWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AccesoIndicadors from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AccesoIndicadors.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AccesoIndicadors.
+     */
+    distinct?: AccesoIndicadorScalarFieldEnum | AccesoIndicadorScalarFieldEnum[]
+  }
+
+  /**
+   * AccesoIndicador findMany
+   */
+  export type AccesoIndicadorFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccesoIndicador
+     */
+    select?: AccesoIndicadorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccesoIndicador
+     */
+    omit?: AccesoIndicadorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccesoIndicadorInclude<ExtArgs> | null
+    /**
+     * Filter, which AccesoIndicadors to fetch.
+     */
+    where?: AccesoIndicadorWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AccesoIndicadors to fetch.
+     */
+    orderBy?: AccesoIndicadorOrderByWithRelationInput | AccesoIndicadorOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AccesoIndicadors.
+     */
+    cursor?: AccesoIndicadorWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AccesoIndicadors from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AccesoIndicadors.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AccesoIndicadors.
+     */
+    distinct?: AccesoIndicadorScalarFieldEnum | AccesoIndicadorScalarFieldEnum[]
+  }
+
+  /**
+   * AccesoIndicador create
+   */
+  export type AccesoIndicadorCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccesoIndicador
+     */
+    select?: AccesoIndicadorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccesoIndicador
+     */
+    omit?: AccesoIndicadorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccesoIndicadorInclude<ExtArgs> | null
+    /**
+     * The data needed to create a AccesoIndicador.
+     */
+    data: XOR<AccesoIndicadorCreateInput, AccesoIndicadorUncheckedCreateInput>
+  }
+
+  /**
+   * AccesoIndicador createMany
+   */
+  export type AccesoIndicadorCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AccesoIndicadors.
+     */
+    data: AccesoIndicadorCreateManyInput | AccesoIndicadorCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AccesoIndicador createManyAndReturn
+   */
+  export type AccesoIndicadorCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccesoIndicador
+     */
+    select?: AccesoIndicadorSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccesoIndicador
+     */
+    omit?: AccesoIndicadorOmit<ExtArgs> | null
+    /**
+     * The data used to create many AccesoIndicadors.
+     */
+    data: AccesoIndicadorCreateManyInput | AccesoIndicadorCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccesoIndicadorIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AccesoIndicador update
+   */
+  export type AccesoIndicadorUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccesoIndicador
+     */
+    select?: AccesoIndicadorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccesoIndicador
+     */
+    omit?: AccesoIndicadorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccesoIndicadorInclude<ExtArgs> | null
+    /**
+     * The data needed to update a AccesoIndicador.
+     */
+    data: XOR<AccesoIndicadorUpdateInput, AccesoIndicadorUncheckedUpdateInput>
+    /**
+     * Choose, which AccesoIndicador to update.
+     */
+    where: AccesoIndicadorWhereUniqueInput
+  }
+
+  /**
+   * AccesoIndicador updateMany
+   */
+  export type AccesoIndicadorUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AccesoIndicadors.
+     */
+    data: XOR<AccesoIndicadorUpdateManyMutationInput, AccesoIndicadorUncheckedUpdateManyInput>
+    /**
+     * Filter which AccesoIndicadors to update
+     */
+    where?: AccesoIndicadorWhereInput
+    /**
+     * Limit how many AccesoIndicadors to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AccesoIndicador updateManyAndReturn
+   */
+  export type AccesoIndicadorUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccesoIndicador
+     */
+    select?: AccesoIndicadorSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccesoIndicador
+     */
+    omit?: AccesoIndicadorOmit<ExtArgs> | null
+    /**
+     * The data used to update AccesoIndicadors.
+     */
+    data: XOR<AccesoIndicadorUpdateManyMutationInput, AccesoIndicadorUncheckedUpdateManyInput>
+    /**
+     * Filter which AccesoIndicadors to update
+     */
+    where?: AccesoIndicadorWhereInput
+    /**
+     * Limit how many AccesoIndicadors to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccesoIndicadorIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AccesoIndicador upsert
+   */
+  export type AccesoIndicadorUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccesoIndicador
+     */
+    select?: AccesoIndicadorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccesoIndicador
+     */
+    omit?: AccesoIndicadorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccesoIndicadorInclude<ExtArgs> | null
+    /**
+     * The filter to search for the AccesoIndicador to update in case it exists.
+     */
+    where: AccesoIndicadorWhereUniqueInput
+    /**
+     * In case the AccesoIndicador found by the `where` argument doesn't exist, create a new AccesoIndicador with this data.
+     */
+    create: XOR<AccesoIndicadorCreateInput, AccesoIndicadorUncheckedCreateInput>
+    /**
+     * In case the AccesoIndicador was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AccesoIndicadorUpdateInput, AccesoIndicadorUncheckedUpdateInput>
+  }
+
+  /**
+   * AccesoIndicador delete
+   */
+  export type AccesoIndicadorDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccesoIndicador
+     */
+    select?: AccesoIndicadorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccesoIndicador
+     */
+    omit?: AccesoIndicadorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccesoIndicadorInclude<ExtArgs> | null
+    /**
+     * Filter which AccesoIndicador to delete.
+     */
+    where: AccesoIndicadorWhereUniqueInput
+  }
+
+  /**
+   * AccesoIndicador deleteMany
+   */
+  export type AccesoIndicadorDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AccesoIndicadors to delete
+     */
+    where?: AccesoIndicadorWhereInput
+    /**
+     * Limit how many AccesoIndicadors to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * AccesoIndicador without action
+   */
+  export type AccesoIndicadorDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccesoIndicador
+     */
+    select?: AccesoIndicadorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccesoIndicador
+     */
+    omit?: AccesoIndicadorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccesoIndicadorInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model AccesoISO
+   */
+
+  export type AggregateAccesoISO = {
+    _count: AccesoISOCountAggregateOutputType | null
+    _avg: AccesoISOAvgAggregateOutputType | null
+    _sum: AccesoISOSumAggregateOutputType | null
+    _min: AccesoISOMinAggregateOutputType | null
+    _max: AccesoISOMaxAggregateOutputType | null
+  }
+
+  export type AccesoISOAvgAggregateOutputType = {
+    id: number | null
+    usuarioId: number | null
+  }
+
+  export type AccesoISOSumAggregateOutputType = {
+    id: number | null
+    usuarioId: number | null
+  }
+
+  export type AccesoISOMinAggregateOutputType = {
+    id: number | null
+    usuarioId: number | null
+    puedeVer: boolean | null
+    puedeDescargar: boolean | null
+    puedeAdjuntar: boolean | null
+    puedeEditar: boolean | null
+    puedeEliminar: boolean | null
+    gestionaObsoleto: boolean | null
+  }
+
+  export type AccesoISOMaxAggregateOutputType = {
+    id: number | null
+    usuarioId: number | null
+    puedeVer: boolean | null
+    puedeDescargar: boolean | null
+    puedeAdjuntar: boolean | null
+    puedeEditar: boolean | null
+    puedeEliminar: boolean | null
+    gestionaObsoleto: boolean | null
+  }
+
+  export type AccesoISOCountAggregateOutputType = {
+    id: number
+    usuarioId: number
+    puedeVer: number
+    puedeDescargar: number
+    puedeAdjuntar: number
+    puedeEditar: number
+    puedeEliminar: number
+    gestionaObsoleto: number
+    _all: number
+  }
+
+
+  export type AccesoISOAvgAggregateInputType = {
+    id?: true
+    usuarioId?: true
+  }
+
+  export type AccesoISOSumAggregateInputType = {
+    id?: true
+    usuarioId?: true
+  }
+
+  export type AccesoISOMinAggregateInputType = {
+    id?: true
+    usuarioId?: true
+    puedeVer?: true
+    puedeDescargar?: true
+    puedeAdjuntar?: true
+    puedeEditar?: true
+    puedeEliminar?: true
+    gestionaObsoleto?: true
+  }
+
+  export type AccesoISOMaxAggregateInputType = {
+    id?: true
+    usuarioId?: true
+    puedeVer?: true
+    puedeDescargar?: true
+    puedeAdjuntar?: true
+    puedeEditar?: true
+    puedeEliminar?: true
+    gestionaObsoleto?: true
+  }
+
+  export type AccesoISOCountAggregateInputType = {
+    id?: true
+    usuarioId?: true
+    puedeVer?: true
+    puedeDescargar?: true
+    puedeAdjuntar?: true
+    puedeEditar?: true
+    puedeEliminar?: true
+    gestionaObsoleto?: true
+    _all?: true
+  }
+
+  export type AccesoISOAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AccesoISO to aggregate.
+     */
+    where?: AccesoISOWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AccesoISOS to fetch.
+     */
+    orderBy?: AccesoISOOrderByWithRelationInput | AccesoISOOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AccesoISOWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AccesoISOS from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AccesoISOS.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AccesoISOS
+    **/
+    _count?: true | AccesoISOCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: AccesoISOAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: AccesoISOSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AccesoISOMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AccesoISOMaxAggregateInputType
+  }
+
+  export type GetAccesoISOAggregateType<T extends AccesoISOAggregateArgs> = {
+        [P in keyof T & keyof AggregateAccesoISO]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAccesoISO[P]>
+      : GetScalarType<T[P], AggregateAccesoISO[P]>
+  }
+
+
+
+
+  export type AccesoISOGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AccesoISOWhereInput
+    orderBy?: AccesoISOOrderByWithAggregationInput | AccesoISOOrderByWithAggregationInput[]
+    by: AccesoISOScalarFieldEnum[] | AccesoISOScalarFieldEnum
+    having?: AccesoISOScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AccesoISOCountAggregateInputType | true
+    _avg?: AccesoISOAvgAggregateInputType
+    _sum?: AccesoISOSumAggregateInputType
+    _min?: AccesoISOMinAggregateInputType
+    _max?: AccesoISOMaxAggregateInputType
+  }
+
+  export type AccesoISOGroupByOutputType = {
+    id: number
+    usuarioId: number
+    puedeVer: boolean
+    puedeDescargar: boolean
+    puedeAdjuntar: boolean
+    puedeEditar: boolean
+    puedeEliminar: boolean
+    gestionaObsoleto: boolean
+    _count: AccesoISOCountAggregateOutputType | null
+    _avg: AccesoISOAvgAggregateOutputType | null
+    _sum: AccesoISOSumAggregateOutputType | null
+    _min: AccesoISOMinAggregateOutputType | null
+    _max: AccesoISOMaxAggregateOutputType | null
+  }
+
+  type GetAccesoISOGroupByPayload<T extends AccesoISOGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AccesoISOGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AccesoISOGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AccesoISOGroupByOutputType[P]>
+            : GetScalarType<T[P], AccesoISOGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AccesoISOSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    usuarioId?: boolean
+    puedeVer?: boolean
+    puedeDescargar?: boolean
+    puedeAdjuntar?: boolean
+    puedeEditar?: boolean
+    puedeEliminar?: boolean
+    gestionaObsoleto?: boolean
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["accesoISO"]>
+
+  export type AccesoISOSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    usuarioId?: boolean
+    puedeVer?: boolean
+    puedeDescargar?: boolean
+    puedeAdjuntar?: boolean
+    puedeEditar?: boolean
+    puedeEliminar?: boolean
+    gestionaObsoleto?: boolean
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["accesoISO"]>
+
+  export type AccesoISOSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    usuarioId?: boolean
+    puedeVer?: boolean
+    puedeDescargar?: boolean
+    puedeAdjuntar?: boolean
+    puedeEditar?: boolean
+    puedeEliminar?: boolean
+    gestionaObsoleto?: boolean
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["accesoISO"]>
+
+  export type AccesoISOSelectScalar = {
+    id?: boolean
+    usuarioId?: boolean
+    puedeVer?: boolean
+    puedeDescargar?: boolean
+    puedeAdjuntar?: boolean
+    puedeEditar?: boolean
+    puedeEliminar?: boolean
+    gestionaObsoleto?: boolean
+  }
+
+  export type AccesoISOOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "usuarioId" | "puedeVer" | "puedeDescargar" | "puedeAdjuntar" | "puedeEditar" | "puedeEliminar" | "gestionaObsoleto", ExtArgs["result"]["accesoISO"]>
+  export type AccesoISOInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }
+  export type AccesoISOIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }
+  export type AccesoISOIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }
+
+  export type $AccesoISOPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AccesoISO"
+    objects: {
+      usuario: Prisma.$UsuarioPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      usuarioId: number
+      puedeVer: boolean
+      puedeDescargar: boolean
+      puedeAdjuntar: boolean
+      puedeEditar: boolean
+      puedeEliminar: boolean
+      gestionaObsoleto: boolean
+    }, ExtArgs["result"]["accesoISO"]>
+    composites: {}
+  }
+
+  type AccesoISOGetPayload<S extends boolean | null | undefined | AccesoISODefaultArgs> = $Result.GetResult<Prisma.$AccesoISOPayload, S>
+
+  type AccesoISOCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AccesoISOFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AccesoISOCountAggregateInputType | true
+    }
+
+  export interface AccesoISODelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AccesoISO'], meta: { name: 'AccesoISO' } }
+    /**
+     * Find zero or one AccesoISO that matches the filter.
+     * @param {AccesoISOFindUniqueArgs} args - Arguments to find a AccesoISO
+     * @example
+     * // Get one AccesoISO
+     * const accesoISO = await prisma.accesoISO.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AccesoISOFindUniqueArgs>(args: SelectSubset<T, AccesoISOFindUniqueArgs<ExtArgs>>): Prisma__AccesoISOClient<$Result.GetResult<Prisma.$AccesoISOPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one AccesoISO that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AccesoISOFindUniqueOrThrowArgs} args - Arguments to find a AccesoISO
+     * @example
+     * // Get one AccesoISO
+     * const accesoISO = await prisma.accesoISO.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AccesoISOFindUniqueOrThrowArgs>(args: SelectSubset<T, AccesoISOFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AccesoISOClient<$Result.GetResult<Prisma.$AccesoISOPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AccesoISO that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccesoISOFindFirstArgs} args - Arguments to find a AccesoISO
+     * @example
+     * // Get one AccesoISO
+     * const accesoISO = await prisma.accesoISO.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AccesoISOFindFirstArgs>(args?: SelectSubset<T, AccesoISOFindFirstArgs<ExtArgs>>): Prisma__AccesoISOClient<$Result.GetResult<Prisma.$AccesoISOPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AccesoISO that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccesoISOFindFirstOrThrowArgs} args - Arguments to find a AccesoISO
+     * @example
+     * // Get one AccesoISO
+     * const accesoISO = await prisma.accesoISO.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AccesoISOFindFirstOrThrowArgs>(args?: SelectSubset<T, AccesoISOFindFirstOrThrowArgs<ExtArgs>>): Prisma__AccesoISOClient<$Result.GetResult<Prisma.$AccesoISOPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more AccesoISOS that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccesoISOFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AccesoISOS
+     * const accesoISOS = await prisma.accesoISO.findMany()
+     * 
+     * // Get first 10 AccesoISOS
+     * const accesoISOS = await prisma.accesoISO.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const accesoISOWithIdOnly = await prisma.accesoISO.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AccesoISOFindManyArgs>(args?: SelectSubset<T, AccesoISOFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccesoISOPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a AccesoISO.
+     * @param {AccesoISOCreateArgs} args - Arguments to create a AccesoISO.
+     * @example
+     * // Create one AccesoISO
+     * const AccesoISO = await prisma.accesoISO.create({
+     *   data: {
+     *     // ... data to create a AccesoISO
+     *   }
+     * })
+     * 
+     */
+    create<T extends AccesoISOCreateArgs>(args: SelectSubset<T, AccesoISOCreateArgs<ExtArgs>>): Prisma__AccesoISOClient<$Result.GetResult<Prisma.$AccesoISOPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many AccesoISOS.
+     * @param {AccesoISOCreateManyArgs} args - Arguments to create many AccesoISOS.
+     * @example
+     * // Create many AccesoISOS
+     * const accesoISO = await prisma.accesoISO.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AccesoISOCreateManyArgs>(args?: SelectSubset<T, AccesoISOCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AccesoISOS and returns the data saved in the database.
+     * @param {AccesoISOCreateManyAndReturnArgs} args - Arguments to create many AccesoISOS.
+     * @example
+     * // Create many AccesoISOS
+     * const accesoISO = await prisma.accesoISO.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AccesoISOS and only return the `id`
+     * const accesoISOWithIdOnly = await prisma.accesoISO.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AccesoISOCreateManyAndReturnArgs>(args?: SelectSubset<T, AccesoISOCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccesoISOPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a AccesoISO.
+     * @param {AccesoISODeleteArgs} args - Arguments to delete one AccesoISO.
+     * @example
+     * // Delete one AccesoISO
+     * const AccesoISO = await prisma.accesoISO.delete({
+     *   where: {
+     *     // ... filter to delete one AccesoISO
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AccesoISODeleteArgs>(args: SelectSubset<T, AccesoISODeleteArgs<ExtArgs>>): Prisma__AccesoISOClient<$Result.GetResult<Prisma.$AccesoISOPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one AccesoISO.
+     * @param {AccesoISOUpdateArgs} args - Arguments to update one AccesoISO.
+     * @example
+     * // Update one AccesoISO
+     * const accesoISO = await prisma.accesoISO.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AccesoISOUpdateArgs>(args: SelectSubset<T, AccesoISOUpdateArgs<ExtArgs>>): Prisma__AccesoISOClient<$Result.GetResult<Prisma.$AccesoISOPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more AccesoISOS.
+     * @param {AccesoISODeleteManyArgs} args - Arguments to filter AccesoISOS to delete.
+     * @example
+     * // Delete a few AccesoISOS
+     * const { count } = await prisma.accesoISO.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AccesoISODeleteManyArgs>(args?: SelectSubset<T, AccesoISODeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AccesoISOS.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccesoISOUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AccesoISOS
+     * const accesoISO = await prisma.accesoISO.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AccesoISOUpdateManyArgs>(args: SelectSubset<T, AccesoISOUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AccesoISOS and returns the data updated in the database.
+     * @param {AccesoISOUpdateManyAndReturnArgs} args - Arguments to update many AccesoISOS.
+     * @example
+     * // Update many AccesoISOS
+     * const accesoISO = await prisma.accesoISO.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more AccesoISOS and only return the `id`
+     * const accesoISOWithIdOnly = await prisma.accesoISO.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AccesoISOUpdateManyAndReturnArgs>(args: SelectSubset<T, AccesoISOUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccesoISOPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one AccesoISO.
+     * @param {AccesoISOUpsertArgs} args - Arguments to update or create a AccesoISO.
+     * @example
+     * // Update or create a AccesoISO
+     * const accesoISO = await prisma.accesoISO.upsert({
+     *   create: {
+     *     // ... data to create a AccesoISO
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AccesoISO we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AccesoISOUpsertArgs>(args: SelectSubset<T, AccesoISOUpsertArgs<ExtArgs>>): Prisma__AccesoISOClient<$Result.GetResult<Prisma.$AccesoISOPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of AccesoISOS.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccesoISOCountArgs} args - Arguments to filter AccesoISOS to count.
+     * @example
+     * // Count the number of AccesoISOS
+     * const count = await prisma.accesoISO.count({
+     *   where: {
+     *     // ... the filter for the AccesoISOS we want to count
+     *   }
+     * })
+    **/
+    count<T extends AccesoISOCountArgs>(
+      args?: Subset<T, AccesoISOCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AccesoISOCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AccesoISO.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccesoISOAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AccesoISOAggregateArgs>(args: Subset<T, AccesoISOAggregateArgs>): Prisma.PrismaPromise<GetAccesoISOAggregateType<T>>
+
+    /**
+     * Group by AccesoISO.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccesoISOGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AccesoISOGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AccesoISOGroupByArgs['orderBy'] }
+        : { orderBy?: AccesoISOGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AccesoISOGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAccesoISOGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AccesoISO model
+   */
+  readonly fields: AccesoISOFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AccesoISO.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AccesoISOClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    usuario<T extends UsuarioDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UsuarioDefaultArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AccesoISO model
+   */
+  interface AccesoISOFieldRefs {
+    readonly id: FieldRef<"AccesoISO", 'Int'>
+    readonly usuarioId: FieldRef<"AccesoISO", 'Int'>
+    readonly puedeVer: FieldRef<"AccesoISO", 'Boolean'>
+    readonly puedeDescargar: FieldRef<"AccesoISO", 'Boolean'>
+    readonly puedeAdjuntar: FieldRef<"AccesoISO", 'Boolean'>
+    readonly puedeEditar: FieldRef<"AccesoISO", 'Boolean'>
+    readonly puedeEliminar: FieldRef<"AccesoISO", 'Boolean'>
+    readonly gestionaObsoleto: FieldRef<"AccesoISO", 'Boolean'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AccesoISO findUnique
+   */
+  export type AccesoISOFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccesoISO
+     */
+    select?: AccesoISOSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccesoISO
+     */
+    omit?: AccesoISOOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccesoISOInclude<ExtArgs> | null
+    /**
+     * Filter, which AccesoISO to fetch.
+     */
+    where: AccesoISOWhereUniqueInput
+  }
+
+  /**
+   * AccesoISO findUniqueOrThrow
+   */
+  export type AccesoISOFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccesoISO
+     */
+    select?: AccesoISOSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccesoISO
+     */
+    omit?: AccesoISOOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccesoISOInclude<ExtArgs> | null
+    /**
+     * Filter, which AccesoISO to fetch.
+     */
+    where: AccesoISOWhereUniqueInput
+  }
+
+  /**
+   * AccesoISO findFirst
+   */
+  export type AccesoISOFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccesoISO
+     */
+    select?: AccesoISOSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccesoISO
+     */
+    omit?: AccesoISOOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccesoISOInclude<ExtArgs> | null
+    /**
+     * Filter, which AccesoISO to fetch.
+     */
+    where?: AccesoISOWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AccesoISOS to fetch.
+     */
+    orderBy?: AccesoISOOrderByWithRelationInput | AccesoISOOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AccesoISOS.
+     */
+    cursor?: AccesoISOWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AccesoISOS from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AccesoISOS.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AccesoISOS.
+     */
+    distinct?: AccesoISOScalarFieldEnum | AccesoISOScalarFieldEnum[]
+  }
+
+  /**
+   * AccesoISO findFirstOrThrow
+   */
+  export type AccesoISOFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccesoISO
+     */
+    select?: AccesoISOSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccesoISO
+     */
+    omit?: AccesoISOOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccesoISOInclude<ExtArgs> | null
+    /**
+     * Filter, which AccesoISO to fetch.
+     */
+    where?: AccesoISOWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AccesoISOS to fetch.
+     */
+    orderBy?: AccesoISOOrderByWithRelationInput | AccesoISOOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AccesoISOS.
+     */
+    cursor?: AccesoISOWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AccesoISOS from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AccesoISOS.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AccesoISOS.
+     */
+    distinct?: AccesoISOScalarFieldEnum | AccesoISOScalarFieldEnum[]
+  }
+
+  /**
+   * AccesoISO findMany
+   */
+  export type AccesoISOFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccesoISO
+     */
+    select?: AccesoISOSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccesoISO
+     */
+    omit?: AccesoISOOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccesoISOInclude<ExtArgs> | null
+    /**
+     * Filter, which AccesoISOS to fetch.
+     */
+    where?: AccesoISOWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AccesoISOS to fetch.
+     */
+    orderBy?: AccesoISOOrderByWithRelationInput | AccesoISOOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AccesoISOS.
+     */
+    cursor?: AccesoISOWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AccesoISOS from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AccesoISOS.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AccesoISOS.
+     */
+    distinct?: AccesoISOScalarFieldEnum | AccesoISOScalarFieldEnum[]
+  }
+
+  /**
+   * AccesoISO create
+   */
+  export type AccesoISOCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccesoISO
+     */
+    select?: AccesoISOSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccesoISO
+     */
+    omit?: AccesoISOOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccesoISOInclude<ExtArgs> | null
+    /**
+     * The data needed to create a AccesoISO.
+     */
+    data: XOR<AccesoISOCreateInput, AccesoISOUncheckedCreateInput>
+  }
+
+  /**
+   * AccesoISO createMany
+   */
+  export type AccesoISOCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AccesoISOS.
+     */
+    data: AccesoISOCreateManyInput | AccesoISOCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AccesoISO createManyAndReturn
+   */
+  export type AccesoISOCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccesoISO
+     */
+    select?: AccesoISOSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccesoISO
+     */
+    omit?: AccesoISOOmit<ExtArgs> | null
+    /**
+     * The data used to create many AccesoISOS.
+     */
+    data: AccesoISOCreateManyInput | AccesoISOCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccesoISOIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AccesoISO update
+   */
+  export type AccesoISOUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccesoISO
+     */
+    select?: AccesoISOSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccesoISO
+     */
+    omit?: AccesoISOOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccesoISOInclude<ExtArgs> | null
+    /**
+     * The data needed to update a AccesoISO.
+     */
+    data: XOR<AccesoISOUpdateInput, AccesoISOUncheckedUpdateInput>
+    /**
+     * Choose, which AccesoISO to update.
+     */
+    where: AccesoISOWhereUniqueInput
+  }
+
+  /**
+   * AccesoISO updateMany
+   */
+  export type AccesoISOUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AccesoISOS.
+     */
+    data: XOR<AccesoISOUpdateManyMutationInput, AccesoISOUncheckedUpdateManyInput>
+    /**
+     * Filter which AccesoISOS to update
+     */
+    where?: AccesoISOWhereInput
+    /**
+     * Limit how many AccesoISOS to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AccesoISO updateManyAndReturn
+   */
+  export type AccesoISOUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccesoISO
+     */
+    select?: AccesoISOSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccesoISO
+     */
+    omit?: AccesoISOOmit<ExtArgs> | null
+    /**
+     * The data used to update AccesoISOS.
+     */
+    data: XOR<AccesoISOUpdateManyMutationInput, AccesoISOUncheckedUpdateManyInput>
+    /**
+     * Filter which AccesoISOS to update
+     */
+    where?: AccesoISOWhereInput
+    /**
+     * Limit how many AccesoISOS to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccesoISOIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AccesoISO upsert
+   */
+  export type AccesoISOUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccesoISO
+     */
+    select?: AccesoISOSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccesoISO
+     */
+    omit?: AccesoISOOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccesoISOInclude<ExtArgs> | null
+    /**
+     * The filter to search for the AccesoISO to update in case it exists.
+     */
+    where: AccesoISOWhereUniqueInput
+    /**
+     * In case the AccesoISO found by the `where` argument doesn't exist, create a new AccesoISO with this data.
+     */
+    create: XOR<AccesoISOCreateInput, AccesoISOUncheckedCreateInput>
+    /**
+     * In case the AccesoISO was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AccesoISOUpdateInput, AccesoISOUncheckedUpdateInput>
+  }
+
+  /**
+   * AccesoISO delete
+   */
+  export type AccesoISODeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccesoISO
+     */
+    select?: AccesoISOSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccesoISO
+     */
+    omit?: AccesoISOOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccesoISOInclude<ExtArgs> | null
+    /**
+     * Filter which AccesoISO to delete.
+     */
+    where: AccesoISOWhereUniqueInput
+  }
+
+  /**
+   * AccesoISO deleteMany
+   */
+  export type AccesoISODeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AccesoISOS to delete
+     */
+    where?: AccesoISOWhereInput
+    /**
+     * Limit how many AccesoISOS to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * AccesoISO without action
+   */
+  export type AccesoISODefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccesoISO
+     */
+    select?: AccesoISOSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccesoISO
+     */
+    omit?: AccesoISOOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccesoISOInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -9775,6 +14998,7 @@ export namespace Prisma {
     supabaseUserId: 'supabaseUserId',
     nombre: 'nombre',
     esAdmin: 'esAdmin',
+    esAdminKpis: 'esAdminKpis',
     avatarUrl: 'avatarUrl',
     createdAt: 'createdAt'
   };
@@ -9813,6 +15037,7 @@ export namespace Prisma {
     nfpaSalud: 'nfpaSalud',
     nfpaInflamabilidad: 'nfpaInflamabilidad',
     nfpaReactividad: 'nfpaReactividad',
+    fichaSeguridadUrl: 'fichaSeguridadUrl',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -9866,6 +15091,61 @@ export namespace Prisma {
   };
 
   export type TrabajoImpresionScalarFieldEnum = (typeof TrabajoImpresionScalarFieldEnum)[keyof typeof TrabajoImpresionScalarFieldEnum]
+
+
+  export const CarpetaScalarFieldEnum: {
+    id: 'id',
+    nombre: 'nombre',
+    carpetaPadreId: 'carpetaPadreId',
+    modulo: 'modulo',
+    tipo: 'tipo',
+    proceso: 'proceso',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type CarpetaScalarFieldEnum = (typeof CarpetaScalarFieldEnum)[keyof typeof CarpetaScalarFieldEnum]
+
+
+  export const ArchivoScalarFieldEnum: {
+    id: 'id',
+    carpetaId: 'carpetaId',
+    nombre: 'nombre',
+    tipo: 'tipo',
+    storagePath: 'storagePath',
+    subidoPorId: 'subidoPorId',
+    fechaSubida: 'fechaSubida'
+  };
+
+  export type ArchivoScalarFieldEnum = (typeof ArchivoScalarFieldEnum)[keyof typeof ArchivoScalarFieldEnum]
+
+
+  export const AccesoIndicadorScalarFieldEnum: {
+    id: 'id',
+    usuarioId: 'usuarioId',
+    proceso: 'proceso',
+    puedeVer: 'puedeVer',
+    puedeDescargar: 'puedeDescargar',
+    puedeAdjuntar: 'puedeAdjuntar',
+    puedeEditar: 'puedeEditar',
+    puedeEliminar: 'puedeEliminar'
+  };
+
+  export type AccesoIndicadorScalarFieldEnum = (typeof AccesoIndicadorScalarFieldEnum)[keyof typeof AccesoIndicadorScalarFieldEnum]
+
+
+  export const AccesoISOScalarFieldEnum: {
+    id: 'id',
+    usuarioId: 'usuarioId',
+    puedeVer: 'puedeVer',
+    puedeDescargar: 'puedeDescargar',
+    puedeAdjuntar: 'puedeAdjuntar',
+    puedeEditar: 'puedeEditar',
+    puedeEliminar: 'puedeEliminar',
+    gestionaObsoleto: 'gestionaObsoleto'
+  };
+
+  export type AccesoISOScalarFieldEnum = (typeof AccesoISOScalarFieldEnum)[keyof typeof AccesoISOScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -9975,6 +15255,62 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'ModuloDocumentos'
+   */
+  export type EnumModuloDocumentosFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ModuloDocumentos'>
+    
+
+
+  /**
+   * Reference to a field of type 'ModuloDocumentos[]'
+   */
+  export type ListEnumModuloDocumentosFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ModuloDocumentos[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'TipoCarpeta'
+   */
+  export type EnumTipoCarpetaFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TipoCarpeta'>
+    
+
+
+  /**
+   * Reference to a field of type 'TipoCarpeta[]'
+   */
+  export type ListEnumTipoCarpetaFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TipoCarpeta[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'ProcesoIndicador'
+   */
+  export type EnumProcesoIndicadorFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProcesoIndicador'>
+    
+
+
+  /**
+   * Reference to a field of type 'ProcesoIndicador[]'
+   */
+  export type ListEnumProcesoIndicadorFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProcesoIndicador[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'TipoArchivoDocumento'
+   */
+  export type EnumTipoArchivoDocumentoFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TipoArchivoDocumento'>
+    
+
+
+  /**
+   * Reference to a field of type 'TipoArchivoDocumento[]'
+   */
+  export type ListEnumTipoArchivoDocumentoFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TipoArchivoDocumento[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -9999,10 +15335,14 @@ export namespace Prisma {
     supabaseUserId?: StringFilter<"Usuario"> | string
     nombre?: StringFilter<"Usuario"> | string
     esAdmin?: BoolFilter<"Usuario"> | boolean
+    esAdminKpis?: BoolFilter<"Usuario"> | boolean
     avatarUrl?: StringNullableFilter<"Usuario"> | string | null
     createdAt?: DateTimeFilter<"Usuario"> | Date | string
     permisos?: PermisoListRelationFilter
     trabajosImpresion?: TrabajoImpresionListRelationFilter
+    archivosSubidos?: ArchivoListRelationFilter
+    accesosIndicador?: AccesoIndicadorListRelationFilter
+    accesoIso?: XOR<AccesoISONullableScalarRelationFilter, AccesoISOWhereInput> | null
   }
 
   export type UsuarioOrderByWithRelationInput = {
@@ -10010,10 +15350,14 @@ export namespace Prisma {
     supabaseUserId?: SortOrder
     nombre?: SortOrder
     esAdmin?: SortOrder
+    esAdminKpis?: SortOrder
     avatarUrl?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     permisos?: PermisoOrderByRelationAggregateInput
     trabajosImpresion?: TrabajoImpresionOrderByRelationAggregateInput
+    archivosSubidos?: ArchivoOrderByRelationAggregateInput
+    accesosIndicador?: AccesoIndicadorOrderByRelationAggregateInput
+    accesoIso?: AccesoISOOrderByWithRelationInput
   }
 
   export type UsuarioWhereUniqueInput = Prisma.AtLeast<{
@@ -10024,10 +15368,14 @@ export namespace Prisma {
     NOT?: UsuarioWhereInput | UsuarioWhereInput[]
     nombre?: StringFilter<"Usuario"> | string
     esAdmin?: BoolFilter<"Usuario"> | boolean
+    esAdminKpis?: BoolFilter<"Usuario"> | boolean
     avatarUrl?: StringNullableFilter<"Usuario"> | string | null
     createdAt?: DateTimeFilter<"Usuario"> | Date | string
     permisos?: PermisoListRelationFilter
     trabajosImpresion?: TrabajoImpresionListRelationFilter
+    archivosSubidos?: ArchivoListRelationFilter
+    accesosIndicador?: AccesoIndicadorListRelationFilter
+    accesoIso?: XOR<AccesoISONullableScalarRelationFilter, AccesoISOWhereInput> | null
   }, "id" | "supabaseUserId">
 
   export type UsuarioOrderByWithAggregationInput = {
@@ -10035,6 +15383,7 @@ export namespace Prisma {
     supabaseUserId?: SortOrder
     nombre?: SortOrder
     esAdmin?: SortOrder
+    esAdminKpis?: SortOrder
     avatarUrl?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     _count?: UsuarioCountOrderByAggregateInput
@@ -10052,6 +15401,7 @@ export namespace Prisma {
     supabaseUserId?: StringWithAggregatesFilter<"Usuario"> | string
     nombre?: StringWithAggregatesFilter<"Usuario"> | string
     esAdmin?: BoolWithAggregatesFilter<"Usuario"> | boolean
+    esAdminKpis?: BoolWithAggregatesFilter<"Usuario"> | boolean
     avatarUrl?: StringNullableWithAggregatesFilter<"Usuario"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Usuario"> | Date | string
   }
@@ -10191,6 +15541,7 @@ export namespace Prisma {
     nfpaSalud?: IntNullableFilter<"Producto"> | number | null
     nfpaInflamabilidad?: IntNullableFilter<"Producto"> | number | null
     nfpaReactividad?: IntNullableFilter<"Producto"> | number | null
+    fichaSeguridadUrl?: StringNullableFilter<"Producto"> | string | null
     createdAt?: DateTimeFilter<"Producto"> | Date | string
     updatedAt?: DateTimeFilter<"Producto"> | Date | string
     lotes?: LoteListRelationFilter
@@ -10203,6 +15554,7 @@ export namespace Prisma {
     nfpaSalud?: SortOrderInput | SortOrder
     nfpaInflamabilidad?: SortOrderInput | SortOrder
     nfpaReactividad?: SortOrderInput | SortOrder
+    fichaSeguridadUrl?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     lotes?: LoteOrderByRelationAggregateInput
@@ -10218,6 +15570,7 @@ export namespace Prisma {
     nfpaSalud?: IntNullableFilter<"Producto"> | number | null
     nfpaInflamabilidad?: IntNullableFilter<"Producto"> | number | null
     nfpaReactividad?: IntNullableFilter<"Producto"> | number | null
+    fichaSeguridadUrl?: StringNullableFilter<"Producto"> | string | null
     createdAt?: DateTimeFilter<"Producto"> | Date | string
     updatedAt?: DateTimeFilter<"Producto"> | Date | string
     lotes?: LoteListRelationFilter
@@ -10230,6 +15583,7 @@ export namespace Prisma {
     nfpaSalud?: SortOrderInput | SortOrder
     nfpaInflamabilidad?: SortOrderInput | SortOrder
     nfpaReactividad?: SortOrderInput | SortOrder
+    fichaSeguridadUrl?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: ProductoCountOrderByAggregateInput
@@ -10249,6 +15603,7 @@ export namespace Prisma {
     nfpaSalud?: IntNullableWithAggregatesFilter<"Producto"> | number | null
     nfpaInflamabilidad?: IntNullableWithAggregatesFilter<"Producto"> | number | null
     nfpaReactividad?: IntNullableWithAggregatesFilter<"Producto"> | number | null
+    fichaSeguridadUrl?: StringNullableWithAggregatesFilter<"Producto"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Producto"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Producto"> | Date | string
   }
@@ -10512,14 +15867,311 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"TrabajoImpresion"> | Date | string
   }
 
+  export type CarpetaWhereInput = {
+    AND?: CarpetaWhereInput | CarpetaWhereInput[]
+    OR?: CarpetaWhereInput[]
+    NOT?: CarpetaWhereInput | CarpetaWhereInput[]
+    id?: IntFilter<"Carpeta"> | number
+    nombre?: StringFilter<"Carpeta"> | string
+    carpetaPadreId?: IntNullableFilter<"Carpeta"> | number | null
+    modulo?: EnumModuloDocumentosFilter<"Carpeta"> | $Enums.ModuloDocumentos
+    tipo?: EnumTipoCarpetaNullableFilter<"Carpeta"> | $Enums.TipoCarpeta | null
+    proceso?: EnumProcesoIndicadorNullableFilter<"Carpeta"> | $Enums.ProcesoIndicador | null
+    createdAt?: DateTimeFilter<"Carpeta"> | Date | string
+    updatedAt?: DateTimeFilter<"Carpeta"> | Date | string
+    carpetaPadre?: XOR<CarpetaNullableScalarRelationFilter, CarpetaWhereInput> | null
+    hijos?: CarpetaListRelationFilter
+    archivos?: ArchivoListRelationFilter
+  }
+
+  export type CarpetaOrderByWithRelationInput = {
+    id?: SortOrder
+    nombre?: SortOrder
+    carpetaPadreId?: SortOrderInput | SortOrder
+    modulo?: SortOrder
+    tipo?: SortOrderInput | SortOrder
+    proceso?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    carpetaPadre?: CarpetaOrderByWithRelationInput
+    hijos?: CarpetaOrderByRelationAggregateInput
+    archivos?: ArchivoOrderByRelationAggregateInput
+  }
+
+  export type CarpetaWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: CarpetaWhereInput | CarpetaWhereInput[]
+    OR?: CarpetaWhereInput[]
+    NOT?: CarpetaWhereInput | CarpetaWhereInput[]
+    nombre?: StringFilter<"Carpeta"> | string
+    carpetaPadreId?: IntNullableFilter<"Carpeta"> | number | null
+    modulo?: EnumModuloDocumentosFilter<"Carpeta"> | $Enums.ModuloDocumentos
+    tipo?: EnumTipoCarpetaNullableFilter<"Carpeta"> | $Enums.TipoCarpeta | null
+    proceso?: EnumProcesoIndicadorNullableFilter<"Carpeta"> | $Enums.ProcesoIndicador | null
+    createdAt?: DateTimeFilter<"Carpeta"> | Date | string
+    updatedAt?: DateTimeFilter<"Carpeta"> | Date | string
+    carpetaPadre?: XOR<CarpetaNullableScalarRelationFilter, CarpetaWhereInput> | null
+    hijos?: CarpetaListRelationFilter
+    archivos?: ArchivoListRelationFilter
+  }, "id">
+
+  export type CarpetaOrderByWithAggregationInput = {
+    id?: SortOrder
+    nombre?: SortOrder
+    carpetaPadreId?: SortOrderInput | SortOrder
+    modulo?: SortOrder
+    tipo?: SortOrderInput | SortOrder
+    proceso?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: CarpetaCountOrderByAggregateInput
+    _avg?: CarpetaAvgOrderByAggregateInput
+    _max?: CarpetaMaxOrderByAggregateInput
+    _min?: CarpetaMinOrderByAggregateInput
+    _sum?: CarpetaSumOrderByAggregateInput
+  }
+
+  export type CarpetaScalarWhereWithAggregatesInput = {
+    AND?: CarpetaScalarWhereWithAggregatesInput | CarpetaScalarWhereWithAggregatesInput[]
+    OR?: CarpetaScalarWhereWithAggregatesInput[]
+    NOT?: CarpetaScalarWhereWithAggregatesInput | CarpetaScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Carpeta"> | number
+    nombre?: StringWithAggregatesFilter<"Carpeta"> | string
+    carpetaPadreId?: IntNullableWithAggregatesFilter<"Carpeta"> | number | null
+    modulo?: EnumModuloDocumentosWithAggregatesFilter<"Carpeta"> | $Enums.ModuloDocumentos
+    tipo?: EnumTipoCarpetaNullableWithAggregatesFilter<"Carpeta"> | $Enums.TipoCarpeta | null
+    proceso?: EnumProcesoIndicadorNullableWithAggregatesFilter<"Carpeta"> | $Enums.ProcesoIndicador | null
+    createdAt?: DateTimeWithAggregatesFilter<"Carpeta"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Carpeta"> | Date | string
+  }
+
+  export type ArchivoWhereInput = {
+    AND?: ArchivoWhereInput | ArchivoWhereInput[]
+    OR?: ArchivoWhereInput[]
+    NOT?: ArchivoWhereInput | ArchivoWhereInput[]
+    id?: IntFilter<"Archivo"> | number
+    carpetaId?: IntFilter<"Archivo"> | number
+    nombre?: StringFilter<"Archivo"> | string
+    tipo?: EnumTipoArchivoDocumentoFilter<"Archivo"> | $Enums.TipoArchivoDocumento
+    storagePath?: StringFilter<"Archivo"> | string
+    subidoPorId?: IntFilter<"Archivo"> | number
+    fechaSubida?: DateTimeFilter<"Archivo"> | Date | string
+    carpeta?: XOR<CarpetaScalarRelationFilter, CarpetaWhereInput>
+    subidoPor?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
+  }
+
+  export type ArchivoOrderByWithRelationInput = {
+    id?: SortOrder
+    carpetaId?: SortOrder
+    nombre?: SortOrder
+    tipo?: SortOrder
+    storagePath?: SortOrder
+    subidoPorId?: SortOrder
+    fechaSubida?: SortOrder
+    carpeta?: CarpetaOrderByWithRelationInput
+    subidoPor?: UsuarioOrderByWithRelationInput
+  }
+
+  export type ArchivoWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: ArchivoWhereInput | ArchivoWhereInput[]
+    OR?: ArchivoWhereInput[]
+    NOT?: ArchivoWhereInput | ArchivoWhereInput[]
+    carpetaId?: IntFilter<"Archivo"> | number
+    nombre?: StringFilter<"Archivo"> | string
+    tipo?: EnumTipoArchivoDocumentoFilter<"Archivo"> | $Enums.TipoArchivoDocumento
+    storagePath?: StringFilter<"Archivo"> | string
+    subidoPorId?: IntFilter<"Archivo"> | number
+    fechaSubida?: DateTimeFilter<"Archivo"> | Date | string
+    carpeta?: XOR<CarpetaScalarRelationFilter, CarpetaWhereInput>
+    subidoPor?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
+  }, "id">
+
+  export type ArchivoOrderByWithAggregationInput = {
+    id?: SortOrder
+    carpetaId?: SortOrder
+    nombre?: SortOrder
+    tipo?: SortOrder
+    storagePath?: SortOrder
+    subidoPorId?: SortOrder
+    fechaSubida?: SortOrder
+    _count?: ArchivoCountOrderByAggregateInput
+    _avg?: ArchivoAvgOrderByAggregateInput
+    _max?: ArchivoMaxOrderByAggregateInput
+    _min?: ArchivoMinOrderByAggregateInput
+    _sum?: ArchivoSumOrderByAggregateInput
+  }
+
+  export type ArchivoScalarWhereWithAggregatesInput = {
+    AND?: ArchivoScalarWhereWithAggregatesInput | ArchivoScalarWhereWithAggregatesInput[]
+    OR?: ArchivoScalarWhereWithAggregatesInput[]
+    NOT?: ArchivoScalarWhereWithAggregatesInput | ArchivoScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Archivo"> | number
+    carpetaId?: IntWithAggregatesFilter<"Archivo"> | number
+    nombre?: StringWithAggregatesFilter<"Archivo"> | string
+    tipo?: EnumTipoArchivoDocumentoWithAggregatesFilter<"Archivo"> | $Enums.TipoArchivoDocumento
+    storagePath?: StringWithAggregatesFilter<"Archivo"> | string
+    subidoPorId?: IntWithAggregatesFilter<"Archivo"> | number
+    fechaSubida?: DateTimeWithAggregatesFilter<"Archivo"> | Date | string
+  }
+
+  export type AccesoIndicadorWhereInput = {
+    AND?: AccesoIndicadorWhereInput | AccesoIndicadorWhereInput[]
+    OR?: AccesoIndicadorWhereInput[]
+    NOT?: AccesoIndicadorWhereInput | AccesoIndicadorWhereInput[]
+    id?: IntFilter<"AccesoIndicador"> | number
+    usuarioId?: IntFilter<"AccesoIndicador"> | number
+    proceso?: EnumProcesoIndicadorFilter<"AccesoIndicador"> | $Enums.ProcesoIndicador
+    puedeVer?: BoolFilter<"AccesoIndicador"> | boolean
+    puedeDescargar?: BoolFilter<"AccesoIndicador"> | boolean
+    puedeAdjuntar?: BoolFilter<"AccesoIndicador"> | boolean
+    puedeEditar?: BoolFilter<"AccesoIndicador"> | boolean
+    puedeEliminar?: BoolFilter<"AccesoIndicador"> | boolean
+    usuario?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
+  }
+
+  export type AccesoIndicadorOrderByWithRelationInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+    proceso?: SortOrder
+    puedeVer?: SortOrder
+    puedeDescargar?: SortOrder
+    puedeAdjuntar?: SortOrder
+    puedeEditar?: SortOrder
+    puedeEliminar?: SortOrder
+    usuario?: UsuarioOrderByWithRelationInput
+  }
+
+  export type AccesoIndicadorWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    usuarioId_proceso?: AccesoIndicadorUsuarioIdProcesoCompoundUniqueInput
+    AND?: AccesoIndicadorWhereInput | AccesoIndicadorWhereInput[]
+    OR?: AccesoIndicadorWhereInput[]
+    NOT?: AccesoIndicadorWhereInput | AccesoIndicadorWhereInput[]
+    usuarioId?: IntFilter<"AccesoIndicador"> | number
+    proceso?: EnumProcesoIndicadorFilter<"AccesoIndicador"> | $Enums.ProcesoIndicador
+    puedeVer?: BoolFilter<"AccesoIndicador"> | boolean
+    puedeDescargar?: BoolFilter<"AccesoIndicador"> | boolean
+    puedeAdjuntar?: BoolFilter<"AccesoIndicador"> | boolean
+    puedeEditar?: BoolFilter<"AccesoIndicador"> | boolean
+    puedeEliminar?: BoolFilter<"AccesoIndicador"> | boolean
+    usuario?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
+  }, "id" | "usuarioId_proceso">
+
+  export type AccesoIndicadorOrderByWithAggregationInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+    proceso?: SortOrder
+    puedeVer?: SortOrder
+    puedeDescargar?: SortOrder
+    puedeAdjuntar?: SortOrder
+    puedeEditar?: SortOrder
+    puedeEliminar?: SortOrder
+    _count?: AccesoIndicadorCountOrderByAggregateInput
+    _avg?: AccesoIndicadorAvgOrderByAggregateInput
+    _max?: AccesoIndicadorMaxOrderByAggregateInput
+    _min?: AccesoIndicadorMinOrderByAggregateInput
+    _sum?: AccesoIndicadorSumOrderByAggregateInput
+  }
+
+  export type AccesoIndicadorScalarWhereWithAggregatesInput = {
+    AND?: AccesoIndicadorScalarWhereWithAggregatesInput | AccesoIndicadorScalarWhereWithAggregatesInput[]
+    OR?: AccesoIndicadorScalarWhereWithAggregatesInput[]
+    NOT?: AccesoIndicadorScalarWhereWithAggregatesInput | AccesoIndicadorScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"AccesoIndicador"> | number
+    usuarioId?: IntWithAggregatesFilter<"AccesoIndicador"> | number
+    proceso?: EnumProcesoIndicadorWithAggregatesFilter<"AccesoIndicador"> | $Enums.ProcesoIndicador
+    puedeVer?: BoolWithAggregatesFilter<"AccesoIndicador"> | boolean
+    puedeDescargar?: BoolWithAggregatesFilter<"AccesoIndicador"> | boolean
+    puedeAdjuntar?: BoolWithAggregatesFilter<"AccesoIndicador"> | boolean
+    puedeEditar?: BoolWithAggregatesFilter<"AccesoIndicador"> | boolean
+    puedeEliminar?: BoolWithAggregatesFilter<"AccesoIndicador"> | boolean
+  }
+
+  export type AccesoISOWhereInput = {
+    AND?: AccesoISOWhereInput | AccesoISOWhereInput[]
+    OR?: AccesoISOWhereInput[]
+    NOT?: AccesoISOWhereInput | AccesoISOWhereInput[]
+    id?: IntFilter<"AccesoISO"> | number
+    usuarioId?: IntFilter<"AccesoISO"> | number
+    puedeVer?: BoolFilter<"AccesoISO"> | boolean
+    puedeDescargar?: BoolFilter<"AccesoISO"> | boolean
+    puedeAdjuntar?: BoolFilter<"AccesoISO"> | boolean
+    puedeEditar?: BoolFilter<"AccesoISO"> | boolean
+    puedeEliminar?: BoolFilter<"AccesoISO"> | boolean
+    gestionaObsoleto?: BoolFilter<"AccesoISO"> | boolean
+    usuario?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
+  }
+
+  export type AccesoISOOrderByWithRelationInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+    puedeVer?: SortOrder
+    puedeDescargar?: SortOrder
+    puedeAdjuntar?: SortOrder
+    puedeEditar?: SortOrder
+    puedeEliminar?: SortOrder
+    gestionaObsoleto?: SortOrder
+    usuario?: UsuarioOrderByWithRelationInput
+  }
+
+  export type AccesoISOWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    usuarioId?: number
+    AND?: AccesoISOWhereInput | AccesoISOWhereInput[]
+    OR?: AccesoISOWhereInput[]
+    NOT?: AccesoISOWhereInput | AccesoISOWhereInput[]
+    puedeVer?: BoolFilter<"AccesoISO"> | boolean
+    puedeDescargar?: BoolFilter<"AccesoISO"> | boolean
+    puedeAdjuntar?: BoolFilter<"AccesoISO"> | boolean
+    puedeEditar?: BoolFilter<"AccesoISO"> | boolean
+    puedeEliminar?: BoolFilter<"AccesoISO"> | boolean
+    gestionaObsoleto?: BoolFilter<"AccesoISO"> | boolean
+    usuario?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
+  }, "id" | "usuarioId">
+
+  export type AccesoISOOrderByWithAggregationInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+    puedeVer?: SortOrder
+    puedeDescargar?: SortOrder
+    puedeAdjuntar?: SortOrder
+    puedeEditar?: SortOrder
+    puedeEliminar?: SortOrder
+    gestionaObsoleto?: SortOrder
+    _count?: AccesoISOCountOrderByAggregateInput
+    _avg?: AccesoISOAvgOrderByAggregateInput
+    _max?: AccesoISOMaxOrderByAggregateInput
+    _min?: AccesoISOMinOrderByAggregateInput
+    _sum?: AccesoISOSumOrderByAggregateInput
+  }
+
+  export type AccesoISOScalarWhereWithAggregatesInput = {
+    AND?: AccesoISOScalarWhereWithAggregatesInput | AccesoISOScalarWhereWithAggregatesInput[]
+    OR?: AccesoISOScalarWhereWithAggregatesInput[]
+    NOT?: AccesoISOScalarWhereWithAggregatesInput | AccesoISOScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"AccesoISO"> | number
+    usuarioId?: IntWithAggregatesFilter<"AccesoISO"> | number
+    puedeVer?: BoolWithAggregatesFilter<"AccesoISO"> | boolean
+    puedeDescargar?: BoolWithAggregatesFilter<"AccesoISO"> | boolean
+    puedeAdjuntar?: BoolWithAggregatesFilter<"AccesoISO"> | boolean
+    puedeEditar?: BoolWithAggregatesFilter<"AccesoISO"> | boolean
+    puedeEliminar?: BoolWithAggregatesFilter<"AccesoISO"> | boolean
+    gestionaObsoleto?: BoolWithAggregatesFilter<"AccesoISO"> | boolean
+  }
+
   export type UsuarioCreateInput = {
     supabaseUserId: string
     nombre: string
     esAdmin?: boolean
+    esAdminKpis?: boolean
     avatarUrl?: string | null
     createdAt?: Date | string
     permisos?: PermisoCreateNestedManyWithoutUsuarioInput
     trabajosImpresion?: TrabajoImpresionCreateNestedManyWithoutCreadoPorInput
+    archivosSubidos?: ArchivoCreateNestedManyWithoutSubidoPorInput
+    accesosIndicador?: AccesoIndicadorCreateNestedManyWithoutUsuarioInput
+    accesoIso?: AccesoISOCreateNestedOneWithoutUsuarioInput
   }
 
   export type UsuarioUncheckedCreateInput = {
@@ -10527,20 +16179,28 @@ export namespace Prisma {
     supabaseUserId: string
     nombre: string
     esAdmin?: boolean
+    esAdminKpis?: boolean
     avatarUrl?: string | null
     createdAt?: Date | string
     permisos?: PermisoUncheckedCreateNestedManyWithoutUsuarioInput
     trabajosImpresion?: TrabajoImpresionUncheckedCreateNestedManyWithoutCreadoPorInput
+    archivosSubidos?: ArchivoUncheckedCreateNestedManyWithoutSubidoPorInput
+    accesosIndicador?: AccesoIndicadorUncheckedCreateNestedManyWithoutUsuarioInput
+    accesoIso?: AccesoISOUncheckedCreateNestedOneWithoutUsuarioInput
   }
 
   export type UsuarioUpdateInput = {
     supabaseUserId?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
+    esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     permisos?: PermisoUpdateManyWithoutUsuarioNestedInput
     trabajosImpresion?: TrabajoImpresionUpdateManyWithoutCreadoPorNestedInput
+    archivosSubidos?: ArchivoUpdateManyWithoutSubidoPorNestedInput
+    accesosIndicador?: AccesoIndicadorUpdateManyWithoutUsuarioNestedInput
+    accesoIso?: AccesoISOUpdateOneWithoutUsuarioNestedInput
   }
 
   export type UsuarioUncheckedUpdateInput = {
@@ -10548,10 +16208,14 @@ export namespace Prisma {
     supabaseUserId?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
+    esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     permisos?: PermisoUncheckedUpdateManyWithoutUsuarioNestedInput
     trabajosImpresion?: TrabajoImpresionUncheckedUpdateManyWithoutCreadoPorNestedInput
+    archivosSubidos?: ArchivoUncheckedUpdateManyWithoutSubidoPorNestedInput
+    accesosIndicador?: AccesoIndicadorUncheckedUpdateManyWithoutUsuarioNestedInput
+    accesoIso?: AccesoISOUncheckedUpdateOneWithoutUsuarioNestedInput
   }
 
   export type UsuarioCreateManyInput = {
@@ -10559,6 +16223,7 @@ export namespace Prisma {
     supabaseUserId: string
     nombre: string
     esAdmin?: boolean
+    esAdminKpis?: boolean
     avatarUrl?: string | null
     createdAt?: Date | string
   }
@@ -10567,6 +16232,7 @@ export namespace Prisma {
     supabaseUserId?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
+    esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -10576,6 +16242,7 @@ export namespace Prisma {
     supabaseUserId?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
+    esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -10709,6 +16376,7 @@ export namespace Prisma {
     nfpaSalud?: number | null
     nfpaInflamabilidad?: number | null
     nfpaReactividad?: number | null
+    fichaSeguridadUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     lotes?: LoteCreateNestedManyWithoutProductoInput
@@ -10721,6 +16389,7 @@ export namespace Prisma {
     nfpaSalud?: number | null
     nfpaInflamabilidad?: number | null
     nfpaReactividad?: number | null
+    fichaSeguridadUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     lotes?: LoteUncheckedCreateNestedManyWithoutProductoInput
@@ -10732,6 +16401,7 @@ export namespace Prisma {
     nfpaSalud?: NullableIntFieldUpdateOperationsInput | number | null
     nfpaInflamabilidad?: NullableIntFieldUpdateOperationsInput | number | null
     nfpaReactividad?: NullableIntFieldUpdateOperationsInput | number | null
+    fichaSeguridadUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lotes?: LoteUpdateManyWithoutProductoNestedInput
@@ -10744,6 +16414,7 @@ export namespace Prisma {
     nfpaSalud?: NullableIntFieldUpdateOperationsInput | number | null
     nfpaInflamabilidad?: NullableIntFieldUpdateOperationsInput | number | null
     nfpaReactividad?: NullableIntFieldUpdateOperationsInput | number | null
+    fichaSeguridadUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lotes?: LoteUncheckedUpdateManyWithoutProductoNestedInput
@@ -10756,6 +16427,7 @@ export namespace Prisma {
     nfpaSalud?: number | null
     nfpaInflamabilidad?: number | null
     nfpaReactividad?: number | null
+    fichaSeguridadUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -10766,6 +16438,7 @@ export namespace Prisma {
     nfpaSalud?: NullableIntFieldUpdateOperationsInput | number | null
     nfpaInflamabilidad?: NullableIntFieldUpdateOperationsInput | number | null
     nfpaReactividad?: NullableIntFieldUpdateOperationsInput | number | null
+    fichaSeguridadUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -10777,6 +16450,7 @@ export namespace Prisma {
     nfpaSalud?: NullableIntFieldUpdateOperationsInput | number | null
     nfpaInflamabilidad?: NullableIntFieldUpdateOperationsInput | number | null
     nfpaReactividad?: NullableIntFieldUpdateOperationsInput | number | null
+    fichaSeguridadUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -11048,6 +16722,298 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type CarpetaCreateInput = {
+    nombre: string
+    modulo: $Enums.ModuloDocumentos
+    tipo?: $Enums.TipoCarpeta | null
+    proceso?: $Enums.ProcesoIndicador | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    carpetaPadre?: CarpetaCreateNestedOneWithoutHijosInput
+    hijos?: CarpetaCreateNestedManyWithoutCarpetaPadreInput
+    archivos?: ArchivoCreateNestedManyWithoutCarpetaInput
+  }
+
+  export type CarpetaUncheckedCreateInput = {
+    id?: number
+    nombre: string
+    carpetaPadreId?: number | null
+    modulo: $Enums.ModuloDocumentos
+    tipo?: $Enums.TipoCarpeta | null
+    proceso?: $Enums.ProcesoIndicador | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    hijos?: CarpetaUncheckedCreateNestedManyWithoutCarpetaPadreInput
+    archivos?: ArchivoUncheckedCreateNestedManyWithoutCarpetaInput
+  }
+
+  export type CarpetaUpdateInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    modulo?: EnumModuloDocumentosFieldUpdateOperationsInput | $Enums.ModuloDocumentos
+    tipo?: NullableEnumTipoCarpetaFieldUpdateOperationsInput | $Enums.TipoCarpeta | null
+    proceso?: NullableEnumProcesoIndicadorFieldUpdateOperationsInput | $Enums.ProcesoIndicador | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    carpetaPadre?: CarpetaUpdateOneWithoutHijosNestedInput
+    hijos?: CarpetaUpdateManyWithoutCarpetaPadreNestedInput
+    archivos?: ArchivoUpdateManyWithoutCarpetaNestedInput
+  }
+
+  export type CarpetaUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    carpetaPadreId?: NullableIntFieldUpdateOperationsInput | number | null
+    modulo?: EnumModuloDocumentosFieldUpdateOperationsInput | $Enums.ModuloDocumentos
+    tipo?: NullableEnumTipoCarpetaFieldUpdateOperationsInput | $Enums.TipoCarpeta | null
+    proceso?: NullableEnumProcesoIndicadorFieldUpdateOperationsInput | $Enums.ProcesoIndicador | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    hijos?: CarpetaUncheckedUpdateManyWithoutCarpetaPadreNestedInput
+    archivos?: ArchivoUncheckedUpdateManyWithoutCarpetaNestedInput
+  }
+
+  export type CarpetaCreateManyInput = {
+    id?: number
+    nombre: string
+    carpetaPadreId?: number | null
+    modulo: $Enums.ModuloDocumentos
+    tipo?: $Enums.TipoCarpeta | null
+    proceso?: $Enums.ProcesoIndicador | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CarpetaUpdateManyMutationInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    modulo?: EnumModuloDocumentosFieldUpdateOperationsInput | $Enums.ModuloDocumentos
+    tipo?: NullableEnumTipoCarpetaFieldUpdateOperationsInput | $Enums.TipoCarpeta | null
+    proceso?: NullableEnumProcesoIndicadorFieldUpdateOperationsInput | $Enums.ProcesoIndicador | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CarpetaUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    carpetaPadreId?: NullableIntFieldUpdateOperationsInput | number | null
+    modulo?: EnumModuloDocumentosFieldUpdateOperationsInput | $Enums.ModuloDocumentos
+    tipo?: NullableEnumTipoCarpetaFieldUpdateOperationsInput | $Enums.TipoCarpeta | null
+    proceso?: NullableEnumProcesoIndicadorFieldUpdateOperationsInput | $Enums.ProcesoIndicador | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ArchivoCreateInput = {
+    nombre: string
+    tipo: $Enums.TipoArchivoDocumento
+    storagePath: string
+    fechaSubida?: Date | string
+    carpeta: CarpetaCreateNestedOneWithoutArchivosInput
+    subidoPor: UsuarioCreateNestedOneWithoutArchivosSubidosInput
+  }
+
+  export type ArchivoUncheckedCreateInput = {
+    id?: number
+    carpetaId: number
+    nombre: string
+    tipo: $Enums.TipoArchivoDocumento
+    storagePath: string
+    subidoPorId: number
+    fechaSubida?: Date | string
+  }
+
+  export type ArchivoUpdateInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    tipo?: EnumTipoArchivoDocumentoFieldUpdateOperationsInput | $Enums.TipoArchivoDocumento
+    storagePath?: StringFieldUpdateOperationsInput | string
+    fechaSubida?: DateTimeFieldUpdateOperationsInput | Date | string
+    carpeta?: CarpetaUpdateOneRequiredWithoutArchivosNestedInput
+    subidoPor?: UsuarioUpdateOneRequiredWithoutArchivosSubidosNestedInput
+  }
+
+  export type ArchivoUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    carpetaId?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    tipo?: EnumTipoArchivoDocumentoFieldUpdateOperationsInput | $Enums.TipoArchivoDocumento
+    storagePath?: StringFieldUpdateOperationsInput | string
+    subidoPorId?: IntFieldUpdateOperationsInput | number
+    fechaSubida?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ArchivoCreateManyInput = {
+    id?: number
+    carpetaId: number
+    nombre: string
+    tipo: $Enums.TipoArchivoDocumento
+    storagePath: string
+    subidoPorId: number
+    fechaSubida?: Date | string
+  }
+
+  export type ArchivoUpdateManyMutationInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    tipo?: EnumTipoArchivoDocumentoFieldUpdateOperationsInput | $Enums.TipoArchivoDocumento
+    storagePath?: StringFieldUpdateOperationsInput | string
+    fechaSubida?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ArchivoUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    carpetaId?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    tipo?: EnumTipoArchivoDocumentoFieldUpdateOperationsInput | $Enums.TipoArchivoDocumento
+    storagePath?: StringFieldUpdateOperationsInput | string
+    subidoPorId?: IntFieldUpdateOperationsInput | number
+    fechaSubida?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AccesoIndicadorCreateInput = {
+    proceso: $Enums.ProcesoIndicador
+    puedeVer?: boolean
+    puedeDescargar?: boolean
+    puedeAdjuntar?: boolean
+    puedeEditar?: boolean
+    puedeEliminar?: boolean
+    usuario: UsuarioCreateNestedOneWithoutAccesosIndicadorInput
+  }
+
+  export type AccesoIndicadorUncheckedCreateInput = {
+    id?: number
+    usuarioId: number
+    proceso: $Enums.ProcesoIndicador
+    puedeVer?: boolean
+    puedeDescargar?: boolean
+    puedeAdjuntar?: boolean
+    puedeEditar?: boolean
+    puedeEliminar?: boolean
+  }
+
+  export type AccesoIndicadorUpdateInput = {
+    proceso?: EnumProcesoIndicadorFieldUpdateOperationsInput | $Enums.ProcesoIndicador
+    puedeVer?: BoolFieldUpdateOperationsInput | boolean
+    puedeDescargar?: BoolFieldUpdateOperationsInput | boolean
+    puedeAdjuntar?: BoolFieldUpdateOperationsInput | boolean
+    puedeEditar?: BoolFieldUpdateOperationsInput | boolean
+    puedeEliminar?: BoolFieldUpdateOperationsInput | boolean
+    usuario?: UsuarioUpdateOneRequiredWithoutAccesosIndicadorNestedInput
+  }
+
+  export type AccesoIndicadorUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    usuarioId?: IntFieldUpdateOperationsInput | number
+    proceso?: EnumProcesoIndicadorFieldUpdateOperationsInput | $Enums.ProcesoIndicador
+    puedeVer?: BoolFieldUpdateOperationsInput | boolean
+    puedeDescargar?: BoolFieldUpdateOperationsInput | boolean
+    puedeAdjuntar?: BoolFieldUpdateOperationsInput | boolean
+    puedeEditar?: BoolFieldUpdateOperationsInput | boolean
+    puedeEliminar?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type AccesoIndicadorCreateManyInput = {
+    id?: number
+    usuarioId: number
+    proceso: $Enums.ProcesoIndicador
+    puedeVer?: boolean
+    puedeDescargar?: boolean
+    puedeAdjuntar?: boolean
+    puedeEditar?: boolean
+    puedeEliminar?: boolean
+  }
+
+  export type AccesoIndicadorUpdateManyMutationInput = {
+    proceso?: EnumProcesoIndicadorFieldUpdateOperationsInput | $Enums.ProcesoIndicador
+    puedeVer?: BoolFieldUpdateOperationsInput | boolean
+    puedeDescargar?: BoolFieldUpdateOperationsInput | boolean
+    puedeAdjuntar?: BoolFieldUpdateOperationsInput | boolean
+    puedeEditar?: BoolFieldUpdateOperationsInput | boolean
+    puedeEliminar?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type AccesoIndicadorUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    usuarioId?: IntFieldUpdateOperationsInput | number
+    proceso?: EnumProcesoIndicadorFieldUpdateOperationsInput | $Enums.ProcesoIndicador
+    puedeVer?: BoolFieldUpdateOperationsInput | boolean
+    puedeDescargar?: BoolFieldUpdateOperationsInput | boolean
+    puedeAdjuntar?: BoolFieldUpdateOperationsInput | boolean
+    puedeEditar?: BoolFieldUpdateOperationsInput | boolean
+    puedeEliminar?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type AccesoISOCreateInput = {
+    puedeVer?: boolean
+    puedeDescargar?: boolean
+    puedeAdjuntar?: boolean
+    puedeEditar?: boolean
+    puedeEliminar?: boolean
+    gestionaObsoleto?: boolean
+    usuario: UsuarioCreateNestedOneWithoutAccesoIsoInput
+  }
+
+  export type AccesoISOUncheckedCreateInput = {
+    id?: number
+    usuarioId: number
+    puedeVer?: boolean
+    puedeDescargar?: boolean
+    puedeAdjuntar?: boolean
+    puedeEditar?: boolean
+    puedeEliminar?: boolean
+    gestionaObsoleto?: boolean
+  }
+
+  export type AccesoISOUpdateInput = {
+    puedeVer?: BoolFieldUpdateOperationsInput | boolean
+    puedeDescargar?: BoolFieldUpdateOperationsInput | boolean
+    puedeAdjuntar?: BoolFieldUpdateOperationsInput | boolean
+    puedeEditar?: BoolFieldUpdateOperationsInput | boolean
+    puedeEliminar?: BoolFieldUpdateOperationsInput | boolean
+    gestionaObsoleto?: BoolFieldUpdateOperationsInput | boolean
+    usuario?: UsuarioUpdateOneRequiredWithoutAccesoIsoNestedInput
+  }
+
+  export type AccesoISOUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    usuarioId?: IntFieldUpdateOperationsInput | number
+    puedeVer?: BoolFieldUpdateOperationsInput | boolean
+    puedeDescargar?: BoolFieldUpdateOperationsInput | boolean
+    puedeAdjuntar?: BoolFieldUpdateOperationsInput | boolean
+    puedeEditar?: BoolFieldUpdateOperationsInput | boolean
+    puedeEliminar?: BoolFieldUpdateOperationsInput | boolean
+    gestionaObsoleto?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type AccesoISOCreateManyInput = {
+    id?: number
+    usuarioId: number
+    puedeVer?: boolean
+    puedeDescargar?: boolean
+    puedeAdjuntar?: boolean
+    puedeEditar?: boolean
+    puedeEliminar?: boolean
+    gestionaObsoleto?: boolean
+  }
+
+  export type AccesoISOUpdateManyMutationInput = {
+    puedeVer?: BoolFieldUpdateOperationsInput | boolean
+    puedeDescargar?: BoolFieldUpdateOperationsInput | boolean
+    puedeAdjuntar?: BoolFieldUpdateOperationsInput | boolean
+    puedeEditar?: BoolFieldUpdateOperationsInput | boolean
+    puedeEliminar?: BoolFieldUpdateOperationsInput | boolean
+    gestionaObsoleto?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type AccesoISOUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    usuarioId?: IntFieldUpdateOperationsInput | number
+    puedeVer?: BoolFieldUpdateOperationsInput | boolean
+    puedeDescargar?: BoolFieldUpdateOperationsInput | boolean
+    puedeAdjuntar?: BoolFieldUpdateOperationsInput | boolean
+    puedeEditar?: BoolFieldUpdateOperationsInput | boolean
+    puedeEliminar?: BoolFieldUpdateOperationsInput | boolean
+    gestionaObsoleto?: BoolFieldUpdateOperationsInput | boolean
+  }
+
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -11117,6 +17083,23 @@ export namespace Prisma {
     none?: TrabajoImpresionWhereInput
   }
 
+  export type ArchivoListRelationFilter = {
+    every?: ArchivoWhereInput
+    some?: ArchivoWhereInput
+    none?: ArchivoWhereInput
+  }
+
+  export type AccesoIndicadorListRelationFilter = {
+    every?: AccesoIndicadorWhereInput
+    some?: AccesoIndicadorWhereInput
+    none?: AccesoIndicadorWhereInput
+  }
+
+  export type AccesoISONullableScalarRelationFilter = {
+    is?: AccesoISOWhereInput | null
+    isNot?: AccesoISOWhereInput | null
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -11130,11 +17113,20 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type ArchivoOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type AccesoIndicadorOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type UsuarioCountOrderByAggregateInput = {
     id?: SortOrder
     supabaseUserId?: SortOrder
     nombre?: SortOrder
     esAdmin?: SortOrder
+    esAdminKpis?: SortOrder
     avatarUrl?: SortOrder
     createdAt?: SortOrder
   }
@@ -11148,6 +17140,7 @@ export namespace Prisma {
     supabaseUserId?: SortOrder
     nombre?: SortOrder
     esAdmin?: SortOrder
+    esAdminKpis?: SortOrder
     avatarUrl?: SortOrder
     createdAt?: SortOrder
   }
@@ -11157,6 +17150,7 @@ export namespace Prisma {
     supabaseUserId?: SortOrder
     nombre?: SortOrder
     esAdmin?: SortOrder
+    esAdminKpis?: SortOrder
     avatarUrl?: SortOrder
     createdAt?: SortOrder
   }
@@ -11366,6 +17360,7 @@ export namespace Prisma {
     nfpaSalud?: SortOrder
     nfpaInflamabilidad?: SortOrder
     nfpaReactividad?: SortOrder
+    fichaSeguridadUrl?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -11384,6 +17379,7 @@ export namespace Prisma {
     nfpaSalud?: SortOrder
     nfpaInflamabilidad?: SortOrder
     nfpaReactividad?: SortOrder
+    fichaSeguridadUrl?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -11395,6 +17391,7 @@ export namespace Prisma {
     nfpaSalud?: SortOrder
     nfpaInflamabilidad?: SortOrder
     nfpaReactividad?: SortOrder
+    fichaSeguridadUrl?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -11641,6 +17638,287 @@ export namespace Prisma {
     _max?: NestedEnumEstadoTrabajoImpresionFilter<$PrismaModel>
   }
 
+  export type EnumModuloDocumentosFilter<$PrismaModel = never> = {
+    equals?: $Enums.ModuloDocumentos | EnumModuloDocumentosFieldRefInput<$PrismaModel>
+    in?: $Enums.ModuloDocumentos[] | ListEnumModuloDocumentosFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ModuloDocumentos[] | ListEnumModuloDocumentosFieldRefInput<$PrismaModel>
+    not?: NestedEnumModuloDocumentosFilter<$PrismaModel> | $Enums.ModuloDocumentos
+  }
+
+  export type EnumTipoCarpetaNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.TipoCarpeta | EnumTipoCarpetaFieldRefInput<$PrismaModel> | null
+    in?: $Enums.TipoCarpeta[] | ListEnumTipoCarpetaFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.TipoCarpeta[] | ListEnumTipoCarpetaFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumTipoCarpetaNullableFilter<$PrismaModel> | $Enums.TipoCarpeta | null
+  }
+
+  export type EnumProcesoIndicadorNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.ProcesoIndicador | EnumProcesoIndicadorFieldRefInput<$PrismaModel> | null
+    in?: $Enums.ProcesoIndicador[] | ListEnumProcesoIndicadorFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.ProcesoIndicador[] | ListEnumProcesoIndicadorFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumProcesoIndicadorNullableFilter<$PrismaModel> | $Enums.ProcesoIndicador | null
+  }
+
+  export type CarpetaNullableScalarRelationFilter = {
+    is?: CarpetaWhereInput | null
+    isNot?: CarpetaWhereInput | null
+  }
+
+  export type CarpetaListRelationFilter = {
+    every?: CarpetaWhereInput
+    some?: CarpetaWhereInput
+    none?: CarpetaWhereInput
+  }
+
+  export type CarpetaOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type CarpetaCountOrderByAggregateInput = {
+    id?: SortOrder
+    nombre?: SortOrder
+    carpetaPadreId?: SortOrder
+    modulo?: SortOrder
+    tipo?: SortOrder
+    proceso?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CarpetaAvgOrderByAggregateInput = {
+    id?: SortOrder
+    carpetaPadreId?: SortOrder
+  }
+
+  export type CarpetaMaxOrderByAggregateInput = {
+    id?: SortOrder
+    nombre?: SortOrder
+    carpetaPadreId?: SortOrder
+    modulo?: SortOrder
+    tipo?: SortOrder
+    proceso?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CarpetaMinOrderByAggregateInput = {
+    id?: SortOrder
+    nombre?: SortOrder
+    carpetaPadreId?: SortOrder
+    modulo?: SortOrder
+    tipo?: SortOrder
+    proceso?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CarpetaSumOrderByAggregateInput = {
+    id?: SortOrder
+    carpetaPadreId?: SortOrder
+  }
+
+  export type EnumModuloDocumentosWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ModuloDocumentos | EnumModuloDocumentosFieldRefInput<$PrismaModel>
+    in?: $Enums.ModuloDocumentos[] | ListEnumModuloDocumentosFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ModuloDocumentos[] | ListEnumModuloDocumentosFieldRefInput<$PrismaModel>
+    not?: NestedEnumModuloDocumentosWithAggregatesFilter<$PrismaModel> | $Enums.ModuloDocumentos
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumModuloDocumentosFilter<$PrismaModel>
+    _max?: NestedEnumModuloDocumentosFilter<$PrismaModel>
+  }
+
+  export type EnumTipoCarpetaNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.TipoCarpeta | EnumTipoCarpetaFieldRefInput<$PrismaModel> | null
+    in?: $Enums.TipoCarpeta[] | ListEnumTipoCarpetaFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.TipoCarpeta[] | ListEnumTipoCarpetaFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumTipoCarpetaNullableWithAggregatesFilter<$PrismaModel> | $Enums.TipoCarpeta | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumTipoCarpetaNullableFilter<$PrismaModel>
+    _max?: NestedEnumTipoCarpetaNullableFilter<$PrismaModel>
+  }
+
+  export type EnumProcesoIndicadorNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ProcesoIndicador | EnumProcesoIndicadorFieldRefInput<$PrismaModel> | null
+    in?: $Enums.ProcesoIndicador[] | ListEnumProcesoIndicadorFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.ProcesoIndicador[] | ListEnumProcesoIndicadorFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumProcesoIndicadorNullableWithAggregatesFilter<$PrismaModel> | $Enums.ProcesoIndicador | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumProcesoIndicadorNullableFilter<$PrismaModel>
+    _max?: NestedEnumProcesoIndicadorNullableFilter<$PrismaModel>
+  }
+
+  export type EnumTipoArchivoDocumentoFilter<$PrismaModel = never> = {
+    equals?: $Enums.TipoArchivoDocumento | EnumTipoArchivoDocumentoFieldRefInput<$PrismaModel>
+    in?: $Enums.TipoArchivoDocumento[] | ListEnumTipoArchivoDocumentoFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TipoArchivoDocumento[] | ListEnumTipoArchivoDocumentoFieldRefInput<$PrismaModel>
+    not?: NestedEnumTipoArchivoDocumentoFilter<$PrismaModel> | $Enums.TipoArchivoDocumento
+  }
+
+  export type CarpetaScalarRelationFilter = {
+    is?: CarpetaWhereInput
+    isNot?: CarpetaWhereInput
+  }
+
+  export type ArchivoCountOrderByAggregateInput = {
+    id?: SortOrder
+    carpetaId?: SortOrder
+    nombre?: SortOrder
+    tipo?: SortOrder
+    storagePath?: SortOrder
+    subidoPorId?: SortOrder
+    fechaSubida?: SortOrder
+  }
+
+  export type ArchivoAvgOrderByAggregateInput = {
+    id?: SortOrder
+    carpetaId?: SortOrder
+    subidoPorId?: SortOrder
+  }
+
+  export type ArchivoMaxOrderByAggregateInput = {
+    id?: SortOrder
+    carpetaId?: SortOrder
+    nombre?: SortOrder
+    tipo?: SortOrder
+    storagePath?: SortOrder
+    subidoPorId?: SortOrder
+    fechaSubida?: SortOrder
+  }
+
+  export type ArchivoMinOrderByAggregateInput = {
+    id?: SortOrder
+    carpetaId?: SortOrder
+    nombre?: SortOrder
+    tipo?: SortOrder
+    storagePath?: SortOrder
+    subidoPorId?: SortOrder
+    fechaSubida?: SortOrder
+  }
+
+  export type ArchivoSumOrderByAggregateInput = {
+    id?: SortOrder
+    carpetaId?: SortOrder
+    subidoPorId?: SortOrder
+  }
+
+  export type EnumTipoArchivoDocumentoWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.TipoArchivoDocumento | EnumTipoArchivoDocumentoFieldRefInput<$PrismaModel>
+    in?: $Enums.TipoArchivoDocumento[] | ListEnumTipoArchivoDocumentoFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TipoArchivoDocumento[] | ListEnumTipoArchivoDocumentoFieldRefInput<$PrismaModel>
+    not?: NestedEnumTipoArchivoDocumentoWithAggregatesFilter<$PrismaModel> | $Enums.TipoArchivoDocumento
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumTipoArchivoDocumentoFilter<$PrismaModel>
+    _max?: NestedEnumTipoArchivoDocumentoFilter<$PrismaModel>
+  }
+
+  export type EnumProcesoIndicadorFilter<$PrismaModel = never> = {
+    equals?: $Enums.ProcesoIndicador | EnumProcesoIndicadorFieldRefInput<$PrismaModel>
+    in?: $Enums.ProcesoIndicador[] | ListEnumProcesoIndicadorFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ProcesoIndicador[] | ListEnumProcesoIndicadorFieldRefInput<$PrismaModel>
+    not?: NestedEnumProcesoIndicadorFilter<$PrismaModel> | $Enums.ProcesoIndicador
+  }
+
+  export type AccesoIndicadorUsuarioIdProcesoCompoundUniqueInput = {
+    usuarioId: number
+    proceso: $Enums.ProcesoIndicador
+  }
+
+  export type AccesoIndicadorCountOrderByAggregateInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+    proceso?: SortOrder
+    puedeVer?: SortOrder
+    puedeDescargar?: SortOrder
+    puedeAdjuntar?: SortOrder
+    puedeEditar?: SortOrder
+    puedeEliminar?: SortOrder
+  }
+
+  export type AccesoIndicadorAvgOrderByAggregateInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+  }
+
+  export type AccesoIndicadorMaxOrderByAggregateInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+    proceso?: SortOrder
+    puedeVer?: SortOrder
+    puedeDescargar?: SortOrder
+    puedeAdjuntar?: SortOrder
+    puedeEditar?: SortOrder
+    puedeEliminar?: SortOrder
+  }
+
+  export type AccesoIndicadorMinOrderByAggregateInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+    proceso?: SortOrder
+    puedeVer?: SortOrder
+    puedeDescargar?: SortOrder
+    puedeAdjuntar?: SortOrder
+    puedeEditar?: SortOrder
+    puedeEliminar?: SortOrder
+  }
+
+  export type AccesoIndicadorSumOrderByAggregateInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+  }
+
+  export type EnumProcesoIndicadorWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ProcesoIndicador | EnumProcesoIndicadorFieldRefInput<$PrismaModel>
+    in?: $Enums.ProcesoIndicador[] | ListEnumProcesoIndicadorFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ProcesoIndicador[] | ListEnumProcesoIndicadorFieldRefInput<$PrismaModel>
+    not?: NestedEnumProcesoIndicadorWithAggregatesFilter<$PrismaModel> | $Enums.ProcesoIndicador
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumProcesoIndicadorFilter<$PrismaModel>
+    _max?: NestedEnumProcesoIndicadorFilter<$PrismaModel>
+  }
+
+  export type AccesoISOCountOrderByAggregateInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+    puedeVer?: SortOrder
+    puedeDescargar?: SortOrder
+    puedeAdjuntar?: SortOrder
+    puedeEditar?: SortOrder
+    puedeEliminar?: SortOrder
+    gestionaObsoleto?: SortOrder
+  }
+
+  export type AccesoISOAvgOrderByAggregateInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+  }
+
+  export type AccesoISOMaxOrderByAggregateInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+    puedeVer?: SortOrder
+    puedeDescargar?: SortOrder
+    puedeAdjuntar?: SortOrder
+    puedeEditar?: SortOrder
+    puedeEliminar?: SortOrder
+    gestionaObsoleto?: SortOrder
+  }
+
+  export type AccesoISOMinOrderByAggregateInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+    puedeVer?: SortOrder
+    puedeDescargar?: SortOrder
+    puedeAdjuntar?: SortOrder
+    puedeEditar?: SortOrder
+    puedeEliminar?: SortOrder
+    gestionaObsoleto?: SortOrder
+  }
+
+  export type AccesoISOSumOrderByAggregateInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+  }
+
   export type PermisoCreateNestedManyWithoutUsuarioInput = {
     create?: XOR<PermisoCreateWithoutUsuarioInput, PermisoUncheckedCreateWithoutUsuarioInput> | PermisoCreateWithoutUsuarioInput[] | PermisoUncheckedCreateWithoutUsuarioInput[]
     connectOrCreate?: PermisoCreateOrConnectWithoutUsuarioInput | PermisoCreateOrConnectWithoutUsuarioInput[]
@@ -11655,6 +17933,26 @@ export namespace Prisma {
     connect?: TrabajoImpresionWhereUniqueInput | TrabajoImpresionWhereUniqueInput[]
   }
 
+  export type ArchivoCreateNestedManyWithoutSubidoPorInput = {
+    create?: XOR<ArchivoCreateWithoutSubidoPorInput, ArchivoUncheckedCreateWithoutSubidoPorInput> | ArchivoCreateWithoutSubidoPorInput[] | ArchivoUncheckedCreateWithoutSubidoPorInput[]
+    connectOrCreate?: ArchivoCreateOrConnectWithoutSubidoPorInput | ArchivoCreateOrConnectWithoutSubidoPorInput[]
+    createMany?: ArchivoCreateManySubidoPorInputEnvelope
+    connect?: ArchivoWhereUniqueInput | ArchivoWhereUniqueInput[]
+  }
+
+  export type AccesoIndicadorCreateNestedManyWithoutUsuarioInput = {
+    create?: XOR<AccesoIndicadorCreateWithoutUsuarioInput, AccesoIndicadorUncheckedCreateWithoutUsuarioInput> | AccesoIndicadorCreateWithoutUsuarioInput[] | AccesoIndicadorUncheckedCreateWithoutUsuarioInput[]
+    connectOrCreate?: AccesoIndicadorCreateOrConnectWithoutUsuarioInput | AccesoIndicadorCreateOrConnectWithoutUsuarioInput[]
+    createMany?: AccesoIndicadorCreateManyUsuarioInputEnvelope
+    connect?: AccesoIndicadorWhereUniqueInput | AccesoIndicadorWhereUniqueInput[]
+  }
+
+  export type AccesoISOCreateNestedOneWithoutUsuarioInput = {
+    create?: XOR<AccesoISOCreateWithoutUsuarioInput, AccesoISOUncheckedCreateWithoutUsuarioInput>
+    connectOrCreate?: AccesoISOCreateOrConnectWithoutUsuarioInput
+    connect?: AccesoISOWhereUniqueInput
+  }
+
   export type PermisoUncheckedCreateNestedManyWithoutUsuarioInput = {
     create?: XOR<PermisoCreateWithoutUsuarioInput, PermisoUncheckedCreateWithoutUsuarioInput> | PermisoCreateWithoutUsuarioInput[] | PermisoUncheckedCreateWithoutUsuarioInput[]
     connectOrCreate?: PermisoCreateOrConnectWithoutUsuarioInput | PermisoCreateOrConnectWithoutUsuarioInput[]
@@ -11667,6 +17965,26 @@ export namespace Prisma {
     connectOrCreate?: TrabajoImpresionCreateOrConnectWithoutCreadoPorInput | TrabajoImpresionCreateOrConnectWithoutCreadoPorInput[]
     createMany?: TrabajoImpresionCreateManyCreadoPorInputEnvelope
     connect?: TrabajoImpresionWhereUniqueInput | TrabajoImpresionWhereUniqueInput[]
+  }
+
+  export type ArchivoUncheckedCreateNestedManyWithoutSubidoPorInput = {
+    create?: XOR<ArchivoCreateWithoutSubidoPorInput, ArchivoUncheckedCreateWithoutSubidoPorInput> | ArchivoCreateWithoutSubidoPorInput[] | ArchivoUncheckedCreateWithoutSubidoPorInput[]
+    connectOrCreate?: ArchivoCreateOrConnectWithoutSubidoPorInput | ArchivoCreateOrConnectWithoutSubidoPorInput[]
+    createMany?: ArchivoCreateManySubidoPorInputEnvelope
+    connect?: ArchivoWhereUniqueInput | ArchivoWhereUniqueInput[]
+  }
+
+  export type AccesoIndicadorUncheckedCreateNestedManyWithoutUsuarioInput = {
+    create?: XOR<AccesoIndicadorCreateWithoutUsuarioInput, AccesoIndicadorUncheckedCreateWithoutUsuarioInput> | AccesoIndicadorCreateWithoutUsuarioInput[] | AccesoIndicadorUncheckedCreateWithoutUsuarioInput[]
+    connectOrCreate?: AccesoIndicadorCreateOrConnectWithoutUsuarioInput | AccesoIndicadorCreateOrConnectWithoutUsuarioInput[]
+    createMany?: AccesoIndicadorCreateManyUsuarioInputEnvelope
+    connect?: AccesoIndicadorWhereUniqueInput | AccesoIndicadorWhereUniqueInput[]
+  }
+
+  export type AccesoISOUncheckedCreateNestedOneWithoutUsuarioInput = {
+    create?: XOR<AccesoISOCreateWithoutUsuarioInput, AccesoISOUncheckedCreateWithoutUsuarioInput>
+    connectOrCreate?: AccesoISOCreateOrConnectWithoutUsuarioInput
+    connect?: AccesoISOWhereUniqueInput
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -11713,6 +18031,44 @@ export namespace Prisma {
     deleteMany?: TrabajoImpresionScalarWhereInput | TrabajoImpresionScalarWhereInput[]
   }
 
+  export type ArchivoUpdateManyWithoutSubidoPorNestedInput = {
+    create?: XOR<ArchivoCreateWithoutSubidoPorInput, ArchivoUncheckedCreateWithoutSubidoPorInput> | ArchivoCreateWithoutSubidoPorInput[] | ArchivoUncheckedCreateWithoutSubidoPorInput[]
+    connectOrCreate?: ArchivoCreateOrConnectWithoutSubidoPorInput | ArchivoCreateOrConnectWithoutSubidoPorInput[]
+    upsert?: ArchivoUpsertWithWhereUniqueWithoutSubidoPorInput | ArchivoUpsertWithWhereUniqueWithoutSubidoPorInput[]
+    createMany?: ArchivoCreateManySubidoPorInputEnvelope
+    set?: ArchivoWhereUniqueInput | ArchivoWhereUniqueInput[]
+    disconnect?: ArchivoWhereUniqueInput | ArchivoWhereUniqueInput[]
+    delete?: ArchivoWhereUniqueInput | ArchivoWhereUniqueInput[]
+    connect?: ArchivoWhereUniqueInput | ArchivoWhereUniqueInput[]
+    update?: ArchivoUpdateWithWhereUniqueWithoutSubidoPorInput | ArchivoUpdateWithWhereUniqueWithoutSubidoPorInput[]
+    updateMany?: ArchivoUpdateManyWithWhereWithoutSubidoPorInput | ArchivoUpdateManyWithWhereWithoutSubidoPorInput[]
+    deleteMany?: ArchivoScalarWhereInput | ArchivoScalarWhereInput[]
+  }
+
+  export type AccesoIndicadorUpdateManyWithoutUsuarioNestedInput = {
+    create?: XOR<AccesoIndicadorCreateWithoutUsuarioInput, AccesoIndicadorUncheckedCreateWithoutUsuarioInput> | AccesoIndicadorCreateWithoutUsuarioInput[] | AccesoIndicadorUncheckedCreateWithoutUsuarioInput[]
+    connectOrCreate?: AccesoIndicadorCreateOrConnectWithoutUsuarioInput | AccesoIndicadorCreateOrConnectWithoutUsuarioInput[]
+    upsert?: AccesoIndicadorUpsertWithWhereUniqueWithoutUsuarioInput | AccesoIndicadorUpsertWithWhereUniqueWithoutUsuarioInput[]
+    createMany?: AccesoIndicadorCreateManyUsuarioInputEnvelope
+    set?: AccesoIndicadorWhereUniqueInput | AccesoIndicadorWhereUniqueInput[]
+    disconnect?: AccesoIndicadorWhereUniqueInput | AccesoIndicadorWhereUniqueInput[]
+    delete?: AccesoIndicadorWhereUniqueInput | AccesoIndicadorWhereUniqueInput[]
+    connect?: AccesoIndicadorWhereUniqueInput | AccesoIndicadorWhereUniqueInput[]
+    update?: AccesoIndicadorUpdateWithWhereUniqueWithoutUsuarioInput | AccesoIndicadorUpdateWithWhereUniqueWithoutUsuarioInput[]
+    updateMany?: AccesoIndicadorUpdateManyWithWhereWithoutUsuarioInput | AccesoIndicadorUpdateManyWithWhereWithoutUsuarioInput[]
+    deleteMany?: AccesoIndicadorScalarWhereInput | AccesoIndicadorScalarWhereInput[]
+  }
+
+  export type AccesoISOUpdateOneWithoutUsuarioNestedInput = {
+    create?: XOR<AccesoISOCreateWithoutUsuarioInput, AccesoISOUncheckedCreateWithoutUsuarioInput>
+    connectOrCreate?: AccesoISOCreateOrConnectWithoutUsuarioInput
+    upsert?: AccesoISOUpsertWithoutUsuarioInput
+    disconnect?: AccesoISOWhereInput | boolean
+    delete?: AccesoISOWhereInput | boolean
+    connect?: AccesoISOWhereUniqueInput
+    update?: XOR<XOR<AccesoISOUpdateToOneWithWhereWithoutUsuarioInput, AccesoISOUpdateWithoutUsuarioInput>, AccesoISOUncheckedUpdateWithoutUsuarioInput>
+  }
+
   export type IntFieldUpdateOperationsInput = {
     set?: number
     increment?: number
@@ -11747,6 +18103,44 @@ export namespace Prisma {
     update?: TrabajoImpresionUpdateWithWhereUniqueWithoutCreadoPorInput | TrabajoImpresionUpdateWithWhereUniqueWithoutCreadoPorInput[]
     updateMany?: TrabajoImpresionUpdateManyWithWhereWithoutCreadoPorInput | TrabajoImpresionUpdateManyWithWhereWithoutCreadoPorInput[]
     deleteMany?: TrabajoImpresionScalarWhereInput | TrabajoImpresionScalarWhereInput[]
+  }
+
+  export type ArchivoUncheckedUpdateManyWithoutSubidoPorNestedInput = {
+    create?: XOR<ArchivoCreateWithoutSubidoPorInput, ArchivoUncheckedCreateWithoutSubidoPorInput> | ArchivoCreateWithoutSubidoPorInput[] | ArchivoUncheckedCreateWithoutSubidoPorInput[]
+    connectOrCreate?: ArchivoCreateOrConnectWithoutSubidoPorInput | ArchivoCreateOrConnectWithoutSubidoPorInput[]
+    upsert?: ArchivoUpsertWithWhereUniqueWithoutSubidoPorInput | ArchivoUpsertWithWhereUniqueWithoutSubidoPorInput[]
+    createMany?: ArchivoCreateManySubidoPorInputEnvelope
+    set?: ArchivoWhereUniqueInput | ArchivoWhereUniqueInput[]
+    disconnect?: ArchivoWhereUniqueInput | ArchivoWhereUniqueInput[]
+    delete?: ArchivoWhereUniqueInput | ArchivoWhereUniqueInput[]
+    connect?: ArchivoWhereUniqueInput | ArchivoWhereUniqueInput[]
+    update?: ArchivoUpdateWithWhereUniqueWithoutSubidoPorInput | ArchivoUpdateWithWhereUniqueWithoutSubidoPorInput[]
+    updateMany?: ArchivoUpdateManyWithWhereWithoutSubidoPorInput | ArchivoUpdateManyWithWhereWithoutSubidoPorInput[]
+    deleteMany?: ArchivoScalarWhereInput | ArchivoScalarWhereInput[]
+  }
+
+  export type AccesoIndicadorUncheckedUpdateManyWithoutUsuarioNestedInput = {
+    create?: XOR<AccesoIndicadorCreateWithoutUsuarioInput, AccesoIndicadorUncheckedCreateWithoutUsuarioInput> | AccesoIndicadorCreateWithoutUsuarioInput[] | AccesoIndicadorUncheckedCreateWithoutUsuarioInput[]
+    connectOrCreate?: AccesoIndicadorCreateOrConnectWithoutUsuarioInput | AccesoIndicadorCreateOrConnectWithoutUsuarioInput[]
+    upsert?: AccesoIndicadorUpsertWithWhereUniqueWithoutUsuarioInput | AccesoIndicadorUpsertWithWhereUniqueWithoutUsuarioInput[]
+    createMany?: AccesoIndicadorCreateManyUsuarioInputEnvelope
+    set?: AccesoIndicadorWhereUniqueInput | AccesoIndicadorWhereUniqueInput[]
+    disconnect?: AccesoIndicadorWhereUniqueInput | AccesoIndicadorWhereUniqueInput[]
+    delete?: AccesoIndicadorWhereUniqueInput | AccesoIndicadorWhereUniqueInput[]
+    connect?: AccesoIndicadorWhereUniqueInput | AccesoIndicadorWhereUniqueInput[]
+    update?: AccesoIndicadorUpdateWithWhereUniqueWithoutUsuarioInput | AccesoIndicadorUpdateWithWhereUniqueWithoutUsuarioInput[]
+    updateMany?: AccesoIndicadorUpdateManyWithWhereWithoutUsuarioInput | AccesoIndicadorUpdateManyWithWhereWithoutUsuarioInput[]
+    deleteMany?: AccesoIndicadorScalarWhereInput | AccesoIndicadorScalarWhereInput[]
+  }
+
+  export type AccesoISOUncheckedUpdateOneWithoutUsuarioNestedInput = {
+    create?: XOR<AccesoISOCreateWithoutUsuarioInput, AccesoISOUncheckedCreateWithoutUsuarioInput>
+    connectOrCreate?: AccesoISOCreateOrConnectWithoutUsuarioInput
+    upsert?: AccesoISOUpsertWithoutUsuarioInput
+    disconnect?: AccesoISOWhereInput | boolean
+    delete?: AccesoISOWhereInput | boolean
+    connect?: AccesoISOWhereUniqueInput
+    update?: XOR<XOR<AccesoISOUpdateToOneWithWhereWithoutUsuarioInput, AccesoISOUpdateWithoutUsuarioInput>, AccesoISOUncheckedUpdateWithoutUsuarioInput>
   }
 
   export type UsuarioCreateNestedOneWithoutPermisosInput = {
@@ -12021,6 +18415,182 @@ export namespace Prisma {
     update?: XOR<XOR<UsuarioUpdateToOneWithWhereWithoutTrabajosImpresionInput, UsuarioUpdateWithoutTrabajosImpresionInput>, UsuarioUncheckedUpdateWithoutTrabajosImpresionInput>
   }
 
+  export type CarpetaCreateNestedOneWithoutHijosInput = {
+    create?: XOR<CarpetaCreateWithoutHijosInput, CarpetaUncheckedCreateWithoutHijosInput>
+    connectOrCreate?: CarpetaCreateOrConnectWithoutHijosInput
+    connect?: CarpetaWhereUniqueInput
+  }
+
+  export type CarpetaCreateNestedManyWithoutCarpetaPadreInput = {
+    create?: XOR<CarpetaCreateWithoutCarpetaPadreInput, CarpetaUncheckedCreateWithoutCarpetaPadreInput> | CarpetaCreateWithoutCarpetaPadreInput[] | CarpetaUncheckedCreateWithoutCarpetaPadreInput[]
+    connectOrCreate?: CarpetaCreateOrConnectWithoutCarpetaPadreInput | CarpetaCreateOrConnectWithoutCarpetaPadreInput[]
+    createMany?: CarpetaCreateManyCarpetaPadreInputEnvelope
+    connect?: CarpetaWhereUniqueInput | CarpetaWhereUniqueInput[]
+  }
+
+  export type ArchivoCreateNestedManyWithoutCarpetaInput = {
+    create?: XOR<ArchivoCreateWithoutCarpetaInput, ArchivoUncheckedCreateWithoutCarpetaInput> | ArchivoCreateWithoutCarpetaInput[] | ArchivoUncheckedCreateWithoutCarpetaInput[]
+    connectOrCreate?: ArchivoCreateOrConnectWithoutCarpetaInput | ArchivoCreateOrConnectWithoutCarpetaInput[]
+    createMany?: ArchivoCreateManyCarpetaInputEnvelope
+    connect?: ArchivoWhereUniqueInput | ArchivoWhereUniqueInput[]
+  }
+
+  export type CarpetaUncheckedCreateNestedManyWithoutCarpetaPadreInput = {
+    create?: XOR<CarpetaCreateWithoutCarpetaPadreInput, CarpetaUncheckedCreateWithoutCarpetaPadreInput> | CarpetaCreateWithoutCarpetaPadreInput[] | CarpetaUncheckedCreateWithoutCarpetaPadreInput[]
+    connectOrCreate?: CarpetaCreateOrConnectWithoutCarpetaPadreInput | CarpetaCreateOrConnectWithoutCarpetaPadreInput[]
+    createMany?: CarpetaCreateManyCarpetaPadreInputEnvelope
+    connect?: CarpetaWhereUniqueInput | CarpetaWhereUniqueInput[]
+  }
+
+  export type ArchivoUncheckedCreateNestedManyWithoutCarpetaInput = {
+    create?: XOR<ArchivoCreateWithoutCarpetaInput, ArchivoUncheckedCreateWithoutCarpetaInput> | ArchivoCreateWithoutCarpetaInput[] | ArchivoUncheckedCreateWithoutCarpetaInput[]
+    connectOrCreate?: ArchivoCreateOrConnectWithoutCarpetaInput | ArchivoCreateOrConnectWithoutCarpetaInput[]
+    createMany?: ArchivoCreateManyCarpetaInputEnvelope
+    connect?: ArchivoWhereUniqueInput | ArchivoWhereUniqueInput[]
+  }
+
+  export type EnumModuloDocumentosFieldUpdateOperationsInput = {
+    set?: $Enums.ModuloDocumentos
+  }
+
+  export type NullableEnumTipoCarpetaFieldUpdateOperationsInput = {
+    set?: $Enums.TipoCarpeta | null
+  }
+
+  export type NullableEnumProcesoIndicadorFieldUpdateOperationsInput = {
+    set?: $Enums.ProcesoIndicador | null
+  }
+
+  export type CarpetaUpdateOneWithoutHijosNestedInput = {
+    create?: XOR<CarpetaCreateWithoutHijosInput, CarpetaUncheckedCreateWithoutHijosInput>
+    connectOrCreate?: CarpetaCreateOrConnectWithoutHijosInput
+    upsert?: CarpetaUpsertWithoutHijosInput
+    disconnect?: CarpetaWhereInput | boolean
+    delete?: CarpetaWhereInput | boolean
+    connect?: CarpetaWhereUniqueInput
+    update?: XOR<XOR<CarpetaUpdateToOneWithWhereWithoutHijosInput, CarpetaUpdateWithoutHijosInput>, CarpetaUncheckedUpdateWithoutHijosInput>
+  }
+
+  export type CarpetaUpdateManyWithoutCarpetaPadreNestedInput = {
+    create?: XOR<CarpetaCreateWithoutCarpetaPadreInput, CarpetaUncheckedCreateWithoutCarpetaPadreInput> | CarpetaCreateWithoutCarpetaPadreInput[] | CarpetaUncheckedCreateWithoutCarpetaPadreInput[]
+    connectOrCreate?: CarpetaCreateOrConnectWithoutCarpetaPadreInput | CarpetaCreateOrConnectWithoutCarpetaPadreInput[]
+    upsert?: CarpetaUpsertWithWhereUniqueWithoutCarpetaPadreInput | CarpetaUpsertWithWhereUniqueWithoutCarpetaPadreInput[]
+    createMany?: CarpetaCreateManyCarpetaPadreInputEnvelope
+    set?: CarpetaWhereUniqueInput | CarpetaWhereUniqueInput[]
+    disconnect?: CarpetaWhereUniqueInput | CarpetaWhereUniqueInput[]
+    delete?: CarpetaWhereUniqueInput | CarpetaWhereUniqueInput[]
+    connect?: CarpetaWhereUniqueInput | CarpetaWhereUniqueInput[]
+    update?: CarpetaUpdateWithWhereUniqueWithoutCarpetaPadreInput | CarpetaUpdateWithWhereUniqueWithoutCarpetaPadreInput[]
+    updateMany?: CarpetaUpdateManyWithWhereWithoutCarpetaPadreInput | CarpetaUpdateManyWithWhereWithoutCarpetaPadreInput[]
+    deleteMany?: CarpetaScalarWhereInput | CarpetaScalarWhereInput[]
+  }
+
+  export type ArchivoUpdateManyWithoutCarpetaNestedInput = {
+    create?: XOR<ArchivoCreateWithoutCarpetaInput, ArchivoUncheckedCreateWithoutCarpetaInput> | ArchivoCreateWithoutCarpetaInput[] | ArchivoUncheckedCreateWithoutCarpetaInput[]
+    connectOrCreate?: ArchivoCreateOrConnectWithoutCarpetaInput | ArchivoCreateOrConnectWithoutCarpetaInput[]
+    upsert?: ArchivoUpsertWithWhereUniqueWithoutCarpetaInput | ArchivoUpsertWithWhereUniqueWithoutCarpetaInput[]
+    createMany?: ArchivoCreateManyCarpetaInputEnvelope
+    set?: ArchivoWhereUniqueInput | ArchivoWhereUniqueInput[]
+    disconnect?: ArchivoWhereUniqueInput | ArchivoWhereUniqueInput[]
+    delete?: ArchivoWhereUniqueInput | ArchivoWhereUniqueInput[]
+    connect?: ArchivoWhereUniqueInput | ArchivoWhereUniqueInput[]
+    update?: ArchivoUpdateWithWhereUniqueWithoutCarpetaInput | ArchivoUpdateWithWhereUniqueWithoutCarpetaInput[]
+    updateMany?: ArchivoUpdateManyWithWhereWithoutCarpetaInput | ArchivoUpdateManyWithWhereWithoutCarpetaInput[]
+    deleteMany?: ArchivoScalarWhereInput | ArchivoScalarWhereInput[]
+  }
+
+  export type CarpetaUncheckedUpdateManyWithoutCarpetaPadreNestedInput = {
+    create?: XOR<CarpetaCreateWithoutCarpetaPadreInput, CarpetaUncheckedCreateWithoutCarpetaPadreInput> | CarpetaCreateWithoutCarpetaPadreInput[] | CarpetaUncheckedCreateWithoutCarpetaPadreInput[]
+    connectOrCreate?: CarpetaCreateOrConnectWithoutCarpetaPadreInput | CarpetaCreateOrConnectWithoutCarpetaPadreInput[]
+    upsert?: CarpetaUpsertWithWhereUniqueWithoutCarpetaPadreInput | CarpetaUpsertWithWhereUniqueWithoutCarpetaPadreInput[]
+    createMany?: CarpetaCreateManyCarpetaPadreInputEnvelope
+    set?: CarpetaWhereUniqueInput | CarpetaWhereUniqueInput[]
+    disconnect?: CarpetaWhereUniqueInput | CarpetaWhereUniqueInput[]
+    delete?: CarpetaWhereUniqueInput | CarpetaWhereUniqueInput[]
+    connect?: CarpetaWhereUniqueInput | CarpetaWhereUniqueInput[]
+    update?: CarpetaUpdateWithWhereUniqueWithoutCarpetaPadreInput | CarpetaUpdateWithWhereUniqueWithoutCarpetaPadreInput[]
+    updateMany?: CarpetaUpdateManyWithWhereWithoutCarpetaPadreInput | CarpetaUpdateManyWithWhereWithoutCarpetaPadreInput[]
+    deleteMany?: CarpetaScalarWhereInput | CarpetaScalarWhereInput[]
+  }
+
+  export type ArchivoUncheckedUpdateManyWithoutCarpetaNestedInput = {
+    create?: XOR<ArchivoCreateWithoutCarpetaInput, ArchivoUncheckedCreateWithoutCarpetaInput> | ArchivoCreateWithoutCarpetaInput[] | ArchivoUncheckedCreateWithoutCarpetaInput[]
+    connectOrCreate?: ArchivoCreateOrConnectWithoutCarpetaInput | ArchivoCreateOrConnectWithoutCarpetaInput[]
+    upsert?: ArchivoUpsertWithWhereUniqueWithoutCarpetaInput | ArchivoUpsertWithWhereUniqueWithoutCarpetaInput[]
+    createMany?: ArchivoCreateManyCarpetaInputEnvelope
+    set?: ArchivoWhereUniqueInput | ArchivoWhereUniqueInput[]
+    disconnect?: ArchivoWhereUniqueInput | ArchivoWhereUniqueInput[]
+    delete?: ArchivoWhereUniqueInput | ArchivoWhereUniqueInput[]
+    connect?: ArchivoWhereUniqueInput | ArchivoWhereUniqueInput[]
+    update?: ArchivoUpdateWithWhereUniqueWithoutCarpetaInput | ArchivoUpdateWithWhereUniqueWithoutCarpetaInput[]
+    updateMany?: ArchivoUpdateManyWithWhereWithoutCarpetaInput | ArchivoUpdateManyWithWhereWithoutCarpetaInput[]
+    deleteMany?: ArchivoScalarWhereInput | ArchivoScalarWhereInput[]
+  }
+
+  export type CarpetaCreateNestedOneWithoutArchivosInput = {
+    create?: XOR<CarpetaCreateWithoutArchivosInput, CarpetaUncheckedCreateWithoutArchivosInput>
+    connectOrCreate?: CarpetaCreateOrConnectWithoutArchivosInput
+    connect?: CarpetaWhereUniqueInput
+  }
+
+  export type UsuarioCreateNestedOneWithoutArchivosSubidosInput = {
+    create?: XOR<UsuarioCreateWithoutArchivosSubidosInput, UsuarioUncheckedCreateWithoutArchivosSubidosInput>
+    connectOrCreate?: UsuarioCreateOrConnectWithoutArchivosSubidosInput
+    connect?: UsuarioWhereUniqueInput
+  }
+
+  export type EnumTipoArchivoDocumentoFieldUpdateOperationsInput = {
+    set?: $Enums.TipoArchivoDocumento
+  }
+
+  export type CarpetaUpdateOneRequiredWithoutArchivosNestedInput = {
+    create?: XOR<CarpetaCreateWithoutArchivosInput, CarpetaUncheckedCreateWithoutArchivosInput>
+    connectOrCreate?: CarpetaCreateOrConnectWithoutArchivosInput
+    upsert?: CarpetaUpsertWithoutArchivosInput
+    connect?: CarpetaWhereUniqueInput
+    update?: XOR<XOR<CarpetaUpdateToOneWithWhereWithoutArchivosInput, CarpetaUpdateWithoutArchivosInput>, CarpetaUncheckedUpdateWithoutArchivosInput>
+  }
+
+  export type UsuarioUpdateOneRequiredWithoutArchivosSubidosNestedInput = {
+    create?: XOR<UsuarioCreateWithoutArchivosSubidosInput, UsuarioUncheckedCreateWithoutArchivosSubidosInput>
+    connectOrCreate?: UsuarioCreateOrConnectWithoutArchivosSubidosInput
+    upsert?: UsuarioUpsertWithoutArchivosSubidosInput
+    connect?: UsuarioWhereUniqueInput
+    update?: XOR<XOR<UsuarioUpdateToOneWithWhereWithoutArchivosSubidosInput, UsuarioUpdateWithoutArchivosSubidosInput>, UsuarioUncheckedUpdateWithoutArchivosSubidosInput>
+  }
+
+  export type UsuarioCreateNestedOneWithoutAccesosIndicadorInput = {
+    create?: XOR<UsuarioCreateWithoutAccesosIndicadorInput, UsuarioUncheckedCreateWithoutAccesosIndicadorInput>
+    connectOrCreate?: UsuarioCreateOrConnectWithoutAccesosIndicadorInput
+    connect?: UsuarioWhereUniqueInput
+  }
+
+  export type EnumProcesoIndicadorFieldUpdateOperationsInput = {
+    set?: $Enums.ProcesoIndicador
+  }
+
+  export type UsuarioUpdateOneRequiredWithoutAccesosIndicadorNestedInput = {
+    create?: XOR<UsuarioCreateWithoutAccesosIndicadorInput, UsuarioUncheckedCreateWithoutAccesosIndicadorInput>
+    connectOrCreate?: UsuarioCreateOrConnectWithoutAccesosIndicadorInput
+    upsert?: UsuarioUpsertWithoutAccesosIndicadorInput
+    connect?: UsuarioWhereUniqueInput
+    update?: XOR<XOR<UsuarioUpdateToOneWithWhereWithoutAccesosIndicadorInput, UsuarioUpdateWithoutAccesosIndicadorInput>, UsuarioUncheckedUpdateWithoutAccesosIndicadorInput>
+  }
+
+  export type UsuarioCreateNestedOneWithoutAccesoIsoInput = {
+    create?: XOR<UsuarioCreateWithoutAccesoIsoInput, UsuarioUncheckedCreateWithoutAccesoIsoInput>
+    connectOrCreate?: UsuarioCreateOrConnectWithoutAccesoIsoInput
+    connect?: UsuarioWhereUniqueInput
+  }
+
+  export type UsuarioUpdateOneRequiredWithoutAccesoIsoNestedInput = {
+    create?: XOR<UsuarioCreateWithoutAccesoIsoInput, UsuarioUncheckedCreateWithoutAccesoIsoInput>
+    connectOrCreate?: UsuarioCreateOrConnectWithoutAccesoIsoInput
+    upsert?: UsuarioUpsertWithoutAccesoIsoInput
+    connect?: UsuarioWhereUniqueInput
+    update?: XOR<XOR<UsuarioUpdateToOneWithWhereWithoutAccesoIsoInput, UsuarioUpdateWithoutAccesoIsoInput>, UsuarioUncheckedUpdateWithoutAccesoIsoInput>
+  }
+
   export type NestedIntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -12256,6 +18826,91 @@ export namespace Prisma {
     _max?: NestedEnumEstadoTrabajoImpresionFilter<$PrismaModel>
   }
 
+  export type NestedEnumModuloDocumentosFilter<$PrismaModel = never> = {
+    equals?: $Enums.ModuloDocumentos | EnumModuloDocumentosFieldRefInput<$PrismaModel>
+    in?: $Enums.ModuloDocumentos[] | ListEnumModuloDocumentosFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ModuloDocumentos[] | ListEnumModuloDocumentosFieldRefInput<$PrismaModel>
+    not?: NestedEnumModuloDocumentosFilter<$PrismaModel> | $Enums.ModuloDocumentos
+  }
+
+  export type NestedEnumTipoCarpetaNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.TipoCarpeta | EnumTipoCarpetaFieldRefInput<$PrismaModel> | null
+    in?: $Enums.TipoCarpeta[] | ListEnumTipoCarpetaFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.TipoCarpeta[] | ListEnumTipoCarpetaFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumTipoCarpetaNullableFilter<$PrismaModel> | $Enums.TipoCarpeta | null
+  }
+
+  export type NestedEnumProcesoIndicadorNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.ProcesoIndicador | EnumProcesoIndicadorFieldRefInput<$PrismaModel> | null
+    in?: $Enums.ProcesoIndicador[] | ListEnumProcesoIndicadorFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.ProcesoIndicador[] | ListEnumProcesoIndicadorFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumProcesoIndicadorNullableFilter<$PrismaModel> | $Enums.ProcesoIndicador | null
+  }
+
+  export type NestedEnumModuloDocumentosWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ModuloDocumentos | EnumModuloDocumentosFieldRefInput<$PrismaModel>
+    in?: $Enums.ModuloDocumentos[] | ListEnumModuloDocumentosFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ModuloDocumentos[] | ListEnumModuloDocumentosFieldRefInput<$PrismaModel>
+    not?: NestedEnumModuloDocumentosWithAggregatesFilter<$PrismaModel> | $Enums.ModuloDocumentos
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumModuloDocumentosFilter<$PrismaModel>
+    _max?: NestedEnumModuloDocumentosFilter<$PrismaModel>
+  }
+
+  export type NestedEnumTipoCarpetaNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.TipoCarpeta | EnumTipoCarpetaFieldRefInput<$PrismaModel> | null
+    in?: $Enums.TipoCarpeta[] | ListEnumTipoCarpetaFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.TipoCarpeta[] | ListEnumTipoCarpetaFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumTipoCarpetaNullableWithAggregatesFilter<$PrismaModel> | $Enums.TipoCarpeta | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumTipoCarpetaNullableFilter<$PrismaModel>
+    _max?: NestedEnumTipoCarpetaNullableFilter<$PrismaModel>
+  }
+
+  export type NestedEnumProcesoIndicadorNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ProcesoIndicador | EnumProcesoIndicadorFieldRefInput<$PrismaModel> | null
+    in?: $Enums.ProcesoIndicador[] | ListEnumProcesoIndicadorFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.ProcesoIndicador[] | ListEnumProcesoIndicadorFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumProcesoIndicadorNullableWithAggregatesFilter<$PrismaModel> | $Enums.ProcesoIndicador | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumProcesoIndicadorNullableFilter<$PrismaModel>
+    _max?: NestedEnumProcesoIndicadorNullableFilter<$PrismaModel>
+  }
+
+  export type NestedEnumTipoArchivoDocumentoFilter<$PrismaModel = never> = {
+    equals?: $Enums.TipoArchivoDocumento | EnumTipoArchivoDocumentoFieldRefInput<$PrismaModel>
+    in?: $Enums.TipoArchivoDocumento[] | ListEnumTipoArchivoDocumentoFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TipoArchivoDocumento[] | ListEnumTipoArchivoDocumentoFieldRefInput<$PrismaModel>
+    not?: NestedEnumTipoArchivoDocumentoFilter<$PrismaModel> | $Enums.TipoArchivoDocumento
+  }
+
+  export type NestedEnumTipoArchivoDocumentoWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.TipoArchivoDocumento | EnumTipoArchivoDocumentoFieldRefInput<$PrismaModel>
+    in?: $Enums.TipoArchivoDocumento[] | ListEnumTipoArchivoDocumentoFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TipoArchivoDocumento[] | ListEnumTipoArchivoDocumentoFieldRefInput<$PrismaModel>
+    not?: NestedEnumTipoArchivoDocumentoWithAggregatesFilter<$PrismaModel> | $Enums.TipoArchivoDocumento
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumTipoArchivoDocumentoFilter<$PrismaModel>
+    _max?: NestedEnumTipoArchivoDocumentoFilter<$PrismaModel>
+  }
+
+  export type NestedEnumProcesoIndicadorFilter<$PrismaModel = never> = {
+    equals?: $Enums.ProcesoIndicador | EnumProcesoIndicadorFieldRefInput<$PrismaModel>
+    in?: $Enums.ProcesoIndicador[] | ListEnumProcesoIndicadorFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ProcesoIndicador[] | ListEnumProcesoIndicadorFieldRefInput<$PrismaModel>
+    not?: NestedEnumProcesoIndicadorFilter<$PrismaModel> | $Enums.ProcesoIndicador
+  }
+
+  export type NestedEnumProcesoIndicadorWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ProcesoIndicador | EnumProcesoIndicadorFieldRefInput<$PrismaModel>
+    in?: $Enums.ProcesoIndicador[] | ListEnumProcesoIndicadorFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ProcesoIndicador[] | ListEnumProcesoIndicadorFieldRefInput<$PrismaModel>
+    not?: NestedEnumProcesoIndicadorWithAggregatesFilter<$PrismaModel> | $Enums.ProcesoIndicador
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumProcesoIndicadorFilter<$PrismaModel>
+    _max?: NestedEnumProcesoIndicadorFilter<$PrismaModel>
+  }
+
   export type PermisoCreateWithoutUsuarioInput = {
     recurso: $Enums.Recurso
     puedeVer?: boolean
@@ -12324,6 +18979,86 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type ArchivoCreateWithoutSubidoPorInput = {
+    nombre: string
+    tipo: $Enums.TipoArchivoDocumento
+    storagePath: string
+    fechaSubida?: Date | string
+    carpeta: CarpetaCreateNestedOneWithoutArchivosInput
+  }
+
+  export type ArchivoUncheckedCreateWithoutSubidoPorInput = {
+    id?: number
+    carpetaId: number
+    nombre: string
+    tipo: $Enums.TipoArchivoDocumento
+    storagePath: string
+    fechaSubida?: Date | string
+  }
+
+  export type ArchivoCreateOrConnectWithoutSubidoPorInput = {
+    where: ArchivoWhereUniqueInput
+    create: XOR<ArchivoCreateWithoutSubidoPorInput, ArchivoUncheckedCreateWithoutSubidoPorInput>
+  }
+
+  export type ArchivoCreateManySubidoPorInputEnvelope = {
+    data: ArchivoCreateManySubidoPorInput | ArchivoCreateManySubidoPorInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type AccesoIndicadorCreateWithoutUsuarioInput = {
+    proceso: $Enums.ProcesoIndicador
+    puedeVer?: boolean
+    puedeDescargar?: boolean
+    puedeAdjuntar?: boolean
+    puedeEditar?: boolean
+    puedeEliminar?: boolean
+  }
+
+  export type AccesoIndicadorUncheckedCreateWithoutUsuarioInput = {
+    id?: number
+    proceso: $Enums.ProcesoIndicador
+    puedeVer?: boolean
+    puedeDescargar?: boolean
+    puedeAdjuntar?: boolean
+    puedeEditar?: boolean
+    puedeEliminar?: boolean
+  }
+
+  export type AccesoIndicadorCreateOrConnectWithoutUsuarioInput = {
+    where: AccesoIndicadorWhereUniqueInput
+    create: XOR<AccesoIndicadorCreateWithoutUsuarioInput, AccesoIndicadorUncheckedCreateWithoutUsuarioInput>
+  }
+
+  export type AccesoIndicadorCreateManyUsuarioInputEnvelope = {
+    data: AccesoIndicadorCreateManyUsuarioInput | AccesoIndicadorCreateManyUsuarioInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type AccesoISOCreateWithoutUsuarioInput = {
+    puedeVer?: boolean
+    puedeDescargar?: boolean
+    puedeAdjuntar?: boolean
+    puedeEditar?: boolean
+    puedeEliminar?: boolean
+    gestionaObsoleto?: boolean
+  }
+
+  export type AccesoISOUncheckedCreateWithoutUsuarioInput = {
+    id?: number
+    puedeVer?: boolean
+    puedeDescargar?: boolean
+    puedeAdjuntar?: boolean
+    puedeEditar?: boolean
+    puedeEliminar?: boolean
+    gestionaObsoleto?: boolean
+  }
+
+  export type AccesoISOCreateOrConnectWithoutUsuarioInput = {
+    where: AccesoISOWhereUniqueInput
+    create: XOR<AccesoISOCreateWithoutUsuarioInput, AccesoISOUncheckedCreateWithoutUsuarioInput>
+  }
+
   export type PermisoUpsertWithWhereUniqueWithoutUsuarioInput = {
     where: PermisoWhereUniqueInput
     update: XOR<PermisoUpdateWithoutUsuarioInput, PermisoUncheckedUpdateWithoutUsuarioInput>
@@ -12389,13 +19124,106 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"TrabajoImpresion"> | Date | string
   }
 
+  export type ArchivoUpsertWithWhereUniqueWithoutSubidoPorInput = {
+    where: ArchivoWhereUniqueInput
+    update: XOR<ArchivoUpdateWithoutSubidoPorInput, ArchivoUncheckedUpdateWithoutSubidoPorInput>
+    create: XOR<ArchivoCreateWithoutSubidoPorInput, ArchivoUncheckedCreateWithoutSubidoPorInput>
+  }
+
+  export type ArchivoUpdateWithWhereUniqueWithoutSubidoPorInput = {
+    where: ArchivoWhereUniqueInput
+    data: XOR<ArchivoUpdateWithoutSubidoPorInput, ArchivoUncheckedUpdateWithoutSubidoPorInput>
+  }
+
+  export type ArchivoUpdateManyWithWhereWithoutSubidoPorInput = {
+    where: ArchivoScalarWhereInput
+    data: XOR<ArchivoUpdateManyMutationInput, ArchivoUncheckedUpdateManyWithoutSubidoPorInput>
+  }
+
+  export type ArchivoScalarWhereInput = {
+    AND?: ArchivoScalarWhereInput | ArchivoScalarWhereInput[]
+    OR?: ArchivoScalarWhereInput[]
+    NOT?: ArchivoScalarWhereInput | ArchivoScalarWhereInput[]
+    id?: IntFilter<"Archivo"> | number
+    carpetaId?: IntFilter<"Archivo"> | number
+    nombre?: StringFilter<"Archivo"> | string
+    tipo?: EnumTipoArchivoDocumentoFilter<"Archivo"> | $Enums.TipoArchivoDocumento
+    storagePath?: StringFilter<"Archivo"> | string
+    subidoPorId?: IntFilter<"Archivo"> | number
+    fechaSubida?: DateTimeFilter<"Archivo"> | Date | string
+  }
+
+  export type AccesoIndicadorUpsertWithWhereUniqueWithoutUsuarioInput = {
+    where: AccesoIndicadorWhereUniqueInput
+    update: XOR<AccesoIndicadorUpdateWithoutUsuarioInput, AccesoIndicadorUncheckedUpdateWithoutUsuarioInput>
+    create: XOR<AccesoIndicadorCreateWithoutUsuarioInput, AccesoIndicadorUncheckedCreateWithoutUsuarioInput>
+  }
+
+  export type AccesoIndicadorUpdateWithWhereUniqueWithoutUsuarioInput = {
+    where: AccesoIndicadorWhereUniqueInput
+    data: XOR<AccesoIndicadorUpdateWithoutUsuarioInput, AccesoIndicadorUncheckedUpdateWithoutUsuarioInput>
+  }
+
+  export type AccesoIndicadorUpdateManyWithWhereWithoutUsuarioInput = {
+    where: AccesoIndicadorScalarWhereInput
+    data: XOR<AccesoIndicadorUpdateManyMutationInput, AccesoIndicadorUncheckedUpdateManyWithoutUsuarioInput>
+  }
+
+  export type AccesoIndicadorScalarWhereInput = {
+    AND?: AccesoIndicadorScalarWhereInput | AccesoIndicadorScalarWhereInput[]
+    OR?: AccesoIndicadorScalarWhereInput[]
+    NOT?: AccesoIndicadorScalarWhereInput | AccesoIndicadorScalarWhereInput[]
+    id?: IntFilter<"AccesoIndicador"> | number
+    usuarioId?: IntFilter<"AccesoIndicador"> | number
+    proceso?: EnumProcesoIndicadorFilter<"AccesoIndicador"> | $Enums.ProcesoIndicador
+    puedeVer?: BoolFilter<"AccesoIndicador"> | boolean
+    puedeDescargar?: BoolFilter<"AccesoIndicador"> | boolean
+    puedeAdjuntar?: BoolFilter<"AccesoIndicador"> | boolean
+    puedeEditar?: BoolFilter<"AccesoIndicador"> | boolean
+    puedeEliminar?: BoolFilter<"AccesoIndicador"> | boolean
+  }
+
+  export type AccesoISOUpsertWithoutUsuarioInput = {
+    update: XOR<AccesoISOUpdateWithoutUsuarioInput, AccesoISOUncheckedUpdateWithoutUsuarioInput>
+    create: XOR<AccesoISOCreateWithoutUsuarioInput, AccesoISOUncheckedCreateWithoutUsuarioInput>
+    where?: AccesoISOWhereInput
+  }
+
+  export type AccesoISOUpdateToOneWithWhereWithoutUsuarioInput = {
+    where?: AccesoISOWhereInput
+    data: XOR<AccesoISOUpdateWithoutUsuarioInput, AccesoISOUncheckedUpdateWithoutUsuarioInput>
+  }
+
+  export type AccesoISOUpdateWithoutUsuarioInput = {
+    puedeVer?: BoolFieldUpdateOperationsInput | boolean
+    puedeDescargar?: BoolFieldUpdateOperationsInput | boolean
+    puedeAdjuntar?: BoolFieldUpdateOperationsInput | boolean
+    puedeEditar?: BoolFieldUpdateOperationsInput | boolean
+    puedeEliminar?: BoolFieldUpdateOperationsInput | boolean
+    gestionaObsoleto?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type AccesoISOUncheckedUpdateWithoutUsuarioInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    puedeVer?: BoolFieldUpdateOperationsInput | boolean
+    puedeDescargar?: BoolFieldUpdateOperationsInput | boolean
+    puedeAdjuntar?: BoolFieldUpdateOperationsInput | boolean
+    puedeEditar?: BoolFieldUpdateOperationsInput | boolean
+    puedeEliminar?: BoolFieldUpdateOperationsInput | boolean
+    gestionaObsoleto?: BoolFieldUpdateOperationsInput | boolean
+  }
+
   export type UsuarioCreateWithoutPermisosInput = {
     supabaseUserId: string
     nombre: string
     esAdmin?: boolean
+    esAdminKpis?: boolean
     avatarUrl?: string | null
     createdAt?: Date | string
     trabajosImpresion?: TrabajoImpresionCreateNestedManyWithoutCreadoPorInput
+    archivosSubidos?: ArchivoCreateNestedManyWithoutSubidoPorInput
+    accesosIndicador?: AccesoIndicadorCreateNestedManyWithoutUsuarioInput
+    accesoIso?: AccesoISOCreateNestedOneWithoutUsuarioInput
   }
 
   export type UsuarioUncheckedCreateWithoutPermisosInput = {
@@ -12403,9 +19231,13 @@ export namespace Prisma {
     supabaseUserId: string
     nombre: string
     esAdmin?: boolean
+    esAdminKpis?: boolean
     avatarUrl?: string | null
     createdAt?: Date | string
     trabajosImpresion?: TrabajoImpresionUncheckedCreateNestedManyWithoutCreadoPorInput
+    archivosSubidos?: ArchivoUncheckedCreateNestedManyWithoutSubidoPorInput
+    accesosIndicador?: AccesoIndicadorUncheckedCreateNestedManyWithoutUsuarioInput
+    accesoIso?: AccesoISOUncheckedCreateNestedOneWithoutUsuarioInput
   }
 
   export type UsuarioCreateOrConnectWithoutPermisosInput = {
@@ -12428,9 +19260,13 @@ export namespace Prisma {
     supabaseUserId?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
+    esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     trabajosImpresion?: TrabajoImpresionUpdateManyWithoutCreadoPorNestedInput
+    archivosSubidos?: ArchivoUpdateManyWithoutSubidoPorNestedInput
+    accesosIndicador?: AccesoIndicadorUpdateManyWithoutUsuarioNestedInput
+    accesoIso?: AccesoISOUpdateOneWithoutUsuarioNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutPermisosInput = {
@@ -12438,9 +19274,13 @@ export namespace Prisma {
     supabaseUserId?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
+    esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     trabajosImpresion?: TrabajoImpresionUncheckedUpdateManyWithoutCreadoPorNestedInput
+    archivosSubidos?: ArchivoUncheckedUpdateManyWithoutSubidoPorNestedInput
+    accesosIndicador?: AccesoIndicadorUncheckedUpdateManyWithoutUsuarioNestedInput
+    accesoIso?: AccesoISOUncheckedUpdateOneWithoutUsuarioNestedInput
   }
 
   export type LoteCreateWithoutFabricanteInput = {
@@ -12624,6 +19464,7 @@ export namespace Prisma {
     nfpaSalud?: number | null
     nfpaInflamabilidad?: number | null
     nfpaReactividad?: number | null
+    fichaSeguridadUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -12635,6 +19476,7 @@ export namespace Prisma {
     nfpaSalud?: number | null
     nfpaInflamabilidad?: number | null
     nfpaReactividad?: number | null
+    fichaSeguridadUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -12722,6 +19564,7 @@ export namespace Prisma {
     nfpaSalud?: NullableIntFieldUpdateOperationsInput | number | null
     nfpaInflamabilidad?: NullableIntFieldUpdateOperationsInput | number | null
     nfpaReactividad?: NullableIntFieldUpdateOperationsInput | number | null
+    fichaSeguridadUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -12733,6 +19576,7 @@ export namespace Prisma {
     nfpaSalud?: NullableIntFieldUpdateOperationsInput | number | null
     nfpaInflamabilidad?: NullableIntFieldUpdateOperationsInput | number | null
     nfpaReactividad?: NullableIntFieldUpdateOperationsInput | number | null
+    fichaSeguridadUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -12835,9 +19679,13 @@ export namespace Prisma {
     supabaseUserId: string
     nombre: string
     esAdmin?: boolean
+    esAdminKpis?: boolean
     avatarUrl?: string | null
     createdAt?: Date | string
     permisos?: PermisoCreateNestedManyWithoutUsuarioInput
+    archivosSubidos?: ArchivoCreateNestedManyWithoutSubidoPorInput
+    accesosIndicador?: AccesoIndicadorCreateNestedManyWithoutUsuarioInput
+    accesoIso?: AccesoISOCreateNestedOneWithoutUsuarioInput
   }
 
   export type UsuarioUncheckedCreateWithoutTrabajosImpresionInput = {
@@ -12845,9 +19693,13 @@ export namespace Prisma {
     supabaseUserId: string
     nombre: string
     esAdmin?: boolean
+    esAdminKpis?: boolean
     avatarUrl?: string | null
     createdAt?: Date | string
     permisos?: PermisoUncheckedCreateNestedManyWithoutUsuarioInput
+    archivosSubidos?: ArchivoUncheckedCreateNestedManyWithoutSubidoPorInput
+    accesosIndicador?: AccesoIndicadorUncheckedCreateNestedManyWithoutUsuarioInput
+    accesoIso?: AccesoISOUncheckedCreateNestedOneWithoutUsuarioInput
   }
 
   export type UsuarioCreateOrConnectWithoutTrabajosImpresionInput = {
@@ -12934,9 +19786,13 @@ export namespace Prisma {
     supabaseUserId?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
+    esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     permisos?: PermisoUpdateManyWithoutUsuarioNestedInput
+    archivosSubidos?: ArchivoUpdateManyWithoutSubidoPorNestedInput
+    accesosIndicador?: AccesoIndicadorUpdateManyWithoutUsuarioNestedInput
+    accesoIso?: AccesoISOUpdateOneWithoutUsuarioNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutTrabajosImpresionInput = {
@@ -12944,9 +19800,453 @@ export namespace Prisma {
     supabaseUserId?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
+    esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     permisos?: PermisoUncheckedUpdateManyWithoutUsuarioNestedInput
+    archivosSubidos?: ArchivoUncheckedUpdateManyWithoutSubidoPorNestedInput
+    accesosIndicador?: AccesoIndicadorUncheckedUpdateManyWithoutUsuarioNestedInput
+    accesoIso?: AccesoISOUncheckedUpdateOneWithoutUsuarioNestedInput
+  }
+
+  export type CarpetaCreateWithoutHijosInput = {
+    nombre: string
+    modulo: $Enums.ModuloDocumentos
+    tipo?: $Enums.TipoCarpeta | null
+    proceso?: $Enums.ProcesoIndicador | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    carpetaPadre?: CarpetaCreateNestedOneWithoutHijosInput
+    archivos?: ArchivoCreateNestedManyWithoutCarpetaInput
+  }
+
+  export type CarpetaUncheckedCreateWithoutHijosInput = {
+    id?: number
+    nombre: string
+    carpetaPadreId?: number | null
+    modulo: $Enums.ModuloDocumentos
+    tipo?: $Enums.TipoCarpeta | null
+    proceso?: $Enums.ProcesoIndicador | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    archivos?: ArchivoUncheckedCreateNestedManyWithoutCarpetaInput
+  }
+
+  export type CarpetaCreateOrConnectWithoutHijosInput = {
+    where: CarpetaWhereUniqueInput
+    create: XOR<CarpetaCreateWithoutHijosInput, CarpetaUncheckedCreateWithoutHijosInput>
+  }
+
+  export type CarpetaCreateWithoutCarpetaPadreInput = {
+    nombre: string
+    modulo: $Enums.ModuloDocumentos
+    tipo?: $Enums.TipoCarpeta | null
+    proceso?: $Enums.ProcesoIndicador | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    hijos?: CarpetaCreateNestedManyWithoutCarpetaPadreInput
+    archivos?: ArchivoCreateNestedManyWithoutCarpetaInput
+  }
+
+  export type CarpetaUncheckedCreateWithoutCarpetaPadreInput = {
+    id?: number
+    nombre: string
+    modulo: $Enums.ModuloDocumentos
+    tipo?: $Enums.TipoCarpeta | null
+    proceso?: $Enums.ProcesoIndicador | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    hijos?: CarpetaUncheckedCreateNestedManyWithoutCarpetaPadreInput
+    archivos?: ArchivoUncheckedCreateNestedManyWithoutCarpetaInput
+  }
+
+  export type CarpetaCreateOrConnectWithoutCarpetaPadreInput = {
+    where: CarpetaWhereUniqueInput
+    create: XOR<CarpetaCreateWithoutCarpetaPadreInput, CarpetaUncheckedCreateWithoutCarpetaPadreInput>
+  }
+
+  export type CarpetaCreateManyCarpetaPadreInputEnvelope = {
+    data: CarpetaCreateManyCarpetaPadreInput | CarpetaCreateManyCarpetaPadreInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ArchivoCreateWithoutCarpetaInput = {
+    nombre: string
+    tipo: $Enums.TipoArchivoDocumento
+    storagePath: string
+    fechaSubida?: Date | string
+    subidoPor: UsuarioCreateNestedOneWithoutArchivosSubidosInput
+  }
+
+  export type ArchivoUncheckedCreateWithoutCarpetaInput = {
+    id?: number
+    nombre: string
+    tipo: $Enums.TipoArchivoDocumento
+    storagePath: string
+    subidoPorId: number
+    fechaSubida?: Date | string
+  }
+
+  export type ArchivoCreateOrConnectWithoutCarpetaInput = {
+    where: ArchivoWhereUniqueInput
+    create: XOR<ArchivoCreateWithoutCarpetaInput, ArchivoUncheckedCreateWithoutCarpetaInput>
+  }
+
+  export type ArchivoCreateManyCarpetaInputEnvelope = {
+    data: ArchivoCreateManyCarpetaInput | ArchivoCreateManyCarpetaInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type CarpetaUpsertWithoutHijosInput = {
+    update: XOR<CarpetaUpdateWithoutHijosInput, CarpetaUncheckedUpdateWithoutHijosInput>
+    create: XOR<CarpetaCreateWithoutHijosInput, CarpetaUncheckedCreateWithoutHijosInput>
+    where?: CarpetaWhereInput
+  }
+
+  export type CarpetaUpdateToOneWithWhereWithoutHijosInput = {
+    where?: CarpetaWhereInput
+    data: XOR<CarpetaUpdateWithoutHijosInput, CarpetaUncheckedUpdateWithoutHijosInput>
+  }
+
+  export type CarpetaUpdateWithoutHijosInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    modulo?: EnumModuloDocumentosFieldUpdateOperationsInput | $Enums.ModuloDocumentos
+    tipo?: NullableEnumTipoCarpetaFieldUpdateOperationsInput | $Enums.TipoCarpeta | null
+    proceso?: NullableEnumProcesoIndicadorFieldUpdateOperationsInput | $Enums.ProcesoIndicador | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    carpetaPadre?: CarpetaUpdateOneWithoutHijosNestedInput
+    archivos?: ArchivoUpdateManyWithoutCarpetaNestedInput
+  }
+
+  export type CarpetaUncheckedUpdateWithoutHijosInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    carpetaPadreId?: NullableIntFieldUpdateOperationsInput | number | null
+    modulo?: EnumModuloDocumentosFieldUpdateOperationsInput | $Enums.ModuloDocumentos
+    tipo?: NullableEnumTipoCarpetaFieldUpdateOperationsInput | $Enums.TipoCarpeta | null
+    proceso?: NullableEnumProcesoIndicadorFieldUpdateOperationsInput | $Enums.ProcesoIndicador | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    archivos?: ArchivoUncheckedUpdateManyWithoutCarpetaNestedInput
+  }
+
+  export type CarpetaUpsertWithWhereUniqueWithoutCarpetaPadreInput = {
+    where: CarpetaWhereUniqueInput
+    update: XOR<CarpetaUpdateWithoutCarpetaPadreInput, CarpetaUncheckedUpdateWithoutCarpetaPadreInput>
+    create: XOR<CarpetaCreateWithoutCarpetaPadreInput, CarpetaUncheckedCreateWithoutCarpetaPadreInput>
+  }
+
+  export type CarpetaUpdateWithWhereUniqueWithoutCarpetaPadreInput = {
+    where: CarpetaWhereUniqueInput
+    data: XOR<CarpetaUpdateWithoutCarpetaPadreInput, CarpetaUncheckedUpdateWithoutCarpetaPadreInput>
+  }
+
+  export type CarpetaUpdateManyWithWhereWithoutCarpetaPadreInput = {
+    where: CarpetaScalarWhereInput
+    data: XOR<CarpetaUpdateManyMutationInput, CarpetaUncheckedUpdateManyWithoutCarpetaPadreInput>
+  }
+
+  export type CarpetaScalarWhereInput = {
+    AND?: CarpetaScalarWhereInput | CarpetaScalarWhereInput[]
+    OR?: CarpetaScalarWhereInput[]
+    NOT?: CarpetaScalarWhereInput | CarpetaScalarWhereInput[]
+    id?: IntFilter<"Carpeta"> | number
+    nombre?: StringFilter<"Carpeta"> | string
+    carpetaPadreId?: IntNullableFilter<"Carpeta"> | number | null
+    modulo?: EnumModuloDocumentosFilter<"Carpeta"> | $Enums.ModuloDocumentos
+    tipo?: EnumTipoCarpetaNullableFilter<"Carpeta"> | $Enums.TipoCarpeta | null
+    proceso?: EnumProcesoIndicadorNullableFilter<"Carpeta"> | $Enums.ProcesoIndicador | null
+    createdAt?: DateTimeFilter<"Carpeta"> | Date | string
+    updatedAt?: DateTimeFilter<"Carpeta"> | Date | string
+  }
+
+  export type ArchivoUpsertWithWhereUniqueWithoutCarpetaInput = {
+    where: ArchivoWhereUniqueInput
+    update: XOR<ArchivoUpdateWithoutCarpetaInput, ArchivoUncheckedUpdateWithoutCarpetaInput>
+    create: XOR<ArchivoCreateWithoutCarpetaInput, ArchivoUncheckedCreateWithoutCarpetaInput>
+  }
+
+  export type ArchivoUpdateWithWhereUniqueWithoutCarpetaInput = {
+    where: ArchivoWhereUniqueInput
+    data: XOR<ArchivoUpdateWithoutCarpetaInput, ArchivoUncheckedUpdateWithoutCarpetaInput>
+  }
+
+  export type ArchivoUpdateManyWithWhereWithoutCarpetaInput = {
+    where: ArchivoScalarWhereInput
+    data: XOR<ArchivoUpdateManyMutationInput, ArchivoUncheckedUpdateManyWithoutCarpetaInput>
+  }
+
+  export type CarpetaCreateWithoutArchivosInput = {
+    nombre: string
+    modulo: $Enums.ModuloDocumentos
+    tipo?: $Enums.TipoCarpeta | null
+    proceso?: $Enums.ProcesoIndicador | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    carpetaPadre?: CarpetaCreateNestedOneWithoutHijosInput
+    hijos?: CarpetaCreateNestedManyWithoutCarpetaPadreInput
+  }
+
+  export type CarpetaUncheckedCreateWithoutArchivosInput = {
+    id?: number
+    nombre: string
+    carpetaPadreId?: number | null
+    modulo: $Enums.ModuloDocumentos
+    tipo?: $Enums.TipoCarpeta | null
+    proceso?: $Enums.ProcesoIndicador | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    hijos?: CarpetaUncheckedCreateNestedManyWithoutCarpetaPadreInput
+  }
+
+  export type CarpetaCreateOrConnectWithoutArchivosInput = {
+    where: CarpetaWhereUniqueInput
+    create: XOR<CarpetaCreateWithoutArchivosInput, CarpetaUncheckedCreateWithoutArchivosInput>
+  }
+
+  export type UsuarioCreateWithoutArchivosSubidosInput = {
+    supabaseUserId: string
+    nombre: string
+    esAdmin?: boolean
+    esAdminKpis?: boolean
+    avatarUrl?: string | null
+    createdAt?: Date | string
+    permisos?: PermisoCreateNestedManyWithoutUsuarioInput
+    trabajosImpresion?: TrabajoImpresionCreateNestedManyWithoutCreadoPorInput
+    accesosIndicador?: AccesoIndicadorCreateNestedManyWithoutUsuarioInput
+    accesoIso?: AccesoISOCreateNestedOneWithoutUsuarioInput
+  }
+
+  export type UsuarioUncheckedCreateWithoutArchivosSubidosInput = {
+    id?: number
+    supabaseUserId: string
+    nombre: string
+    esAdmin?: boolean
+    esAdminKpis?: boolean
+    avatarUrl?: string | null
+    createdAt?: Date | string
+    permisos?: PermisoUncheckedCreateNestedManyWithoutUsuarioInput
+    trabajosImpresion?: TrabajoImpresionUncheckedCreateNestedManyWithoutCreadoPorInput
+    accesosIndicador?: AccesoIndicadorUncheckedCreateNestedManyWithoutUsuarioInput
+    accesoIso?: AccesoISOUncheckedCreateNestedOneWithoutUsuarioInput
+  }
+
+  export type UsuarioCreateOrConnectWithoutArchivosSubidosInput = {
+    where: UsuarioWhereUniqueInput
+    create: XOR<UsuarioCreateWithoutArchivosSubidosInput, UsuarioUncheckedCreateWithoutArchivosSubidosInput>
+  }
+
+  export type CarpetaUpsertWithoutArchivosInput = {
+    update: XOR<CarpetaUpdateWithoutArchivosInput, CarpetaUncheckedUpdateWithoutArchivosInput>
+    create: XOR<CarpetaCreateWithoutArchivosInput, CarpetaUncheckedCreateWithoutArchivosInput>
+    where?: CarpetaWhereInput
+  }
+
+  export type CarpetaUpdateToOneWithWhereWithoutArchivosInput = {
+    where?: CarpetaWhereInput
+    data: XOR<CarpetaUpdateWithoutArchivosInput, CarpetaUncheckedUpdateWithoutArchivosInput>
+  }
+
+  export type CarpetaUpdateWithoutArchivosInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    modulo?: EnumModuloDocumentosFieldUpdateOperationsInput | $Enums.ModuloDocumentos
+    tipo?: NullableEnumTipoCarpetaFieldUpdateOperationsInput | $Enums.TipoCarpeta | null
+    proceso?: NullableEnumProcesoIndicadorFieldUpdateOperationsInput | $Enums.ProcesoIndicador | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    carpetaPadre?: CarpetaUpdateOneWithoutHijosNestedInput
+    hijos?: CarpetaUpdateManyWithoutCarpetaPadreNestedInput
+  }
+
+  export type CarpetaUncheckedUpdateWithoutArchivosInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    carpetaPadreId?: NullableIntFieldUpdateOperationsInput | number | null
+    modulo?: EnumModuloDocumentosFieldUpdateOperationsInput | $Enums.ModuloDocumentos
+    tipo?: NullableEnumTipoCarpetaFieldUpdateOperationsInput | $Enums.TipoCarpeta | null
+    proceso?: NullableEnumProcesoIndicadorFieldUpdateOperationsInput | $Enums.ProcesoIndicador | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    hijos?: CarpetaUncheckedUpdateManyWithoutCarpetaPadreNestedInput
+  }
+
+  export type UsuarioUpsertWithoutArchivosSubidosInput = {
+    update: XOR<UsuarioUpdateWithoutArchivosSubidosInput, UsuarioUncheckedUpdateWithoutArchivosSubidosInput>
+    create: XOR<UsuarioCreateWithoutArchivosSubidosInput, UsuarioUncheckedCreateWithoutArchivosSubidosInput>
+    where?: UsuarioWhereInput
+  }
+
+  export type UsuarioUpdateToOneWithWhereWithoutArchivosSubidosInput = {
+    where?: UsuarioWhereInput
+    data: XOR<UsuarioUpdateWithoutArchivosSubidosInput, UsuarioUncheckedUpdateWithoutArchivosSubidosInput>
+  }
+
+  export type UsuarioUpdateWithoutArchivosSubidosInput = {
+    supabaseUserId?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    esAdmin?: BoolFieldUpdateOperationsInput | boolean
+    esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    permisos?: PermisoUpdateManyWithoutUsuarioNestedInput
+    trabajosImpresion?: TrabajoImpresionUpdateManyWithoutCreadoPorNestedInput
+    accesosIndicador?: AccesoIndicadorUpdateManyWithoutUsuarioNestedInput
+    accesoIso?: AccesoISOUpdateOneWithoutUsuarioNestedInput
+  }
+
+  export type UsuarioUncheckedUpdateWithoutArchivosSubidosInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    supabaseUserId?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    esAdmin?: BoolFieldUpdateOperationsInput | boolean
+    esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    permisos?: PermisoUncheckedUpdateManyWithoutUsuarioNestedInput
+    trabajosImpresion?: TrabajoImpresionUncheckedUpdateManyWithoutCreadoPorNestedInput
+    accesosIndicador?: AccesoIndicadorUncheckedUpdateManyWithoutUsuarioNestedInput
+    accesoIso?: AccesoISOUncheckedUpdateOneWithoutUsuarioNestedInput
+  }
+
+  export type UsuarioCreateWithoutAccesosIndicadorInput = {
+    supabaseUserId: string
+    nombre: string
+    esAdmin?: boolean
+    esAdminKpis?: boolean
+    avatarUrl?: string | null
+    createdAt?: Date | string
+    permisos?: PermisoCreateNestedManyWithoutUsuarioInput
+    trabajosImpresion?: TrabajoImpresionCreateNestedManyWithoutCreadoPorInput
+    archivosSubidos?: ArchivoCreateNestedManyWithoutSubidoPorInput
+    accesoIso?: AccesoISOCreateNestedOneWithoutUsuarioInput
+  }
+
+  export type UsuarioUncheckedCreateWithoutAccesosIndicadorInput = {
+    id?: number
+    supabaseUserId: string
+    nombre: string
+    esAdmin?: boolean
+    esAdminKpis?: boolean
+    avatarUrl?: string | null
+    createdAt?: Date | string
+    permisos?: PermisoUncheckedCreateNestedManyWithoutUsuarioInput
+    trabajosImpresion?: TrabajoImpresionUncheckedCreateNestedManyWithoutCreadoPorInput
+    archivosSubidos?: ArchivoUncheckedCreateNestedManyWithoutSubidoPorInput
+    accesoIso?: AccesoISOUncheckedCreateNestedOneWithoutUsuarioInput
+  }
+
+  export type UsuarioCreateOrConnectWithoutAccesosIndicadorInput = {
+    where: UsuarioWhereUniqueInput
+    create: XOR<UsuarioCreateWithoutAccesosIndicadorInput, UsuarioUncheckedCreateWithoutAccesosIndicadorInput>
+  }
+
+  export type UsuarioUpsertWithoutAccesosIndicadorInput = {
+    update: XOR<UsuarioUpdateWithoutAccesosIndicadorInput, UsuarioUncheckedUpdateWithoutAccesosIndicadorInput>
+    create: XOR<UsuarioCreateWithoutAccesosIndicadorInput, UsuarioUncheckedCreateWithoutAccesosIndicadorInput>
+    where?: UsuarioWhereInput
+  }
+
+  export type UsuarioUpdateToOneWithWhereWithoutAccesosIndicadorInput = {
+    where?: UsuarioWhereInput
+    data: XOR<UsuarioUpdateWithoutAccesosIndicadorInput, UsuarioUncheckedUpdateWithoutAccesosIndicadorInput>
+  }
+
+  export type UsuarioUpdateWithoutAccesosIndicadorInput = {
+    supabaseUserId?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    esAdmin?: BoolFieldUpdateOperationsInput | boolean
+    esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    permisos?: PermisoUpdateManyWithoutUsuarioNestedInput
+    trabajosImpresion?: TrabajoImpresionUpdateManyWithoutCreadoPorNestedInput
+    archivosSubidos?: ArchivoUpdateManyWithoutSubidoPorNestedInput
+    accesoIso?: AccesoISOUpdateOneWithoutUsuarioNestedInput
+  }
+
+  export type UsuarioUncheckedUpdateWithoutAccesosIndicadorInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    supabaseUserId?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    esAdmin?: BoolFieldUpdateOperationsInput | boolean
+    esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    permisos?: PermisoUncheckedUpdateManyWithoutUsuarioNestedInput
+    trabajosImpresion?: TrabajoImpresionUncheckedUpdateManyWithoutCreadoPorNestedInput
+    archivosSubidos?: ArchivoUncheckedUpdateManyWithoutSubidoPorNestedInput
+    accesoIso?: AccesoISOUncheckedUpdateOneWithoutUsuarioNestedInput
+  }
+
+  export type UsuarioCreateWithoutAccesoIsoInput = {
+    supabaseUserId: string
+    nombre: string
+    esAdmin?: boolean
+    esAdminKpis?: boolean
+    avatarUrl?: string | null
+    createdAt?: Date | string
+    permisos?: PermisoCreateNestedManyWithoutUsuarioInput
+    trabajosImpresion?: TrabajoImpresionCreateNestedManyWithoutCreadoPorInput
+    archivosSubidos?: ArchivoCreateNestedManyWithoutSubidoPorInput
+    accesosIndicador?: AccesoIndicadorCreateNestedManyWithoutUsuarioInput
+  }
+
+  export type UsuarioUncheckedCreateWithoutAccesoIsoInput = {
+    id?: number
+    supabaseUserId: string
+    nombre: string
+    esAdmin?: boolean
+    esAdminKpis?: boolean
+    avatarUrl?: string | null
+    createdAt?: Date | string
+    permisos?: PermisoUncheckedCreateNestedManyWithoutUsuarioInput
+    trabajosImpresion?: TrabajoImpresionUncheckedCreateNestedManyWithoutCreadoPorInput
+    archivosSubidos?: ArchivoUncheckedCreateNestedManyWithoutSubidoPorInput
+    accesosIndicador?: AccesoIndicadorUncheckedCreateNestedManyWithoutUsuarioInput
+  }
+
+  export type UsuarioCreateOrConnectWithoutAccesoIsoInput = {
+    where: UsuarioWhereUniqueInput
+    create: XOR<UsuarioCreateWithoutAccesoIsoInput, UsuarioUncheckedCreateWithoutAccesoIsoInput>
+  }
+
+  export type UsuarioUpsertWithoutAccesoIsoInput = {
+    update: XOR<UsuarioUpdateWithoutAccesoIsoInput, UsuarioUncheckedUpdateWithoutAccesoIsoInput>
+    create: XOR<UsuarioCreateWithoutAccesoIsoInput, UsuarioUncheckedCreateWithoutAccesoIsoInput>
+    where?: UsuarioWhereInput
+  }
+
+  export type UsuarioUpdateToOneWithWhereWithoutAccesoIsoInput = {
+    where?: UsuarioWhereInput
+    data: XOR<UsuarioUpdateWithoutAccesoIsoInput, UsuarioUncheckedUpdateWithoutAccesoIsoInput>
+  }
+
+  export type UsuarioUpdateWithoutAccesoIsoInput = {
+    supabaseUserId?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    esAdmin?: BoolFieldUpdateOperationsInput | boolean
+    esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    permisos?: PermisoUpdateManyWithoutUsuarioNestedInput
+    trabajosImpresion?: TrabajoImpresionUpdateManyWithoutCreadoPorNestedInput
+    archivosSubidos?: ArchivoUpdateManyWithoutSubidoPorNestedInput
+    accesosIndicador?: AccesoIndicadorUpdateManyWithoutUsuarioNestedInput
+  }
+
+  export type UsuarioUncheckedUpdateWithoutAccesoIsoInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    supabaseUserId?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    esAdmin?: BoolFieldUpdateOperationsInput | boolean
+    esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    permisos?: PermisoUncheckedUpdateManyWithoutUsuarioNestedInput
+    trabajosImpresion?: TrabajoImpresionUncheckedUpdateManyWithoutCreadoPorNestedInput
+    archivosSubidos?: ArchivoUncheckedUpdateManyWithoutSubidoPorNestedInput
+    accesosIndicador?: AccesoIndicadorUncheckedUpdateManyWithoutUsuarioNestedInput
   }
 
   export type PermisoCreateManyUsuarioInput = {
@@ -12972,6 +20272,25 @@ export namespace Prisma {
     mensajeError?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+  }
+
+  export type ArchivoCreateManySubidoPorInput = {
+    id?: number
+    carpetaId: number
+    nombre: string
+    tipo: $Enums.TipoArchivoDocumento
+    storagePath: string
+    fechaSubida?: Date | string
+  }
+
+  export type AccesoIndicadorCreateManyUsuarioInput = {
+    id?: number
+    proceso: $Enums.ProcesoIndicador
+    puedeVer?: boolean
+    puedeDescargar?: boolean
+    puedeAdjuntar?: boolean
+    puedeEditar?: boolean
+    puedeEliminar?: boolean
   }
 
   export type PermisoUpdateWithoutUsuarioInput = {
@@ -13045,6 +20364,61 @@ export namespace Prisma {
     mensajeError?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ArchivoUpdateWithoutSubidoPorInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    tipo?: EnumTipoArchivoDocumentoFieldUpdateOperationsInput | $Enums.TipoArchivoDocumento
+    storagePath?: StringFieldUpdateOperationsInput | string
+    fechaSubida?: DateTimeFieldUpdateOperationsInput | Date | string
+    carpeta?: CarpetaUpdateOneRequiredWithoutArchivosNestedInput
+  }
+
+  export type ArchivoUncheckedUpdateWithoutSubidoPorInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    carpetaId?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    tipo?: EnumTipoArchivoDocumentoFieldUpdateOperationsInput | $Enums.TipoArchivoDocumento
+    storagePath?: StringFieldUpdateOperationsInput | string
+    fechaSubida?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ArchivoUncheckedUpdateManyWithoutSubidoPorInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    carpetaId?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    tipo?: EnumTipoArchivoDocumentoFieldUpdateOperationsInput | $Enums.TipoArchivoDocumento
+    storagePath?: StringFieldUpdateOperationsInput | string
+    fechaSubida?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AccesoIndicadorUpdateWithoutUsuarioInput = {
+    proceso?: EnumProcesoIndicadorFieldUpdateOperationsInput | $Enums.ProcesoIndicador
+    puedeVer?: BoolFieldUpdateOperationsInput | boolean
+    puedeDescargar?: BoolFieldUpdateOperationsInput | boolean
+    puedeAdjuntar?: BoolFieldUpdateOperationsInput | boolean
+    puedeEditar?: BoolFieldUpdateOperationsInput | boolean
+    puedeEliminar?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type AccesoIndicadorUncheckedUpdateWithoutUsuarioInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    proceso?: EnumProcesoIndicadorFieldUpdateOperationsInput | $Enums.ProcesoIndicador
+    puedeVer?: BoolFieldUpdateOperationsInput | boolean
+    puedeDescargar?: BoolFieldUpdateOperationsInput | boolean
+    puedeAdjuntar?: BoolFieldUpdateOperationsInput | boolean
+    puedeEditar?: BoolFieldUpdateOperationsInput | boolean
+    puedeEliminar?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type AccesoIndicadorUncheckedUpdateManyWithoutUsuarioInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    proceso?: EnumProcesoIndicadorFieldUpdateOperationsInput | $Enums.ProcesoIndicador
+    puedeVer?: BoolFieldUpdateOperationsInput | boolean
+    puedeDescargar?: BoolFieldUpdateOperationsInput | boolean
+    puedeAdjuntar?: BoolFieldUpdateOperationsInput | boolean
+    puedeEditar?: BoolFieldUpdateOperationsInput | boolean
+    puedeEliminar?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type LoteCreateManyFabricanteInput = {
@@ -13269,6 +20643,84 @@ export namespace Prisma {
     creadoPorId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CarpetaCreateManyCarpetaPadreInput = {
+    id?: number
+    nombre: string
+    modulo: $Enums.ModuloDocumentos
+    tipo?: $Enums.TipoCarpeta | null
+    proceso?: $Enums.ProcesoIndicador | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ArchivoCreateManyCarpetaInput = {
+    id?: number
+    nombre: string
+    tipo: $Enums.TipoArchivoDocumento
+    storagePath: string
+    subidoPorId: number
+    fechaSubida?: Date | string
+  }
+
+  export type CarpetaUpdateWithoutCarpetaPadreInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    modulo?: EnumModuloDocumentosFieldUpdateOperationsInput | $Enums.ModuloDocumentos
+    tipo?: NullableEnumTipoCarpetaFieldUpdateOperationsInput | $Enums.TipoCarpeta | null
+    proceso?: NullableEnumProcesoIndicadorFieldUpdateOperationsInput | $Enums.ProcesoIndicador | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    hijos?: CarpetaUpdateManyWithoutCarpetaPadreNestedInput
+    archivos?: ArchivoUpdateManyWithoutCarpetaNestedInput
+  }
+
+  export type CarpetaUncheckedUpdateWithoutCarpetaPadreInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    modulo?: EnumModuloDocumentosFieldUpdateOperationsInput | $Enums.ModuloDocumentos
+    tipo?: NullableEnumTipoCarpetaFieldUpdateOperationsInput | $Enums.TipoCarpeta | null
+    proceso?: NullableEnumProcesoIndicadorFieldUpdateOperationsInput | $Enums.ProcesoIndicador | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    hijos?: CarpetaUncheckedUpdateManyWithoutCarpetaPadreNestedInput
+    archivos?: ArchivoUncheckedUpdateManyWithoutCarpetaNestedInput
+  }
+
+  export type CarpetaUncheckedUpdateManyWithoutCarpetaPadreInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    modulo?: EnumModuloDocumentosFieldUpdateOperationsInput | $Enums.ModuloDocumentos
+    tipo?: NullableEnumTipoCarpetaFieldUpdateOperationsInput | $Enums.TipoCarpeta | null
+    proceso?: NullableEnumProcesoIndicadorFieldUpdateOperationsInput | $Enums.ProcesoIndicador | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ArchivoUpdateWithoutCarpetaInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    tipo?: EnumTipoArchivoDocumentoFieldUpdateOperationsInput | $Enums.TipoArchivoDocumento
+    storagePath?: StringFieldUpdateOperationsInput | string
+    fechaSubida?: DateTimeFieldUpdateOperationsInput | Date | string
+    subidoPor?: UsuarioUpdateOneRequiredWithoutArchivosSubidosNestedInput
+  }
+
+  export type ArchivoUncheckedUpdateWithoutCarpetaInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    tipo?: EnumTipoArchivoDocumentoFieldUpdateOperationsInput | $Enums.TipoArchivoDocumento
+    storagePath?: StringFieldUpdateOperationsInput | string
+    subidoPorId?: IntFieldUpdateOperationsInput | number
+    fechaSubida?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ArchivoUncheckedUpdateManyWithoutCarpetaInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    tipo?: EnumTipoArchivoDocumentoFieldUpdateOperationsInput | $Enums.TipoArchivoDocumento
+    storagePath?: StringFieldUpdateOperationsInput | string
+    subidoPorId?: IntFieldUpdateOperationsInput | number
+    fechaSubida?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

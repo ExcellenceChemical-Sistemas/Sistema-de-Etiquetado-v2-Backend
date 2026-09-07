@@ -125,6 +125,7 @@ exports.Prisma.UsuarioScalarFieldEnum = {
   supabaseUserId: 'supabaseUserId',
   nombre: 'nombre',
   esAdmin: 'esAdmin',
+  esAdminKpis: 'esAdminKpis',
   avatarUrl: 'avatarUrl',
   createdAt: 'createdAt'
 };
@@ -154,6 +155,7 @@ exports.Prisma.ProductoScalarFieldEnum = {
   nfpaSalud: 'nfpaSalud',
   nfpaInflamabilidad: 'nfpaInflamabilidad',
   nfpaReactividad: 'nfpaReactividad',
+  fichaSeguridadUrl: 'fichaSeguridadUrl',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -197,6 +199,49 @@ exports.Prisma.TrabajoImpresionScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.CarpetaScalarFieldEnum = {
+  id: 'id',
+  nombre: 'nombre',
+  carpetaPadreId: 'carpetaPadreId',
+  modulo: 'modulo',
+  tipo: 'tipo',
+  proceso: 'proceso',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ArchivoScalarFieldEnum = {
+  id: 'id',
+  carpetaId: 'carpetaId',
+  nombre: 'nombre',
+  tipo: 'tipo',
+  storagePath: 'storagePath',
+  subidoPorId: 'subidoPorId',
+  fechaSubida: 'fechaSubida'
+};
+
+exports.Prisma.AccesoIndicadorScalarFieldEnum = {
+  id: 'id',
+  usuarioId: 'usuarioId',
+  proceso: 'proceso',
+  puedeVer: 'puedeVer',
+  puedeDescargar: 'puedeDescargar',
+  puedeAdjuntar: 'puedeAdjuntar',
+  puedeEditar: 'puedeEditar',
+  puedeEliminar: 'puedeEliminar'
+};
+
+exports.Prisma.AccesoISOScalarFieldEnum = {
+  id: 'id',
+  usuarioId: 'usuarioId',
+  puedeVer: 'puedeVer',
+  puedeDescargar: 'puedeDescargar',
+  puedeAdjuntar: 'puedeAdjuntar',
+  puedeEditar: 'puedeEditar',
+  puedeEliminar: 'puedeEliminar',
+  gestionaObsoleto: 'gestionaObsoleto'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -227,6 +272,38 @@ exports.EstadoTrabajoImpresion = exports.$Enums.EstadoTrabajoImpresion = {
   ERROR: 'ERROR'
 };
 
+exports.ModuloDocumentos = exports.$Enums.ModuloDocumentos = {
+  KPIS: 'KPIS',
+  ISO: 'ISO'
+};
+
+exports.TipoCarpeta = exports.$Enums.TipoCarpeta = {
+  ANIO: 'ANIO',
+  PROCESO: 'PROCESO',
+  PERIODO: 'PERIODO',
+  RI: 'RI',
+  DS: 'DS',
+  OBSOLETO: 'OBSOLETO'
+};
+
+exports.ProcesoIndicador = exports.$Enums.ProcesoIndicador = {
+  COMERCIAL: 'COMERCIAL',
+  COMPRAS: 'COMPRAS',
+  ALMACEN_DISTRIBUCION: 'ALMACEN_DISTRIBUCION',
+  CONTROL_CALIDAD: 'CONTROL_CALIDAD',
+  SGC: 'SGC',
+  DIRECCION_PLANEAMIENTO: 'DIRECCION_PLANEAMIENTO',
+  RRHH: 'RRHH',
+  SERVICIOS_GENERALES: 'SERVICIOS_GENERALES'
+};
+
+exports.TipoArchivoDocumento = exports.$Enums.TipoArchivoDocumento = {
+  PDF: 'PDF',
+  WORD: 'WORD',
+  EXCEL: 'EXCEL',
+  POWERPOINT: 'POWERPOINT'
+};
+
 exports.Prisma.ModelName = {
   Usuario: 'Usuario',
   Permiso: 'Permiso',
@@ -234,7 +311,11 @@ exports.Prisma.ModelName = {
   Producto: 'Producto',
   Plantilla: 'Plantilla',
   Lote: 'Lote',
-  TrabajoImpresion: 'TrabajoImpresion'
+  TrabajoImpresion: 'TrabajoImpresion',
+  Carpeta: 'Carpeta',
+  Archivo: 'Archivo',
+  AccesoIndicador: 'AccesoIndicador',
+  AccesoISO: 'AccesoISO'
 };
 
 /**

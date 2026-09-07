@@ -32,9 +32,13 @@ export class EtiquetasController {
     return this.trabajos.actualizarEstado(id, dto);
   }
 
+  // Sin @RequierePermiso: consultar el estado del trabajo propio es parte del
+  // flujo de quien ya pudo crearlo. La restriccion que importa la aplica el
+  // service, que solo devuelve el trabajo al usuario que lo creo.
   @Get('trabajos/:id')
   @UseGuards(SupabaseAuthGuard)
-  async estado(@Param('id', ParseIntPipe) id: number) {
-    return this.trabajos.obtenerEstado(id);
+  async estado(@Param('id', ParseIntPipe) id: number, @Req() req: Request) {
+    const usuario = (req as any).usuario;
+    return this.trabajos.obtenerEstado(id, usuario);
   }
 }

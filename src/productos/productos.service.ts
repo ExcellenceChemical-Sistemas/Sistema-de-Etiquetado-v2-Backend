@@ -71,6 +71,23 @@ export class ProductosService {
     }
   }
 
+  async setFichaSeguridadUrl(id: number, fichaSeguridadUrl: string) {
+    await this.findOne(id);
+    return this.prisma.producto.update({
+      where: { id },
+      data: { fichaSeguridadUrl },
+    });
+  }
+
+  async removeFichaSeguridadUrl(id: number) {
+    const producto = await this.findOne(id);
+    if (!producto.fichaSeguridadUrl) return producto;
+    return this.prisma.producto.update({
+      where: { id },
+      data: { fichaSeguridadUrl: null },
+    });
+  }
+
   private handleDuplicado(error: unknown): never {
     if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
       throw new ConflictException('Ya existe un producto con ese nombre');

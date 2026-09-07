@@ -20,11 +20,14 @@ model Usuario {
   supabaseUserId String    @unique
   nombre         String
   esAdmin        Boolean   @default(false)
+  esAdminKpis    Boolean   @default(false) // gestiona accesos de KPIs/ISO de otros; no implica acceso propio automático
   avatarUrl      String?
   permisos       Permiso[]
   createdAt      DateTime  @default(now())
-
-    trabajosImpresion TrabajoImpresion[]
+  trabajosImpresion TrabajoImpresion[]
+  archivosSubidos   Archivo[]
+  accesosIndicador  AccesoIndicador[]
+  accesoIso         AccesoISO?
 }
 
 model Permiso {
@@ -83,6 +86,9 @@ model Producto {
   nfpaSalud          Int? // 0-4
   nfpaInflamabilidad Int? // 0-4
   nfpaReactividad    Int?
+  // Path del objeto en el bucket, ej: "ficha-seguridad/producto-12/1234-ficha.pdf".
+  // Opcional: un producto se puede registrar sin ficha y adjuntarla despues.
+  fichaSeguridadUrl  String?
   lotes              Lote[]
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
@@ -171,4 +177,108 @@ imagenPath   String?
   updatedAt    DateTime               @updatedAt
 
   @@map("trabajos_impresion")
+}
+
+
+// ──────────────────────────────────────────
+// MÓDULO KPIs + DOCUMENTACIÓN ISO (Fase 3)
+// Árbol de carpetas dinámico guardado en BD (no hay archivos
+// reales en disco, los documentos van a Supabase Storage).
+// Los permisos se atan al concepto (proceso, o ISO en general),
+// NO a una carpeta puntual — así se heredan solos al clonar un
+// año nuevo. La regla "PDF visible a todos" y "Obsoleto solo
+// Alice" quedan hardcodeadas en el service (no en tabla), se
+// migran a tabla más adelante si hace falta.
+// ──────────────────────────────────────────
+enum ModuloDocumentos {
+  KPIS
+  ISO
+}
+
+enum TipoCarpeta {
+  ANIO
+  PROCESO
+  PERIODO
+  RI
+  DS
+  OBSOLETO
+}
+
+enum ProcesoIndicador {
+  COMERCIAL
+  COMPRAS
+  ALMACEN_DISTRIBUCION
+  CONTROL_CALIDAD
+  SGC
+  DIRECCION_PLANEAMIENTO
+  RRHH
+  SERVICIOS_GENERALES
+}
+
+enum TipoArchivoDocumento {
+  PDF
+  WORD
+  EXCEL
+  POWERPOINT
+}
+
+model Carpeta {
+  id             Int              @id @default(autoincrement())
+  nombre         String
+  carpetaPadreId Int?
+  carpetaPadre   Carpeta?         @relation("CarpetaHijos", fields: [carpetaPadreId], references: [id], onDelete: Cascade)
+  hijos          Carpeta[]        @relation("CarpetaHijos")
+  modulo         ModuloDocumentos
+  tipo           TipoCarpeta?
+  proceso        ProcesoIndicador?
+  archivos       Archivo[]
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+
+  @@index([carpetaPadreId])
+  @@map("carpetas")
+}
+
+model Archivo {
+  id           Int                  @id @default(autoincrement())
+  carpetaId    Int
+  carpeta      Carpeta              @relation(fields: [carpetaId], references: [id], onDelete: Cascade)
+  nombre       String
+  tipo         TipoArchivoDocumento
+  storagePath  String
+  subidoPorId  Int
+  subidoPor    Usuario              @relation(fields: [subidoPorId], references: [id])
+  fechaSubida  DateTime             @default(now())
+
+  @@index([carpetaId])
+  @@map("archivos")
+}
+
+model AccesoIndicador {
+  id             Int              @id @default(autoincrement())
+  usuarioId      Int
+  usuario        Usuario          @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  proceso        ProcesoIndicador
+  puedeVer       Boolean          @default(false)
+  puedeDescargar Boolean          @default(false)
+  puedeAdjuntar  Boolean          @default(false)
+  puedeEditar    Boolean          @default(false)
+  puedeEliminar  Boolean          @default(false)
+
+  @@unique([usuarioId, proceso])
+  @@map("accesos_indicador")
+}
+
+model AccesoISO {
+  id               Int     @id @default(autoincrement())
+  usuarioId        Int     @unique
+  usuario          Usuario @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  puedeVer         Boolean @default(false)
+  puedeDescargar   Boolean @default(false)
+  puedeAdjuntar    Boolean @default(false)
+  puedeEditar      Boolean @default(false)
+  puedeEliminar    Boolean @default(false)
+  gestionaObsoleto Boolean @default(false) // ver+editar la carpeta Obsoleto (antes hardcodeado "solo Alice")
+
+  @@map("accesos_iso")
 }

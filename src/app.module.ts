@@ -1,3 +1,4 @@
+// app.module.ts
 import { Module } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
@@ -9,6 +10,7 @@ import { LotesModule } from './lotes/lotes.module';
 import { PlantillasModule } from './plantillas/plantillas.module';
 import { EtiquetasModule } from './etiquetas/etiquetas.module';
 import { UsuariosModule } from './usuario/usuarios.module';
+import { CarpetasModule } from './carpetas/carpetas.module';
 
 @Module({
   imports: [
@@ -26,6 +28,7 @@ import { UsuariosModule } from './usuario/usuarios.module';
     PlantillasModule,
     EtiquetasModule,
     UsuariosModule,
+    CarpetasModule,
   ],
   providers: [
     {

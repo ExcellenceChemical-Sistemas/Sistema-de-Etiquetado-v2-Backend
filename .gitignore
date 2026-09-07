@@ -17,6 +17,11 @@ npm-debug.log*
 
 # Prisma
 prisma/*.db
+# Los seeds se corren con ts-node: el .ts es la fuente, cualquier compilado
+# suelto acá es basura (ya pasó de pisar el .ts con una copia equivocada).
+prisma/seeds/*.js
+prisma/seeds/*.js.map
+prisma/seeds/*.d.ts
 
 # Editor / OS
 .vscode/
@@ -28,3 +33,19 @@ Thumbs.db
 *.tsbuildinfo
 coverage/
 .turbo/
+
+# Salida de build. `dist2/` quedo commiteado por error en su momento: se
+# destrackea, pero sigue existiendo en el historial.
+dist2/
+
+# Scripts descartables que se corrieron a mano contra la base (sesiones 10-11).
+# Leen credenciales de process.env, no las contienen, pero no son parte del
+# proyecto: son andamiaje de una sola vez.
+*.tmp.js
+*.tmp.js.map
+*.tmp.d.ts
+
+# Archivos de prueba sueltos en la raiz (se subieron a mano para testear
+# adjuntos). No confundir con las fixtures reales, que viven en Supabase.
+boleta.pdf
+prueba.docx

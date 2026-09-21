@@ -42,10 +42,10 @@ Prefijo global de rutas: **`/api`**.
 - **Usuario**: espejo local de Supabase Auth (`supabaseUserId` único, `nombre`, `esAdmin`, `esAdminKpis`, `avatarUrl`). Relación 1:N con `Permiso`, `AccesoIndicador` y `TrabajoImpresion`; 1:1 opcional con `AccesoISO`.
 - **Permiso**: por usuario + `Recurso` (`LOTES`, `PRODUCTOS`, `FABRICANTES`, `PLANTILLAS`, `COA`, `USUARIOS`, `ETIQUETAS`), con los flags `puedeVer` / `puedeCrear` / `puedeEditar` / `puedeEliminar`.
 - **Fabricante** y **Producto**: `nombre` + `nombreNormalizado` (minúsculas, sin acentos), ambos únicos, para evitar duplicados tipo "Ácido Cítrico" vs "acido citrico". Los services **deben** setear `nombreNormalizado` al escribir.
-- **Producto**: sin fabricante fijo (varía por lote); campos NFPA opcionales (`nfpaSalud`, `nfpaInflamabilidad`, `nfpaReactividad`, 0-4) y `fichaSeguridadUrl` opcional.
+- **Producto**: sin fabricante fijo (varía por lote); campos NFPA opcionales (`nfpaSalud`, `nfpaInflamabilidad`, `nfpaReactividad`, 0-4) y `fichaSeguridadUrl` opcional. Clasificación GHS opcional, que se muestra solo en la página pública del QR (no en la etiqueta impresa): `pictogramasGhs` (códigos `GHS01`–`GHS09`), `palabraAdvertencia` (`PELIGRO` | `ATENCION`), `frasesH` y `frasesP`.
 - **Lote**: `numeroLote`, `coaUrl`, único compuesto `[productoId, fabricanteId, numeroLote]`.
   ⚠️ `fechaFabricacion` / `fechaVencimiento` se guardan como **`String` tal cual aparecen en el COA** (el formato varía según el proveedor). `fechaVencimientoOrden` (`DateTime?`) lo calcula el service solo para ordenar/filtrar — **nunca editarlo a mano**.
-- **TrabajoImpresion**: `estado` (`PENDIENTE` | `IMPRESO` | `ERROR`), datos de peso/unidades/proforma, `imagenPath`, `mensajeError`, `creadoPorId`.
+- **TrabajoImpresion**: `estado` (`PENDIENTE` | `IMPRESO` | `ERROR`), datos de peso/unidades/proforma, `imagenPath`, `mensajeError`, `creadoPorId` y `token` (código imposible de adivinar que va en el QR impreso; abre la página pública de trazabilidad de **esa** etiqueta). El QR vale 2 años (`QR_VIGENCIA_DIAS`, por defecto 730).
 
 ### KPIs / ISO
 
@@ -102,6 +102,11 @@ Los módulos CRUD (`fabricantes`, `productos`, `lotes`, `plantillas`) siguen el 
 
 - `POST|GET|DELETE /api/lotes/:id/coa` — COA del lote (subir = `puedeEditar`, ver = `puedeVer`, borrar = `puedeEliminar`).
 - `POST|GET|DELETE /api/productos/:id/ficha-seguridad` — ficha de seguridad del producto, mismo criterio de permisos.
+- `POST /api/productos/analizar-ficha` — recibe un PDF (máx. 10 MB, `PRODUCTOS:puedeVer`) y **propone** la clasificación GHS leyendo su sección 2; no guarda nada. Ver "Lectura de fichas de seguridad".
+
+### Lotes: eliminación
+
+`DELETE /api/lotes/:id` borra el lote junto con su historial de etiquetas (y su COA del storage). **Se rechaza con 409** si el lote tiene alguna etiqueta impresa con QR todavía vigente (menos de 2 años), para no dejar sin trazabilidad un QR que ya está pegado en un envase.
 
 ### Etiquetas — cola de impresión, **no** renderizado síncrono
 
@@ -113,8 +118,10 @@ Los módulos CRUD (`fabricantes`, `productos`, `lotes`, `plantillas`) siguen el 
 | `GET /api/etiquetas/trabajos/pendientes` | `AgentTokenGuard` | El agente hace polling |
 | `PATCH /api/etiquetas/trabajos/:id/estado` | `AgentTokenGuard` | El agente reporta `IMPRESO` / `ERROR` |
 | `GET /api/etiquetas/trabajos/:id` | Supabase | El frontend consulta el estado — **solo del trabajo propio** (o cualquiera si es `esAdmin`); uno ajeno responde 404 |
+| `GET /api/etiquetas/historial` | Supabase + `ETIQUETAS:puedeVer` | Etiquetas generadas (las 1000 más recientes) con producto, lote, estado, autor y token del QR |
+| `GET /api/publico/etiquetas/:token` (+ `/coa`, `/fds`) | Sin login | Página pública del QR: datos del lote, clasificación GHS, COA y ficha de seguridad |
 
-`LimpiezaTrabajosService` corre un cron **diario a las 3 AM** que borra los trabajos `IMPRESO`/`ERROR` más viejos que `RETENCION_TRABAJOS_DIAS` (por defecto 3).
+`LimpiezaTrabajosService` corre un cron **diario a las 3 AM** que borra los trabajos `IMPRESO`/`ERROR` más viejos que `RETENCION_TRABAJOS_DIAS` (por defecto 3). Los `IMPRESO` con `token` se conservan hasta que vence el QR (2 años), porque son el respaldo de la etiqueta ya pegada.
 
 ### Usuarios
 
@@ -159,7 +166,19 @@ Tres buckets:
 
 ## Etiquetas: renderizado
 
-El backend no renderiza etiquetas: crea el trabajo de impresión y el `agente-impresion` lo renderiza (Handlebars + Puppeteer) y lo imprime.
+El backend no renderiza etiquetas: crea el trabajo de impresión y el `agente-impresion` lo renderiza (Handlebars + Puppeteer) y lo imprime. La etiqueta impresa **no lleva** pictogramas GHS ni número de envase: la clasificación de seguridad se ve al escanear el QR.
+
+## Lectura de fichas de seguridad
+
+`POST /api/productos/analizar-ficha` (`src/productos/fds-parser.ts`) lee el texto del PDF con `pdf-parse` y devuelve `{ pictogramasGhs, palabraAdvertencia, frasesH, frasesP, noPeligroso }`:
+
+- Toma la **sección 2** (ignorando el índice del documento) y, si no la ubica, busca en todo el PDF.
+- Extrae los códigos H/P y usa el texto oficial en español de las frases H; los pictogramas se deducen de los códigos H según el Anexo V del CLP (con las reglas de irritación vs. corrosivo y nocivo vs. tóxico).
+- Entiende fichas en español, inglés y portugués, y varios formatos (código antes o después del texto, entre paréntesis, combinaciones como `H301+H311+H331`).
+- `noPeligroso: true` si la ficha dice que el producto no está clasificado como peligroso.
+- **No hace OCR**: si el PDF no tiene texto (escaneado) responde 400 y la clasificación se marca a mano.
+
+Es una propuesta: el formulario del producto la muestra y una persona la revisa antes de guardar.
 
 ## Variables de entorno
 

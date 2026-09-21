@@ -86,6 +86,12 @@ labels: the agent renders the `.hbs` templates (Puppeteer + Handlebars) and prin
 `plantillas` table only stores the template filename. `limpieza-trabajos.service.ts` runs a
 `@nestjs/schedule` cron cleanup.
 
+**GHS / fichas de seguridad.** `Producto` guarda `pictogramasGhs`, `palabraAdvertencia`, `frasesH` y
+`frasesP`; se muestran solo en la página pública del QR (`etiquetas-publicas.service.ts`), no en la
+etiqueta impresa. `productos/fds-parser.ts` propone esos datos leyendo el PDF de la ficha
+(`POST /productos/analizar-ficha`, sin OCR). `lotes.service.remove()` rechaza borrar un lote con un
+QR vigente (`limiteVigenciaQr()`).
+
 **Label templates** live in the `agente-impresion` repo (`assets/templates/`), not here.
 `@nestjs/throttler` applies a global 100 req/IP/min limit.
 

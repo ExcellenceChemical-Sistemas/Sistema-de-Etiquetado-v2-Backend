@@ -121,6 +121,12 @@ function limpiar(t: string): string {
   return t.replace(/\s+/g, ' ').replace(/^[\s:.\-–—]+/, '').replace(/[\s;,]+$/, '').trim().slice(0, 270);
 }
 
+// Texto que precede a un código entre paréntesis: se queda con lo que sigue al último encabezado.
+function limpiarAntes(t: string): string {
+  t = t.replace(/^[\s\S]*(?:Generalidades|Prevenci[oó]n|Intervenci[oó]n|Almacenamiento|Eliminaci[oó]n|Consejos de prudencia)\s*:/i, '');
+  return t.replace(/^[\s)]+/, '').replace(/[\s(]+$/, '').replace(/\s+/g, ' ').trim().slice(0, 270);
+}
+
 function palabraDe(texto: string): ClasificacionFds['palabraAdvertencia'] {
   const m = texto.match(
     /(palabra\s+de\s+(?:advertencia|se[nñ]al)|se[nñ]al\s+de\s+advertencia|signal\s+word)[\s:.\-–—]*([A-Za-zÁÉÍÓÚáéíóú]+)/i,
@@ -156,7 +162,11 @@ export function clasificarDesdeTexto(textoCompleto: string): ClasificacionFds {
 
   marcas.forEach((m, k) => {
     const siguiente = marcas[k + 1]?.i ?? plano.length;
-    let detalle = limpiar(plano.slice(m.fin, Math.min(siguiente, m.fin + 300)));
+    // Algunas FDS escriben el texto ANTES y el código entre paréntesis: "Provoca irritación. (H315)".
+    const entreParentesis = plano.slice(0, m.i).trimEnd().endsWith('(');
+    let detalle = entreParentesis
+      ? limpiarAntes(plano.slice(k > 0 ? marcas[k - 1].fin : 0, m.i))
+      : limpiar(plano.slice(m.fin, Math.min(siguiente, m.fin + 300)));
     // Un "H" suelto es ambiguo si no está en la lista (evita falsos positivos como "H2O").
     if (m.tipo === 'H' && !m.codigo.startsWith('EUH') && !m.codigo.includes('+') && !TEXTO_H[m.codigo.replace(/[A-Za-z]+$/, '')]) return;
     if (m.tipo === 'H') {
@@ -164,7 +174,8 @@ export function clasificarDesdeTexto(textoCompleto: string): ClasificacionFds {
       if (vistosH.has(m.codigo)) return;
       vistosH.add(m.codigo);
       if (!m.codigo.startsWith('EUH')) codigosH.push(...m.codigo.split('+'));
-      if (!detalle || detalle.length < 8) detalle = TEXTO_H[base] ?? '';
+      // Texto oficial cuando lo conocemos: el que sale del PDF suele venir mezclado con otras líneas.
+      detalle = TEXTO_H[base] ?? detalle;
       frasesH.push(detalle ? `${m.codigo}: ${detalle}` : m.codigo);
     } else {
       if (vistosP.has(m.codigo)) return;

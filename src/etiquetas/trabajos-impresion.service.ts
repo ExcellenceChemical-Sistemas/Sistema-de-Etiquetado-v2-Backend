@@ -11,12 +11,19 @@ export class TrabajosImpresionService {
 
   async crear(dto: GenerarEtiquetaDto, creadoPorId: number) {
     const [lote, plantilla] = await Promise.all([
-      this.prisma.lote.findUnique({ where: { id: dto.loteId } }),
+      this.prisma.lote.findUnique({
+        where: { id: dto.loteId },
+        include: { producto: { select: { densidad: true } } },
+      }),
       this.prisma.plantilla.findUnique({ where: { id: dto.plantillaId } }),
     ]);
 
-    if (!lote) throw new NotFoundException(`Lote con id ${dto.loteId} no encontrado`);
-    if (!plantilla) throw new NotFoundException(`Plantilla con id ${dto.plantillaId} no encontrada`);
+    if (!lote)
+      throw new NotFoundException(`Lote con id ${dto.loteId} no encontrado`);
+    if (!plantilla)
+      throw new NotFoundException(
+        `Plantilla con id ${dto.plantillaId} no encontrada`,
+      );
 
     const trabajo = await this.prisma.trabajoImpresion.create({
       data: {
@@ -26,9 +33,13 @@ export class TrabajosImpresionService {
         unidadBruto: dto.unidadBruto,
         cantidadNeta: dto.cantidadNeta,
         unidadNeta: dto.unidadNeta,
-        tara: calcularTara(dto.pesoBruto, dto.unidadBruto, dto.cantidadNeta, dto.unidadNeta),
-        envaseNumero: dto.envaseNumero,
-        envaseTotal: dto.envaseTotal,
+        tara: calcularTara(
+          dto.pesoBruto,
+          dto.unidadBruto,
+          dto.cantidadNeta,
+          dto.unidadNeta,
+          lote.producto.densidad,
+        ),
         token: randomBytes(12).toString('base64url'),
         proforma: dto.proforma,
         creadoPorId,
@@ -68,12 +79,15 @@ export class TrabajosImpresionService {
       nfpaInflamabilidad: t.lote.producto.nfpaInflamabilidad,
       nfpaReactividad: t.lote.producto.nfpaReactividad,
       coaValidado: !!t.lote.coaUrl,
+      pictogramasGhs: t.lote.producto.pictogramasGhs,
       qrUrl: t.token ? `${process.env.FRONTEND_URL}/e/${t.token}` : null,
     }));
   }
 
   async actualizarEstado(id: number, dto: ActualizarEstadoTrabajoDto) {
-    const trabajo = await this.prisma.trabajoImpresion.findUnique({ where: { id } });
+    const trabajo = await this.prisma.trabajoImpresion.findUnique({
+      where: { id },
+    });
     if (!trabajo) throw new NotFoundException(`Trabajo ${id} no encontrado`);
     return this.prisma.trabajoImpresion.update({
       where: { id },
@@ -105,6 +119,10 @@ export class TrabajosImpresionService {
     // `creadoPorId` se trajo solo para el chequeo de pertenencia y no tiene que
     // salir. La forma queda igual que antes del fix, asi que el frontend no
     // necesita ningun ajuste.
-    return { id: trabajo.id, estado: trabajo.estado, mensajeError: trabajo.mensajeError };
+    return {
+      id: trabajo.id,
+      estado: trabajo.estado,
+      mensajeError: trabajo.mensajeError,
+    };
   }
 }

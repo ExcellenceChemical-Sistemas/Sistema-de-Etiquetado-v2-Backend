@@ -5615,6 +5615,7 @@ export namespace Prisma {
     nfpaSalud: number | null
     nfpaInflamabilidad: number | null
     nfpaReactividad: number | null
+    densidad: number | null
   }
 
   export type ProductoSumAggregateOutputType = {
@@ -5622,6 +5623,7 @@ export namespace Prisma {
     nfpaSalud: number | null
     nfpaInflamabilidad: number | null
     nfpaReactividad: number | null
+    densidad: number | null
   }
 
   export type ProductoMinAggregateOutputType = {
@@ -5631,6 +5633,8 @@ export namespace Prisma {
     nfpaSalud: number | null
     nfpaInflamabilidad: number | null
     nfpaReactividad: number | null
+    densidad: number | null
+    palabraAdvertencia: string | null
     fichaSeguridadUrl: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -5643,6 +5647,8 @@ export namespace Prisma {
     nfpaSalud: number | null
     nfpaInflamabilidad: number | null
     nfpaReactividad: number | null
+    densidad: number | null
+    palabraAdvertencia: string | null
     fichaSeguridadUrl: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -5655,6 +5661,11 @@ export namespace Prisma {
     nfpaSalud: number
     nfpaInflamabilidad: number
     nfpaReactividad: number
+    densidad: number
+    pictogramasGhs: number
+    palabraAdvertencia: number
+    frasesH: number
+    frasesP: number
     fichaSeguridadUrl: number
     createdAt: number
     updatedAt: number
@@ -5667,6 +5678,7 @@ export namespace Prisma {
     nfpaSalud?: true
     nfpaInflamabilidad?: true
     nfpaReactividad?: true
+    densidad?: true
   }
 
   export type ProductoSumAggregateInputType = {
@@ -5674,6 +5686,7 @@ export namespace Prisma {
     nfpaSalud?: true
     nfpaInflamabilidad?: true
     nfpaReactividad?: true
+    densidad?: true
   }
 
   export type ProductoMinAggregateInputType = {
@@ -5683,6 +5696,8 @@ export namespace Prisma {
     nfpaSalud?: true
     nfpaInflamabilidad?: true
     nfpaReactividad?: true
+    densidad?: true
+    palabraAdvertencia?: true
     fichaSeguridadUrl?: true
     createdAt?: true
     updatedAt?: true
@@ -5695,6 +5710,8 @@ export namespace Prisma {
     nfpaSalud?: true
     nfpaInflamabilidad?: true
     nfpaReactividad?: true
+    densidad?: true
+    palabraAdvertencia?: true
     fichaSeguridadUrl?: true
     createdAt?: true
     updatedAt?: true
@@ -5707,6 +5724,11 @@ export namespace Prisma {
     nfpaSalud?: true
     nfpaInflamabilidad?: true
     nfpaReactividad?: true
+    densidad?: true
+    pictogramasGhs?: true
+    palabraAdvertencia?: true
+    frasesH?: true
+    frasesP?: true
     fichaSeguridadUrl?: true
     createdAt?: true
     updatedAt?: true
@@ -5806,6 +5828,11 @@ export namespace Prisma {
     nfpaSalud: number | null
     nfpaInflamabilidad: number | null
     nfpaReactividad: number | null
+    densidad: number | null
+    pictogramasGhs: string[]
+    palabraAdvertencia: string | null
+    frasesH: string[]
+    frasesP: string[]
     fichaSeguridadUrl: string | null
     createdAt: Date
     updatedAt: Date
@@ -5837,6 +5864,11 @@ export namespace Prisma {
     nfpaSalud?: boolean
     nfpaInflamabilidad?: boolean
     nfpaReactividad?: boolean
+    densidad?: boolean
+    pictogramasGhs?: boolean
+    palabraAdvertencia?: boolean
+    frasesH?: boolean
+    frasesP?: boolean
     fichaSeguridadUrl?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -5851,6 +5883,11 @@ export namespace Prisma {
     nfpaSalud?: boolean
     nfpaInflamabilidad?: boolean
     nfpaReactividad?: boolean
+    densidad?: boolean
+    pictogramasGhs?: boolean
+    palabraAdvertencia?: boolean
+    frasesH?: boolean
+    frasesP?: boolean
     fichaSeguridadUrl?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -5863,6 +5900,11 @@ export namespace Prisma {
     nfpaSalud?: boolean
     nfpaInflamabilidad?: boolean
     nfpaReactividad?: boolean
+    densidad?: boolean
+    pictogramasGhs?: boolean
+    palabraAdvertencia?: boolean
+    frasesH?: boolean
+    frasesP?: boolean
     fichaSeguridadUrl?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -5875,12 +5917,17 @@ export namespace Prisma {
     nfpaSalud?: boolean
     nfpaInflamabilidad?: boolean
     nfpaReactividad?: boolean
+    densidad?: boolean
+    pictogramasGhs?: boolean
+    palabraAdvertencia?: boolean
+    frasesH?: boolean
+    frasesP?: boolean
     fichaSeguridadUrl?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type ProductoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nombre" | "nombreNormalizado" | "nfpaSalud" | "nfpaInflamabilidad" | "nfpaReactividad" | "fichaSeguridadUrl" | "createdAt" | "updatedAt", ExtArgs["result"]["producto"]>
+  export type ProductoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nombre" | "nombreNormalizado" | "nfpaSalud" | "nfpaInflamabilidad" | "nfpaReactividad" | "densidad" | "pictogramasGhs" | "palabraAdvertencia" | "frasesH" | "frasesP" | "fichaSeguridadUrl" | "createdAt" | "updatedAt", ExtArgs["result"]["producto"]>
   export type ProductoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     lotes?: boolean | Producto$lotesArgs<ExtArgs>
     _count?: boolean | ProductoCountOutputTypeDefaultArgs<ExtArgs>
@@ -5900,6 +5947,11 @@ export namespace Prisma {
       nfpaSalud: number | null
       nfpaInflamabilidad: number | null
       nfpaReactividad: number | null
+      densidad: number | null
+      pictogramasGhs: string[]
+      palabraAdvertencia: string | null
+      frasesH: string[]
+      frasesP: string[]
       fichaSeguridadUrl: string | null
       createdAt: Date
       updatedAt: Date
@@ -6333,6 +6385,11 @@ export namespace Prisma {
     readonly nfpaSalud: FieldRef<"Producto", 'Int'>
     readonly nfpaInflamabilidad: FieldRef<"Producto", 'Int'>
     readonly nfpaReactividad: FieldRef<"Producto", 'Int'>
+    readonly densidad: FieldRef<"Producto", 'Float'>
+    readonly pictogramasGhs: FieldRef<"Producto", 'String[]'>
+    readonly palabraAdvertencia: FieldRef<"Producto", 'String'>
+    readonly frasesH: FieldRef<"Producto", 'String[]'>
+    readonly frasesP: FieldRef<"Producto", 'String[]'>
     readonly fichaSeguridadUrl: FieldRef<"Producto", 'String'>
     readonly createdAt: FieldRef<"Producto", 'DateTime'>
     readonly updatedAt: FieldRef<"Producto", 'DateTime'>
@@ -15097,6 +15154,11 @@ export namespace Prisma {
     nfpaSalud: 'nfpaSalud',
     nfpaInflamabilidad: 'nfpaInflamabilidad',
     nfpaReactividad: 'nfpaReactividad',
+    densidad: 'densidad',
+    pictogramasGhs: 'pictogramasGhs',
+    palabraAdvertencia: 'palabraAdvertencia',
+    frasesH: 'frasesH',
+    frasesP: 'frasesP',
     fichaSeguridadUrl: 'fichaSeguridadUrl',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -15305,6 +15367,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Float'
+   */
+  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float[]'
+   */
+  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+  /**
    * Reference to a field of type 'EstadoTrabajoImpresion'
    */
   export type EnumEstadoTrabajoImpresionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EstadoTrabajoImpresion'>
@@ -15371,20 +15447,6 @@ export namespace Prisma {
    * Reference to a field of type 'TipoArchivoDocumento[]'
    */
   export type ListEnumTipoArchivoDocumentoFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TipoArchivoDocumento[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'Float'
-   */
-  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
-    
-
-
-  /**
-   * Reference to a field of type 'Float[]'
-   */
-  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
   /**
    * Deep Input Types
@@ -15605,6 +15667,11 @@ export namespace Prisma {
     nfpaSalud?: IntNullableFilter<"Producto"> | number | null
     nfpaInflamabilidad?: IntNullableFilter<"Producto"> | number | null
     nfpaReactividad?: IntNullableFilter<"Producto"> | number | null
+    densidad?: FloatNullableFilter<"Producto"> | number | null
+    pictogramasGhs?: StringNullableListFilter<"Producto">
+    palabraAdvertencia?: StringNullableFilter<"Producto"> | string | null
+    frasesH?: StringNullableListFilter<"Producto">
+    frasesP?: StringNullableListFilter<"Producto">
     fichaSeguridadUrl?: StringNullableFilter<"Producto"> | string | null
     createdAt?: DateTimeFilter<"Producto"> | Date | string
     updatedAt?: DateTimeFilter<"Producto"> | Date | string
@@ -15618,6 +15685,11 @@ export namespace Prisma {
     nfpaSalud?: SortOrderInput | SortOrder
     nfpaInflamabilidad?: SortOrderInput | SortOrder
     nfpaReactividad?: SortOrderInput | SortOrder
+    densidad?: SortOrderInput | SortOrder
+    pictogramasGhs?: SortOrder
+    palabraAdvertencia?: SortOrderInput | SortOrder
+    frasesH?: SortOrder
+    frasesP?: SortOrder
     fichaSeguridadUrl?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -15634,6 +15706,11 @@ export namespace Prisma {
     nfpaSalud?: IntNullableFilter<"Producto"> | number | null
     nfpaInflamabilidad?: IntNullableFilter<"Producto"> | number | null
     nfpaReactividad?: IntNullableFilter<"Producto"> | number | null
+    densidad?: FloatNullableFilter<"Producto"> | number | null
+    pictogramasGhs?: StringNullableListFilter<"Producto">
+    palabraAdvertencia?: StringNullableFilter<"Producto"> | string | null
+    frasesH?: StringNullableListFilter<"Producto">
+    frasesP?: StringNullableListFilter<"Producto">
     fichaSeguridadUrl?: StringNullableFilter<"Producto"> | string | null
     createdAt?: DateTimeFilter<"Producto"> | Date | string
     updatedAt?: DateTimeFilter<"Producto"> | Date | string
@@ -15647,6 +15724,11 @@ export namespace Prisma {
     nfpaSalud?: SortOrderInput | SortOrder
     nfpaInflamabilidad?: SortOrderInput | SortOrder
     nfpaReactividad?: SortOrderInput | SortOrder
+    densidad?: SortOrderInput | SortOrder
+    pictogramasGhs?: SortOrder
+    palabraAdvertencia?: SortOrderInput | SortOrder
+    frasesH?: SortOrder
+    frasesP?: SortOrder
     fichaSeguridadUrl?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -15667,6 +15749,11 @@ export namespace Prisma {
     nfpaSalud?: IntNullableWithAggregatesFilter<"Producto"> | number | null
     nfpaInflamabilidad?: IntNullableWithAggregatesFilter<"Producto"> | number | null
     nfpaReactividad?: IntNullableWithAggregatesFilter<"Producto"> | number | null
+    densidad?: FloatNullableWithAggregatesFilter<"Producto"> | number | null
+    pictogramasGhs?: StringNullableListFilter<"Producto">
+    palabraAdvertencia?: StringNullableWithAggregatesFilter<"Producto"> | string | null
+    frasesH?: StringNullableListFilter<"Producto">
+    frasesP?: StringNullableListFilter<"Producto">
     fichaSeguridadUrl?: StringNullableWithAggregatesFilter<"Producto"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Producto"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Producto"> | Date | string
@@ -16460,6 +16547,11 @@ export namespace Prisma {
     nfpaSalud?: number | null
     nfpaInflamabilidad?: number | null
     nfpaReactividad?: number | null
+    densidad?: number | null
+    pictogramasGhs?: ProductoCreatepictogramasGhsInput | string[]
+    palabraAdvertencia?: string | null
+    frasesH?: ProductoCreatefrasesHInput | string[]
+    frasesP?: ProductoCreatefrasesPInput | string[]
     fichaSeguridadUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -16473,6 +16565,11 @@ export namespace Prisma {
     nfpaSalud?: number | null
     nfpaInflamabilidad?: number | null
     nfpaReactividad?: number | null
+    densidad?: number | null
+    pictogramasGhs?: ProductoCreatepictogramasGhsInput | string[]
+    palabraAdvertencia?: string | null
+    frasesH?: ProductoCreatefrasesHInput | string[]
+    frasesP?: ProductoCreatefrasesPInput | string[]
     fichaSeguridadUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -16485,6 +16582,11 @@ export namespace Prisma {
     nfpaSalud?: NullableIntFieldUpdateOperationsInput | number | null
     nfpaInflamabilidad?: NullableIntFieldUpdateOperationsInput | number | null
     nfpaReactividad?: NullableIntFieldUpdateOperationsInput | number | null
+    densidad?: NullableFloatFieldUpdateOperationsInput | number | null
+    pictogramasGhs?: ProductoUpdatepictogramasGhsInput | string[]
+    palabraAdvertencia?: NullableStringFieldUpdateOperationsInput | string | null
+    frasesH?: ProductoUpdatefrasesHInput | string[]
+    frasesP?: ProductoUpdatefrasesPInput | string[]
     fichaSeguridadUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16498,6 +16600,11 @@ export namespace Prisma {
     nfpaSalud?: NullableIntFieldUpdateOperationsInput | number | null
     nfpaInflamabilidad?: NullableIntFieldUpdateOperationsInput | number | null
     nfpaReactividad?: NullableIntFieldUpdateOperationsInput | number | null
+    densidad?: NullableFloatFieldUpdateOperationsInput | number | null
+    pictogramasGhs?: ProductoUpdatepictogramasGhsInput | string[]
+    palabraAdvertencia?: NullableStringFieldUpdateOperationsInput | string | null
+    frasesH?: ProductoUpdatefrasesHInput | string[]
+    frasesP?: ProductoUpdatefrasesPInput | string[]
     fichaSeguridadUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16511,6 +16618,11 @@ export namespace Prisma {
     nfpaSalud?: number | null
     nfpaInflamabilidad?: number | null
     nfpaReactividad?: number | null
+    densidad?: number | null
+    pictogramasGhs?: ProductoCreatepictogramasGhsInput | string[]
+    palabraAdvertencia?: string | null
+    frasesH?: ProductoCreatefrasesHInput | string[]
+    frasesP?: ProductoCreatefrasesPInput | string[]
     fichaSeguridadUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -16522,6 +16634,11 @@ export namespace Prisma {
     nfpaSalud?: NullableIntFieldUpdateOperationsInput | number | null
     nfpaInflamabilidad?: NullableIntFieldUpdateOperationsInput | number | null
     nfpaReactividad?: NullableIntFieldUpdateOperationsInput | number | null
+    densidad?: NullableFloatFieldUpdateOperationsInput | number | null
+    pictogramasGhs?: ProductoUpdatepictogramasGhsInput | string[]
+    palabraAdvertencia?: NullableStringFieldUpdateOperationsInput | string | null
+    frasesH?: ProductoUpdatefrasesHInput | string[]
+    frasesP?: ProductoUpdatefrasesPInput | string[]
     fichaSeguridadUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16534,6 +16651,11 @@ export namespace Prisma {
     nfpaSalud?: NullableIntFieldUpdateOperationsInput | number | null
     nfpaInflamabilidad?: NullableIntFieldUpdateOperationsInput | number | null
     nfpaReactividad?: NullableIntFieldUpdateOperationsInput | number | null
+    densidad?: NullableFloatFieldUpdateOperationsInput | number | null
+    pictogramasGhs?: ProductoUpdatepictogramasGhsInput | string[]
+    palabraAdvertencia?: NullableStringFieldUpdateOperationsInput | string | null
+    frasesH?: ProductoUpdatefrasesHInput | string[]
+    frasesP?: ProductoUpdatefrasesPInput | string[]
     fichaSeguridadUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -17465,6 +17587,25 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
+  export type FloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type StringNullableListFilter<$PrismaModel = never> = {
+    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    has?: string | StringFieldRefInput<$PrismaModel> | null
+    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
+    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
   export type ProductoCountOrderByAggregateInput = {
     id?: SortOrder
     nombre?: SortOrder
@@ -17472,6 +17613,11 @@ export namespace Prisma {
     nfpaSalud?: SortOrder
     nfpaInflamabilidad?: SortOrder
     nfpaReactividad?: SortOrder
+    densidad?: SortOrder
+    pictogramasGhs?: SortOrder
+    palabraAdvertencia?: SortOrder
+    frasesH?: SortOrder
+    frasesP?: SortOrder
     fichaSeguridadUrl?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -17482,6 +17628,7 @@ export namespace Prisma {
     nfpaSalud?: SortOrder
     nfpaInflamabilidad?: SortOrder
     nfpaReactividad?: SortOrder
+    densidad?: SortOrder
   }
 
   export type ProductoMaxOrderByAggregateInput = {
@@ -17491,6 +17638,8 @@ export namespace Prisma {
     nfpaSalud?: SortOrder
     nfpaInflamabilidad?: SortOrder
     nfpaReactividad?: SortOrder
+    densidad?: SortOrder
+    palabraAdvertencia?: SortOrder
     fichaSeguridadUrl?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -17503,6 +17652,8 @@ export namespace Prisma {
     nfpaSalud?: SortOrder
     nfpaInflamabilidad?: SortOrder
     nfpaReactividad?: SortOrder
+    densidad?: SortOrder
+    palabraAdvertencia?: SortOrder
     fichaSeguridadUrl?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -17513,6 +17664,7 @@ export namespace Prisma {
     nfpaSalud?: SortOrder
     nfpaInflamabilidad?: SortOrder
     nfpaReactividad?: SortOrder
+    densidad?: SortOrder
   }
 
   export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -17529,6 +17681,22 @@ export namespace Prisma {
     _sum?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedIntNullableFilter<$PrismaModel>
     _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
   }
 
   export type PlantillaCountOrderByAggregateInput = {
@@ -18331,6 +18499,18 @@ export namespace Prisma {
     deleteMany?: LoteScalarWhereInput | LoteScalarWhereInput[]
   }
 
+  export type ProductoCreatepictogramasGhsInput = {
+    set: string[]
+  }
+
+  export type ProductoCreatefrasesHInput = {
+    set: string[]
+  }
+
+  export type ProductoCreatefrasesPInput = {
+    set: string[]
+  }
+
   export type LoteCreateNestedManyWithoutProductoInput = {
     create?: XOR<LoteCreateWithoutProductoInput, LoteUncheckedCreateWithoutProductoInput> | LoteCreateWithoutProductoInput[] | LoteUncheckedCreateWithoutProductoInput[]
     connectOrCreate?: LoteCreateOrConnectWithoutProductoInput | LoteCreateOrConnectWithoutProductoInput[]
@@ -18351,6 +18531,29 @@ export namespace Prisma {
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type NullableFloatFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type ProductoUpdatepictogramasGhsInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type ProductoUpdatefrasesHInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type ProductoUpdatefrasesPInput = {
+    set?: string[]
+    push?: string | string[]
   }
 
   export type LoteUpdateManyWithoutProductoNestedInput = {
@@ -18885,6 +19088,17 @@ export namespace Prisma {
     _max?: NestedEnumRecursoFilter<$PrismaModel>
   }
 
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
   export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
@@ -18901,7 +19115,7 @@ export namespace Prisma {
     _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
-  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+  export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel> | null
     in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
     notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
@@ -18909,7 +19123,12 @@ export namespace Prisma {
     lte?: number | FloatFieldRefInput<$PrismaModel>
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
   }
 
   export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
@@ -19612,6 +19831,11 @@ export namespace Prisma {
     nfpaSalud?: number | null
     nfpaInflamabilidad?: number | null
     nfpaReactividad?: number | null
+    densidad?: number | null
+    pictogramasGhs?: ProductoCreatepictogramasGhsInput | string[]
+    palabraAdvertencia?: string | null
+    frasesH?: ProductoCreatefrasesHInput | string[]
+    frasesP?: ProductoCreatefrasesPInput | string[]
     fichaSeguridadUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -19624,6 +19848,11 @@ export namespace Prisma {
     nfpaSalud?: number | null
     nfpaInflamabilidad?: number | null
     nfpaReactividad?: number | null
+    densidad?: number | null
+    pictogramasGhs?: ProductoCreatepictogramasGhsInput | string[]
+    palabraAdvertencia?: string | null
+    frasesH?: ProductoCreatefrasesHInput | string[]
+    frasesP?: ProductoCreatefrasesPInput | string[]
     fichaSeguridadUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -19720,6 +19949,11 @@ export namespace Prisma {
     nfpaSalud?: NullableIntFieldUpdateOperationsInput | number | null
     nfpaInflamabilidad?: NullableIntFieldUpdateOperationsInput | number | null
     nfpaReactividad?: NullableIntFieldUpdateOperationsInput | number | null
+    densidad?: NullableFloatFieldUpdateOperationsInput | number | null
+    pictogramasGhs?: ProductoUpdatepictogramasGhsInput | string[]
+    palabraAdvertencia?: NullableStringFieldUpdateOperationsInput | string | null
+    frasesH?: ProductoUpdatefrasesHInput | string[]
+    frasesP?: ProductoUpdatefrasesPInput | string[]
     fichaSeguridadUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -19732,6 +19966,11 @@ export namespace Prisma {
     nfpaSalud?: NullableIntFieldUpdateOperationsInput | number | null
     nfpaInflamabilidad?: NullableIntFieldUpdateOperationsInput | number | null
     nfpaReactividad?: NullableIntFieldUpdateOperationsInput | number | null
+    densidad?: NullableFloatFieldUpdateOperationsInput | number | null
+    pictogramasGhs?: ProductoUpdatepictogramasGhsInput | string[]
+    palabraAdvertencia?: NullableStringFieldUpdateOperationsInput | string | null
+    frasesH?: ProductoUpdatefrasesHInput | string[]
+    frasesP?: ProductoUpdatefrasesPInput | string[]
     fichaSeguridadUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string

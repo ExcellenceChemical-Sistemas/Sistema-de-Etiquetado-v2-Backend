@@ -45,8 +45,11 @@ export class LotesController {
 
   @Delete(':id')
   @RequierePermiso('LOTES', 'puedeEliminar')
-  remove(@Param('id', ParseIntPipe) id: number) {
-    return this.lotesService.remove(id);
+  async remove(@Param('id', ParseIntPipe) id: number) {
+    const lote = await this.lotesService.findOne(id);
+    const eliminado = await this.lotesService.remove(id);
+    if (lote.coaUrl) await this.storageService.deleteCoa(lote.coaUrl);
+    return eliminado;
   }
 
   // --- COA: se trata como parte del recurso LOTES ---

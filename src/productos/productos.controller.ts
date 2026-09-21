@@ -1,3 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const pdfParse: (b: Buffer) => Promise<{ text: string }> = require('pdf-parse/lib/pdf-parse.js');
+import { clasificarDesdeTexto } from './fds-parser';
 import {
   BadRequestException,
   Body,
@@ -67,6 +70,28 @@ export class ProductosController {
         .catch(() => undefined);
     }
     return eliminado;
+  }
+
+  // Lee una FDS (PDF) y propone pictogramas, palabra de advertencia y frases H/P.
+  // No guarda nada: la persona revisa la propuesta en el formulario antes de guardar.
+  @Post('analizar-ficha')
+  @RequierePermiso('PRODUCTOS', 'puedeVer')
+  @UseInterceptors(FileInterceptor('file', { limits: { fileSize: 10 * 1024 * 1024 } }))
+  async analizarFicha(@UploadedFile() file: Express.Multer.File) {
+    if (!file) throw new BadRequestException('No se recibio ningun archivo');
+    if (file.mimetype !== 'application/pdf') throw new BadRequestException('Solo se acepta PDF');
+    let texto: string;
+    try {
+      texto = (await pdfParse(file.buffer)).text;
+    } catch {
+      throw new BadRequestException('No se pudo leer el PDF');
+    }
+    if (texto.trim().length < 50) {
+      throw new BadRequestException(
+        'El PDF no tiene texto legible (parece escaneado). Marca la clasificación a mano.',
+      );
+    }
+    return clasificarDesdeTexto(texto);
   }
 
   // --- Ficha de seguridad: es parte del recurso PRODUCTOS ---

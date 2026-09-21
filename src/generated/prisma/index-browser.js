@@ -155,6 +155,11 @@ exports.Prisma.ProductoScalarFieldEnum = {
   nfpaSalud: 'nfpaSalud',
   nfpaInflamabilidad: 'nfpaInflamabilidad',
   nfpaReactividad: 'nfpaReactividad',
+  densidad: 'densidad',
+  pictogramasGhs: 'pictogramasGhs',
+  palabraAdvertencia: 'palabraAdvertencia',
+  frasesH: 'frasesH',
+  frasesP: 'frasesP',
   fichaSeguridadUrl: 'fichaSeguridadUrl',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

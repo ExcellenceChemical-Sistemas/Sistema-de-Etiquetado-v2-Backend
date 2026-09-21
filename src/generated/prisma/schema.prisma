@@ -86,6 +86,16 @@ model Producto {
   nfpaSalud          Int? // 0-4
   nfpaInflamabilidad Int? // 0-4
   nfpaReactividad    Int?
+  // Densidad en g/ml. Solo hace falta para líquidos (neto en ML/L): con ella la
+  // tara se calcula como bruto - neto × densidad. Null = no se calcula tara.
+  densidad           Float?
+  // Pictogramas GHS/SGA que aplican: 'GHS01'..'GHS09'. Se muestran en la página del QR.
+  pictogramasGhs     String[] @default([])
+  // 'PELIGRO' | 'ATENCION' (palabra de advertencia GHS) y las frases H/P de la FDS,
+  // una por elemento (ej. 'H314: Provoca quemaduras graves en la piel...').
+  palabraAdvertencia String?
+  frasesH            String[] @default([])
+  frasesP            String[] @default([])
   // Path del objeto en el bucket, ej: "ficha-seguridad/producto-12/1234-ficha.pdf".
   // Opcional: un producto se puede registrar sin ficha y adjuntarla despues.
   fichaSeguridadUrl  String?

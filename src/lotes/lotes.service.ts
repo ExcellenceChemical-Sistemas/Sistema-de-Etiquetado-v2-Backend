@@ -93,7 +93,16 @@ export class LotesService {
 
   async remove(id: number) {
     await this.findOne(id);
-    return this.prisma.lote.delete({ where: { id } });
+    try {
+      return await this.prisma.lote.delete({ where: { id } });
+    } catch (error) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2003') {
+        throw new ConflictException(
+          'No se puede eliminar: el lote tiene etiquetas generadas en el historial',
+        );
+      }
+      throw error;
+    }
   }
 
   // --- COA ---

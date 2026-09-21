@@ -41,6 +41,15 @@ export class EtiquetasPublicasService {
       envaseNumero: t.envaseNumero,
       envaseTotal: t.envaseTotal,
       tieneCoa: !!t.lote.coaUrl,
+      tieneFds: !!t.lote.producto.fichaSeguridadUrl,
+      pictogramasGhs: t.lote.producto.pictogramasGhs,
+      palabraAdvertencia: t.lote.producto.palabraAdvertencia,
+      frasesH: t.lote.producto.frasesH,
+      frasesP: t.lote.producto.frasesP,
+      // Línea de tiempo: solo hechos que ya están en la etiqueta o en el sistema,
+      // sin nombres de personas (endpoint sin autenticación).
+      etiquetadoEn: t.createdAt,
+      impreso: t.estado === 'IMPRESO',
     };
   }
 
@@ -48,6 +57,14 @@ export class EtiquetasPublicasService {
     const t = await this.buscarPorToken(token);
     if (!t.lote.coaUrl) throw new NotFoundException('Este lote no tiene COA cargado');
     const url = await this.storage.getSignedUrl(t.lote.coaUrl, 300, descargar);
+    return { url };
+  }
+
+  async obtenerUrlFds(token: string, descargar: boolean) {
+    const t = await this.buscarPorToken(token);
+    const path = t.lote.producto.fichaSeguridadUrl;
+    if (!path) throw new NotFoundException('Este producto no tiene ficha de seguridad');
+    const url = await this.storage.getSignedUrl(path, 300, descargar);
     return { url };
   }
 }

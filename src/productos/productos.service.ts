@@ -18,6 +18,11 @@ export class ProductosService {
           nfpaSalud: dto.nfpaSalud,
           nfpaInflamabilidad: dto.nfpaInflamabilidad,
           nfpaReactividad: dto.nfpaReactividad,
+          densidad: dto.densidad,
+          pictogramasGhs: dto.pictogramasGhs,
+          palabraAdvertencia: dto.palabraAdvertencia,
+          frasesH: dto.frasesH,
+          frasesP: dto.frasesP,
         },
       });
     } catch (error) {
@@ -50,6 +55,12 @@ export class ProductosService {
           ...(dto.nfpaSalud !== undefined && { nfpaSalud: dto.nfpaSalud }),
           ...(dto.nfpaInflamabilidad !== undefined && { nfpaInflamabilidad: dto.nfpaInflamabilidad }),
           ...(dto.nfpaReactividad !== undefined && { nfpaReactividad: dto.nfpaReactividad }),
+          ...(dto.densidad !== undefined && { densidad: dto.densidad }),
+          ...(dto.pictogramasGhs !== undefined && { pictogramasGhs: dto.pictogramasGhs }),
+          // null limpia la palabra de advertencia
+          ...(dto.palabraAdvertencia !== undefined && { palabraAdvertencia: dto.palabraAdvertencia }),
+          ...(dto.frasesH !== undefined && { frasesH: dto.frasesH }),
+          ...(dto.frasesP !== undefined && { frasesP: dto.frasesP }),
         },
       });
     } catch (error) {

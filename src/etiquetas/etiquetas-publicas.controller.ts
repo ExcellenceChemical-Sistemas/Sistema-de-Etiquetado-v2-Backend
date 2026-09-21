@@ -19,4 +19,9 @@ export class EtiquetasPublicasController {
   coa(@Param('token') token: string, @Query('descargar') descargar?: string) {
     return this.publicas.obtenerUrlCoa(token, descargar === '1');
   }
+
+  @Get(':token/fds')
+  fds(@Param('token') token: string, @Query('descargar') descargar?: string) {
+    return this.publicas.obtenerUrlFds(token, descargar === '1');
+  }
 }

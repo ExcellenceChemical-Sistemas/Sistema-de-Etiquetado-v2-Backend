@@ -49,6 +49,39 @@ export class TrabajosImpresionService {
     return { trabajoId: trabajo.id };
   }
 
+  // Historial de etiquetas: las más recientes primero. Se limita para no traer
+  // toda la tabla; el filtrado fino se hace en el frontend.
+  async listarHistorial(limite = 1000) {
+    return this.prisma.trabajoImpresion.findMany({
+      orderBy: { createdAt: 'desc' },
+      take: limite,
+      select: {
+        id: true,
+        estado: true,
+        mensajeError: true,
+        createdAt: true,
+        pesoBruto: true,
+        unidadBruto: true,
+        cantidadNeta: true,
+        unidadNeta: true,
+        tara: true,
+        envaseNumero: true,
+        envaseTotal: true,
+        proforma: true,
+        token: true,
+        plantilla: { select: { nombre: true } },
+        creadoPor: { select: { nombre: true } },
+        lote: {
+          select: {
+            numeroLote: true,
+            producto: { select: { nombre: true } },
+            fabricante: { select: { nombre: true } },
+          },
+        },
+      },
+    });
+  }
+
   async listarPendientes() {
     const pendientes = await this.prisma.trabajoImpresion.findMany({
       where: { estado: 'PENDIENTE' },

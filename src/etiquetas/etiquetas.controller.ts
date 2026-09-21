@@ -20,6 +20,13 @@ export class EtiquetasController {
     return this.trabajos.crear(dto, usuario.id);
   }
 
+  @Get('historial')
+  @UseGuards(SupabaseAuthGuard, PermisosGuard)
+  @RequierePermiso('ETIQUETAS', 'puedeVer')
+  async historial() {
+    return this.trabajos.listarHistorial();
+  }
+
   @Get('trabajos/pendientes')
   @UseGuards(AgentTokenGuard)
   async pendientes() {

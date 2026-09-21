@@ -108,7 +108,6 @@ export class TrabajosImpresionService {
       nfpaInflamabilidad: t.lote.producto.nfpaInflamabilidad,
       nfpaReactividad: t.lote.producto.nfpaReactividad,
       coaValidado: !!t.lote.coaUrl,
-      pictogramasGhs: t.lote.producto.pictogramasGhs,
       qrUrl: t.token ? `${process.env.FRONTEND_URL}/e/${t.token}` : null,
     }));
   }

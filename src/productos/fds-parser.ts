@@ -104,16 +104,21 @@ function pictogramasDe(codigosH: string[]): string[] {
 
 // Se queda con la sección 2 ("Identificación de los peligros"): las secciones 3 y 16
 // suelen listar frases H de los componentes que no son la clasificación del producto.
+// El índice del documento y las referencias tipo "ver sección 2" también coinciden con
+// la búsqueda, así que se prueba cada encabezado y se elige el tramo más largo.
 function seccion2(texto: string): string {
-  const inicio = texto.search(/(secci[oó]n|section)\s*2\s*[:.\-–—]?/i);
-  if (inicio < 0) return texto;
-  const resto = texto.slice(inicio + 5);
-  const fin = resto.search(/(secci[oó]n|section)\s*3\s*[:.\-–—]?/i);
-  return fin < 0 ? resto : resto.slice(0, fin);
+  let mejor = '';
+  for (const m of texto.matchAll(/(?:(?:secci[oó]n|section)\s*)?\b2\s*[:.\-–—]?\s*identificaci[oó]n\s+de\s+(?:los\s+)?peligros/gi)) {
+    const resto = texto.slice(m.index! + m[0].length);
+    const fin = resto.search(/(?:(?:secci[oó]n|section)\s*)?\b3\s*[:.\-–—]?\s*composici[oó]n/i);
+    const tramo = fin < 0 ? resto : resto.slice(0, fin);
+    if (tramo.length > mejor.length) mejor = tramo;
+  }
+  return mejor;
 }
 
 // Corta el texto de una frase donde empieza otro encabezado de la FDS.
-const CORTE = /\s(?:consejos de prudencia|indicaciones de peligro|prevenci[oó]n:|respuesta:|almacenamiento:|eliminaci[oó]n:|otros peligros|\d{1,2}\.\d{1,2}\.?\s+[A-ZÁÉÍÓÚ]|pictogramas?|palabra de|intervenci[oó]n\b|prevenci[oó]n\b|hoja de datos|ficha de datos|pdfcrowd|\d\.\d\.?-|clasificaci[oó]n \(|etiquetado \(|contiene:|frases [rs]:)/i;
+const CORTE = /\s(?:consejos de prudencia|indicaciones de peligro|prevenci[oó]n:|respuesta:|almacenamiento:|eliminaci[oó]n:|otros peligros|\d{1,2}\.\d{1,2}\.?\s+[A-ZÁÉÍÓÚ]|pictogramas?|palabra de|intervenci[oó]n\b|prevenci[oó]n\b|hoja de datos|ficha de datos|pdfcrowd|\d\.\d\.?-|\d\.\d[A-ZÁÉÍÓÚ]|clasificaci[oó]n \(|etiquetado \(|contiene:|frases [rs]:)/i;
 
 function limpiar(t: string): string {
   const corte = t.search(CORTE);
@@ -138,8 +143,21 @@ function palabraDe(texto: string): ClasificacionFds['palabraAdvertencia'] {
   return null;
 }
 
+// Algunas FDS ponen la palabra sola en una línea ("Peligro"), sin el rótulo delante.
+function palabraSuelta(texto: string): ClasificacionFds['palabraAdvertencia'] {
+  const m = texto.match(/^[ 	]*(peligro|atenci[oó]n|danger|warning)[ 	]*$/im);
+  return m ? palabraDe(`palabra de advertencia: ${m[1]}`) : null;
+}
+
 export function clasificarDesdeTexto(textoCompleto: string): ClasificacionFds {
-  const texto = seccion2(textoCompleto.replace(/\r/g, ''));
+  const limpio = textoCompleto.replace(/\r/g, '');
+  const deSeccion2 = analizar(seccion2(limpio));
+  // Si la sección 2 no se ubica o no trae nada, se busca en todo el documento.
+  if (deSeccion2.frasesH.length || deSeccion2.pictogramasGhs.length) return deSeccion2;
+  return analizar(limpio);
+}
+
+function analizar(texto: string): ClasificacionFds {
   const plano = texto.replace(/\s+/g, ' ');
 
   // Frases H: código (+ texto que la FDS pone a continuación, si lo hay).
@@ -175,7 +193,8 @@ export function clasificarDesdeTexto(textoCompleto: string): ClasificacionFds {
       vistosH.add(m.codigo);
       if (!m.codigo.startsWith('EUH')) codigosH.push(...m.codigo.split('+'));
       // Texto oficial cuando lo conocemos: el que sale del PDF suele venir mezclado con otras líneas.
-      detalle = TEXTO_H[base] ?? detalle;
+      const oficiales = m.codigo.split('+').map((c) => TEXTO_H[c.replace(/[A-Za-z]+$/, '')]);
+      detalle = oficiales.every(Boolean) ? oficiales.join(' ') : (TEXTO_H[base] ?? detalle);
       frasesH.push(detalle ? `${m.codigo}: ${detalle}` : m.codigo);
     } else {
       if (vistosP.has(m.codigo)) return;
@@ -192,7 +211,7 @@ export function clasificarDesdeTexto(textoCompleto: string): ClasificacionFds {
 
   return {
     pictogramasGhs: pictogramas,
-    palabraAdvertencia: palabraDe(plano),
+    palabraAdvertencia: palabraDe(plano) ?? palabraSuelta(texto),
     frasesH,
     frasesP,
   };

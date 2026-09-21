@@ -34,7 +34,7 @@ H302 Nocivo en caso de ingestión.`;
 
   it('sin clasificación devuelve vacío', () => {
     const r = clasificarDesdeTexto('SECCIÓN 2 Producto no peligroso');
-    expect(r).toEqual({ pictogramasGhs: [], palabraAdvertencia: null, frasesH: [], frasesP: [] });
+    expect(r).toEqual({ pictogramasGhs: [], palabraAdvertencia: null, frasesH: [], frasesP: [], noPeligroso: true });
   });
 });
 
@@ -126,5 +126,38 @@ P405: Guardar bajo llave. Etiquetado (65/548/CEE) Frases R:R35`;
       'P301+P330+P331: EN CASO DE INGESTIÓN: Enjuagarse la boca. NO provocar el vómito.',
       'P405: Guardar bajo llave.',
     ]);
+  });
+  it('ficha en inglés (formato Sigma-Aldrich): sección, palabra y frases', () => {
+    const fds = `SECTION 1: Identification of the substance
+SECTION 2: Hazards identification
+2.2 GHS Label elements
+Signal word Danger
+Hazard statement(s)
+H225 Highly flammable liquid and vapour.
+H301 + H311 + H331 Toxic if swallowed, in contact with skin or if inhaled.
+H370 Causes damage to organs.
+Precautionary statement(s)
+P210 Keep away from heat, hot surfaces, sparks, open flames.
+P280 Wear protective gloves/ protective clothing.
+SECTION 3: Composition/information on ingredients
+H315 Causes skin irritation (componente, no cuenta)`;
+    const r = clasificarDesdeTexto(fds);
+    expect(r.pictogramasGhs).toEqual(['GHS02', 'GHS06', 'GHS08']);
+    expect(r.palabraAdvertencia).toBe('PELIGRO');
+    expect(r.frasesH.map((f) => f.split(':')[0])).toEqual(['H225', 'H301+H311+H331', 'H370']);
+    expect(r.frasesP[0]).toBe('P210: Keep away from heat, hot surfaces, sparks, open flames.');
+    expect(r.noPeligroso).toBe(false);
+  });
+
+  it('ficha que dice que el producto no es peligroso: sin pictogramas y marcada como no peligrosa', () => {
+    const es = clasificarDesdeTexto(`SECCIÓN 2: IDENTIFICACIÓN DE LOS PELIGROS
+2.1 Clasificación: El producto no está clasificado como peligroso según el Reglamento (CE) 1272/2008.
+SECCIÓN 3: COMPOSICIÓN`);
+    expect(es).toEqual({ pictogramasGhs: [], palabraAdvertencia: null, frasesH: [], frasesP: [], noPeligroso: true });
+    const en = clasificarDesdeTexto(`SECTION 2: Hazards identification
+Not a hazardous substance or mixture according to Regulation (EC) No 1272/2008.
+SECTION 3: Composition`);
+    expect(en.noPeligroso).toBe(true);
+    expect(en.pictogramasGhs).toEqual([]);
   });
 });

@@ -7,6 +7,8 @@ export interface ClasificacionFds {
   palabraAdvertencia: 'PELIGRO' | 'ATENCION' | null;
   frasesH: string[];
   frasesP: string[];
+  // La ficha dice expresamente que el producto no está clasificado como peligroso.
+  noPeligroso: boolean;
 }
 
 // Textos oficiales (CLP/SGA) de las indicaciones de peligro, para cuando la FDS solo trae el código.
@@ -108,9 +110,9 @@ function pictogramasDe(codigosH: string[]): string[] {
 // la búsqueda, así que se prueba cada encabezado y se elige el tramo más largo.
 function seccion2(texto: string): string {
   let mejor = '';
-  for (const m of texto.matchAll(/(?:(?:secci[oó]n|section)\s*)?\b2\s*[:.\-–—]?\s*identificaci[oó]n\s+de\s+(?:los\s+)?peligros/gi)) {
+  for (const m of texto.matchAll(/(?:(?:secci[oó]n|section)\s*)?\b2\s*[:.\-–—]?\s*(?:identificaci[oó]n\s+de\s+(?:los\s+)?peligros|identifica[cç][aã]o\s+(?:de\s+)?(?:dos\s+)?perigos|hazards?\s+identification|identification\s+of\s+(?:the\s+)?hazards?)/gi)) {
     const resto = texto.slice(m.index! + m[0].length);
-    const fin = resto.search(/(?:(?:secci[oó]n|section)\s*)?\b3\s*[:.\-–—]?\s*composici[oó]n/i);
+    const fin = resto.search(/(?:(?:secci[oó]n|section)\s*)?\b3\s*[:.\-–—]?\s*(?:composici[oó]n|composi[cç][aã]o|composition)/i);
     const tramo = fin < 0 ? resto : resto.slice(0, fin);
     if (tramo.length > mejor.length) mejor = tramo;
   }
@@ -118,7 +120,7 @@ function seccion2(texto: string): string {
 }
 
 // Corta el texto de una frase donde empieza otro encabezado de la FDS.
-const CORTE = /\s(?:consejos de prudencia|indicaciones de peligro|prevenci[oó]n:|respuesta:|almacenamiento:|eliminaci[oó]n:|otros peligros|\d{1,2}\.\d{1,2}\.?\s+[A-ZÁÉÍÓÚ]|pictogramas?|palabra de|intervenci[oó]n\b|prevenci[oó]n\b|hoja de datos|ficha de datos|pdfcrowd|\d\.\d\.?-|\d\.\d[A-ZÁÉÍÓÚ]|clasificaci[oó]n \(|etiquetado \(|contiene:|frases [rs]:)/i;
+const CORTE = /\s(?:consejos de prudencia|indicaciones de peligro|prevenci[oó]n:|respuesta:|almacenamiento:|eliminaci[oó]n:|otros peligros|\d{1,2}\.\d{1,2}\.?\s+[A-ZÁÉÍÓÚ]|pictogramas?|palabra de|intervenci[oó]n\b|prevenci[oó]n\b|hoja de datos|ficha de datos|pdfcrowd|\d\.\d\.?-|\d\.\d[A-ZÁÉÍÓÚ]|clasificaci[oó]n \(|etiquetado \(|contiene:|frases [rs]:|precautionary statements|hazard statements|prevention:|response:|storage:|disposal:|other hazards|section \d)/i;
 
 function limpiar(t: string): string {
   const corte = t.search(CORTE);
@@ -128,7 +130,7 @@ function limpiar(t: string): string {
 
 // Texto que precede a un código entre paréntesis: se queda con lo que sigue al último encabezado.
 function limpiarAntes(t: string): string {
-  t = t.replace(/^[\s\S]*(?:Generalidades|Prevenci[oó]n|Intervenci[oó]n|Almacenamiento|Eliminaci[oó]n|Consejos de prudencia)\s*:/i, '');
+  t = t.replace(/^[\s\S]*(?:Generalidades|General|Prevention|Response|Storage|Disposal|Precautionary statements|Prevenci[oó]n|Intervenci[oó]n|Almacenamiento|Eliminaci[oó]n|Consejos de prudencia)\s*:/i, '');
   return t.replace(/^[\s)]+/, '').replace(/[\s(]+$/, '').replace(/\s+/g, ' ').trim().slice(0, 270);
 }
 
@@ -138,14 +140,14 @@ function palabraDe(texto: string): ClasificacionFds['palabraAdvertencia'] {
   );
   if (!m) return null;
   const w = m[2].toLowerCase();
-  if (w === 'peligro' || w === 'danger') return 'PELIGRO';
-  if (w === 'atención' || w === 'atencion' || w === 'warning') return 'ATENCION';
+  if (w === 'peligro' || w === 'danger' || w === 'perigo') return 'PELIGRO';
+  if (w === 'atención' || w === 'atencion' || w === 'atenção' || w === 'atencao' || w === 'warning') return 'ATENCION';
   return null;
 }
 
 // Algunas FDS ponen la palabra sola en una línea ("Peligro"), sin el rótulo delante.
 function palabraSuelta(texto: string): ClasificacionFds['palabraAdvertencia'] {
-  const m = texto.match(/^[ 	]*(peligro|atenci[oó]n|danger|warning)[ 	]*$/im);
+  const m = texto.match(/^[ 	]*(peligro|atenci[oó]n|danger|warning|perigo|aten[cç][aã]o)[ 	]*$/im);
   return m ? palabraDe(`palabra de advertencia: ${m[1]}`) : null;
 }
 
@@ -153,9 +155,12 @@ export function clasificarDesdeTexto(textoCompleto: string): ClasificacionFds {
   const limpio = textoCompleto.replace(/\r/g, '');
   const deSeccion2 = analizar(seccion2(limpio));
   // Si la sección 2 no se ubica o no trae nada, se busca en todo el documento.
-  if (deSeccion2.frasesH.length || deSeccion2.pictogramasGhs.length) return deSeccion2;
+  if (deSeccion2.frasesH.length || deSeccion2.pictogramasGhs.length || deSeccion2.noPeligroso) return deSeccion2;
   return analizar(limpio);
 }
+
+const NO_PELIGROSO =
+  /no\s+(?:es|est[aá]|se\s+considera|cumple)[^.]{0,80}(?:peligros|clasificad)|no\s+peligros[oa]|not\s+(?:a\s+)?(?:classified|considered)[^.]{0,60}hazardous|not\s+(?:a\s+)?hazardous|n[aã]o\s+(?:[eé]|est[aá])[^.]{0,60}(?:perigos|classificad)/i;
 
 function analizar(texto: string): ClasificacionFds {
   const plano = texto.replace(/\s+/g, ' ');
@@ -214,5 +219,6 @@ function analizar(texto: string): ClasificacionFds {
     palabraAdvertencia: palabraDe(plano) ?? palabraSuelta(texto),
     frasesH,
     frasesP,
+    noPeligroso: !frasesH.length && !pictogramas.length && NO_PELIGROSO.test(plano),
   };
 }

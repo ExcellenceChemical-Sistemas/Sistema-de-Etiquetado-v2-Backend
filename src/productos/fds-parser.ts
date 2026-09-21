@@ -113,7 +113,7 @@ function seccion2(texto: string): string {
 }
 
 // Corta el texto de una frase donde empieza otro encabezado de la FDS.
-const CORTE = /\s(?:consejos de prudencia|indicaciones de peligro|prevenci[oó]n:|respuesta:|almacenamiento:|eliminaci[oó]n:|otros peligros|\d{1,2}\.\d{1,2}\.?\s+[A-ZÁÉÍÓÚ]|pictogramas?|palabra de)/i;
+const CORTE = /\s(?:consejos de prudencia|indicaciones de peligro|prevenci[oó]n:|respuesta:|almacenamiento:|eliminaci[oó]n:|otros peligros|\d{1,2}\.\d{1,2}\.?\s+[A-ZÁÉÍÓÚ]|pictogramas?|palabra de|intervenci[oó]n\b|prevenci[oó]n\b|hoja de datos|ficha de datos|pdfcrowd|\d\.\d\.?-|clasificaci[oó]n \(|etiquetado \(|contiene:|frases [rs]:)/i;
 
 function limpiar(t: string): string {
   const corte = t.search(CORTE);

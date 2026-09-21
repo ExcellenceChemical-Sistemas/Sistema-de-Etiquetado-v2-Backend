@@ -167,6 +167,13 @@ model TrabajoImpresion {
   unidadBruto  String
   cantidadNeta String?
   unidadNeta   String
+  tara         String?
+  envaseNumero Int?
+  envaseTotal  Int?
+  // Código imposible de adivinar que va en el QR impreso; permite abrir la
+  // página pública de trazabilidad de ESTA etiqueta (con sus pesos reales)
+  // sin exponer ids autoincrementales. Null en trabajos anteriores al QR.
+  token        String?                @unique
   proforma     String
 imagenPath   String?
   estado       EstadoTrabajoImpresion @default(PENDIENTE)

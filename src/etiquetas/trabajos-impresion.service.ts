@@ -1,4 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { randomBytes } from 'crypto';
+import { calcularTara } from './tara';
 import { PrismaService } from '../prisma/prisma.service';
 import { GenerarEtiquetaDto } from './dto/generar-etiqueta.dto';
 import { ActualizarEstadoTrabajoDto } from './dto/actualizar-estado-trabajo.dto';
@@ -24,6 +26,10 @@ export class TrabajosImpresionService {
         unidadBruto: dto.unidadBruto,
         cantidadNeta: dto.cantidadNeta,
         unidadNeta: dto.unidadNeta,
+        tara: calcularTara(dto.pesoBruto, dto.unidadBruto, dto.cantidadNeta, dto.unidadNeta),
+        envaseNumero: dto.envaseNumero,
+        envaseTotal: dto.envaseTotal,
+        token: randomBytes(12).toString('base64url'),
         proforma: dto.proforma,
         creadoPorId,
       },
@@ -54,10 +60,15 @@ export class TrabajosImpresionService {
       unidadBruto: t.unidadBruto,
       cantidadNeta: t.cantidadNeta,
       unidadNeta: t.unidadNeta,
+      tara: t.tara,
+      envaseNumero: t.envaseNumero,
+      envaseTotal: t.envaseTotal,
       proforma: t.proforma,
       nfpaSalud: t.lote.producto.nfpaSalud,
       nfpaInflamabilidad: t.lote.producto.nfpaInflamabilidad,
       nfpaReactividad: t.lote.producto.nfpaReactividad,
+      coaValidado: !!t.lote.coaUrl,
+      qrUrl: t.token ? `${process.env.FRONTEND_URL}/e/${t.token}` : null,
     }));
   }
 

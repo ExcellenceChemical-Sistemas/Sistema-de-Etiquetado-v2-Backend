@@ -60,10 +60,10 @@ export class SupabaseStorageService {
     }
   }
 
-  async getSignedUrl(path: string, expiresInSeconds = 300): Promise<string> {
+  async getSignedUrl(path: string, expiresInSeconds = 300, download?: boolean): Promise<string> {
     const { data, error } = await this.client.storage
       .from(this.bucket)
-      .createSignedUrl(path, expiresInSeconds);
+      .createSignedUrl(path, expiresInSeconds, download ? { download: true } : undefined);
 
     if (error || !data) {
       throw new InternalServerErrorException(`Error generando signed URL: ${error?.message}`);

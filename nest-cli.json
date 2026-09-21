@@ -8,10 +8,6 @@
       {
         "include": "generated/prisma/**/*",
         "outDir": "dist"
-      },
-      {
-        "include": "assets/**/*",
-        "outDir": "dist"
       }
     ],
     "watchAssets": true

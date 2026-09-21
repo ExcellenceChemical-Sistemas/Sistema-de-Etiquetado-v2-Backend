@@ -14,7 +14,6 @@ El código y el lenguaje de dominio están en español; los identificadores, com
 - **NestJS 11** + TypeScript (`module`/`moduleResolution: nodenext`, `target: ES2023`)
 - **Prisma ORM 7.9.1** sobre **PostgreSQL** con **driver adapter** (`@prisma/adapter-pg`); el cliente se genera en `src/generated/prisma` y **está commiteado al repo**
 - **Supabase** (`@supabase/supabase-js`) como proveedor de autenticación (`auth.users`) y de almacenamiento (3 buckets, ver abajo)
-- **Handlebars** + **Puppeteer 25** para renderizar las plantillas de etiqueta (HTML → PNG)
 - `@nestjs/schedule` para la limpieza programada de trabajos de impresión
 - `@nestjs/throttler` para rate limiting (100 peticiones/IP/minuto, global)
 - `class-validator` / `class-transformer` (`ValidationPipe` global) en la mayoría de los módulos; el módulo `usuario` valida con **zod**
@@ -29,7 +28,7 @@ Prefijo global de rutas: **`/api`**.
 | `productos` | CRUD de productos + ficha de seguridad (subir/leer/eliminar) |
 | `lotes` | CRUD de lotes + COA (certificado de análisis) |
 | `plantillas` | CRUD de plantillas de etiqueta |
-| `etiquetas` | Cola de trabajos de impresión, renderizador (Puppeteer + Handlebars) y limpieza programada |
+| `etiquetas` | Cola de trabajos de impresión, y limpieza programada (el renderizado lo hace `agente-impresion`) |
 | `usuario` | Perfil propio, administración de usuarios, permisos CRUD y accesos de KPIs/ISO |
 | `carpetas` | Módulo KPIs/ISO: árbol de carpetas, archivos y resolución de accesos |
 | `prisma` | Módulo global de acceso a base de datos |
@@ -160,9 +159,7 @@ Tres buckets:
 
 ## Etiquetas: renderizado
 
-`EtiquetaGeneratorService` (Puppeteer + Handlebars) reutiliza **una sola instancia** del browser headless. Elige la imagen de fondo según el nombre del template (`estandar.hbs` / `con-rombo.hbs` / `blanco.hbs` / `muestras.hbs`), y solo embebe la fuente Selawik en base64 cuando `process.platform !== 'win32'` (en las máquinas de desarrollo Windows se usa la Segoe UI real, por nombre).
-
-`getTemplate` **re-lee el archivo en cada llamada** (sin caché), así que editar un `.hbs` surte efecto sin reiniciar el servidor.
+El backend no renderiza etiquetas: crea el trabajo de impresión y el `agente-impresion` lo renderiza (Handlebars + Puppeteer) y lo imprime.
 
 ## Variables de entorno
 
@@ -180,7 +177,6 @@ AGENT_TOKEN=               # secreto compartido con el agente de impresión
 PORT=3000
 FRONTEND_URL=              # se agrega a la lista de CORS
 RETENCION_TRABAJOS_DIAS=3  # retención de trabajos de impresión ya cerrados
-PUPPETEER_EXECUTABLE_PATH= # Chromium del sistema (lo setea el Dockerfile)
 ```
 
 ⚠️ **`DATABASE_URL` y `DIRECT_URL` no son intercambiables.** El bloque `datasource` del schema **no tiene `url`** (la conexión viene del adapter), y la CLI de Prisma no lee `DATABASE_URL` en este proyecto: toma `DIRECT_URL` desde `prisma.config.ts`. Un `new PrismaClient()` pelado, sin `PrismaPg`, no se conecta.
@@ -200,7 +196,7 @@ npx prisma migrate deploy              # producción
 # desarrollo (watch, http://localhost:3000, prefijo /api)
 npm run start:dev
 
-# producción (nest-cli.json copia generated/prisma y assets a dist/)
+# producción (nest-cli.json copia generated/prisma a dist/)
 npm run build
 npm run start:prod
 
@@ -242,5 +238,4 @@ Ningún seed crea filas de `Archivo`, así que **ninguna fila sembrada puede apu
 - Español en identificadores, comentarios y mensajes de error.
 - `request.usuario`, no `request.user`.
 - Antes de tocar cualquier cosa de KPIs/ISO, leer [`contexto-fase3-kpis-iso.md`](./contexto-fase3-kpis-iso.md).
-- Puppeteer necesita las dependencias de sistema de Chromium headless; en Docker/servidor hay que instalarlas (el `Dockerfile` ya lo resuelve vía `PUPPETEER_EXECUTABLE_PATH`).
 - No existe ningún concepto de "rol" genérico: la autorización es siempre por flags (`Permiso`, `AccesoIndicador`/`AccesoISO`) o por los booleanos `esAdmin`/`esAdminKpis`. Hubo un `RolesGuard` + `@Roles(...)` basado en un `request.user.rol` inexistente; se eliminó por código muerto. Para una ruta nueva, usar alguno de los guards de la tabla de arriba.

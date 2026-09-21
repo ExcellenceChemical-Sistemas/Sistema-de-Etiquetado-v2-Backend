@@ -7,8 +7,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 NestJS 11 REST API for a product-labeling system for fractionated chemical products
 ("Sistema de Etiquetado v2"). It manages fabricantes (manufacturers), productos, lotes
 (batches, with COA file upload), plantillas (label templates), usuarios, and a KPIs/ISO
-document module (`carpetas`). Label images are generated from Handlebars templates rendered
-to PNG via Puppeteer. Code and domain language are Spanish — keep new identifiers,
+document module (`carpetas`). The API queues label print jobs; the label image itself is rendered
+by the separate `agente-impresion` app. Code and domain language are Spanish — keep new identifiers,
 comments, and error messages in Spanish to match.
 
 ## Commands
@@ -43,8 +43,7 @@ at a `storagePath` that does not exist in Supabase Storage.
 pg driver adapter), `DIRECT_URL` (used by `prisma.config.ts` for migrations — Prisma CLI does
 **not** read `DATABASE_URL` here), `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `AGENT_TOKEN`
 (shared secret for the print agent). Optional: `PORT` (3000), `FRONTEND_URL` (added to CORS),
-`EPSON_PRINTER_NAME`, `EPSON_PAPER_SIZE`, `PUPPETEER_EXECUTABLE_PATH` (set to system Chromium
-in the Dockerfile).
+`EPSON_PRINTER_NAME`, `EPSON_PAPER_SIZE`.
 
 ## KPIs / ISO
 
@@ -58,8 +57,8 @@ verdad de decisiones y pendientes de ese módulo, incluyendo el modelo de permis
 **committed to git** (regenerate and commit it after any schema change). Runtime instantiation
 uses `PrismaPg` (`@prisma/adapter-pg`) — see `src/prisma/prisma.service.ts` (Nest DI, global
 module) and `src/lib/prisma.ts` (standalone, used by seeds/scripts). Import Prisma types from
-`../generated/prisma`, never `@prisma/client`. `nest-cli.json` copies `generated/prisma` and
-`assets/` into `dist/` on build.
+`../generated/prisma`, never `@prisma/client`. `nest-cli.json` copies `generated/prisma`
+into `dist/` on build.
 
 **Auth lives entirely in Supabase.** The `Usuario` table is a local mirror keyed by
 `supabaseUserId`. `SupabaseAuthGuard` validates the bearer JWT via `supabaseAdmin.auth.getUser`,
@@ -82,15 +81,13 @@ loads the mirror row with `permisos` + `accesosIndicador` + `accesoIso`, and att
 PNG. It creates a `TrabajoImpresion` row (status PENDIENTE) and returns its id. An external print
 agent polls `GET /api/etiquetas/trabajos/pendientes` and `PATCH /api/etiquetas/trabajos/:id/estado`,
 authenticated with the `x-agent-token` header (`AgentTokenGuard`, constant-time compare against
-`AGENT_TOKEN`) — these routes are **not** behind Supabase auth. `EtiquetaGeneratorService` (Puppeteer +
-Handlebars) is the actual renderer: it reuses one headless browser, picks a background image by
-template filename (`estandar.hbs` / `con-rombo.hbs` / `blanco.hbs` / `muestras.hbs`), and only
-embeds the Selawik font as base64 when `process.platform !== 'win32'` (on Windows dev machines real
-Segoe UI is used by name). `limpieza-trabajos.service.ts` runs a `@nestjs/schedule` cron cleanup.
+`AGENT_TOKEN`) — these routes are **not** behind Supabase auth. The backend does not render
+labels: the agent renders the `.hbs` templates (Puppeteer + Handlebars) and prints. The
+`plantillas` table only stores the template filename. `limpieza-trabajos.service.ts` runs a
+`@nestjs/schedule` cron cleanup.
 
-**Label templates** are `.hbs` files in `src/assets/templates/`, plus fonts and background images
-in `src/assets/`. `getTemplate` re-reads the file every call (no cache) so template edits take effect
-without restart. `@nestjs/throttler` applies a global 100 req/IP/min limit.
+**Label templates** live in the `agente-impresion` repo (`assets/templates/`), not here.
+`@nestjs/throttler` applies a global 100 req/IP/min limit.
 
 **Date handling on `Lote`.** `fechaFabricacion` / `fechaVencimiento` are stored as raw `String`
 exactly as they appear on the COA (formats vary by supplier). `fechaVencimientoOrden` (`Date?`) is

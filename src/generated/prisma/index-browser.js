@@ -196,8 +196,6 @@ exports.Prisma.TrabajoImpresionScalarFieldEnum = {
   cantidadNeta: 'cantidadNeta',
   unidadNeta: 'unidadNeta',
   tara: 'tara',
-  envaseNumero: 'envaseNumero',
-  envaseTotal: 'envaseTotal',
   token: 'token',
   proforma: 'proforma',
   imagenPath: 'imagenPath',

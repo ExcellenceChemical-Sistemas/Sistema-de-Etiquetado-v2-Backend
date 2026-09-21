@@ -38,8 +38,6 @@ export class EtiquetasPublicasService {
       pesoBruto: t.pesoBruto,
       unidadBruto: t.unidadBruto,
       tara: t.tara,
-      envaseNumero: t.envaseNumero,
-      envaseTotal: t.envaseTotal,
       tieneCoa: !!t.lote.coaUrl,
       tieneFds: !!t.lote.producto.fichaSeguridadUrl,
       pictogramasGhs: t.lote.producto.pictogramasGhs,

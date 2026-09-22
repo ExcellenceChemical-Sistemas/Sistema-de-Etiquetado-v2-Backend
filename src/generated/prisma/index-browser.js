@@ -197,6 +197,8 @@ exports.Prisma.TrabajoImpresionScalarFieldEnum = {
   unidadNeta: 'unidadNeta',
   tara: 'tara',
   token: 'token',
+  escaneos: 'escaneos',
+  ultimoEscaneoAt: 'ultimoEscaneoAt',
   proforma: 'proforma',
   imagenPath: 'imagenPath',
   estado: 'estado',

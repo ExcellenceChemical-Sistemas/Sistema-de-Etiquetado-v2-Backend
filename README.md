@@ -118,10 +118,23 @@ Los módulos CRUD (`fabricantes`, `productos`, `lotes`, `plantillas`) siguen el 
 | `GET /api/etiquetas/trabajos/pendientes` | `AgentTokenGuard` | El agente hace polling |
 | `PATCH /api/etiquetas/trabajos/:id/estado` | `AgentTokenGuard` | El agente reporta `IMPRESO` / `ERROR` |
 | `GET /api/etiquetas/trabajos/:id` | Supabase | El frontend consulta el estado — **solo del trabajo propio** (o cualquiera si es `esAdmin`); uno ajeno responde 404 |
-| `GET /api/etiquetas/historial` | Supabase + `ETIQUETAS:puedeVer` | Etiquetas generadas (las 1000 más recientes) con producto, lote, estado, autor y token del QR |
-| `GET /api/publico/etiquetas/:token` (+ `/coa`, `/fds`) | Sin login | Página pública del QR: datos del lote, clasificación GHS, COA y ficha de seguridad |
+| `GET /api/etiquetas/historial` | Supabase + `ETIQUETAS:puedeVer` | Etiquetas generadas (las 1000 más recientes) con producto, lote, estado, autor, token del QR y contador de escaneos |
+| `GET /api/publico/etiquetas/:token` (+ `/coa`, `/fds`) | Sin login | Página pública del QR: datos del lote, clasificación GHS, COA y ficha de seguridad. Cada apertura suma 1 a `escaneos` y actualiza `ultimoEscaneoAt` |
 
 `LimpiezaTrabajosService` corre un cron **diario a las 3 AM** que borra los trabajos `IMPRESO`/`ERROR` más viejos que `RETENCION_TRABAJOS_DIAS` (por defecto 3). Los `IMPRESO` con `token` se conservan hasta que vence el QR (2 años), porque son el respaldo de la etiqueta ya pegada.
+
+### Alertas de impresión y vista previa
+
+| Ruta | Guard | Descripción |
+|---|---|---|
+| `POST /api/etiquetas/agente/estado` | `AgentTokenGuard` | El agente avisa cada ~15s que está vivo y el estado de la impresora (papel, tinta, tapa...) |
+| `GET /api/etiquetas/agente/estado` | Supabase (`ETIQUETAS:puedeVer` o `puedeCrear`) | Lo consulta el frontend: si el agente no responde, si la impresora tiene un problema, o si hay etiquetas esperando más de `ALERTA_COLA_MINUTOS` (por defecto 5) |
+| `POST /api/etiquetas/vista-previa` | Supabase + `ETIQUETAS:puedeCrear` | Pide al agente que **dibuje** la etiqueta sin imprimirla ni guardar nada; devuelve un id efímero |
+| `GET /api/etiquetas/vista-previa/pendientes` | `AgentTokenGuard` | El agente hace polling de vistas previas pendientes |
+| `POST /api/etiquetas/vista-previa/:id/imagen` | `AgentTokenGuard` | El agente entrega la imagen (o un error) |
+| `GET /api/etiquetas/vista-previa/:id` | Supabase | El frontend hace polling hasta que la imagen esté lista |
+
+`AgenteEstadoService` guarda el último aviso del agente **en memoria** (se repone en segundos si el servidor se reinicia); si no hay aviso en `AGENTE_TIMEOUT_SEG` (por defecto 60) se considera desconectado. `VistaPreviaService` también vive en memoria, con un límite de 50 vistas previas simultáneas y una vigencia de 3 minutos — no persiste nada en la base.
 
 ### Usuarios
 
@@ -196,6 +209,8 @@ AGENT_TOKEN=               # secreto compartido con el agente de impresión
 PORT=3000
 FRONTEND_URL=              # se agrega a la lista de CORS
 RETENCION_TRABAJOS_DIAS=3  # retención de trabajos de impresión ya cerrados
+AGENTE_TIMEOUT_SEG=60      # sin aviso del agente en este tiempo, se considera desconectado
+ALERTA_COLA_MINUTOS=5      # avisa si hay etiquetas pendientes más viejas que esto
 ```
 
 ⚠️ **`DATABASE_URL` y `DIRECT_URL` no son intercambiables.** El bloque `datasource` del schema **no tiene `url`** (la conexión viene del adapter), y la CLI de Prisma no lee `DATABASE_URL` en este proyecto: toma `DIRECT_URL` desde `prisma.config.ts`. Un `new PrismaClient()` pelado, sin `PrismaPg`, no se conecta.

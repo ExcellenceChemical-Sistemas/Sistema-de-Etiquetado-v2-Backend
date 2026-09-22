@@ -27,6 +27,14 @@ export class EtiquetasPublicasService {
   // la creó, porque este endpoint no tiene autenticación.
   async obtener(token: string) {
     const t = await this.buscarPorToken(token);
+    // Cada apertura de la página cuenta como un escaneo. No debe frenar ni romper
+    // la respuesta si falla, así que no se espera.
+    void this.prisma.trabajoImpresion
+      .update({
+        where: { id: t.id },
+        data: { escaneos: { increment: 1 }, ultimoEscaneoAt: new Date() },
+      })
+      .catch(() => undefined);
     return {
       producto: t.lote.producto.nombre,
       numeroLote: t.lote.numeroLote,

@@ -182,6 +182,9 @@ model TrabajoImpresion {
   // página pública de trazabilidad de ESTA etiqueta (con sus pesos reales)
   // sin exponer ids autoincrementales. Null en trabajos anteriores al QR.
   token        String?                @unique
+  // Cuántas veces se abrió la página pública de este QR y cuándo fue la última.
+  escaneos        Int                 @default(0)
+  ultimoEscaneoAt DateTime?
   proforma     String
 imagenPath   String?
   estado       EstadoTrabajoImpresion @default(PENDIENTE)

@@ -168,28 +168,31 @@ enum EstadoTrabajoImpresion {
 }
 
 model TrabajoImpresion {
-  id           Int                    @id @default(autoincrement())
-  loteId       Int
-  lote         Lote                   @relation(fields: [loteId], references: [id])
-  plantillaId  Int
-  plantilla    Plantilla              @relation(fields: [plantillaId], references: [id])
-  pesoBruto    String
-  unidadBruto  String
-  cantidadNeta String?
-  unidadNeta   String
-  tara         String?
+  id              Int                    @id @default(autoincrement())
+  loteId          Int
+  lote            Lote                   @relation(fields: [loteId], references: [id])
+  plantillaId     Int
+  plantilla       Plantilla              @relation(fields: [plantillaId], references: [id])
+  pesoBruto       String
+  unidadBruto     String
+  cantidadNeta    String?
+  unidadNeta      String
+  tara            String?
   // Código imposible de adivinar que va en el QR impreso; permite abrir la
   // página pública de trazabilidad de ESTA etiqueta (con sus pesos reales)
   // sin exponer ids autoincrementales. Null en trabajos anteriores al QR.
-  token        String?                @unique
-  proforma     String
-  imagenPath   String?
-  estado       EstadoTrabajoImpresion @default(PENDIENTE)
-  mensajeError String?
-  creadoPorId  Int
-  creadoPor    Usuario                @relation(fields: [creadoPorId], references: [id])
-  createdAt    DateTime               @default(now())
-  updatedAt    DateTime               @updatedAt
+  token           String?                @unique
+  // Cuántas veces se abrió la página pública de este QR y cuándo fue la última.
+  escaneos        Int                    @default(0)
+  ultimoEscaneoAt DateTime?
+  proforma        String
+  imagenPath      String?
+  estado          EstadoTrabajoImpresion @default(PENDIENTE)
+  mensajeError    String?
+  creadoPorId     Int
+  creadoPor       Usuario                @relation(fields: [creadoPorId], references: [id])
+  createdAt       DateTime               @default(now())
+  updatedAt       DateTime               @updatedAt
 
   @@map("trabajos_impresion")
 }

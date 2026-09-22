@@ -9174,6 +9174,7 @@ export namespace Prisma {
     id: number | null
     loteId: number | null
     plantillaId: number | null
+    escaneos: number | null
     creadoPorId: number | null
   }
 
@@ -9181,6 +9182,7 @@ export namespace Prisma {
     id: number | null
     loteId: number | null
     plantillaId: number | null
+    escaneos: number | null
     creadoPorId: number | null
   }
 
@@ -9194,6 +9196,8 @@ export namespace Prisma {
     unidadNeta: string | null
     tara: string | null
     token: string | null
+    escaneos: number | null
+    ultimoEscaneoAt: Date | null
     proforma: string | null
     imagenPath: string | null
     estado: $Enums.EstadoTrabajoImpresion | null
@@ -9213,6 +9217,8 @@ export namespace Prisma {
     unidadNeta: string | null
     tara: string | null
     token: string | null
+    escaneos: number | null
+    ultimoEscaneoAt: Date | null
     proforma: string | null
     imagenPath: string | null
     estado: $Enums.EstadoTrabajoImpresion | null
@@ -9232,6 +9238,8 @@ export namespace Prisma {
     unidadNeta: number
     tara: number
     token: number
+    escaneos: number
+    ultimoEscaneoAt: number
     proforma: number
     imagenPath: number
     estado: number
@@ -9247,6 +9255,7 @@ export namespace Prisma {
     id?: true
     loteId?: true
     plantillaId?: true
+    escaneos?: true
     creadoPorId?: true
   }
 
@@ -9254,6 +9263,7 @@ export namespace Prisma {
     id?: true
     loteId?: true
     plantillaId?: true
+    escaneos?: true
     creadoPorId?: true
   }
 
@@ -9267,6 +9277,8 @@ export namespace Prisma {
     unidadNeta?: true
     tara?: true
     token?: true
+    escaneos?: true
+    ultimoEscaneoAt?: true
     proforma?: true
     imagenPath?: true
     estado?: true
@@ -9286,6 +9298,8 @@ export namespace Prisma {
     unidadNeta?: true
     tara?: true
     token?: true
+    escaneos?: true
+    ultimoEscaneoAt?: true
     proforma?: true
     imagenPath?: true
     estado?: true
@@ -9305,6 +9319,8 @@ export namespace Prisma {
     unidadNeta?: true
     tara?: true
     token?: true
+    escaneos?: true
+    ultimoEscaneoAt?: true
     proforma?: true
     imagenPath?: true
     estado?: true
@@ -9411,6 +9427,8 @@ export namespace Prisma {
     unidadNeta: string
     tara: string | null
     token: string | null
+    escaneos: number
+    ultimoEscaneoAt: Date | null
     proforma: string
     imagenPath: string | null
     estado: $Enums.EstadoTrabajoImpresion
@@ -9449,6 +9467,8 @@ export namespace Prisma {
     unidadNeta?: boolean
     tara?: boolean
     token?: boolean
+    escaneos?: boolean
+    ultimoEscaneoAt?: boolean
     proforma?: boolean
     imagenPath?: boolean
     estado?: boolean
@@ -9471,6 +9491,8 @@ export namespace Prisma {
     unidadNeta?: boolean
     tara?: boolean
     token?: boolean
+    escaneos?: boolean
+    ultimoEscaneoAt?: boolean
     proforma?: boolean
     imagenPath?: boolean
     estado?: boolean
@@ -9493,6 +9515,8 @@ export namespace Prisma {
     unidadNeta?: boolean
     tara?: boolean
     token?: boolean
+    escaneos?: boolean
+    ultimoEscaneoAt?: boolean
     proforma?: boolean
     imagenPath?: boolean
     estado?: boolean
@@ -9515,6 +9539,8 @@ export namespace Prisma {
     unidadNeta?: boolean
     tara?: boolean
     token?: boolean
+    escaneos?: boolean
+    ultimoEscaneoAt?: boolean
     proforma?: boolean
     imagenPath?: boolean
     estado?: boolean
@@ -9524,7 +9550,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type TrabajoImpresionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "loteId" | "plantillaId" | "pesoBruto" | "unidadBruto" | "cantidadNeta" | "unidadNeta" | "tara" | "token" | "proforma" | "imagenPath" | "estado" | "mensajeError" | "creadoPorId" | "createdAt" | "updatedAt", ExtArgs["result"]["trabajoImpresion"]>
+  export type TrabajoImpresionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "loteId" | "plantillaId" | "pesoBruto" | "unidadBruto" | "cantidadNeta" | "unidadNeta" | "tara" | "token" | "escaneos" | "ultimoEscaneoAt" | "proforma" | "imagenPath" | "estado" | "mensajeError" | "creadoPorId" | "createdAt" | "updatedAt", ExtArgs["result"]["trabajoImpresion"]>
   export type TrabajoImpresionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     lote?: boolean | LoteDefaultArgs<ExtArgs>
     plantilla?: boolean | PlantillaDefaultArgs<ExtArgs>
@@ -9558,6 +9584,8 @@ export namespace Prisma {
       unidadNeta: string
       tara: string | null
       token: string | null
+      escaneos: number
+      ultimoEscaneoAt: Date | null
       proforma: string
       imagenPath: string | null
       estado: $Enums.EstadoTrabajoImpresion
@@ -10000,6 +10028,8 @@ export namespace Prisma {
     readonly unidadNeta: FieldRef<"TrabajoImpresion", 'String'>
     readonly tara: FieldRef<"TrabajoImpresion", 'String'>
     readonly token: FieldRef<"TrabajoImpresion", 'String'>
+    readonly escaneos: FieldRef<"TrabajoImpresion", 'Int'>
+    readonly ultimoEscaneoAt: FieldRef<"TrabajoImpresion", 'DateTime'>
     readonly proforma: FieldRef<"TrabajoImpresion", 'String'>
     readonly imagenPath: FieldRef<"TrabajoImpresion", 'String'>
     readonly estado: FieldRef<"TrabajoImpresion", 'EstadoTrabajoImpresion'>
@@ -15171,6 +15201,8 @@ export namespace Prisma {
     unidadNeta: 'unidadNeta',
     tara: 'tara',
     token: 'token',
+    escaneos: 'escaneos',
+    ultimoEscaneoAt: 'ultimoEscaneoAt',
     proforma: 'proforma',
     imagenPath: 'imagenPath',
     estado: 'estado',
@@ -15887,6 +15919,8 @@ export namespace Prisma {
     unidadNeta?: StringFilter<"TrabajoImpresion"> | string
     tara?: StringNullableFilter<"TrabajoImpresion"> | string | null
     token?: StringNullableFilter<"TrabajoImpresion"> | string | null
+    escaneos?: IntFilter<"TrabajoImpresion"> | number
+    ultimoEscaneoAt?: DateTimeNullableFilter<"TrabajoImpresion"> | Date | string | null
     proforma?: StringFilter<"TrabajoImpresion"> | string
     imagenPath?: StringNullableFilter<"TrabajoImpresion"> | string | null
     estado?: EnumEstadoTrabajoImpresionFilter<"TrabajoImpresion"> | $Enums.EstadoTrabajoImpresion
@@ -15909,6 +15943,8 @@ export namespace Prisma {
     unidadNeta?: SortOrder
     tara?: SortOrderInput | SortOrder
     token?: SortOrderInput | SortOrder
+    escaneos?: SortOrder
+    ultimoEscaneoAt?: SortOrderInput | SortOrder
     proforma?: SortOrder
     imagenPath?: SortOrderInput | SortOrder
     estado?: SortOrder
@@ -15934,6 +15970,8 @@ export namespace Prisma {
     cantidadNeta?: StringNullableFilter<"TrabajoImpresion"> | string | null
     unidadNeta?: StringFilter<"TrabajoImpresion"> | string
     tara?: StringNullableFilter<"TrabajoImpresion"> | string | null
+    escaneos?: IntFilter<"TrabajoImpresion"> | number
+    ultimoEscaneoAt?: DateTimeNullableFilter<"TrabajoImpresion"> | Date | string | null
     proforma?: StringFilter<"TrabajoImpresion"> | string
     imagenPath?: StringNullableFilter<"TrabajoImpresion"> | string | null
     estado?: EnumEstadoTrabajoImpresionFilter<"TrabajoImpresion"> | $Enums.EstadoTrabajoImpresion
@@ -15956,6 +15994,8 @@ export namespace Prisma {
     unidadNeta?: SortOrder
     tara?: SortOrderInput | SortOrder
     token?: SortOrderInput | SortOrder
+    escaneos?: SortOrder
+    ultimoEscaneoAt?: SortOrderInput | SortOrder
     proforma?: SortOrder
     imagenPath?: SortOrderInput | SortOrder
     estado?: SortOrder
@@ -15983,6 +16023,8 @@ export namespace Prisma {
     unidadNeta?: StringWithAggregatesFilter<"TrabajoImpresion"> | string
     tara?: StringNullableWithAggregatesFilter<"TrabajoImpresion"> | string | null
     token?: StringNullableWithAggregatesFilter<"TrabajoImpresion"> | string | null
+    escaneos?: IntWithAggregatesFilter<"TrabajoImpresion"> | number
+    ultimoEscaneoAt?: DateTimeNullableWithAggregatesFilter<"TrabajoImpresion"> | Date | string | null
     proforma?: StringWithAggregatesFilter<"TrabajoImpresion"> | string
     imagenPath?: StringNullableWithAggregatesFilter<"TrabajoImpresion"> | string | null
     estado?: EnumEstadoTrabajoImpresionWithAggregatesFilter<"TrabajoImpresion"> | $Enums.EstadoTrabajoImpresion
@@ -16776,6 +16818,8 @@ export namespace Prisma {
     unidadNeta: string
     tara?: string | null
     token?: string | null
+    escaneos?: number
+    ultimoEscaneoAt?: Date | string | null
     proforma: string
     imagenPath?: string | null
     estado?: $Enums.EstadoTrabajoImpresion
@@ -16797,6 +16841,8 @@ export namespace Prisma {
     unidadNeta: string
     tara?: string | null
     token?: string | null
+    escaneos?: number
+    ultimoEscaneoAt?: Date | string | null
     proforma: string
     imagenPath?: string | null
     estado?: $Enums.EstadoTrabajoImpresion
@@ -16813,6 +16859,8 @@ export namespace Prisma {
     unidadNeta?: StringFieldUpdateOperationsInput | string
     tara?: NullableStringFieldUpdateOperationsInput | string | null
     token?: NullableStringFieldUpdateOperationsInput | string | null
+    escaneos?: IntFieldUpdateOperationsInput | number
+    ultimoEscaneoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     proforma?: StringFieldUpdateOperationsInput | string
     imagenPath?: NullableStringFieldUpdateOperationsInput | string | null
     estado?: EnumEstadoTrabajoImpresionFieldUpdateOperationsInput | $Enums.EstadoTrabajoImpresion
@@ -16834,6 +16882,8 @@ export namespace Prisma {
     unidadNeta?: StringFieldUpdateOperationsInput | string
     tara?: NullableStringFieldUpdateOperationsInput | string | null
     token?: NullableStringFieldUpdateOperationsInput | string | null
+    escaneos?: IntFieldUpdateOperationsInput | number
+    ultimoEscaneoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     proforma?: StringFieldUpdateOperationsInput | string
     imagenPath?: NullableStringFieldUpdateOperationsInput | string | null
     estado?: EnumEstadoTrabajoImpresionFieldUpdateOperationsInput | $Enums.EstadoTrabajoImpresion
@@ -16853,6 +16903,8 @@ export namespace Prisma {
     unidadNeta: string
     tara?: string | null
     token?: string | null
+    escaneos?: number
+    ultimoEscaneoAt?: Date | string | null
     proforma: string
     imagenPath?: string | null
     estado?: $Enums.EstadoTrabajoImpresion
@@ -16869,6 +16921,8 @@ export namespace Prisma {
     unidadNeta?: StringFieldUpdateOperationsInput | string
     tara?: NullableStringFieldUpdateOperationsInput | string | null
     token?: NullableStringFieldUpdateOperationsInput | string | null
+    escaneos?: IntFieldUpdateOperationsInput | number
+    ultimoEscaneoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     proforma?: StringFieldUpdateOperationsInput | string
     imagenPath?: NullableStringFieldUpdateOperationsInput | string | null
     estado?: EnumEstadoTrabajoImpresionFieldUpdateOperationsInput | $Enums.EstadoTrabajoImpresion
@@ -16887,6 +16941,8 @@ export namespace Prisma {
     unidadNeta?: StringFieldUpdateOperationsInput | string
     tara?: NullableStringFieldUpdateOperationsInput | string | null
     token?: NullableStringFieldUpdateOperationsInput | string | null
+    escaneos?: IntFieldUpdateOperationsInput | number
+    ultimoEscaneoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     proforma?: StringFieldUpdateOperationsInput | string
     imagenPath?: NullableStringFieldUpdateOperationsInput | string | null
     estado?: EnumEstadoTrabajoImpresionFieldUpdateOperationsInput | $Enums.EstadoTrabajoImpresion
@@ -17793,6 +17849,8 @@ export namespace Prisma {
     unidadNeta?: SortOrder
     tara?: SortOrder
     token?: SortOrder
+    escaneos?: SortOrder
+    ultimoEscaneoAt?: SortOrder
     proforma?: SortOrder
     imagenPath?: SortOrder
     estado?: SortOrder
@@ -17806,6 +17864,7 @@ export namespace Prisma {
     id?: SortOrder
     loteId?: SortOrder
     plantillaId?: SortOrder
+    escaneos?: SortOrder
     creadoPorId?: SortOrder
   }
 
@@ -17819,6 +17878,8 @@ export namespace Prisma {
     unidadNeta?: SortOrder
     tara?: SortOrder
     token?: SortOrder
+    escaneos?: SortOrder
+    ultimoEscaneoAt?: SortOrder
     proforma?: SortOrder
     imagenPath?: SortOrder
     estado?: SortOrder
@@ -17838,6 +17899,8 @@ export namespace Prisma {
     unidadNeta?: SortOrder
     tara?: SortOrder
     token?: SortOrder
+    escaneos?: SortOrder
+    ultimoEscaneoAt?: SortOrder
     proforma?: SortOrder
     imagenPath?: SortOrder
     estado?: SortOrder
@@ -17851,6 +17914,7 @@ export namespace Prisma {
     id?: SortOrder
     loteId?: SortOrder
     plantillaId?: SortOrder
+    escaneos?: SortOrder
     creadoPorId?: SortOrder
   }
 
@@ -19222,6 +19286,8 @@ export namespace Prisma {
     unidadNeta: string
     tara?: string | null
     token?: string | null
+    escaneos?: number
+    ultimoEscaneoAt?: Date | string | null
     proforma: string
     imagenPath?: string | null
     estado?: $Enums.EstadoTrabajoImpresion
@@ -19242,6 +19308,8 @@ export namespace Prisma {
     unidadNeta: string
     tara?: string | null
     token?: string | null
+    escaneos?: number
+    ultimoEscaneoAt?: Date | string | null
     proforma: string
     imagenPath?: string | null
     estado?: $Enums.EstadoTrabajoImpresion
@@ -19398,6 +19466,8 @@ export namespace Prisma {
     unidadNeta?: StringFilter<"TrabajoImpresion"> | string
     tara?: StringNullableFilter<"TrabajoImpresion"> | string | null
     token?: StringNullableFilter<"TrabajoImpresion"> | string | null
+    escaneos?: IntFilter<"TrabajoImpresion"> | number
+    ultimoEscaneoAt?: DateTimeNullableFilter<"TrabajoImpresion"> | Date | string | null
     proforma?: StringFilter<"TrabajoImpresion"> | string
     imagenPath?: StringNullableFilter<"TrabajoImpresion"> | string | null
     estado?: EnumEstadoTrabajoImpresionFilter<"TrabajoImpresion"> | $Enums.EstadoTrabajoImpresion
@@ -19691,6 +19761,8 @@ export namespace Prisma {
     unidadNeta: string
     tara?: string | null
     token?: string | null
+    escaneos?: number
+    ultimoEscaneoAt?: Date | string | null
     proforma: string
     imagenPath?: string | null
     estado?: $Enums.EstadoTrabajoImpresion
@@ -19710,6 +19782,8 @@ export namespace Prisma {
     unidadNeta: string
     tara?: string | null
     token?: string | null
+    escaneos?: number
+    ultimoEscaneoAt?: Date | string | null
     proforma: string
     imagenPath?: string | null
     estado?: $Enums.EstadoTrabajoImpresion
@@ -19810,6 +19884,8 @@ export namespace Prisma {
     unidadNeta: string
     tara?: string | null
     token?: string | null
+    escaneos?: number
+    ultimoEscaneoAt?: Date | string | null
     proforma: string
     imagenPath?: string | null
     estado?: $Enums.EstadoTrabajoImpresion
@@ -19829,6 +19905,8 @@ export namespace Prisma {
     unidadNeta: string
     tara?: string | null
     token?: string | null
+    escaneos?: number
+    ultimoEscaneoAt?: Date | string | null
     proforma: string
     imagenPath?: string | null
     estado?: $Enums.EstadoTrabajoImpresion
@@ -20579,6 +20657,8 @@ export namespace Prisma {
     unidadNeta: string
     tara?: string | null
     token?: string | null
+    escaneos?: number
+    ultimoEscaneoAt?: Date | string | null
     proforma: string
     imagenPath?: string | null
     estado?: $Enums.EstadoTrabajoImpresion
@@ -20639,6 +20719,8 @@ export namespace Prisma {
     unidadNeta?: StringFieldUpdateOperationsInput | string
     tara?: NullableStringFieldUpdateOperationsInput | string | null
     token?: NullableStringFieldUpdateOperationsInput | string | null
+    escaneos?: IntFieldUpdateOperationsInput | number
+    ultimoEscaneoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     proforma?: StringFieldUpdateOperationsInput | string
     imagenPath?: NullableStringFieldUpdateOperationsInput | string | null
     estado?: EnumEstadoTrabajoImpresionFieldUpdateOperationsInput | $Enums.EstadoTrabajoImpresion
@@ -20659,6 +20741,8 @@ export namespace Prisma {
     unidadNeta?: StringFieldUpdateOperationsInput | string
     tara?: NullableStringFieldUpdateOperationsInput | string | null
     token?: NullableStringFieldUpdateOperationsInput | string | null
+    escaneos?: IntFieldUpdateOperationsInput | number
+    ultimoEscaneoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     proforma?: StringFieldUpdateOperationsInput | string
     imagenPath?: NullableStringFieldUpdateOperationsInput | string | null
     estado?: EnumEstadoTrabajoImpresionFieldUpdateOperationsInput | $Enums.EstadoTrabajoImpresion
@@ -20677,6 +20761,8 @@ export namespace Prisma {
     unidadNeta?: StringFieldUpdateOperationsInput | string
     tara?: NullableStringFieldUpdateOperationsInput | string | null
     token?: NullableStringFieldUpdateOperationsInput | string | null
+    escaneos?: IntFieldUpdateOperationsInput | number
+    ultimoEscaneoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     proforma?: StringFieldUpdateOperationsInput | string
     imagenPath?: NullableStringFieldUpdateOperationsInput | string | null
     estado?: EnumEstadoTrabajoImpresionFieldUpdateOperationsInput | $Enums.EstadoTrabajoImpresion
@@ -20847,6 +20933,8 @@ export namespace Prisma {
     unidadNeta: string
     tara?: string | null
     token?: string | null
+    escaneos?: number
+    ultimoEscaneoAt?: Date | string | null
     proforma: string
     imagenPath?: string | null
     estado?: $Enums.EstadoTrabajoImpresion
@@ -20863,6 +20951,8 @@ export namespace Prisma {
     unidadNeta?: StringFieldUpdateOperationsInput | string
     tara?: NullableStringFieldUpdateOperationsInput | string | null
     token?: NullableStringFieldUpdateOperationsInput | string | null
+    escaneos?: IntFieldUpdateOperationsInput | number
+    ultimoEscaneoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     proforma?: StringFieldUpdateOperationsInput | string
     imagenPath?: NullableStringFieldUpdateOperationsInput | string | null
     estado?: EnumEstadoTrabajoImpresionFieldUpdateOperationsInput | $Enums.EstadoTrabajoImpresion
@@ -20882,6 +20972,8 @@ export namespace Prisma {
     unidadNeta?: StringFieldUpdateOperationsInput | string
     tara?: NullableStringFieldUpdateOperationsInput | string | null
     token?: NullableStringFieldUpdateOperationsInput | string | null
+    escaneos?: IntFieldUpdateOperationsInput | number
+    ultimoEscaneoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     proforma?: StringFieldUpdateOperationsInput | string
     imagenPath?: NullableStringFieldUpdateOperationsInput | string | null
     estado?: EnumEstadoTrabajoImpresionFieldUpdateOperationsInput | $Enums.EstadoTrabajoImpresion
@@ -20900,6 +20992,8 @@ export namespace Prisma {
     unidadNeta?: StringFieldUpdateOperationsInput | string
     tara?: NullableStringFieldUpdateOperationsInput | string | null
     token?: NullableStringFieldUpdateOperationsInput | string | null
+    escaneos?: IntFieldUpdateOperationsInput | number
+    ultimoEscaneoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     proforma?: StringFieldUpdateOperationsInput | string
     imagenPath?: NullableStringFieldUpdateOperationsInput | string | null
     estado?: EnumEstadoTrabajoImpresionFieldUpdateOperationsInput | $Enums.EstadoTrabajoImpresion
@@ -20918,6 +21012,8 @@ export namespace Prisma {
     unidadNeta: string
     tara?: string | null
     token?: string | null
+    escaneos?: number
+    ultimoEscaneoAt?: Date | string | null
     proforma: string
     imagenPath?: string | null
     estado?: $Enums.EstadoTrabajoImpresion
@@ -20934,6 +21030,8 @@ export namespace Prisma {
     unidadNeta?: StringFieldUpdateOperationsInput | string
     tara?: NullableStringFieldUpdateOperationsInput | string | null
     token?: NullableStringFieldUpdateOperationsInput | string | null
+    escaneos?: IntFieldUpdateOperationsInput | number
+    ultimoEscaneoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     proforma?: StringFieldUpdateOperationsInput | string
     imagenPath?: NullableStringFieldUpdateOperationsInput | string | null
     estado?: EnumEstadoTrabajoImpresionFieldUpdateOperationsInput | $Enums.EstadoTrabajoImpresion
@@ -20953,6 +21051,8 @@ export namespace Prisma {
     unidadNeta?: StringFieldUpdateOperationsInput | string
     tara?: NullableStringFieldUpdateOperationsInput | string | null
     token?: NullableStringFieldUpdateOperationsInput | string | null
+    escaneos?: IntFieldUpdateOperationsInput | number
+    ultimoEscaneoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     proforma?: StringFieldUpdateOperationsInput | string
     imagenPath?: NullableStringFieldUpdateOperationsInput | string | null
     estado?: EnumEstadoTrabajoImpresionFieldUpdateOperationsInput | $Enums.EstadoTrabajoImpresion
@@ -20971,6 +21071,8 @@ export namespace Prisma {
     unidadNeta?: StringFieldUpdateOperationsInput | string
     tara?: NullableStringFieldUpdateOperationsInput | string | null
     token?: NullableStringFieldUpdateOperationsInput | string | null
+    escaneos?: IntFieldUpdateOperationsInput | number
+    ultimoEscaneoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     proforma?: StringFieldUpdateOperationsInput | string
     imagenPath?: NullableStringFieldUpdateOperationsInput | string | null
     estado?: EnumEstadoTrabajoImpresionFieldUpdateOperationsInput | $Enums.EstadoTrabajoImpresion

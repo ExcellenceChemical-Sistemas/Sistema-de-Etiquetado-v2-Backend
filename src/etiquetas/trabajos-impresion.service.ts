@@ -5,6 +5,47 @@ import { PrismaService } from '../prisma/prisma.service';
 import { GenerarEtiquetaDto } from './dto/generar-etiqueta.dto';
 import { ActualizarEstadoTrabajoDto } from './dto/actualizar-estado-trabajo.dto';
 
+interface DatosEtiqueta {
+  lote: {
+    numeroLote: string;
+    fechaFabricacion: string;
+    fechaVencimiento: string;
+    coaUrl: string | null;
+    producto: { nombre: string; nfpaSalud: number | null; nfpaInflamabilidad: number | null; nfpaReactividad: number | null };
+    fabricante: { nombre: string };
+  };
+  plantilla: { archivo: string };
+  pesoBruto: string;
+  unidadBruto: string;
+  cantidadNeta: string | null;
+  unidadNeta: string;
+  tara: string | null;
+  proforma: string;
+}
+
+// Lo que el agente necesita para dibujar (y luego imprimir) una etiqueta.
+function datosParaAgente(t: DatosEtiqueta, qrUrl: string | null) {
+  return {
+    plantillaArchivo: t.plantilla.archivo,
+    producto: t.lote.producto.nombre,
+    numeroLote: t.lote.numeroLote,
+    fabricante: t.lote.fabricante.nombre,
+    fechaFabricacion: t.lote.fechaFabricacion,
+    fechaVencimiento: t.lote.fechaVencimiento,
+    pesoBruto: t.pesoBruto,
+    unidadBruto: t.unidadBruto,
+    cantidadNeta: t.cantidadNeta,
+    unidadNeta: t.unidadNeta,
+    tara: t.tara,
+    proforma: t.proforma,
+    nfpaSalud: t.lote.producto.nfpaSalud,
+    nfpaInflamabilidad: t.lote.producto.nfpaInflamabilidad,
+    nfpaReactividad: t.lote.producto.nfpaReactividad,
+    coaValidado: !!t.lote.coaUrl,
+    qrUrl,
+  };
+}
+
 @Injectable()
 export class TrabajosImpresionService {
   constructor(private prisma: PrismaService) {}
@@ -67,6 +108,8 @@ export class TrabajosImpresionService {
         tara: true,
         proforma: true,
         token: true,
+        escaneos: true,
+        ultimoEscaneoAt: true,
         plantilla: { select: { nombre: true } },
         creadoPor: { select: { nombre: true } },
         lote: {
@@ -92,24 +135,42 @@ export class TrabajosImpresionService {
 
     return pendientes.map((t) => ({
       id: t.id,
-      plantillaArchivo: t.plantilla.archivo,
-      producto: t.lote.producto.nombre,
-      numeroLote: t.lote.numeroLote,
-      fabricante: t.lote.fabricante.nombre,
-      fechaFabricacion: t.lote.fechaFabricacion,
-      fechaVencimiento: t.lote.fechaVencimiento,
-      pesoBruto: t.pesoBruto,
-      unidadBruto: t.unidadBruto,
-      cantidadNeta: t.cantidadNeta,
-      unidadNeta: t.unidadNeta,
-      tara: t.tara,
-      proforma: t.proforma,
-      nfpaSalud: t.lote.producto.nfpaSalud,
-      nfpaInflamabilidad: t.lote.producto.nfpaInflamabilidad,
-      nfpaReactividad: t.lote.producto.nfpaReactividad,
-      coaValidado: !!t.lote.coaUrl,
-      qrUrl: t.token ? `${process.env.FRONTEND_URL}/e/${t.token}` : null,
+      ...datosParaAgente(t, t.token ? `${process.env.FRONTEND_URL}/e/${t.token}` : null),
     }));
+  }
+
+  // Los mismos datos que recibe el agente para imprimir, pero sin guardar nada:
+  // sirven para dibujar una vista previa. El QR apunta a una página de muestra.
+  async datosVistaPrevia(dto: GenerarEtiquetaDto) {
+    const [lote, plantilla] = await Promise.all([
+      this.prisma.lote.findUnique({
+        where: { id: dto.loteId },
+        include: { producto: true, fabricante: true },
+      }),
+      this.prisma.plantilla.findUnique({ where: { id: dto.plantillaId } }),
+    ]);
+    if (!lote) throw new NotFoundException(`Lote con id ${dto.loteId} no encontrado`);
+    if (!plantilla) throw new NotFoundException(`Plantilla con id ${dto.plantillaId} no encontrada`);
+
+    return datosParaAgente(
+      {
+        lote,
+        plantilla,
+        pesoBruto: dto.pesoBruto,
+        unidadBruto: dto.unidadBruto,
+        cantidadNeta: dto.cantidadNeta ?? null,
+        unidadNeta: dto.unidadNeta,
+        tara: calcularTara(
+          dto.pesoBruto,
+          dto.unidadBruto,
+          dto.cantidadNeta,
+          dto.unidadNeta,
+          lote.producto.densidad,
+        ),
+        proforma: dto.proforma,
+      },
+      `${process.env.FRONTEND_URL}/e/vista-previa`,
+    );
   }
 
   async actualizarEstado(id: number, dto: ActualizarEstadoTrabajoDto) {

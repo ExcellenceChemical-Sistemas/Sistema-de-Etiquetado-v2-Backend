@@ -185,6 +185,12 @@ model TrabajoImpresion {
   // Cuántas veces se abrió la página pública de este QR y cuándo fue la última.
   escaneos        Int                    @default(0)
   ultimoEscaneoAt DateTime?
+  // Cuántas veces, desde esa misma página pública, se vio/descargó el COA o
+  // se vio la ficha de seguridad (FDS). Contadores aparte de `escaneos`
+  // porque un escaneo no implica abrir ninguno de los dos documentos.
+  coaVistas       Int                    @default(0)
+  coaDescargas    Int                    @default(0)
+  fdsVistas       Int                    @default(0)
   proforma        String
   imagenPath      String?
   estado          EstadoTrabajoImpresion @default(PENDIENTE)

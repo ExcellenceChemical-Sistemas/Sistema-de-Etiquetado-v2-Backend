@@ -45,7 +45,7 @@ Prefijo global de rutas: **`/api`**.
 - **Producto**: sin fabricante fijo (varía por lote); campos NFPA opcionales (`nfpaSalud`, `nfpaInflamabilidad`, `nfpaReactividad`, 0-4) y `fichaSeguridadUrl` opcional. Clasificación GHS opcional, que se muestra solo en la página pública del QR (no en la etiqueta impresa): `pictogramasGhs` (códigos `GHS01`–`GHS09`), `palabraAdvertencia` (`PELIGRO` | `ATENCION`), `frasesH` y `frasesP`.
 - **Lote**: `numeroLote`, `coaUrl`, único compuesto `[productoId, fabricanteId, numeroLote]`.
   ⚠️ `fechaFabricacion` / `fechaVencimiento` se guardan como **`String` tal cual aparecen en el COA** (el formato varía según el proveedor). `fechaVencimientoOrden` (`DateTime?`) lo calcula el service solo para ordenar/filtrar — **nunca editarlo a mano**.
-- **TrabajoImpresion**: `estado` (`PENDIENTE` | `IMPRESO` | `ERROR`), datos de peso/unidades/proforma, `imagenPath`, `mensajeError`, `creadoPorId` y `token` (código imposible de adivinar que va en el QR impreso; abre la página pública de trazabilidad de **esa** etiqueta). El QR vale 2 años (`QR_VIGENCIA_DIAS`, por defecto 730).
+- **TrabajoImpresion**: `estado` (`PENDIENTE` | `IMPRESO` | `ERROR`), datos de peso/unidades/proforma, `imagenPath`, `mensajeError`, `creadoPorId` y `token` (código imposible de adivinar que va en el QR impreso; abre la página pública de trazabilidad de **esa** etiqueta). El QR vale 2 años (`QR_VIGENCIA_DIAS`, por defecto 730). También lleva contadores de uso de esa página pública: `escaneos`/`ultimoEscaneoAt` (aperturas del QR), `coaVistas`/`coaDescargas` (botones "Ver"/"Descargar" del COA) y `fdsVistas` (botón de la ficha de seguridad) — los tres últimos se incrementan en `EtiquetasPublicasService`.
 
 ### KPIs / ISO
 
@@ -118,8 +118,8 @@ Los módulos CRUD (`fabricantes`, `productos`, `lotes`, `plantillas`) siguen el 
 | `GET /api/etiquetas/trabajos/pendientes` | `AgentTokenGuard` | El agente hace polling |
 | `PATCH /api/etiquetas/trabajos/:id/estado` | `AgentTokenGuard` | El agente reporta `IMPRESO` / `ERROR` |
 | `GET /api/etiquetas/trabajos/:id` | Supabase | El frontend consulta el estado — **solo del trabajo propio** (o cualquiera si es `esAdmin`); uno ajeno responde 404 |
-| `GET /api/etiquetas/historial` | Supabase + `ETIQUETAS:puedeVer` | Etiquetas generadas (las 1000 más recientes) con producto, lote, estado, autor, token del QR y contador de escaneos |
-| `GET /api/publico/etiquetas/:token` (+ `/coa`, `/fds`) | Sin login | Página pública del QR: datos del lote, clasificación GHS, COA y ficha de seguridad. Cada apertura suma 1 a `escaneos` y actualiza `ultimoEscaneoAt` |
+| `GET /api/etiquetas/historial` | Supabase + `ETIQUETAS:puedeVer` | Etiquetas generadas (las 1000 más recientes) con producto, lote, estado, autor, token del QR y contadores de escaneos/COA/FDS |
+| `GET /api/publico/etiquetas/:token` (+ `/coa`, `/fds`) | Sin login | Página pública del QR: datos del lote, clasificación GHS, COA y ficha de seguridad. Cada apertura suma 1 a `escaneos` y actualiza `ultimoEscaneoAt`; `/coa` suma a `coaVistas` (o `coaDescargas` si `?descargar=1`) y `/fds` suma a `fdsVistas` |
 
 `LimpiezaTrabajosService` corre un cron **diario a las 3 AM** que borra los trabajos `IMPRESO`/`ERROR` más viejos que `RETENCION_TRABAJOS_DIAS` (por defecto 3). Los `IMPRESO` con `token` se conservan hasta que vence el QR (2 años), porque son el respaldo de la etiqueta ya pegada.
 

@@ -63,6 +63,14 @@ export class EtiquetasPublicasService {
     const t = await this.buscarPorToken(token);
     if (!t.lote.coaUrl) throw new NotFoundException('Este lote no tiene COA cargado');
     const url = await this.storage.getSignedUrl(t.lote.coaUrl, 300, descargar);
+    // Igual que el contador de escaneos: no debe frenar ni romper la
+    // respuesta si falla, así que no se espera.
+    void this.prisma.trabajoImpresion
+      .update({
+        where: { id: t.id },
+        data: descargar ? { coaDescargas: { increment: 1 } } : { coaVistas: { increment: 1 } },
+      })
+      .catch(() => undefined);
     return { url };
   }
 
@@ -71,6 +79,9 @@ export class EtiquetasPublicasService {
     const path = t.lote.producto.fichaSeguridadUrl;
     if (!path) throw new NotFoundException('Este producto no tiene ficha de seguridad');
     const url = await this.storage.getSignedUrl(path, 300, descargar);
+    void this.prisma.trabajoImpresion
+      .update({ where: { id: t.id }, data: { fdsVistas: { increment: 1 } } })
+      .catch(() => undefined);
     return { url };
   }
 }

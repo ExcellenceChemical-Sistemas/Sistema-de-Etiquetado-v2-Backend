@@ -1,0 +1,3 @@
+ALTER TABLE "trabajos_impresion" ADD COLUMN     "coaVistas" INTEGER NOT NULL DEFAULT 0,
+ADD COLUMN     "coaDescargas" INTEGER NOT NULL DEFAULT 0,
+ADD COLUMN     "fdsVistas" INTEGER NOT NULL DEFAULT 0;

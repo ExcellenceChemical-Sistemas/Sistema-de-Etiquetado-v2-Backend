@@ -110,6 +110,9 @@ export class TrabajosImpresionService {
         token: true,
         escaneos: true,
         ultimoEscaneoAt: true,
+        coaVistas: true,
+        coaDescargas: true,
+        fdsVistas: true,
         plantilla: { select: { nombre: true } },
         creadoPor: { select: { nombre: true } },
         lote: {

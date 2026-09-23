@@ -33,7 +33,8 @@ npm run seed:kpis                        # crea el árbol de carpetas KPIs/ISO d
 npm run seed:accesos                     # asigna AccesoIndicador/AccesoISO por nombre de usuario (prisma/seeds/accesos-kpis-iso.seed.ts)
 ```
 
-There are no watchers wired to tests; run `npm test` manually.
+There are no watchers wired to tests; run `npm test` manually. GitHub Actions
+(`.github/workflows/ci.yml`) runs `npm test` and `npm run build` on every push.
 
 Both seeds run through `ts-node` against the `.ts` directly — there is no compile step, so any
 `.js`/`.d.ts` sitting in `prisma/seeds/` is a stray artifact (gitignored; a stale one once

@@ -1,4 +1,4 @@
-import { Controller, Post, Get, Patch, Delete, Param, ParseIntPipe, Body, UseGuards, Req } from '@nestjs/common';
+import { Controller, Post, Get, Patch, Delete, Param, ParseIntPipe, Body, Query, UseGuards, Req } from '@nestjs/common';
 import { UsuariosService } from './usuarios.service';
 import { crearUsuarioSchema, CrearUsuarioDto } from './dto/usuarios.dto';
 import { actualizarPermisosSchema, ActualizarPermisosDto } from './dto/actualizar-permisos.dto';
@@ -51,6 +51,14 @@ export class UsuariosController {
     return { success: true, data: usuarios };
   }
 
+  // Quién desactivó, reactivó, eliminó o cambió permisos de quién. Solo admin general.
+  @Get('auditoria')
+  @UseGuards(SupabaseAuthGuard, EsAdminGuard)
+  async auditoria(@Query('limite') limite?: string) {
+    const registros = await this.usuariosService.listarAuditoria(limite ? Number(limite) || undefined : undefined);
+    return { success: true, data: registros };
+  }
+
   // Vista reducida (id, nombre, avatarUrl) para el panel de accesos KPIs/ISO.
   // Accesible también por esAdminKpis; el GET / completo sigue solo para esAdmin.
   @Get('lista-basica')
@@ -62,9 +70,9 @@ export class UsuariosController {
 
   @Patch(':id/permisos')
   @UseGuards(SupabaseAuthGuard, EsAdminGuard)
-  async actualizarPermisos(@Param('id', ParseIntPipe) id: number, @Body() body: unknown) {
+  async actualizarPermisos(@Param('id', ParseIntPipe) id: number, @Body() body: unknown, @Req() req: any) {
     const dto: ActualizarPermisosDto = actualizarPermisosSchema.parse(body);
-    const usuario = await this.usuariosService.actualizarPermisos(id, dto.permisos);
+    const usuario = await this.usuariosService.actualizarPermisos(id, dto.permisos, req.usuario.id);
     return { success: true, data: usuario };
   }
 

@@ -87,7 +87,9 @@ loads the mirror row with `permisos` + `accesosIndicador` + `accesoIso`, and att
   never on oneself) keeps the row and its history but `SupabaseAuthGuard` answers 403 with
   `code: 'CUENTA_DESACTIVADA'` — the frontend keys off that code to sign the user out. Who/when is in
   `desactivadoPorId`/`desactivadoEn`. It is the way out for users `DELETE /usuarios/:id` refuses (409:
-  they have labels, pedidos or files). Deletions leave no table trail, only a `Logger.warn` line.
+  they have labels, pedidos or files). Every deactivate/reactivate/delete/permission change writes a
+  `RegistroAuditoria` row (no foreign keys, names copied, so it survives deleting either user); read it with
+  `GET /usuarios/auditoria` (admin only). A failure to write it never blocks the action itself.
 - **Permission coverage test.** `src/common/guards/cobertura-permisos.spec.ts` reads the Nest metadata of
   every controller and fails if a route has no session guard, no restricting guard, a `PermisosGuard`
   without a valid `@RequierePermiso`, or a write route gated only by `puedeVer`. **A new controller must be

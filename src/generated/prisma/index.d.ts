@@ -78,6 +78,11 @@ export type AccesoIndicador = $Result.DefaultSelection<Prisma.$AccesoIndicadorPa
  * 
  */
 export type AccesoISO = $Result.DefaultSelection<Prisma.$AccesoISOPayload>
+/**
+ * Model RegistroAuditoria
+ * 
+ */
+export type RegistroAuditoria = $Result.DefaultSelection<Prisma.$RegistroAuditoriaPayload>
 
 /**
  * Enums
@@ -453,6 +458,16 @@ export class PrismaClient<
     * ```
     */
   get accesoISO(): Prisma.AccesoISODelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.registroAuditoria`: Exposes CRUD operations for the **RegistroAuditoria** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more RegistroAuditorias
+    * const registroAuditorias = await prisma.registroAuditoria.findMany()
+    * ```
+    */
+  get registroAuditoria(): Prisma.RegistroAuditoriaDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -912,7 +927,8 @@ export namespace Prisma {
     Carpeta: 'Carpeta',
     Archivo: 'Archivo',
     AccesoIndicador: 'AccesoIndicador',
-    AccesoISO: 'AccesoISO'
+    AccesoISO: 'AccesoISO',
+    RegistroAuditoria: 'RegistroAuditoria'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -928,7 +944,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "usuario" | "permiso" | "fabricante" | "producto" | "plantilla" | "lote" | "trabajoImpresion" | "cliente" | "pedido" | "carpeta" | "archivo" | "accesoIndicador" | "accesoISO"
+      modelProps: "usuario" | "permiso" | "fabricante" | "producto" | "plantilla" | "lote" | "trabajoImpresion" | "cliente" | "pedido" | "carpeta" | "archivo" | "accesoIndicador" | "accesoISO" | "registroAuditoria"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1894,6 +1910,80 @@ export namespace Prisma {
           }
         }
       }
+      RegistroAuditoria: {
+        payload: Prisma.$RegistroAuditoriaPayload<ExtArgs>
+        fields: Prisma.RegistroAuditoriaFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.RegistroAuditoriaFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RegistroAuditoriaPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.RegistroAuditoriaFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RegistroAuditoriaPayload>
+          }
+          findFirst: {
+            args: Prisma.RegistroAuditoriaFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RegistroAuditoriaPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.RegistroAuditoriaFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RegistroAuditoriaPayload>
+          }
+          findMany: {
+            args: Prisma.RegistroAuditoriaFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RegistroAuditoriaPayload>[]
+          }
+          create: {
+            args: Prisma.RegistroAuditoriaCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RegistroAuditoriaPayload>
+          }
+          createMany: {
+            args: Prisma.RegistroAuditoriaCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.RegistroAuditoriaCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RegistroAuditoriaPayload>[]
+          }
+          delete: {
+            args: Prisma.RegistroAuditoriaDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RegistroAuditoriaPayload>
+          }
+          update: {
+            args: Prisma.RegistroAuditoriaUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RegistroAuditoriaPayload>
+          }
+          deleteMany: {
+            args: Prisma.RegistroAuditoriaDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.RegistroAuditoriaUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.RegistroAuditoriaUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RegistroAuditoriaPayload>[]
+          }
+          upsert: {
+            args: Prisma.RegistroAuditoriaUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RegistroAuditoriaPayload>
+          }
+          aggregate: {
+            args: Prisma.RegistroAuditoriaAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateRegistroAuditoria>
+          }
+          groupBy: {
+            args: Prisma.RegistroAuditoriaGroupByArgs<ExtArgs>
+            result: $Utils.Optional<RegistroAuditoriaGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.RegistroAuditoriaCountArgs<ExtArgs>
+            result: $Utils.Optional<RegistroAuditoriaCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -2030,6 +2120,7 @@ export namespace Prisma {
     archivo?: ArchivoOmit
     accesoIndicador?: AccesoIndicadorOmit
     accesoISO?: AccesoISOOmit
+    registroAuditoria?: RegistroAuditoriaOmit
   }
 
   /* Types for Logging */
@@ -17986,6 +18077,1087 @@ export namespace Prisma {
 
 
   /**
+   * Model RegistroAuditoria
+   */
+
+  export type AggregateRegistroAuditoria = {
+    _count: RegistroAuditoriaCountAggregateOutputType | null
+    _avg: RegistroAuditoriaAvgAggregateOutputType | null
+    _sum: RegistroAuditoriaSumAggregateOutputType | null
+    _min: RegistroAuditoriaMinAggregateOutputType | null
+    _max: RegistroAuditoriaMaxAggregateOutputType | null
+  }
+
+  export type RegistroAuditoriaAvgAggregateOutputType = {
+    id: number | null
+    actorId: number | null
+    objetivoId: number | null
+  }
+
+  export type RegistroAuditoriaSumAggregateOutputType = {
+    id: number | null
+    actorId: number | null
+    objetivoId: number | null
+  }
+
+  export type RegistroAuditoriaMinAggregateOutputType = {
+    id: number | null
+    accion: string | null
+    actorId: number | null
+    actorNombre: string | null
+    objetivoId: number | null
+    objetivoNombre: string | null
+    detalle: string | null
+    createdAt: Date | null
+  }
+
+  export type RegistroAuditoriaMaxAggregateOutputType = {
+    id: number | null
+    accion: string | null
+    actorId: number | null
+    actorNombre: string | null
+    objetivoId: number | null
+    objetivoNombre: string | null
+    detalle: string | null
+    createdAt: Date | null
+  }
+
+  export type RegistroAuditoriaCountAggregateOutputType = {
+    id: number
+    accion: number
+    actorId: number
+    actorNombre: number
+    objetivoId: number
+    objetivoNombre: number
+    detalle: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type RegistroAuditoriaAvgAggregateInputType = {
+    id?: true
+    actorId?: true
+    objetivoId?: true
+  }
+
+  export type RegistroAuditoriaSumAggregateInputType = {
+    id?: true
+    actorId?: true
+    objetivoId?: true
+  }
+
+  export type RegistroAuditoriaMinAggregateInputType = {
+    id?: true
+    accion?: true
+    actorId?: true
+    actorNombre?: true
+    objetivoId?: true
+    objetivoNombre?: true
+    detalle?: true
+    createdAt?: true
+  }
+
+  export type RegistroAuditoriaMaxAggregateInputType = {
+    id?: true
+    accion?: true
+    actorId?: true
+    actorNombre?: true
+    objetivoId?: true
+    objetivoNombre?: true
+    detalle?: true
+    createdAt?: true
+  }
+
+  export type RegistroAuditoriaCountAggregateInputType = {
+    id?: true
+    accion?: true
+    actorId?: true
+    actorNombre?: true
+    objetivoId?: true
+    objetivoNombre?: true
+    detalle?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type RegistroAuditoriaAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which RegistroAuditoria to aggregate.
+     */
+    where?: RegistroAuditoriaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RegistroAuditorias to fetch.
+     */
+    orderBy?: RegistroAuditoriaOrderByWithRelationInput | RegistroAuditoriaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: RegistroAuditoriaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RegistroAuditorias from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RegistroAuditorias.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned RegistroAuditorias
+    **/
+    _count?: true | RegistroAuditoriaCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: RegistroAuditoriaAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: RegistroAuditoriaSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: RegistroAuditoriaMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: RegistroAuditoriaMaxAggregateInputType
+  }
+
+  export type GetRegistroAuditoriaAggregateType<T extends RegistroAuditoriaAggregateArgs> = {
+        [P in keyof T & keyof AggregateRegistroAuditoria]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateRegistroAuditoria[P]>
+      : GetScalarType<T[P], AggregateRegistroAuditoria[P]>
+  }
+
+
+
+
+  export type RegistroAuditoriaGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RegistroAuditoriaWhereInput
+    orderBy?: RegistroAuditoriaOrderByWithAggregationInput | RegistroAuditoriaOrderByWithAggregationInput[]
+    by: RegistroAuditoriaScalarFieldEnum[] | RegistroAuditoriaScalarFieldEnum
+    having?: RegistroAuditoriaScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: RegistroAuditoriaCountAggregateInputType | true
+    _avg?: RegistroAuditoriaAvgAggregateInputType
+    _sum?: RegistroAuditoriaSumAggregateInputType
+    _min?: RegistroAuditoriaMinAggregateInputType
+    _max?: RegistroAuditoriaMaxAggregateInputType
+  }
+
+  export type RegistroAuditoriaGroupByOutputType = {
+    id: number
+    accion: string
+    actorId: number | null
+    actorNombre: string
+    objetivoId: number | null
+    objetivoNombre: string
+    detalle: string | null
+    createdAt: Date
+    _count: RegistroAuditoriaCountAggregateOutputType | null
+    _avg: RegistroAuditoriaAvgAggregateOutputType | null
+    _sum: RegistroAuditoriaSumAggregateOutputType | null
+    _min: RegistroAuditoriaMinAggregateOutputType | null
+    _max: RegistroAuditoriaMaxAggregateOutputType | null
+  }
+
+  type GetRegistroAuditoriaGroupByPayload<T extends RegistroAuditoriaGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<RegistroAuditoriaGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof RegistroAuditoriaGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], RegistroAuditoriaGroupByOutputType[P]>
+            : GetScalarType<T[P], RegistroAuditoriaGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type RegistroAuditoriaSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    accion?: boolean
+    actorId?: boolean
+    actorNombre?: boolean
+    objetivoId?: boolean
+    objetivoNombre?: boolean
+    detalle?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["registroAuditoria"]>
+
+  export type RegistroAuditoriaSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    accion?: boolean
+    actorId?: boolean
+    actorNombre?: boolean
+    objetivoId?: boolean
+    objetivoNombre?: boolean
+    detalle?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["registroAuditoria"]>
+
+  export type RegistroAuditoriaSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    accion?: boolean
+    actorId?: boolean
+    actorNombre?: boolean
+    objetivoId?: boolean
+    objetivoNombre?: boolean
+    detalle?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["registroAuditoria"]>
+
+  export type RegistroAuditoriaSelectScalar = {
+    id?: boolean
+    accion?: boolean
+    actorId?: boolean
+    actorNombre?: boolean
+    objetivoId?: boolean
+    objetivoNombre?: boolean
+    detalle?: boolean
+    createdAt?: boolean
+  }
+
+  export type RegistroAuditoriaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "accion" | "actorId" | "actorNombre" | "objetivoId" | "objetivoNombre" | "detalle" | "createdAt", ExtArgs["result"]["registroAuditoria"]>
+
+  export type $RegistroAuditoriaPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "RegistroAuditoria"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      accion: string
+      actorId: number | null
+      actorNombre: string
+      objetivoId: number | null
+      objetivoNombre: string
+      detalle: string | null
+      createdAt: Date
+    }, ExtArgs["result"]["registroAuditoria"]>
+    composites: {}
+  }
+
+  type RegistroAuditoriaGetPayload<S extends boolean | null | undefined | RegistroAuditoriaDefaultArgs> = $Result.GetResult<Prisma.$RegistroAuditoriaPayload, S>
+
+  type RegistroAuditoriaCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<RegistroAuditoriaFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: RegistroAuditoriaCountAggregateInputType | true
+    }
+
+  export interface RegistroAuditoriaDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['RegistroAuditoria'], meta: { name: 'RegistroAuditoria' } }
+    /**
+     * Find zero or one RegistroAuditoria that matches the filter.
+     * @param {RegistroAuditoriaFindUniqueArgs} args - Arguments to find a RegistroAuditoria
+     * @example
+     * // Get one RegistroAuditoria
+     * const registroAuditoria = await prisma.registroAuditoria.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends RegistroAuditoriaFindUniqueArgs>(args: SelectSubset<T, RegistroAuditoriaFindUniqueArgs<ExtArgs>>): Prisma__RegistroAuditoriaClient<$Result.GetResult<Prisma.$RegistroAuditoriaPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one RegistroAuditoria that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {RegistroAuditoriaFindUniqueOrThrowArgs} args - Arguments to find a RegistroAuditoria
+     * @example
+     * // Get one RegistroAuditoria
+     * const registroAuditoria = await prisma.registroAuditoria.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends RegistroAuditoriaFindUniqueOrThrowArgs>(args: SelectSubset<T, RegistroAuditoriaFindUniqueOrThrowArgs<ExtArgs>>): Prisma__RegistroAuditoriaClient<$Result.GetResult<Prisma.$RegistroAuditoriaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first RegistroAuditoria that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RegistroAuditoriaFindFirstArgs} args - Arguments to find a RegistroAuditoria
+     * @example
+     * // Get one RegistroAuditoria
+     * const registroAuditoria = await prisma.registroAuditoria.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends RegistroAuditoriaFindFirstArgs>(args?: SelectSubset<T, RegistroAuditoriaFindFirstArgs<ExtArgs>>): Prisma__RegistroAuditoriaClient<$Result.GetResult<Prisma.$RegistroAuditoriaPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first RegistroAuditoria that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RegistroAuditoriaFindFirstOrThrowArgs} args - Arguments to find a RegistroAuditoria
+     * @example
+     * // Get one RegistroAuditoria
+     * const registroAuditoria = await prisma.registroAuditoria.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends RegistroAuditoriaFindFirstOrThrowArgs>(args?: SelectSubset<T, RegistroAuditoriaFindFirstOrThrowArgs<ExtArgs>>): Prisma__RegistroAuditoriaClient<$Result.GetResult<Prisma.$RegistroAuditoriaPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more RegistroAuditorias that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RegistroAuditoriaFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all RegistroAuditorias
+     * const registroAuditorias = await prisma.registroAuditoria.findMany()
+     * 
+     * // Get first 10 RegistroAuditorias
+     * const registroAuditorias = await prisma.registroAuditoria.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const registroAuditoriaWithIdOnly = await prisma.registroAuditoria.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends RegistroAuditoriaFindManyArgs>(args?: SelectSubset<T, RegistroAuditoriaFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RegistroAuditoriaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a RegistroAuditoria.
+     * @param {RegistroAuditoriaCreateArgs} args - Arguments to create a RegistroAuditoria.
+     * @example
+     * // Create one RegistroAuditoria
+     * const RegistroAuditoria = await prisma.registroAuditoria.create({
+     *   data: {
+     *     // ... data to create a RegistroAuditoria
+     *   }
+     * })
+     * 
+     */
+    create<T extends RegistroAuditoriaCreateArgs>(args: SelectSubset<T, RegistroAuditoriaCreateArgs<ExtArgs>>): Prisma__RegistroAuditoriaClient<$Result.GetResult<Prisma.$RegistroAuditoriaPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many RegistroAuditorias.
+     * @param {RegistroAuditoriaCreateManyArgs} args - Arguments to create many RegistroAuditorias.
+     * @example
+     * // Create many RegistroAuditorias
+     * const registroAuditoria = await prisma.registroAuditoria.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends RegistroAuditoriaCreateManyArgs>(args?: SelectSubset<T, RegistroAuditoriaCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many RegistroAuditorias and returns the data saved in the database.
+     * @param {RegistroAuditoriaCreateManyAndReturnArgs} args - Arguments to create many RegistroAuditorias.
+     * @example
+     * // Create many RegistroAuditorias
+     * const registroAuditoria = await prisma.registroAuditoria.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many RegistroAuditorias and only return the `id`
+     * const registroAuditoriaWithIdOnly = await prisma.registroAuditoria.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends RegistroAuditoriaCreateManyAndReturnArgs>(args?: SelectSubset<T, RegistroAuditoriaCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RegistroAuditoriaPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a RegistroAuditoria.
+     * @param {RegistroAuditoriaDeleteArgs} args - Arguments to delete one RegistroAuditoria.
+     * @example
+     * // Delete one RegistroAuditoria
+     * const RegistroAuditoria = await prisma.registroAuditoria.delete({
+     *   where: {
+     *     // ... filter to delete one RegistroAuditoria
+     *   }
+     * })
+     * 
+     */
+    delete<T extends RegistroAuditoriaDeleteArgs>(args: SelectSubset<T, RegistroAuditoriaDeleteArgs<ExtArgs>>): Prisma__RegistroAuditoriaClient<$Result.GetResult<Prisma.$RegistroAuditoriaPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one RegistroAuditoria.
+     * @param {RegistroAuditoriaUpdateArgs} args - Arguments to update one RegistroAuditoria.
+     * @example
+     * // Update one RegistroAuditoria
+     * const registroAuditoria = await prisma.registroAuditoria.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends RegistroAuditoriaUpdateArgs>(args: SelectSubset<T, RegistroAuditoriaUpdateArgs<ExtArgs>>): Prisma__RegistroAuditoriaClient<$Result.GetResult<Prisma.$RegistroAuditoriaPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more RegistroAuditorias.
+     * @param {RegistroAuditoriaDeleteManyArgs} args - Arguments to filter RegistroAuditorias to delete.
+     * @example
+     * // Delete a few RegistroAuditorias
+     * const { count } = await prisma.registroAuditoria.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends RegistroAuditoriaDeleteManyArgs>(args?: SelectSubset<T, RegistroAuditoriaDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more RegistroAuditorias.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RegistroAuditoriaUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many RegistroAuditorias
+     * const registroAuditoria = await prisma.registroAuditoria.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends RegistroAuditoriaUpdateManyArgs>(args: SelectSubset<T, RegistroAuditoriaUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more RegistroAuditorias and returns the data updated in the database.
+     * @param {RegistroAuditoriaUpdateManyAndReturnArgs} args - Arguments to update many RegistroAuditorias.
+     * @example
+     * // Update many RegistroAuditorias
+     * const registroAuditoria = await prisma.registroAuditoria.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more RegistroAuditorias and only return the `id`
+     * const registroAuditoriaWithIdOnly = await prisma.registroAuditoria.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends RegistroAuditoriaUpdateManyAndReturnArgs>(args: SelectSubset<T, RegistroAuditoriaUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RegistroAuditoriaPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one RegistroAuditoria.
+     * @param {RegistroAuditoriaUpsertArgs} args - Arguments to update or create a RegistroAuditoria.
+     * @example
+     * // Update or create a RegistroAuditoria
+     * const registroAuditoria = await prisma.registroAuditoria.upsert({
+     *   create: {
+     *     // ... data to create a RegistroAuditoria
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the RegistroAuditoria we want to update
+     *   }
+     * })
+     */
+    upsert<T extends RegistroAuditoriaUpsertArgs>(args: SelectSubset<T, RegistroAuditoriaUpsertArgs<ExtArgs>>): Prisma__RegistroAuditoriaClient<$Result.GetResult<Prisma.$RegistroAuditoriaPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of RegistroAuditorias.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RegistroAuditoriaCountArgs} args - Arguments to filter RegistroAuditorias to count.
+     * @example
+     * // Count the number of RegistroAuditorias
+     * const count = await prisma.registroAuditoria.count({
+     *   where: {
+     *     // ... the filter for the RegistroAuditorias we want to count
+     *   }
+     * })
+    **/
+    count<T extends RegistroAuditoriaCountArgs>(
+      args?: Subset<T, RegistroAuditoriaCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], RegistroAuditoriaCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a RegistroAuditoria.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RegistroAuditoriaAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends RegistroAuditoriaAggregateArgs>(args: Subset<T, RegistroAuditoriaAggregateArgs>): Prisma.PrismaPromise<GetRegistroAuditoriaAggregateType<T>>
+
+    /**
+     * Group by RegistroAuditoria.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RegistroAuditoriaGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends RegistroAuditoriaGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: RegistroAuditoriaGroupByArgs['orderBy'] }
+        : { orderBy?: RegistroAuditoriaGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, RegistroAuditoriaGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetRegistroAuditoriaGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the RegistroAuditoria model
+   */
+  readonly fields: RegistroAuditoriaFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for RegistroAuditoria.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__RegistroAuditoriaClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the RegistroAuditoria model
+   */
+  interface RegistroAuditoriaFieldRefs {
+    readonly id: FieldRef<"RegistroAuditoria", 'Int'>
+    readonly accion: FieldRef<"RegistroAuditoria", 'String'>
+    readonly actorId: FieldRef<"RegistroAuditoria", 'Int'>
+    readonly actorNombre: FieldRef<"RegistroAuditoria", 'String'>
+    readonly objetivoId: FieldRef<"RegistroAuditoria", 'Int'>
+    readonly objetivoNombre: FieldRef<"RegistroAuditoria", 'String'>
+    readonly detalle: FieldRef<"RegistroAuditoria", 'String'>
+    readonly createdAt: FieldRef<"RegistroAuditoria", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * RegistroAuditoria findUnique
+   */
+  export type RegistroAuditoriaFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RegistroAuditoria
+     */
+    select?: RegistroAuditoriaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RegistroAuditoria
+     */
+    omit?: RegistroAuditoriaOmit<ExtArgs> | null
+    /**
+     * Filter, which RegistroAuditoria to fetch.
+     */
+    where: RegistroAuditoriaWhereUniqueInput
+  }
+
+  /**
+   * RegistroAuditoria findUniqueOrThrow
+   */
+  export type RegistroAuditoriaFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RegistroAuditoria
+     */
+    select?: RegistroAuditoriaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RegistroAuditoria
+     */
+    omit?: RegistroAuditoriaOmit<ExtArgs> | null
+    /**
+     * Filter, which RegistroAuditoria to fetch.
+     */
+    where: RegistroAuditoriaWhereUniqueInput
+  }
+
+  /**
+   * RegistroAuditoria findFirst
+   */
+  export type RegistroAuditoriaFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RegistroAuditoria
+     */
+    select?: RegistroAuditoriaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RegistroAuditoria
+     */
+    omit?: RegistroAuditoriaOmit<ExtArgs> | null
+    /**
+     * Filter, which RegistroAuditoria to fetch.
+     */
+    where?: RegistroAuditoriaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RegistroAuditorias to fetch.
+     */
+    orderBy?: RegistroAuditoriaOrderByWithRelationInput | RegistroAuditoriaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for RegistroAuditorias.
+     */
+    cursor?: RegistroAuditoriaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RegistroAuditorias from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RegistroAuditorias.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of RegistroAuditorias.
+     */
+    distinct?: RegistroAuditoriaScalarFieldEnum | RegistroAuditoriaScalarFieldEnum[]
+  }
+
+  /**
+   * RegistroAuditoria findFirstOrThrow
+   */
+  export type RegistroAuditoriaFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RegistroAuditoria
+     */
+    select?: RegistroAuditoriaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RegistroAuditoria
+     */
+    omit?: RegistroAuditoriaOmit<ExtArgs> | null
+    /**
+     * Filter, which RegistroAuditoria to fetch.
+     */
+    where?: RegistroAuditoriaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RegistroAuditorias to fetch.
+     */
+    orderBy?: RegistroAuditoriaOrderByWithRelationInput | RegistroAuditoriaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for RegistroAuditorias.
+     */
+    cursor?: RegistroAuditoriaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RegistroAuditorias from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RegistroAuditorias.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of RegistroAuditorias.
+     */
+    distinct?: RegistroAuditoriaScalarFieldEnum | RegistroAuditoriaScalarFieldEnum[]
+  }
+
+  /**
+   * RegistroAuditoria findMany
+   */
+  export type RegistroAuditoriaFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RegistroAuditoria
+     */
+    select?: RegistroAuditoriaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RegistroAuditoria
+     */
+    omit?: RegistroAuditoriaOmit<ExtArgs> | null
+    /**
+     * Filter, which RegistroAuditorias to fetch.
+     */
+    where?: RegistroAuditoriaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RegistroAuditorias to fetch.
+     */
+    orderBy?: RegistroAuditoriaOrderByWithRelationInput | RegistroAuditoriaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing RegistroAuditorias.
+     */
+    cursor?: RegistroAuditoriaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RegistroAuditorias from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RegistroAuditorias.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of RegistroAuditorias.
+     */
+    distinct?: RegistroAuditoriaScalarFieldEnum | RegistroAuditoriaScalarFieldEnum[]
+  }
+
+  /**
+   * RegistroAuditoria create
+   */
+  export type RegistroAuditoriaCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RegistroAuditoria
+     */
+    select?: RegistroAuditoriaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RegistroAuditoria
+     */
+    omit?: RegistroAuditoriaOmit<ExtArgs> | null
+    /**
+     * The data needed to create a RegistroAuditoria.
+     */
+    data: XOR<RegistroAuditoriaCreateInput, RegistroAuditoriaUncheckedCreateInput>
+  }
+
+  /**
+   * RegistroAuditoria createMany
+   */
+  export type RegistroAuditoriaCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many RegistroAuditorias.
+     */
+    data: RegistroAuditoriaCreateManyInput | RegistroAuditoriaCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * RegistroAuditoria createManyAndReturn
+   */
+  export type RegistroAuditoriaCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RegistroAuditoria
+     */
+    select?: RegistroAuditoriaSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the RegistroAuditoria
+     */
+    omit?: RegistroAuditoriaOmit<ExtArgs> | null
+    /**
+     * The data used to create many RegistroAuditorias.
+     */
+    data: RegistroAuditoriaCreateManyInput | RegistroAuditoriaCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * RegistroAuditoria update
+   */
+  export type RegistroAuditoriaUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RegistroAuditoria
+     */
+    select?: RegistroAuditoriaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RegistroAuditoria
+     */
+    omit?: RegistroAuditoriaOmit<ExtArgs> | null
+    /**
+     * The data needed to update a RegistroAuditoria.
+     */
+    data: XOR<RegistroAuditoriaUpdateInput, RegistroAuditoriaUncheckedUpdateInput>
+    /**
+     * Choose, which RegistroAuditoria to update.
+     */
+    where: RegistroAuditoriaWhereUniqueInput
+  }
+
+  /**
+   * RegistroAuditoria updateMany
+   */
+  export type RegistroAuditoriaUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update RegistroAuditorias.
+     */
+    data: XOR<RegistroAuditoriaUpdateManyMutationInput, RegistroAuditoriaUncheckedUpdateManyInput>
+    /**
+     * Filter which RegistroAuditorias to update
+     */
+    where?: RegistroAuditoriaWhereInput
+    /**
+     * Limit how many RegistroAuditorias to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * RegistroAuditoria updateManyAndReturn
+   */
+  export type RegistroAuditoriaUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RegistroAuditoria
+     */
+    select?: RegistroAuditoriaSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the RegistroAuditoria
+     */
+    omit?: RegistroAuditoriaOmit<ExtArgs> | null
+    /**
+     * The data used to update RegistroAuditorias.
+     */
+    data: XOR<RegistroAuditoriaUpdateManyMutationInput, RegistroAuditoriaUncheckedUpdateManyInput>
+    /**
+     * Filter which RegistroAuditorias to update
+     */
+    where?: RegistroAuditoriaWhereInput
+    /**
+     * Limit how many RegistroAuditorias to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * RegistroAuditoria upsert
+   */
+  export type RegistroAuditoriaUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RegistroAuditoria
+     */
+    select?: RegistroAuditoriaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RegistroAuditoria
+     */
+    omit?: RegistroAuditoriaOmit<ExtArgs> | null
+    /**
+     * The filter to search for the RegistroAuditoria to update in case it exists.
+     */
+    where: RegistroAuditoriaWhereUniqueInput
+    /**
+     * In case the RegistroAuditoria found by the `where` argument doesn't exist, create a new RegistroAuditoria with this data.
+     */
+    create: XOR<RegistroAuditoriaCreateInput, RegistroAuditoriaUncheckedCreateInput>
+    /**
+     * In case the RegistroAuditoria was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<RegistroAuditoriaUpdateInput, RegistroAuditoriaUncheckedUpdateInput>
+  }
+
+  /**
+   * RegistroAuditoria delete
+   */
+  export type RegistroAuditoriaDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RegistroAuditoria
+     */
+    select?: RegistroAuditoriaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RegistroAuditoria
+     */
+    omit?: RegistroAuditoriaOmit<ExtArgs> | null
+    /**
+     * Filter which RegistroAuditoria to delete.
+     */
+    where: RegistroAuditoriaWhereUniqueInput
+  }
+
+  /**
+   * RegistroAuditoria deleteMany
+   */
+  export type RegistroAuditoriaDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which RegistroAuditorias to delete
+     */
+    where?: RegistroAuditoriaWhereInput
+    /**
+     * Limit how many RegistroAuditorias to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * RegistroAuditoria without action
+   */
+  export type RegistroAuditoriaDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RegistroAuditoria
+     */
+    select?: RegistroAuditoriaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RegistroAuditoria
+     */
+    omit?: RegistroAuditoriaOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -18201,6 +19373,20 @@ export namespace Prisma {
   };
 
   export type AccesoISOScalarFieldEnum = (typeof AccesoISOScalarFieldEnum)[keyof typeof AccesoISOScalarFieldEnum]
+
+
+  export const RegistroAuditoriaScalarFieldEnum: {
+    id: 'id',
+    accion: 'accion',
+    actorId: 'actorId',
+    actorNombre: 'actorNombre',
+    objetivoId: 'objetivoId',
+    objetivoNombre: 'objetivoNombre',
+    detalle: 'detalle',
+    createdAt: 'createdAt'
+  };
+
+  export type RegistroAuditoriaScalarFieldEnum = (typeof RegistroAuditoriaScalarFieldEnum)[keyof typeof RegistroAuditoriaScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -19510,6 +20696,75 @@ export namespace Prisma {
     gestionaObsoleto?: BoolWithAggregatesFilter<"AccesoISO"> | boolean
   }
 
+  export type RegistroAuditoriaWhereInput = {
+    AND?: RegistroAuditoriaWhereInput | RegistroAuditoriaWhereInput[]
+    OR?: RegistroAuditoriaWhereInput[]
+    NOT?: RegistroAuditoriaWhereInput | RegistroAuditoriaWhereInput[]
+    id?: IntFilter<"RegistroAuditoria"> | number
+    accion?: StringFilter<"RegistroAuditoria"> | string
+    actorId?: IntNullableFilter<"RegistroAuditoria"> | number | null
+    actorNombre?: StringFilter<"RegistroAuditoria"> | string
+    objetivoId?: IntNullableFilter<"RegistroAuditoria"> | number | null
+    objetivoNombre?: StringFilter<"RegistroAuditoria"> | string
+    detalle?: StringNullableFilter<"RegistroAuditoria"> | string | null
+    createdAt?: DateTimeFilter<"RegistroAuditoria"> | Date | string
+  }
+
+  export type RegistroAuditoriaOrderByWithRelationInput = {
+    id?: SortOrder
+    accion?: SortOrder
+    actorId?: SortOrderInput | SortOrder
+    actorNombre?: SortOrder
+    objetivoId?: SortOrderInput | SortOrder
+    objetivoNombre?: SortOrder
+    detalle?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type RegistroAuditoriaWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: RegistroAuditoriaWhereInput | RegistroAuditoriaWhereInput[]
+    OR?: RegistroAuditoriaWhereInput[]
+    NOT?: RegistroAuditoriaWhereInput | RegistroAuditoriaWhereInput[]
+    accion?: StringFilter<"RegistroAuditoria"> | string
+    actorId?: IntNullableFilter<"RegistroAuditoria"> | number | null
+    actorNombre?: StringFilter<"RegistroAuditoria"> | string
+    objetivoId?: IntNullableFilter<"RegistroAuditoria"> | number | null
+    objetivoNombre?: StringFilter<"RegistroAuditoria"> | string
+    detalle?: StringNullableFilter<"RegistroAuditoria"> | string | null
+    createdAt?: DateTimeFilter<"RegistroAuditoria"> | Date | string
+  }, "id">
+
+  export type RegistroAuditoriaOrderByWithAggregationInput = {
+    id?: SortOrder
+    accion?: SortOrder
+    actorId?: SortOrderInput | SortOrder
+    actorNombre?: SortOrder
+    objetivoId?: SortOrderInput | SortOrder
+    objetivoNombre?: SortOrder
+    detalle?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: RegistroAuditoriaCountOrderByAggregateInput
+    _avg?: RegistroAuditoriaAvgOrderByAggregateInput
+    _max?: RegistroAuditoriaMaxOrderByAggregateInput
+    _min?: RegistroAuditoriaMinOrderByAggregateInput
+    _sum?: RegistroAuditoriaSumOrderByAggregateInput
+  }
+
+  export type RegistroAuditoriaScalarWhereWithAggregatesInput = {
+    AND?: RegistroAuditoriaScalarWhereWithAggregatesInput | RegistroAuditoriaScalarWhereWithAggregatesInput[]
+    OR?: RegistroAuditoriaScalarWhereWithAggregatesInput[]
+    NOT?: RegistroAuditoriaScalarWhereWithAggregatesInput | RegistroAuditoriaScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"RegistroAuditoria"> | number
+    accion?: StringWithAggregatesFilter<"RegistroAuditoria"> | string
+    actorId?: IntNullableWithAggregatesFilter<"RegistroAuditoria"> | number | null
+    actorNombre?: StringWithAggregatesFilter<"RegistroAuditoria"> | string
+    objetivoId?: IntNullableWithAggregatesFilter<"RegistroAuditoria"> | number | null
+    objetivoNombre?: StringWithAggregatesFilter<"RegistroAuditoria"> | string
+    detalle?: StringNullableWithAggregatesFilter<"RegistroAuditoria"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"RegistroAuditoria"> | Date | string
+  }
+
   export type UsuarioCreateInput = {
     supabaseUserId: string
     nombre: string
@@ -20671,6 +21926,80 @@ export namespace Prisma {
     gestionaObsoleto?: BoolFieldUpdateOperationsInput | boolean
   }
 
+  export type RegistroAuditoriaCreateInput = {
+    accion: string
+    actorId?: number | null
+    actorNombre: string
+    objetivoId?: number | null
+    objetivoNombre: string
+    detalle?: string | null
+    createdAt?: Date | string
+  }
+
+  export type RegistroAuditoriaUncheckedCreateInput = {
+    id?: number
+    accion: string
+    actorId?: number | null
+    actorNombre: string
+    objetivoId?: number | null
+    objetivoNombre: string
+    detalle?: string | null
+    createdAt?: Date | string
+  }
+
+  export type RegistroAuditoriaUpdateInput = {
+    accion?: StringFieldUpdateOperationsInput | string
+    actorId?: NullableIntFieldUpdateOperationsInput | number | null
+    actorNombre?: StringFieldUpdateOperationsInput | string
+    objetivoId?: NullableIntFieldUpdateOperationsInput | number | null
+    objetivoNombre?: StringFieldUpdateOperationsInput | string
+    detalle?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RegistroAuditoriaUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    accion?: StringFieldUpdateOperationsInput | string
+    actorId?: NullableIntFieldUpdateOperationsInput | number | null
+    actorNombre?: StringFieldUpdateOperationsInput | string
+    objetivoId?: NullableIntFieldUpdateOperationsInput | number | null
+    objetivoNombre?: StringFieldUpdateOperationsInput | string
+    detalle?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RegistroAuditoriaCreateManyInput = {
+    id?: number
+    accion: string
+    actorId?: number | null
+    actorNombre: string
+    objetivoId?: number | null
+    objetivoNombre: string
+    detalle?: string | null
+    createdAt?: Date | string
+  }
+
+  export type RegistroAuditoriaUpdateManyMutationInput = {
+    accion?: StringFieldUpdateOperationsInput | string
+    actorId?: NullableIntFieldUpdateOperationsInput | number | null
+    actorNombre?: StringFieldUpdateOperationsInput | string
+    objetivoId?: NullableIntFieldUpdateOperationsInput | number | null
+    objetivoNombre?: StringFieldUpdateOperationsInput | string
+    detalle?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RegistroAuditoriaUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    accion?: StringFieldUpdateOperationsInput | string
+    actorId?: NullableIntFieldUpdateOperationsInput | number | null
+    actorNombre?: StringFieldUpdateOperationsInput | string
+    objetivoId?: NullableIntFieldUpdateOperationsInput | number | null
+    objetivoNombre?: StringFieldUpdateOperationsInput | string
+    detalle?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -21830,6 +23159,51 @@ export namespace Prisma {
   export type AccesoISOSumOrderByAggregateInput = {
     id?: SortOrder
     usuarioId?: SortOrder
+  }
+
+  export type RegistroAuditoriaCountOrderByAggregateInput = {
+    id?: SortOrder
+    accion?: SortOrder
+    actorId?: SortOrder
+    actorNombre?: SortOrder
+    objetivoId?: SortOrder
+    objetivoNombre?: SortOrder
+    detalle?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type RegistroAuditoriaAvgOrderByAggregateInput = {
+    id?: SortOrder
+    actorId?: SortOrder
+    objetivoId?: SortOrder
+  }
+
+  export type RegistroAuditoriaMaxOrderByAggregateInput = {
+    id?: SortOrder
+    accion?: SortOrder
+    actorId?: SortOrder
+    actorNombre?: SortOrder
+    objetivoId?: SortOrder
+    objetivoNombre?: SortOrder
+    detalle?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type RegistroAuditoriaMinOrderByAggregateInput = {
+    id?: SortOrder
+    accion?: SortOrder
+    actorId?: SortOrder
+    actorNombre?: SortOrder
+    objetivoId?: SortOrder
+    objetivoNombre?: SortOrder
+    detalle?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type RegistroAuditoriaSumOrderByAggregateInput = {
+    id?: SortOrder
+    actorId?: SortOrder
+    objetivoId?: SortOrder
   }
 
   export type UsuarioCreateNestedOneWithoutDesactivadosInput = {

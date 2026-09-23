@@ -27,8 +27,9 @@ function crearServicio() {
       findUnique: jest.fn(() => Promise.resolve(USUARIO)),
       update,
     },
+    registroAuditoria: { create: jest.fn(() => Promise.resolve({})), findMany: jest.fn(() => Promise.resolve([])) },
   };
-  return { servicio: new UsuariosService(prisma), update };
+  return { servicio: new UsuariosService(prisma), update, registrar: prisma.registroAuditoria.create as jest.Mock, prisma };
 }
 
 describe('actualizarRolKpis — acceso minimo en la respuesta', () => {
@@ -79,8 +80,9 @@ describe('eliminar', () => {
         findUnique: jest.fn(() => Promise.resolve(opciones.existe === false ? null : OBJETIVO)),
         delete: remove,
       },
+      registroAuditoria: { create: jest.fn(() => Promise.resolve({})) },
     };
-    return { servicio: new UsuariosService(prisma), remove };
+    return { servicio: new UsuariosService(prisma), remove, registrar: prisma.registroAuditoria.create as jest.Mock };
   }
 
   beforeEach(() => mockDeleteUser.mockReset().mockResolvedValue({ error: null }));
@@ -91,6 +93,25 @@ describe('eliminar', () => {
 
     expect(remove).toHaveBeenCalledWith({ where: { id: 6 } });
     expect(mockDeleteUser).toHaveBeenCalledWith('sb-6');
+  });
+
+  it('deja constancia de quién eliminó a quién (la fila ya no existe)', async () => {
+    const { servicio, registrar } = crear();
+    await servicio.eliminar(6, 1);
+
+    expect(registrar.mock.calls[0][0].data).toMatchObject({
+      accion: 'USUARIO_ELIMINADO',
+      actorId: 1,
+      objetivoId: 6,
+    });
+  });
+
+  it('si el borrado falla por historial (409) no registra nada', async () => {
+    const fk = new Prisma.PrismaClientKnownRequestError('fk', { code: 'P2003', clientVersion: 'test' });
+    const { servicio, registrar } = crear({ errorDelete: fk });
+
+    await expect(servicio.eliminar(6, 1)).rejects.toBeInstanceOf(ConflictException);
+    expect(registrar).not.toHaveBeenCalled();
   });
 
   it('no deja que un admin se elimine a sí mismo', async () => {
@@ -151,5 +172,52 @@ describe('actualizarActivo', () => {
 
     await expect(servicio.actualizarActivo(99, false, 1)).rejects.toBeInstanceOf(NotFoundException);
     expect(update).not.toHaveBeenCalled();
+  });
+});
+
+describe('auditoría', () => {
+  it('desactivar y reactivar dejan su registro', async () => {
+    const { servicio, registrar } = crearServicio();
+    await servicio.actualizarActivo(6, false, 1);
+    await servicio.actualizarActivo(6, true, 1);
+
+    expect(registrar.mock.calls.map((c) => (c[0] as any).data.accion)).toEqual([
+      'USUARIO_DESACTIVADO',
+      'USUARIO_REACTIVADO',
+    ]);
+  });
+
+  it('cambiar permisos registra quién y un resumen de lo asignado', async () => {
+    const { servicio, registrar, prisma } = crearServicio();
+    prisma.$transaction = jest.fn(() => Promise.resolve(USUARIO));
+    await servicio.actualizarPermisos(
+      6,
+      [
+        { recurso: 'LOTES', puedeVer: true, puedeCrear: true, puedeEditar: false, puedeEliminar: false },
+        { recurso: 'PEDIDOS', puedeVer: false, puedeCrear: false, puedeEditar: false, puedeEliminar: false },
+      ] as any,
+      1,
+    );
+
+    const data = (registrar.mock.calls[0][0] as any).data;
+    expect(data).toMatchObject({ accion: 'PERMISOS_ACTUALIZADOS', actorId: 1, objetivoId: 6 });
+    expect(data.detalle).toBe('LOTES: ver/crear'); // el recurso sin ninguna acción no aparece
+  });
+
+  it('si el registro falla, la acción principal igual se completa', async () => {
+    const { servicio, update, registrar } = crearServicio();
+    registrar.mockRejectedValueOnce(new Error('tabla caída'));
+
+    await expect(servicio.actualizarActivo(6, false, 1)).resolves.toBeDefined();
+    expect(update).toHaveBeenCalled();
+  });
+
+  it('listarAuditoria acota el límite pedido', async () => {
+    const { servicio, prisma } = crearServicio();
+    await servicio.listarAuditoria(100000);
+    await servicio.listarAuditoria(0);
+
+    expect(prisma.registroAuditoria.findMany.mock.calls[0][0].take).toBe(500);
+    expect(prisma.registroAuditoria.findMany.mock.calls[1][0].take).toBe(1);
   });
 });

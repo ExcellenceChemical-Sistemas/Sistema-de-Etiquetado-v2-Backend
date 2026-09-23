@@ -382,3 +382,23 @@ model AccesoISO {
 
   @@map("accesos_iso")
 }
+
+// ──────────────────────────────────────────
+// AUDITORÍA DE USUARIOS
+// Quién hizo qué sobre las cuentas (desactivar, reactivar, eliminar, cambiar
+// permisos). A propósito SIN claves foráneas y con los nombres copiados: el
+// registro tiene que sobrevivir a que se elimine el usuario afectado o el admin.
+// ──────────────────────────────────────────
+model RegistroAuditoria {
+  id             Int      @id @default(autoincrement())
+  accion         String // USUARIO_DESACTIVADO | USUARIO_REACTIVADO | USUARIO_ELIMINADO | PERMISOS_ACTUALIZADOS
+  actorId        Int?
+  actorNombre    String
+  objetivoId     Int?
+  objetivoNombre String
+  detalle        String?
+  createdAt      DateTime @default(now())
+
+  @@index([createdAt])
+  @@map("registro_auditoria")
+}

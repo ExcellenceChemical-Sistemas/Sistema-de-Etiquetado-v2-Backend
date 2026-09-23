@@ -22,6 +22,12 @@ import { ActualizarRolKpisDto } from './dto/actualizar-rol-kpis.dto';
  * rol no tiene por qué ver permisos de los módulos CRUD (§1.1 punto 4).
  * Compartido para que las dos respuestas no se puedan desincronizar.
  */
+export type AccionAuditoria =
+  | 'USUARIO_DESACTIVADO'
+  | 'USUARIO_REACTIVADO'
+  | 'USUARIO_ELIMINADO'
+  | 'PERMISOS_ACTUALIZADOS';
+
 /** Incluye el nombre de quién desactivó la cuenta (solo lo ve el admin en la lista). */
 const INCLUDE_USUARIO_ADMIN = {
   permisos: true,
@@ -61,6 +67,44 @@ export class UsuariosService {
   private readonly logger = new Logger(UsuariosService.name);
 
   constructor(private readonly prisma: PrismaService) {}
+
+  /**
+   * Deja constancia de una acción de un admin sobre una cuenta. Nunca hace
+   * fallar la acción principal: si no se pudo escribir, queda en el log.
+   */
+  private async registrar(
+    accion: AccionAuditoria,
+    actorId: number,
+    objetivo: { id: number; nombre: string },
+    detalle?: string,
+  ) {
+    try {
+      const actor = await this.prisma.usuario.findUnique({
+        where: { id: actorId },
+        select: { nombre: true },
+      });
+      await this.prisma.registroAuditoria.create({
+        data: {
+          accion,
+          actorId,
+          actorNombre: actor?.nombre ?? `#${actorId}`,
+          objetivoId: objetivo.id,
+          objetivoNombre: objetivo.nombre,
+          detalle,
+        },
+      });
+    } catch (error) {
+      this.logger.error(`No se pudo registrar la auditoría (${accion} sobre usuario ${objetivo.id}): ${error}`);
+    }
+  }
+
+  /** Últimos movimientos sobre cuentas, del más nuevo al más viejo. */
+  listarAuditoria(limite = 100) {
+    return this.prisma.registroAuditoria.findMany({
+      orderBy: { createdAt: 'desc' },
+      take: Math.min(Math.max(limite, 1), 500),
+    });
+  }
 
   async crear(dto: CrearUsuarioDto) {
     const { data, error } = await supabaseAdmin.auth.admin.createUser({
@@ -117,13 +161,14 @@ export class UsuariosService {
   async actualizarPermisos(
     usuarioId: number,
     permisos: ActualizarPermisosDto['permisos'],
+    solicitanteId: number,
   ) {
     const usuario = await this.prisma.usuario.findUnique({
       where: { id: usuarioId },
     });
     if (!usuario) throw new NotFoundException('Usuario no encontrado');
 
-    return this.prisma.$transaction(async (tx) => {
+    const resultado = await this.prisma.$transaction(async (tx) => {
       await tx.permiso.deleteMany({ where: { usuarioId } });
 
       if (permisos.length > 0) {
@@ -137,6 +182,26 @@ export class UsuariosService {
         include: { permisos: true, accesosIndicador: true, accesoIso: true }, // ← agregado
       });
     });
+
+    const resumen = permisos
+      .filter((p) => p.puedeVer || p.puedeCrear || p.puedeEditar || p.puedeEliminar)
+      .map((p) => {
+        const acciones = [
+          p.puedeVer && 'ver',
+          p.puedeCrear && 'crear',
+          p.puedeEditar && 'editar',
+          p.puedeEliminar && 'eliminar',
+        ].filter(Boolean);
+        return `${p.recurso}: ${acciones.join('/')}`;
+      })
+      .join('; ');
+    await this.registrar(
+      'PERMISOS_ACTUALIZADOS',
+      solicitanteId,
+      usuario,
+      resumen || 'sin permisos',
+    );
+    return resultado;
   }
 
   /**
@@ -253,9 +318,10 @@ export class UsuariosService {
       throw error;
     }
 
-    // Sin tabla de auditoría: el usuario se borra y con él su fila, así que el
-    // único rastro de quién lo eliminó queda en el log del servidor.
+    // La fila del usuario ya no existe: el registro de auditoría (sin claves
+    // foráneas, con el nombre copiado) es lo que deja constancia de quién lo eliminó.
     this.logger.warn(`Usuario eliminado: id=${usuario.id} nombre="${usuario.nombre}" por usuarioId=${solicitanteId}`);
+    await this.registrar('USUARIO_ELIMINADO', solicitanteId, usuario);
 
     const { error } = await supabaseAdmin.auth.admin.deleteUser(usuario.supabaseUserId);
     if (error) {
@@ -279,7 +345,7 @@ export class UsuariosService {
     const usuario = await this.prisma.usuario.findUnique({ where: { id: usuarioId } });
     if (!usuario) throw new NotFoundException('Usuario no encontrado');
 
-    return this.prisma.usuario.update({
+    const actualizado = await this.prisma.usuario.update({
       where: { id: usuarioId },
       // Queda registrado quién y cuándo; al reactivar se limpia.
       data: activo
@@ -287,6 +353,8 @@ export class UsuariosService {
         : { activo, desactivadoEn: new Date(), desactivadoPorId: solicitanteId },
       include: INCLUDE_USUARIO_ADMIN,
     });
+    await this.registrar(activo ? 'USUARIO_REACTIVADO' : 'USUARIO_DESACTIVADO', solicitanteId, usuario);
+    return actualizado;
   }
 
   async actualizarPerfil(usuarioId: number, dto: ActualizarPerfilDto) {

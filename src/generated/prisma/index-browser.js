@@ -285,6 +285,17 @@ exports.Prisma.AccesoISOScalarFieldEnum = {
   gestionaObsoleto: 'gestionaObsoleto'
 };
 
+exports.Prisma.RegistroAuditoriaScalarFieldEnum = {
+  id: 'id',
+  accion: 'accion',
+  actorId: 'actorId',
+  actorNombre: 'actorNombre',
+  objetivoId: 'objetivoId',
+  objetivoNombre: 'objetivoNombre',
+  detalle: 'detalle',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -375,7 +386,8 @@ exports.Prisma.ModelName = {
   Carpeta: 'Carpeta',
   Archivo: 'Archivo',
   AccesoIndicador: 'AccesoIndicador',
-  AccesoISO: 'AccesoISO'
+  AccesoISO: 'AccesoISO',
+  RegistroAuditoria: 'RegistroAuditoria'
 };
 
 /**

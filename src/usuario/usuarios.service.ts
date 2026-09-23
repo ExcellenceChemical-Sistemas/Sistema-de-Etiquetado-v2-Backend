@@ -236,7 +236,7 @@ export class UsuariosService {
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2003') {
         throw new ConflictException(
-          'No se puede eliminar: el usuario tiene historial (etiquetas impresas, pedidos o archivos subidos).',
+          'No se puede eliminar: el usuario tiene historial (etiquetas impresas, pedidos o archivos subidos). Podés desactivarlo para quitarle el acceso.',
         );
       }
       throw error;
@@ -248,6 +248,27 @@ export class UsuariosService {
         `El usuario se eliminó del sistema pero no de Supabase Auth: ${error.message}`,
       );
     }
+  }
+
+  /**
+   * Desactiva o reactiva una cuenta. Desactivada, SupabaseAuthGuard le responde
+   * 403 en cada request, pero la fila (y su historial) se conserva. Es la salida
+   * para quien no se puede eliminar por tener etiquetas, pedidos o archivos.
+   * Un admin no puede desactivarse a sí mismo (quedaría sin nadie que la reactive).
+   */
+  async actualizarActivo(usuarioId: number, activo: boolean, solicitanteId: number) {
+    if (usuarioId === solicitanteId && !activo) {
+      throw new BadRequestException('No podés desactivar tu propio usuario');
+    }
+
+    const usuario = await this.prisma.usuario.findUnique({ where: { id: usuarioId } });
+    if (!usuario) throw new NotFoundException('Usuario no encontrado');
+
+    return this.prisma.usuario.update({
+      where: { id: usuarioId },
+      data: { activo },
+      include: { permisos: true, accesosIndicador: true, accesoIso: true },
+    });
   }
 
   async actualizarPerfil(usuarioId: number, dto: ActualizarPerfilDto) {

@@ -2407,6 +2407,7 @@ export namespace Prisma {
     nombre: string | null
     esAdmin: boolean | null
     esAdminKpis: boolean | null
+    activo: boolean | null
     avatarUrl: string | null
     createdAt: Date | null
   }
@@ -2417,6 +2418,7 @@ export namespace Prisma {
     nombre: string | null
     esAdmin: boolean | null
     esAdminKpis: boolean | null
+    activo: boolean | null
     avatarUrl: string | null
     createdAt: Date | null
   }
@@ -2427,6 +2429,7 @@ export namespace Prisma {
     nombre: number
     esAdmin: number
     esAdminKpis: number
+    activo: number
     avatarUrl: number
     createdAt: number
     _all: number
@@ -2447,6 +2450,7 @@ export namespace Prisma {
     nombre?: true
     esAdmin?: true
     esAdminKpis?: true
+    activo?: true
     avatarUrl?: true
     createdAt?: true
   }
@@ -2457,6 +2461,7 @@ export namespace Prisma {
     nombre?: true
     esAdmin?: true
     esAdminKpis?: true
+    activo?: true
     avatarUrl?: true
     createdAt?: true
   }
@@ -2467,6 +2472,7 @@ export namespace Prisma {
     nombre?: true
     esAdmin?: true
     esAdminKpis?: true
+    activo?: true
     avatarUrl?: true
     createdAt?: true
     _all?: true
@@ -2564,6 +2570,7 @@ export namespace Prisma {
     nombre: string
     esAdmin: boolean
     esAdminKpis: boolean
+    activo: boolean
     avatarUrl: string | null
     createdAt: Date
     _count: UsuarioCountAggregateOutputType | null
@@ -2593,6 +2600,7 @@ export namespace Prisma {
     nombre?: boolean
     esAdmin?: boolean
     esAdminKpis?: boolean
+    activo?: boolean
     avatarUrl?: boolean
     createdAt?: boolean
     permisos?: boolean | Usuario$permisosArgs<ExtArgs>
@@ -2611,6 +2619,7 @@ export namespace Prisma {
     nombre?: boolean
     esAdmin?: boolean
     esAdminKpis?: boolean
+    activo?: boolean
     avatarUrl?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["usuario"]>
@@ -2621,6 +2630,7 @@ export namespace Prisma {
     nombre?: boolean
     esAdmin?: boolean
     esAdminKpis?: boolean
+    activo?: boolean
     avatarUrl?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["usuario"]>
@@ -2631,11 +2641,12 @@ export namespace Prisma {
     nombre?: boolean
     esAdmin?: boolean
     esAdminKpis?: boolean
+    activo?: boolean
     avatarUrl?: boolean
     createdAt?: boolean
   }
 
-  export type UsuarioOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "supabaseUserId" | "nombre" | "esAdmin" | "esAdminKpis" | "avatarUrl" | "createdAt", ExtArgs["result"]["usuario"]>
+  export type UsuarioOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "supabaseUserId" | "nombre" | "esAdmin" | "esAdminKpis" | "activo" | "avatarUrl" | "createdAt", ExtArgs["result"]["usuario"]>
   export type UsuarioInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     permisos?: boolean | Usuario$permisosArgs<ExtArgs>
     trabajosImpresion?: boolean | Usuario$trabajosImpresionArgs<ExtArgs>
@@ -2666,6 +2677,7 @@ export namespace Prisma {
       nombre: string
       esAdmin: boolean
       esAdminKpis: boolean
+      activo: boolean
       avatarUrl: string | null
       createdAt: Date
     }, ExtArgs["result"]["usuario"]>
@@ -3103,6 +3115,7 @@ export namespace Prisma {
     readonly nombre: FieldRef<"Usuario", 'String'>
     readonly esAdmin: FieldRef<"Usuario", 'Boolean'>
     readonly esAdminKpis: FieldRef<"Usuario", 'Boolean'>
+    readonly activo: FieldRef<"Usuario", 'Boolean'>
     readonly avatarUrl: FieldRef<"Usuario", 'String'>
     readonly createdAt: FieldRef<"Usuario", 'DateTime'>
   }
@@ -17889,6 +17902,7 @@ export namespace Prisma {
     nombre: 'nombre',
     esAdmin: 'esAdmin',
     esAdminKpis: 'esAdminKpis',
+    activo: 'activo',
     avatarUrl: 'avatarUrl',
     createdAt: 'createdAt'
   };
@@ -18300,6 +18314,7 @@ export namespace Prisma {
     nombre?: StringFilter<"Usuario"> | string
     esAdmin?: BoolFilter<"Usuario"> | boolean
     esAdminKpis?: BoolFilter<"Usuario"> | boolean
+    activo?: BoolFilter<"Usuario"> | boolean
     avatarUrl?: StringNullableFilter<"Usuario"> | string | null
     createdAt?: DateTimeFilter<"Usuario"> | Date | string
     permisos?: PermisoListRelationFilter
@@ -18317,6 +18332,7 @@ export namespace Prisma {
     nombre?: SortOrder
     esAdmin?: SortOrder
     esAdminKpis?: SortOrder
+    activo?: SortOrder
     avatarUrl?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     permisos?: PermisoOrderByRelationAggregateInput
@@ -18337,6 +18353,7 @@ export namespace Prisma {
     nombre?: StringFilter<"Usuario"> | string
     esAdmin?: BoolFilter<"Usuario"> | boolean
     esAdminKpis?: BoolFilter<"Usuario"> | boolean
+    activo?: BoolFilter<"Usuario"> | boolean
     avatarUrl?: StringNullableFilter<"Usuario"> | string | null
     createdAt?: DateTimeFilter<"Usuario"> | Date | string
     permisos?: PermisoListRelationFilter
@@ -18354,6 +18371,7 @@ export namespace Prisma {
     nombre?: SortOrder
     esAdmin?: SortOrder
     esAdminKpis?: SortOrder
+    activo?: SortOrder
     avatarUrl?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     _count?: UsuarioCountOrderByAggregateInput
@@ -18372,6 +18390,7 @@ export namespace Prisma {
     nombre?: StringWithAggregatesFilter<"Usuario"> | string
     esAdmin?: BoolWithAggregatesFilter<"Usuario"> | boolean
     esAdminKpis?: BoolWithAggregatesFilter<"Usuario"> | boolean
+    activo?: BoolWithAggregatesFilter<"Usuario"> | boolean
     avatarUrl?: StringNullableWithAggregatesFilter<"Usuario"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Usuario"> | Date | string
   }
@@ -19375,6 +19394,7 @@ export namespace Prisma {
     nombre: string
     esAdmin?: boolean
     esAdminKpis?: boolean
+    activo?: boolean
     avatarUrl?: string | null
     createdAt?: Date | string
     permisos?: PermisoCreateNestedManyWithoutUsuarioInput
@@ -19392,6 +19412,7 @@ export namespace Prisma {
     nombre: string
     esAdmin?: boolean
     esAdminKpis?: boolean
+    activo?: boolean
     avatarUrl?: string | null
     createdAt?: Date | string
     permisos?: PermisoUncheckedCreateNestedManyWithoutUsuarioInput
@@ -19408,6 +19429,7 @@ export namespace Prisma {
     nombre?: StringFieldUpdateOperationsInput | string
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
+    activo?: BoolFieldUpdateOperationsInput | boolean
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     permisos?: PermisoUpdateManyWithoutUsuarioNestedInput
@@ -19425,6 +19447,7 @@ export namespace Prisma {
     nombre?: StringFieldUpdateOperationsInput | string
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
+    activo?: BoolFieldUpdateOperationsInput | boolean
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     permisos?: PermisoUncheckedUpdateManyWithoutUsuarioNestedInput
@@ -19442,6 +19465,7 @@ export namespace Prisma {
     nombre: string
     esAdmin?: boolean
     esAdminKpis?: boolean
+    activo?: boolean
     avatarUrl?: string | null
     createdAt?: Date | string
   }
@@ -19451,6 +19475,7 @@ export namespace Prisma {
     nombre?: StringFieldUpdateOperationsInput | string
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
+    activo?: BoolFieldUpdateOperationsInput | boolean
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -19461,6 +19486,7 @@ export namespace Prisma {
     nombre?: StringFieldUpdateOperationsInput | string
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
+    activo?: BoolFieldUpdateOperationsInput | boolean
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -20630,6 +20656,7 @@ export namespace Prisma {
     nombre?: SortOrder
     esAdmin?: SortOrder
     esAdminKpis?: SortOrder
+    activo?: SortOrder
     avatarUrl?: SortOrder
     createdAt?: SortOrder
   }
@@ -20644,6 +20671,7 @@ export namespace Prisma {
     nombre?: SortOrder
     esAdmin?: SortOrder
     esAdminKpis?: SortOrder
+    activo?: SortOrder
     avatarUrl?: SortOrder
     createdAt?: SortOrder
   }
@@ -20654,6 +20682,7 @@ export namespace Prisma {
     nombre?: SortOrder
     esAdmin?: SortOrder
     esAdminKpis?: SortOrder
+    activo?: SortOrder
     avatarUrl?: SortOrder
     createdAt?: SortOrder
   }
@@ -23364,6 +23393,7 @@ export namespace Prisma {
     nombre: string
     esAdmin?: boolean
     esAdminKpis?: boolean
+    activo?: boolean
     avatarUrl?: string | null
     createdAt?: Date | string
     trabajosImpresion?: TrabajoImpresionCreateNestedManyWithoutCreadoPorInput
@@ -23380,6 +23410,7 @@ export namespace Prisma {
     nombre: string
     esAdmin?: boolean
     esAdminKpis?: boolean
+    activo?: boolean
     avatarUrl?: string | null
     createdAt?: Date | string
     trabajosImpresion?: TrabajoImpresionUncheckedCreateNestedManyWithoutCreadoPorInput
@@ -23411,6 +23442,7 @@ export namespace Prisma {
     nombre?: StringFieldUpdateOperationsInput | string
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
+    activo?: BoolFieldUpdateOperationsInput | boolean
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     trabajosImpresion?: TrabajoImpresionUpdateManyWithoutCreadoPorNestedInput
@@ -23427,6 +23459,7 @@ export namespace Prisma {
     nombre?: StringFieldUpdateOperationsInput | string
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
+    activo?: BoolFieldUpdateOperationsInput | boolean
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     trabajosImpresion?: TrabajoImpresionUncheckedUpdateManyWithoutCreadoPorNestedInput
@@ -23882,6 +23915,7 @@ export namespace Prisma {
     nombre: string
     esAdmin?: boolean
     esAdminKpis?: boolean
+    activo?: boolean
     avatarUrl?: string | null
     createdAt?: Date | string
     permisos?: PermisoCreateNestedManyWithoutUsuarioInput
@@ -23898,6 +23932,7 @@ export namespace Prisma {
     nombre: string
     esAdmin?: boolean
     esAdminKpis?: boolean
+    activo?: boolean
     avatarUrl?: string | null
     createdAt?: Date | string
     permisos?: PermisoUncheckedCreateNestedManyWithoutUsuarioInput
@@ -23993,6 +24028,7 @@ export namespace Prisma {
     nombre?: StringFieldUpdateOperationsInput | string
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
+    activo?: BoolFieldUpdateOperationsInput | boolean
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     permisos?: PermisoUpdateManyWithoutUsuarioNestedInput
@@ -24009,6 +24045,7 @@ export namespace Prisma {
     nombre?: StringFieldUpdateOperationsInput | string
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
+    activo?: BoolFieldUpdateOperationsInput | boolean
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     permisos?: PermisoUncheckedUpdateManyWithoutUsuarioNestedInput
@@ -24107,6 +24144,7 @@ export namespace Prisma {
     nombre: string
     esAdmin?: boolean
     esAdminKpis?: boolean
+    activo?: boolean
     avatarUrl?: string | null
     createdAt?: Date | string
     permisos?: PermisoCreateNestedManyWithoutUsuarioInput
@@ -24123,6 +24161,7 @@ export namespace Prisma {
     nombre: string
     esAdmin?: boolean
     esAdminKpis?: boolean
+    activo?: boolean
     avatarUrl?: string | null
     createdAt?: Date | string
     permisos?: PermisoUncheckedCreateNestedManyWithoutUsuarioInput
@@ -24143,6 +24182,7 @@ export namespace Prisma {
     nombre: string
     esAdmin?: boolean
     esAdminKpis?: boolean
+    activo?: boolean
     avatarUrl?: string | null
     createdAt?: Date | string
     permisos?: PermisoCreateNestedManyWithoutUsuarioInput
@@ -24159,6 +24199,7 @@ export namespace Prisma {
     nombre: string
     esAdmin?: boolean
     esAdminKpis?: boolean
+    activo?: boolean
     avatarUrl?: string | null
     createdAt?: Date | string
     permisos?: PermisoUncheckedCreateNestedManyWithoutUsuarioInput
@@ -24222,6 +24263,7 @@ export namespace Prisma {
     nombre?: StringFieldUpdateOperationsInput | string
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
+    activo?: BoolFieldUpdateOperationsInput | boolean
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     permisos?: PermisoUpdateManyWithoutUsuarioNestedInput
@@ -24238,6 +24280,7 @@ export namespace Prisma {
     nombre?: StringFieldUpdateOperationsInput | string
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
+    activo?: BoolFieldUpdateOperationsInput | boolean
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     permisos?: PermisoUncheckedUpdateManyWithoutUsuarioNestedInput
@@ -24264,6 +24307,7 @@ export namespace Prisma {
     nombre?: StringFieldUpdateOperationsInput | string
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
+    activo?: BoolFieldUpdateOperationsInput | boolean
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     permisos?: PermisoUpdateManyWithoutUsuarioNestedInput
@@ -24280,6 +24324,7 @@ export namespace Prisma {
     nombre?: StringFieldUpdateOperationsInput | string
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
+    activo?: BoolFieldUpdateOperationsInput | boolean
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     permisos?: PermisoUncheckedUpdateManyWithoutUsuarioNestedInput
@@ -24491,6 +24536,7 @@ export namespace Prisma {
     nombre: string
     esAdmin?: boolean
     esAdminKpis?: boolean
+    activo?: boolean
     avatarUrl?: string | null
     createdAt?: Date | string
     permisos?: PermisoCreateNestedManyWithoutUsuarioInput
@@ -24507,6 +24553,7 @@ export namespace Prisma {
     nombre: string
     esAdmin?: boolean
     esAdminKpis?: boolean
+    activo?: boolean
     avatarUrl?: string | null
     createdAt?: Date | string
     permisos?: PermisoUncheckedCreateNestedManyWithoutUsuarioInput
@@ -24572,6 +24619,7 @@ export namespace Prisma {
     nombre?: StringFieldUpdateOperationsInput | string
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
+    activo?: BoolFieldUpdateOperationsInput | boolean
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     permisos?: PermisoUpdateManyWithoutUsuarioNestedInput
@@ -24588,6 +24636,7 @@ export namespace Prisma {
     nombre?: StringFieldUpdateOperationsInput | string
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
+    activo?: BoolFieldUpdateOperationsInput | boolean
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     permisos?: PermisoUncheckedUpdateManyWithoutUsuarioNestedInput
@@ -24603,6 +24652,7 @@ export namespace Prisma {
     nombre: string
     esAdmin?: boolean
     esAdminKpis?: boolean
+    activo?: boolean
     avatarUrl?: string | null
     createdAt?: Date | string
     permisos?: PermisoCreateNestedManyWithoutUsuarioInput
@@ -24619,6 +24669,7 @@ export namespace Prisma {
     nombre: string
     esAdmin?: boolean
     esAdminKpis?: boolean
+    activo?: boolean
     avatarUrl?: string | null
     createdAt?: Date | string
     permisos?: PermisoUncheckedCreateNestedManyWithoutUsuarioInput
@@ -24650,6 +24701,7 @@ export namespace Prisma {
     nombre?: StringFieldUpdateOperationsInput | string
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
+    activo?: BoolFieldUpdateOperationsInput | boolean
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     permisos?: PermisoUpdateManyWithoutUsuarioNestedInput
@@ -24666,6 +24718,7 @@ export namespace Prisma {
     nombre?: StringFieldUpdateOperationsInput | string
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
+    activo?: BoolFieldUpdateOperationsInput | boolean
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     permisos?: PermisoUncheckedUpdateManyWithoutUsuarioNestedInput
@@ -24681,6 +24734,7 @@ export namespace Prisma {
     nombre: string
     esAdmin?: boolean
     esAdminKpis?: boolean
+    activo?: boolean
     avatarUrl?: string | null
     createdAt?: Date | string
     permisos?: PermisoCreateNestedManyWithoutUsuarioInput
@@ -24697,6 +24751,7 @@ export namespace Prisma {
     nombre: string
     esAdmin?: boolean
     esAdminKpis?: boolean
+    activo?: boolean
     avatarUrl?: string | null
     createdAt?: Date | string
     permisos?: PermisoUncheckedCreateNestedManyWithoutUsuarioInput
@@ -24728,6 +24783,7 @@ export namespace Prisma {
     nombre?: StringFieldUpdateOperationsInput | string
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
+    activo?: BoolFieldUpdateOperationsInput | boolean
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     permisos?: PermisoUpdateManyWithoutUsuarioNestedInput
@@ -24744,6 +24800,7 @@ export namespace Prisma {
     nombre?: StringFieldUpdateOperationsInput | string
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
+    activo?: BoolFieldUpdateOperationsInput | boolean
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     permisos?: PermisoUncheckedUpdateManyWithoutUsuarioNestedInput

@@ -2,6 +2,7 @@
 import {
   CanActivate,
   ExecutionContext,
+  ForbiddenException,
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
@@ -37,6 +38,12 @@ export class SupabaseAuthGuard implements CanActivate {
 
     if (!usuario) {
       throw new UnauthorizedException('Usuario no registrado en el sistema');
+    }
+
+    // Cuenta desactivada: el login de Supabase sigue funcionando, pero el
+    // sistema la rechaza acá. Se conserva el historial (etiquetas, pedidos).
+    if (!usuario.activo) {
+      throw new ForbiddenException('Tu cuenta está desactivada. Contactá a un administrador.');
     }
 
     request.usuario = { ...usuario, email: data.user.email };

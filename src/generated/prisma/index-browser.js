@@ -126,6 +126,7 @@ exports.Prisma.UsuarioScalarFieldEnum = {
   nombre: 'nombre',
   esAdmin: 'esAdmin',
   esAdminKpis: 'esAdminKpis',
+  activo: 'activo',
   avatarUrl: 'avatarUrl',
   createdAt: 'createdAt'
 };

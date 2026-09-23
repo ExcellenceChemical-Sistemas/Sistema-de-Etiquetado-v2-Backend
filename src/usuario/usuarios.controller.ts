@@ -4,6 +4,7 @@ import { crearUsuarioSchema, CrearUsuarioDto } from './dto/usuarios.dto';
 import { actualizarPermisosSchema, ActualizarPermisosDto } from './dto/actualizar-permisos.dto';
 import { actualizarPerfilSchema, ActualizarPerfilDto } from './dto/actualizar-perfil.dto';
 import { actualizarAccesosKpisIsoSchema, ActualizarAccesosKpisIsoDto } from './dto/actualizar-accesos-kpis-iso.dto';
+import { actualizarActivoSchema, ActualizarActivoDto } from './dto/actualizar-activo.dto';
 import { actualizarRolKpisSchema, ActualizarRolKpisDto } from './dto/actualizar-rol-kpis.dto';
 import { SupabaseAuthGuard } from '../common/guards/supabase-auth.guard';
 import { EsAdminGuard } from '../common/guards/es-admin.guard';
@@ -64,6 +65,19 @@ export class UsuariosController {
   async actualizarPermisos(@Param('id', ParseIntPipe) id: number, @Body() body: unknown) {
     const dto: ActualizarPermisosDto = actualizarPermisosSchema.parse(body);
     const usuario = await this.usuariosService.actualizarPermisos(id, dto.permisos);
+    return { success: true, data: usuario };
+  }
+
+  // Alternativa a DELETE para quien ya tiene historial (el DELETE responde 409).
+  @Patch(':id/activo')
+  @UseGuards(SupabaseAuthGuard, EsAdminGuard)
+  async actualizarActivo(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() body: unknown,
+    @Req() req: any,
+  ) {
+    const dto: ActualizarActivoDto = actualizarActivoSchema.parse(body);
+    const usuario = await this.usuariosService.actualizarActivo(id, dto.activo, req.usuario.id);
     return { success: true, data: usuario };
   }
 

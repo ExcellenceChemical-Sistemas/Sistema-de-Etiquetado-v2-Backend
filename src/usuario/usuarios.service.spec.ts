@@ -113,3 +113,35 @@ describe('eliminar', () => {
     expect(mockDeleteUser).not.toHaveBeenCalled();
   });
 });
+
+describe('actualizarActivo', () => {
+  it('desactiva la cuenta y no toca Supabase ni borra la fila', async () => {
+    const { servicio, update } = crearServicio();
+    await servicio.actualizarActivo(6, false, 1);
+
+    expect((update.mock.calls[0][0] as any).data).toEqual({ activo: false });
+    expect(mockDeleteUser).not.toHaveBeenCalled();
+  });
+
+  it('reactiva la cuenta', async () => {
+    const { servicio, update } = crearServicio();
+    await servicio.actualizarActivo(6, true, 1);
+
+    expect((update.mock.calls[0][0] as any).data).toEqual({ activo: true });
+  });
+
+  it('un admin no puede desactivarse a sí mismo', async () => {
+    const { servicio, update } = crearServicio();
+
+    await expect(servicio.actualizarActivo(1, false, 1)).rejects.toBeInstanceOf(BadRequestException);
+    expect(update).not.toHaveBeenCalled();
+  });
+
+  it('usuario inexistente → NotFound', async () => {
+    const { servicio, update } = crearServicio();
+    (servicio as any).prisma.usuario.findUnique.mockResolvedValueOnce(null);
+
+    await expect(servicio.actualizarActivo(99, false, 1)).rejects.toBeInstanceOf(NotFoundException);
+    expect(update).not.toHaveBeenCalled();
+  });
+});

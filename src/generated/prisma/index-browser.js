@@ -211,6 +211,34 @@ exports.Prisma.TrabajoImpresionScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.ClienteScalarFieldEnum = {
+  id: 'id',
+  nombre: 'nombre',
+  nombreNormalizado: 'nombreNormalizado',
+  tipoDocumento: 'tipoDocumento',
+  numeroDocumento: 'numeroDocumento',
+  direccion: 'direccion',
+  celular: 'celular',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.PedidoScalarFieldEnum = {
+  id: 'id',
+  clienteId: 'clienteId',
+  numeroProforma: 'numeroProforma',
+  recibidoEn: 'recibidoEn',
+  inicioPreparacionEn: 'inicioPreparacionEn',
+  preparadoEn: 'preparadoEn',
+  salioEn: 'salioEn',
+  entregadoEn: 'entregadoEn',
+  categoriaObservacion: 'categoriaObservacion',
+  detalleObservacion: 'detalleObservacion',
+  creadoPorId: 'creadoPorId',
+  ultimoEditadoPorId: 'ultimoEditadoPorId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.CarpetaScalarFieldEnum = {
   id: 'id',
   nombre: 'nombre',
@@ -275,13 +303,29 @@ exports.Recurso = exports.$Enums.Recurso = {
   PLANTILLAS: 'PLANTILLAS',
   COA: 'COA',
   USUARIOS: 'USUARIOS',
-  ETIQUETAS: 'ETIQUETAS'
+  ETIQUETAS: 'ETIQUETAS',
+  PEDIDOS: 'PEDIDOS'
 };
 
 exports.EstadoTrabajoImpresion = exports.$Enums.EstadoTrabajoImpresion = {
   PENDIENTE: 'PENDIENTE',
   IMPRESO: 'IMPRESO',
   ERROR: 'ERROR'
+};
+
+exports.TipoDocumentoCliente = exports.$Enums.TipoDocumentoCliente = {
+  RUC: 'RUC',
+  DNI: 'DNI',
+  CARNET_EXTRANJERIA: 'CARNET_EXTRANJERIA'
+};
+
+exports.CategoriaObservacionPedido = exports.$Enums.CategoriaObservacionPedido = {
+  INSUMO_EN_IMPORTACION: 'INSUMO_EN_IMPORTACION',
+  INSUMO_SIN_STOCK: 'INSUMO_SIN_STOCK',
+  RECOGE_EN_ALMACEN: 'RECOGE_EN_ALMACEN',
+  IMPORTACION_EXPORTACION: 'IMPORTACION_EXPORTACION',
+  CANCELADO: 'CANCELADO',
+  OTRO: 'OTRO'
 };
 
 exports.ModuloDocumentos = exports.$Enums.ModuloDocumentos = {
@@ -324,6 +368,8 @@ exports.Prisma.ModelName = {
   Plantilla: 'Plantilla',
   Lote: 'Lote',
   TrabajoImpresion: 'TrabajoImpresion',
+  Cliente: 'Cliente',
+  Pedido: 'Pedido',
   Carpeta: 'Carpeta',
   Archivo: 'Archivo',
   AccesoIndicador: 'AccesoIndicador',

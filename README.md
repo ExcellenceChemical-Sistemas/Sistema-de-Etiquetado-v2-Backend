@@ -1,11 +1,12 @@
-# Sistema de Etiquetado v2 — Backend
+# Sistema de Gestión Excellence Chemical — Backend
 
-API REST construida con **NestJS 11** para el Sistema de Etiquetado de productos fraccionados de Excellence Chemical S.A.C. (repo `backend`, parte de `sistema-etiquetado-fraccionados`).
+API REST construida con **NestJS 11** para el Sistema de Gestión de Excellence Chemical S.A.C. (repo `backend`; el nombre de carpeta sigue diciendo "Etiquetado" por motivos históricos, pero el sistema ya cubre más que eso).
 
-Cubre dos dominios:
+Cubre estos dominios:
 
 1. **Etiquetado** — fabricantes, productos, lotes (con COA y ficha de seguridad), plantillas y generación/impresión de etiquetas (con soporte de rombo NFPA 704).
 2. **KPIs / Documentación ISO** (Fase 3) — árbol de carpetas y archivos de gestión, con un modelo de permisos granular propio. El estado de decisiones y pendientes de este módulo vive en [`contexto-fase3-kpis-iso.md`](./contexto-fase3-kpis-iso.md), que es su fuente de verdad.
+3. **Pedidos / tiempo de entrega** (en diseño) — reemplaza el registro manual en Excel del lead time de pedidos (recepción → preparación → salida → entrega), con permisos vía el mismo sistema de `Recurso`.
 
 El código y el lenguaje de dominio están en español; los identificadores, comentarios y mensajes de error nuevos deben mantener esa convención.
 

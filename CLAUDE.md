@@ -4,12 +4,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-NestJS 11 REST API for a product-labeling system for fractionated chemical products
-("Sistema de Etiquetado v2"). It manages fabricantes (manufacturers), productos, lotes
-(batches, with COA file upload), plantillas (label templates), usuarios, and a KPIs/ISO
-document module (`carpetas`). The API queues label print jobs; the label image itself is rendered
-by the separate `agente-impresion` app. Code and domain language are Spanish — keep new identifiers,
-comments, and error messages in Spanish to match.
+NestJS 11 REST API for "Sistema de Gestión Excellence Chemical" — an operations management
+system for Excellence Chemical S.A.C. (repo folder name still says "Etiquetado" for historical
+reasons; that's cosmetic, the system covers more than labeling now). It manages fabricantes
+(manufacturers), productos, lotes (batches, with COA file upload), plantillas (label templates),
+usuarios, a KPIs/ISO document module (`carpetas`), and an order lead-time module (`pedidos` +
+`clientes`). The
+API queues label print jobs; the label image itself is rendered by the separate
+`agente-impresion` app. Code and domain language are Spanish — keep new identifiers, comments,
+and error messages in Spanish to match.
 
 ## Commands
 
@@ -69,7 +72,9 @@ loads the mirror row with `permisos` + `accesosIndicador` + `accesoIso`, and att
 `EsAdminGuard`, and `AccesoCarpetaGuard` all read the `request.usuario` it populates.
 - CRUD modules (`fabricantes`, `productos`, `lotes`, `plantillas`): `SupabaseAuthGuard` +
   `PermisosGuard` with `@RequierePermiso('RECURSO', 'puedeVer'|'puedeCrear'|'puedeEditar'|'puedeEliminar')`.
-  `Recurso` enum: LOTES, PRODUCTOS, FABRICANTES, PLANTILLAS, COA, USUARIOS, ETIQUETAS.
+  `Recurso` enum: LOTES, PRODUCTOS, FABRICANTES, PLANTILLAS, COA, USUARIOS, ETIQUETAS, PEDIDOS.
+  `clientes` and `pedidos` both gate on `PEDIDOS` — clients only exist today to feed the pedido
+  form's autocomplete, they don't warrant their own `Recurso`.
 - `carpetas` module: `SupabaseAuthGuard` + `AccesoCarpetaGuard` with `@RequiereAccesoCarpeta({ accion })`.
   Access is resolved per-folder by walking the parent chain (`AccesoDocumentosService`): most-specific
   folder wins; KPIS access is tied to a `proceso`, ISO access to the whole ISO concept
@@ -90,7 +95,10 @@ labels: the agent renders the `.hbs` templates (Puppeteer + Handlebars) and prin
 `frasesP`; se muestran solo en la página pública del QR (`etiquetas-publicas.service.ts`), no en la
 etiqueta impresa. `productos/fds-parser.ts` propone esos datos leyendo el PDF de la ficha
 (`POST /productos/analizar-ficha`, sin OCR). `lotes.service.remove()` rechaza borrar un lote con un
-QR vigente (`limiteVigenciaQr()`).
+QR vigente (`qrVigente()`, en `etiquetas/qr-vigencia.ts`) — la vigencia sigue el vencimiento real
+del lote (`fechaVencimientoOrden` + `QR_MARGEN_RETENCION_DIAS`, un año por defecto), no una
+cantidad fija de días desde que se imprimió; si el lote no tiene una fecha de vencimiento
+parseable, cae a un plazo fijo desde la impresión (`QR_VIGENCIA_DIAS`, 730 días) como respaldo.
 
 **Label templates** live in the `agente-impresion` repo (`assets/templates/`), not here.
 `@nestjs/throttler` applies a global 100 req/IP/min limit.
@@ -99,8 +107,19 @@ QR vigente (`limiteVigenciaQr()`).
 exactly as they appear on the COA (formats vary by supplier). `fechaVencimientoOrden` (`Date?`) is
 computed by the service purely for sorting/filtering — never edit it by hand.
 
-**Duplicate prevention.** `Fabricante` and `Producto` have both `nombre` and `nombreNormalizado`
-(lowercase, no accents) as unique columns; services must set `nombreNormalizado` on write.
+**Duplicate prevention.** `Fabricante`, `Producto`, and `Cliente` all have both `nombre` and
+`nombreNormalizado` (lowercase, no accents) as unique columns; services must set
+`nombreNormalizado` on write.
+
+**`Pedido` has no `estado` column.** It's derived in `pedidos.service.ts` from which of
+`preparadoEn`/`salioEn`/`entregadoEn` are set (null = that stage hasn't happened yet) — this
+keeps a displayed status from ever drifting out of sync with the actual timestamps. All four
+stage timestamps (`recibidoEn` included) stay editable after being set: the frontend precharges
+"now" when marking a stage, but warehouse staff often only log a delivery after leaving for the
+day, so the real time has to be correctable, not locked in. `ultimoEditadoPorId` tracks the last
+person who touched a pedido (not a full audit trail — see `contexto` discussion if that's ever
+needed). Clients were bulk-imported once from a real Excel client list; there's no seed script
+for it (was a throwaway one-off, not committed).
 
 ## Global setup (`src/main.ts`)
 

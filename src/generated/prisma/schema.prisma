@@ -28,6 +28,8 @@ model Usuario {
   archivosSubidos   Archivo[]
   accesosIndicador  AccesoIndicador[]
   accesoIso         AccesoISO?
+  pedidosCreados    Pedido[]           @relation("PedidosCreados")
+  pedidosEditados   Pedido[]           @relation("PedidosEditados")
 }
 
 model Permiso {
@@ -51,6 +53,7 @@ enum Recurso {
   COA
   USUARIOS
   ETIQUETAS
+  PEDIDOS
 }
 
 // ──────────────────────────────────────────
@@ -201,6 +204,74 @@ model TrabajoImpresion {
   updatedAt       DateTime               @updatedAt
 
   @@map("trabajos_impresion")
+}
+
+// ──────────────────────────────────────────
+// MÓDULO PEDIDOS / TIEMPO DE ENTREGA
+// Reemplaza el registro manual en Excel del lead time de pedidos.
+// Cada fecha/hora de etapa (preparadoEn, salioEn, entregadoEn) se
+// precarga con la hora actual al marcarla desde la UI, pero queda
+// editable después — a diferencia de createdAt/updatedAt (automáticos,
+// solo para trazabilidad interna, nunca se muestran como "dato a llenar").
+// No hay un campo `estado` propio: la etapa se deriva de qué timestamps
+// están seteados (evita que quede desincronizado de la fecha real).
+// ──────────────────────────────────────────
+enum TipoDocumentoCliente {
+  RUC
+  DNI
+  CARNET_EXTRANJERIA
+}
+
+model Cliente {
+  id                Int                   @id @default(autoincrement())
+  nombre            String                @unique
+  nombreNormalizado String                @unique
+  tipoDocumento     TipoDocumentoCliente?
+  numeroDocumento   String?
+  direccion         String?
+  celular           String?
+  createdAt         DateTime              @default(now())
+  pedidos           Pedido[]
+
+  @@map("clientes")
+}
+
+// Motivo por el que un pedido se sale de lo normal — cubre tanto demoras
+// de preparación (falta de insumo) como formas de entrega o cierre
+// distintas a la venta normal. Es un solo campo por pedido, no por etapa:
+// en la práctica el Excel nunca tuvo más de una observación relevante por
+// fila.
+enum CategoriaObservacionPedido {
+  INSUMO_EN_IMPORTACION
+  INSUMO_SIN_STOCK
+  RECOGE_EN_ALMACEN
+  IMPORTACION_EXPORTACION
+  CANCELADO
+  OTRO
+}
+
+model Pedido {
+  id                   Int                         @id @default(autoincrement())
+  clienteId            Int
+  cliente              Cliente                     @relation(fields: [clienteId], references: [id], onDelete: Restrict)
+  numeroProforma       String
+  recibidoEn           DateTime                    @default(now())
+  inicioPreparacionEn  DateTime?
+  preparadoEn          DateTime?
+  salioEn              DateTime?
+  entregadoEn          DateTime?
+  categoriaObservacion CategoriaObservacionPedido?
+  detalleObservacion   String?
+  creadoPorId          Int
+  creadoPor            Usuario                     @relation("PedidosCreados", fields: [creadoPorId], references: [id])
+  ultimoEditadoPorId   Int?
+  ultimoEditadoPor     Usuario?                    @relation("PedidosEditados", fields: [ultimoEditadoPorId], references: [id])
+  createdAt            DateTime                    @default(now())
+  updatedAt            DateTime                    @updatedAt
+
+  @@index([clienteId])
+  @@index([numeroProforma])
+  @@map("pedidos")
 }
 
 // ──────────────────────────────────────────

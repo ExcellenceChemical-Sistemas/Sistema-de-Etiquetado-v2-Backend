@@ -11,6 +11,8 @@ import { PlantillasModule } from './plantillas/plantillas.module';
 import { EtiquetasModule } from './etiquetas/etiquetas.module';
 import { UsuariosModule } from './usuario/usuarios.module';
 import { CarpetasModule } from './carpetas/carpetas.module';
+import { ClientesModule } from './clientes/clientes.module';
+import { PedidosModule } from './pedidos/pedidos.module';
 
 @Module({
   imports: [
@@ -29,6 +31,8 @@ import { CarpetasModule } from './carpetas/carpetas.module';
     EtiquetasModule,
     UsuariosModule,
     CarpetasModule,
+    ClientesModule,
+    PedidosModule,
   ],
   providers: [
     {

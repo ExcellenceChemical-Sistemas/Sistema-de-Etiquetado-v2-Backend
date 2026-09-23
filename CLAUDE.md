@@ -22,12 +22,12 @@ npm run build            # nest build → dist/
 npm run lint             # eslint --fix over {src,apps,libs,test}
 npm run format           # prettier --write
 
-npm test                 # jest, runs *.spec.ts under src/
+npm test                 # jest, runs *.spec.ts under src/ (no DB or Supabase needed)
 npm test -- path/to/file.spec.ts        # single test file
 npm test -- -t "nombre del test"        # single test by name
 npm run test:e2e         # jest --config ./test/jest-e2e.json
 
-npx prisma migrate dev --name <slug>    # create + apply a migration
+npx prisma migrate dev --name <slug>    # create + apply a migration (elsewhere: npx prisma migrate deploy)
 npx prisma generate                     # regen client into src/generated/prisma (committed!)
 npm run seed:kpis                        # crea el árbol de carpetas KPIs/ISO del año (prisma/seeds/kpis-iso-2026.seed.ts)
 npm run seed:accesos                     # asigna AccesoIndicador/AccesoISO por nombre de usuario (prisma/seeds/accesos-kpis-iso.seed.ts)
@@ -71,7 +71,7 @@ loads the mirror row with `permisos` + `accesosIndicador` + `accesoIso`, and att
 
 **Guard chaining — order matters.** `SupabaseAuthGuard` must come first; `PermisosGuard`,
 `EsAdminGuard`, and `AccesoCarpetaGuard` all read the `request.usuario` it populates.
-- CRUD modules (`fabricantes`, `productos`, `lotes`, `plantillas`): `SupabaseAuthGuard` +
+- CRUD modules (`fabricantes`, `productos`, `lotes`, `plantillas`, `pedidos`, `clientes`): `SupabaseAuthGuard` +
   `PermisosGuard` with `@RequierePermiso('RECURSO', 'puedeVer'|'puedeCrear'|'puedeEditar'|'puedeEliminar')`.
   `Recurso` enum: LOTES, PRODUCTOS, FABRICANTES, PLANTILLAS, USUARIOS, ETIQUETAS, PEDIDOS. There is no
   `COA` resource (removed by the `quitar_recurso_coa` migration): COA upload is `LOTES.puedeEditar`.
@@ -126,7 +126,8 @@ computed by the service purely for sorting/filtering — never edit it by hand.
 `nombreNormalizado` on write.
 
 **`Pedido` has no `estado` column.** It's derived in `pedidos.service.ts` from which of
-`preparadoEn`/`salioEn`/`entregadoEn` are set (null = that stage hasn't happened yet) — this
+`inicioPreparacionEn`/`preparadoEn`/`salioEn`/`entregadoEn` are set (null = that stage hasn't happened yet;
+the furthest stage wins: RECIBIDO < EN_PREPARACION < PREPARADO < SALIO < ENTREGADO) — this
 keeps a displayed status from ever drifting out of sync with the actual timestamps. All four
 stage timestamps (`recibidoEn` included) stay editable after being set: the frontend precharges
 "now" when marking a stage, but warehouse staff often only log a delivery after leaving for the

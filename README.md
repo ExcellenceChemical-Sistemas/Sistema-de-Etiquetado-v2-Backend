@@ -6,7 +6,7 @@ Cubre estos dominios:
 
 1. **Etiquetado** — fabricantes, productos, lotes (con COA y ficha de seguridad), plantillas y generación/impresión de etiquetas (con soporte de rombo NFPA 704).
 2. **KPIs / Documentación ISO** (Fase 3) — árbol de carpetas y archivos de gestión, con un modelo de permisos granular propio. El estado de decisiones y pendientes de este módulo vive en [`contexto-fase3-kpis-iso.md`](./contexto-fase3-kpis-iso.md), que es su fuente de verdad.
-3. **Pedidos / tiempo de entrega** (en diseño) — reemplaza el registro manual en Excel del lead time de pedidos (recepción → preparación → salida → entrega), con permisos vía el mismo sistema de `Recurso`.
+3. **Pedidos / tiempo de entrega** — reemplaza el registro manual en Excel del lead time de pedidos (recepción → inicio de preparación → preparado → salida → entrega), con su lista de clientes. Permisos vía el recurso `PEDIDOS`.
 
 El código y el lenguaje de dominio están en español; los identificadores, comentarios y mensajes de error nuevos deben mantener esa convención.
 
@@ -29,6 +29,8 @@ Prefijo global de rutas: **`/api`**.
 | `productos` | CRUD de productos + ficha de seguridad (subir/leer/eliminar) |
 | `lotes` | CRUD de lotes + COA (certificado de análisis) |
 | `plantillas` | CRUD de plantillas de etiqueta |
+| `pedidos` | CRUD de pedidos; el estado se **deriva** de las fechas de cada etapa (no hay columna `estado`) |
+| `clientes` | CRUD de clientes; alimenta el autocompletado del formulario de pedido |
 | `etiquetas` | Cola de trabajos de impresión, y limpieza programada (el renderizado lo hace `agente-impresion`) |
 | `usuario` | Perfil propio, administración de usuarios, permisos CRUD y accesos de KPIs/ISO |
 | `carpetas` | Módulo KPIs/ISO: árbol de carpetas, archivos y resolución de accesos |
@@ -40,13 +42,23 @@ Prefijo global de rutas: **`/api`**.
 
 ### Etiquetado
 
-- **Usuario**: espejo local de Supabase Auth (`supabaseUserId` único, `nombre`, `esAdmin`, `esAdminKpis`, `avatarUrl`). Relación 1:N con `Permiso`, `AccesoIndicador` y `TrabajoImpresion`; 1:1 opcional con `AccesoISO`.
-- **Permiso**: por usuario + `Recurso` (`LOTES`, `PRODUCTOS`, `FABRICANTES`, `PLANTILLAS`, `COA`, `USUARIOS`, `ETIQUETAS`), con los flags `puedeVer` / `puedeCrear` / `puedeEditar` / `puedeEliminar`.
+- **Usuario**: espejo local de Supabase Auth (`supabaseUserId` único, `nombre`, `esAdmin`, `esAdminKpis`, `avatarUrl`). Relación 1:N con `Permiso`, `AccesoIndicador` y `TrabajoImpresion`; 1:1 opcional con `AccesoISO`. `activo` (por defecto `true`): en `false` la cuenta no puede usar el sistema pero conserva su historial; `desactivadoEn` / `desactivadoPorId` dicen cuándo y quién la desactivó.
+- **Permiso**: por usuario + `Recurso` (`LOTES`, `PRODUCTOS`, `FABRICANTES`, `PLANTILLAS`, `USUARIOS`, `ETIQUETAS`, `PEDIDOS`; no existe un recurso `COA`: subir el COA es `LOTES.puedeEditar`), con los flags `puedeVer` / `puedeCrear` / `puedeEditar` / `puedeEliminar`.
 - **Fabricante** y **Producto**: `nombre` + `nombreNormalizado` (minúsculas, sin acentos), ambos únicos, para evitar duplicados tipo "Ácido Cítrico" vs "acido citrico". Los services **deben** setear `nombreNormalizado` al escribir.
 - **Producto**: sin fabricante fijo (varía por lote); campos NFPA opcionales (`nfpaSalud`, `nfpaInflamabilidad`, `nfpaReactividad`, 0-4) y `fichaSeguridadUrl` opcional. Clasificación GHS opcional, que se muestra solo en la página pública del QR (no en la etiqueta impresa): `pictogramasGhs` (códigos `GHS01`–`GHS09`), `palabraAdvertencia` (`PELIGRO` | `ATENCION`), `frasesH` y `frasesP`.
 - **Lote**: `numeroLote`, `coaUrl`, único compuesto `[productoId, fabricanteId, numeroLote]`.
   ⚠️ `fechaFabricacion` / `fechaVencimiento` se guardan como **`String` tal cual aparecen en el COA** (el formato varía según el proveedor). `fechaVencimientoOrden` (`DateTime?`) lo calcula el service solo para ordenar/filtrar — **nunca editarlo a mano**.
-- **TrabajoImpresion**: `estado` (`PENDIENTE` | `IMPRESO` | `ERROR`), datos de peso/unidades/proforma, `imagenPath`, `mensajeError`, `creadoPorId` y `token` (código imposible de adivinar que va en el QR impreso; abre la página pública de trazabilidad de **esa** etiqueta). El QR vale 2 años (`QR_VIGENCIA_DIAS`, por defecto 730). También lleva contadores de uso de esa página pública: `escaneos`/`ultimoEscaneoAt` (aperturas del QR), `coaVistas`/`coaDescargas` (botones "Ver"/"Descargar" del COA) y `fdsVistas` (botón de la ficha de seguridad) — los tres últimos se incrementan en `EtiquetasPublicasService`.
+- **TrabajoImpresion**: `estado` (`PENDIENTE` | `IMPRESO` | `ERROR`), datos de peso/unidades/proforma, `imagenPath`, `mensajeError`, `creadoPorId` y `token` (código imposible de adivinar que va en el QR impreso; abre la página pública de trazabilidad de **esa** etiqueta). El QR sigue vigente hasta `QR_MARGEN_RETENCION_DIAS` (por defecto 365) después del vencimiento del lote (`fechaVencimientoOrden`); si el lote no tiene una fecha parseable, cae a un plazo fijo desde la impresión (`QR_VIGENCIA_DIAS`, por defecto 730). Ver `etiquetas/qr-vigencia.ts`. También lleva contadores de uso de esa página pública: `escaneos`/`ultimoEscaneoAt` (aperturas del QR), `coaVistas`/`coaDescargas` (botones "Ver"/"Descargar" del COA) y `fdsVistas` (botón de la ficha de seguridad) — los tres últimos se incrementan en `EtiquetasPublicasService`.
+
+### Pedidos y clientes
+
+- **Cliente**: `nombre` + `nombreNormalizado` (únicos, igual que Fabricante/Producto), `tipoDocumento` (`RUC` | `DNI` | `CARNET_EXTRANJERIA`), `numeroDocumento`, `direccion`, `celular`.
+- **Pedido**: `clienteId` (`onDelete: Restrict`), `numeroProforma`, y las fechas de cada etapa: `recibidoEn`, `inicioPreparacionEn`, `preparadoEn`, `salioEn`, `entregadoEn` (todas editables, porque el personal a veces registra la entrega al terminar el día). `categoriaObservacion` (`INSUMO_EN_IMPORTACION`, `INSUMO_SIN_STOCK`, `RECOGE_EN_ALMACEN`, `IMPORTACION_EXPORTACION`, `CANCELADO`, `OTRO`) y `detalleObservacion`. `creadoPorId` y `ultimoEditadoPorId` registran quién lo creó y quién lo tocó por última vez (no es una auditoría completa).
+- **No hay columna `estado`**: `derivarEstado()` en `pedidos.service.ts` la calcula. Gana la etapa más avanzada con fecha: `ENTREGADO` > `SALIO` > `PREPARADO` > `EN_PREPARACION` > `RECIBIDO`. Así el estado mostrado no puede desincronizarse de las fechas reales.
+
+### Auditoría de cuentas
+
+- **RegistroAuditoria** (`registro_auditoria`): `accion` (`USUARIO_DESACTIVADO` | `USUARIO_REACTIVADO` | `USUARIO_ELIMINADO` | `PERMISOS_ACTUALIZADOS`), `actorId`/`actorNombre`, `objetivoId`/`objetivoNombre`, `detalle` y `createdAt`. **Sin claves foráneas** y con los nombres copiados, a propósito: el registro tiene que sobrevivir a que se elimine el usuario afectado o el admin que actuó. Si no se puede escribir, la acción principal igual se completa (queda en el log del servidor).
 
 ### KPIs / ISO
 
@@ -61,14 +73,14 @@ Prefijo global de rutas: **`/api`**.
 
 La autenticación vive **100% en Supabase Auth**; el backend solo mantiene un espejo local vinculado por `supabaseUserId`.
 
-`SupabaseAuthGuard` valida el bearer JWT vía `supabaseAdmin.auth.getUser`, carga la fila espejo con `permisos` + `accesosIndicador` + `accesoIso`, y la deja en **`request.usuario`** (ojo: `.usuario`, **no** `.user`).
+`SupabaseAuthGuard` valida el bearer JWT vía `supabaseAdmin.auth.getUser`, carga la fila espejo con `permisos` + `accesosIndicador` + `accesoIso`, y la deja en **`request.usuario`** (ojo: `.usuario`, **no** `.user`). Si la cuenta está desactivada (`activo = false`) responde **403** con `code: 'CUENTA_DESACTIVADA'`, para que el frontend cierre la sesión en vez de tratarlo como un simple "sin permiso".
 
 **El orden de los guards importa**: `SupabaseAuthGuard` va siempre primero, porque todos los demás leen el `request.usuario` que él popula.
 
 | Guard | Uso |
 |---|---|
 | `SupabaseAuthGuard` | Todas las rutas de usuario final |
-| `PermisosGuard` + `@RequierePermiso('RECURSO', 'accion')` | Módulos CRUD (`fabricantes`, `productos`, `lotes`, `plantillas`, generación de etiquetas) |
+| `PermisosGuard` + `@RequierePermiso('RECURSO', 'accion')` | Módulos CRUD (`fabricantes`, `productos`, `lotes`, `plantillas`, `pedidos`, `clientes`, generación de etiquetas). Un `PermisosGuard` sin `@RequierePermiso` deja pasar a todos: el test de cobertura lo detecta |
 | `AccesoCarpetaGuard` + `@RequiereAccesoCarpeta({ accion, esArchivo? })` | Módulo `carpetas`. Acciones: `ver`, `descargar`, `crear`, `editar`, `eliminar` |
 | `EsAdminGuard` | Administración de usuarios y permisos CRUD (solo `esAdmin`) |
 | `EsAdminKpisGuard` | Gestión de accesos de KPIs/ISO (acepta `esAdmin` **o** `esAdminKpis`) |
@@ -95,6 +107,17 @@ Sobre eso hay **reglas duras en código, no en tablas** (detalle y motivos en la
 
 > **Disciplina del módulo**: ningún permiso se declara solo en el frontend. Si la UI oculta un botón por un flag, el guard equivalente valida ese mismo flag antes de tocar la BD.
 
+### Test de cobertura de permisos
+
+`src/common/guards/cobertura-permisos.spec.ts` lee la metadata de Nest de **todas las rutas de todos los controllers** (sin levantar la app ni tocar la base) y falla si una ruta:
+
+- no pide sesión (`SupabaseAuthGuard` primero) y no es una de las rutas públicas listadas;
+- pide solo sesión sin una restricción real (permiso, admin, admin de KPIs, acceso a carpeta o token del agente) y no está en la lista `SOLO_SESION`, cada una con su motivo;
+- usa `PermisosGuard` sin un `@RequierePermiso` válido (recurso del enum y acción existente), o `AccesoCarpetaGuard` sin `@RequiereAccesoCarpeta`;
+- escribe (POST/PATCH/PUT/DELETE) con solo `puedeVer`.
+
+**Un controller nuevo hay que sumarlo a la lista `CONTROLLERS` del test**: uno olvidado no se detecta solo.
+
 ## Endpoints
 
 Los módulos CRUD (`fabricantes`, `productos`, `lotes`, `plantillas`) siguen el patrón REST estándar (`POST /`, `GET /`, `GET /:id`, `PATCH /:id`, `DELETE /:id`) bajo `SupabaseAuthGuard` + `PermisosGuard`.
@@ -107,7 +130,7 @@ Los módulos CRUD (`fabricantes`, `productos`, `lotes`, `plantillas`) siguen el 
 
 ### Lotes: eliminación
 
-`DELETE /api/lotes/:id` borra el lote junto con su historial de etiquetas (y su COA del storage). **Se rechaza con 409** si el lote tiene alguna etiqueta impresa con QR todavía vigente (menos de 2 años), para no dejar sin trazabilidad un QR que ya está pegado en un envase.
+`DELETE /api/lotes/:id` borra el lote junto con su historial de etiquetas (y su COA del storage). **Se rechaza con 409** si el lote tiene alguna etiqueta impresa con QR todavía vigente (según el vencimiento del lote, ver `qr-vigencia.ts`), para no dejar sin trazabilidad un QR que ya está pegado en un envase.
 
 ### Etiquetas — cola de impresión, **no** renderizado síncrono
 
@@ -118,11 +141,11 @@ Los módulos CRUD (`fabricantes`, `productos`, `lotes`, `plantillas`) siguen el 
 | `POST /api/etiquetas/generar` | Supabase + `ETIQUETAS:puedeCrear` | Encola el trabajo, devuelve el id |
 | `GET /api/etiquetas/trabajos/pendientes` | `AgentTokenGuard` | El agente hace polling |
 | `PATCH /api/etiquetas/trabajos/:id/estado` | `AgentTokenGuard` | El agente reporta `IMPRESO` / `ERROR` |
-| `GET /api/etiquetas/trabajos/:id` | Supabase | El frontend consulta el estado — **solo del trabajo propio** (o cualquiera si es `esAdmin`); uno ajeno responde 404 |
+| `GET /api/etiquetas/trabajos/:id` | Supabase | El frontend consulta el estado — **solo del trabajo propio** (o cualquiera si es `esAdmin`); uno ajeno responde 404 (la restricción está en el service, no en un guard) |
 | `GET /api/etiquetas/historial` | Supabase + `ETIQUETAS:puedeVer` | Etiquetas generadas (las 1000 más recientes) con producto, lote, estado, autor, token del QR y contadores de escaneos/COA/FDS |
 | `GET /api/publico/etiquetas/:token` (+ `/coa`, `/fds`) | Sin login | Página pública del QR: datos del lote, clasificación GHS, COA y ficha de seguridad. Cada apertura suma 1 a `escaneos` y actualiza `ultimoEscaneoAt`; `/coa` suma a `coaVistas` (o `coaDescargas` si `?descargar=1`) y `/fds` suma a `fdsVistas` |
 
-`LimpiezaTrabajosService` corre un cron **diario a las 3 AM** que borra los trabajos `IMPRESO`/`ERROR` más viejos que `RETENCION_TRABAJOS_DIAS` (por defecto 3). Los `IMPRESO` con `token` se conservan hasta que vence el QR (2 años), porque son el respaldo de la etiqueta ya pegada.
+`LimpiezaTrabajosService` corre un cron **diario a las 3 AM** que borra los trabajos `IMPRESO`/`ERROR` más viejos que `RETENCION_TRABAJOS_DIAS` (por defecto 3). Los `IMPRESO` con `token` se conservan mientras el QR siga vigente, porque son el respaldo de la etiqueta ya pegada.
 
 ### Alertas de impresión y vista previa
 
@@ -143,7 +166,10 @@ Los módulos CRUD (`fabricantes`, `productos`, `lotes`, `plantillas`) siguen el 
 |---|---|
 | `GET /api/usuarios/me`, `PATCH /api/usuarios/me` | Supabase (cualquiera edita su propio perfil) |
 | `POST /api/usuarios`, `GET /api/usuarios` | `EsAdminGuard` |
-| `PATCH /api/usuarios/:id/permisos` | `EsAdminGuard` |
+| `PATCH /api/usuarios/:id/permisos` | `EsAdminGuard` (deja registro de auditoría) |
+| `PATCH /api/usuarios/:id/activo` | `EsAdminGuard` — desactiva o reactiva la cuenta (`{ activo: boolean }`); no se puede desactivar a uno mismo; deja registro de auditoría |
+| `DELETE /api/usuarios/:id` | `EsAdminGuard` — borra la fila y la cuenta de Supabase; no a uno mismo; **409** si tiene historial (etiquetas, pedidos o archivos), en cuyo caso se desactiva; deja registro de auditoría |
+| `GET /api/usuarios/auditoria` | `EsAdminGuard` — últimos movimientos sobre cuentas (`?limite=`, máx. 500) |
 | `PATCH /api/usuarios/:id/rol-kpis` | `EsAdminGuard` (asigna/quita `esAdminKpis`) |
 | `GET /api/usuarios/lista-basica` | `EsAdminKpisGuard` |
 | `GET /api/usuarios/:id/accesos-kpis-iso` | `EsAdminKpisGuard` |
@@ -152,6 +178,10 @@ Los módulos CRUD (`fabricantes`, `productos`, `lotes`, `plantillas`) siguen el 
 Los guards se aplican **por método**, no a nivel de clase: cada ruta nueva necesita su propio `@UseGuards(...)` explícito.
 
 Las respuestas de este módulo se limitan a lo que cada endpoint toca, vía constantes de `select` compartidas en el service. `GET /usuarios/lista-basica` devuelve solo `{ id, nombre, avatarUrl }`; `PATCH /usuarios/:id/rol-kpis` devuelve `{ id, nombre, avatarUrl, esAdmin, esAdminKpis }`; y los dos endpoints de `accesos-kpis-iso` comparten un único `select` (`{ id, nombre, avatarUrl, accesosIndicador, accesoIso }`) que **deliberadamente omite `permisos`**: los puede llamar un `esAdminKpis` que no es `esAdmin`, y ese rol no tiene por qué ver permisos de los módulos CRUD.
+
+### Pedidos y clientes
+
+`/api/pedidos` y `/api/clientes` siguen el patrón REST estándar (`POST /`, `GET /`, `GET /:id`, `PATCH /:id`, `DELETE /:id`) y ambos se controlan con el recurso **`PEDIDOS`** (los clientes solo existen para alimentar el formulario de pedido, no justifican un recurso propio). `GET /api/pedidos?estado=` filtra por estado derivado (`RECIBIDO`, `EN_PREPARACION`, `PREPARADO`, `SALIO`, `ENTREGADO`).
 
 ### Carpetas y archivos (KPIs/ISO)
 
@@ -212,6 +242,8 @@ FRONTEND_URL=              # se agrega a la lista de CORS
 RETENCION_TRABAJOS_DIAS=3  # retención de trabajos de impresión ya cerrados
 AGENTE_TIMEOUT_SEG=60      # sin aviso del agente en este tiempo, se considera desconectado
 ALERTA_COLA_MINUTOS=5      # avisa si hay etiquetas pendientes más viejas que esto
+QR_MARGEN_RETENCION_DIAS=365  # cuánto después del vencimiento del lote sigue vigente el QR
+QR_VIGENCIA_DIAS=730       # respaldo para lotes sin fecha de vencimiento parseable
 ```
 
 ⚠️ **`DATABASE_URL` y `DIRECT_URL` no son intercambiables.** El bloque `datasource` del schema **no tiene `url`** (la conexión viene del adapter), y la CLI de Prisma no lee `DATABASE_URL` en este proyecto: toma `DIRECT_URL` desde `prisma.config.ts`. Un `new PrismaClient()` pelado, sin `PrismaPg`, no se conecta.
@@ -239,7 +271,7 @@ npm run start:prod
 npm run lint
 npm run format
 
-# tests (no hay watchers enganchados: correr a mano)
+# tests (no hay watchers enganchados: correr a mano; la CI también los corre)
 npm test
 npm test -- src/carpetas/acceso-documentos.service.spec.ts   # un archivo
 npm test -- -t "nombre del test"                             # un test
@@ -261,16 +293,26 @@ Ningún seed crea filas de `Archivo`, así que **ninguna fila sembrada puede apu
 
 > Los seeds usan `ts-node`, no `tsx`, a propósito: `tsx` (esbuild) no emite `emitDecoratorMetadata`, que la inyección de dependencias de Nest necesita. Un script que levante el contexto de Nest y se ejecute con `tsx` recibe dependencias sin inicializar.
 
-## Tests
+## Tests y CI
 
-- `src/carpetas/acceso-documentos.service.spec.ts` — 12 casos sobre las reglas de acceso a archivos: regla dura de PDFs de ISO, visibilidad por tipo, visibilidad previa a eliminar, y la validación de descarga con su excepción del visor.
-- `src/app.controller.spec.ts` — smoke test.
+`npm test` corre Jest sobre `src/**/*.spec.ts` (211 casos, sin base de datos ni Supabase: los servicios se prueban con dobles). **GitHub Actions** (`.github/workflows/ci.yml`) corre `npm test` y `npm run build` en cada push y pull request.
+
+- `common/guards/cobertura-permisos.spec.ts` — el test de cobertura de permisos (ver "Autenticación y permisos"), ~110 casos.
+- `common/guards/supabase-auth.guard.spec.ts` — la cuenta desactivada responde 403 con `CUENTA_DESACTIVADA`.
+- `carpetas/acceso-documentos.service.spec.ts` — reglas de acceso a archivos: regla dura de PDFs de ISO, visibilidad por tipo, visibilidad previa a eliminar y la validación de descarga con su excepción del visor.
+- `usuario/usuarios.service.spec.ts` — respuestas mínimas de los endpoints, eliminación (409 con historial, no a uno mismo), desactivación/reactivación y auditoría.
+- `etiquetas/` — vigencia del QR (`qr-vigencia.spec.ts`), trabajos de impresión (solo el creador ve su trabajo), vista previa, estado del agente y cálculo de tara.
+- `lotes/lotes.service.spec.ts` — un lote con QR vigente no se elimina; alta y duplicados.
+- `pedidos/pedidos.service.spec.ts` — estado derivado de las fechas y filtro por estado.
+- `common/parsear-fecha-vencimiento.spec.ts`, `productos/fds-parser.spec.ts` — parseo de fechas del COA y de fichas de seguridad.
 
 ## Convenciones y trampas conocidas
 
 - **Importar tipos de Prisma desde `../generated/prisma`, nunca desde `@prisma/client`.**
 - Regenerar **y commitear** `src/generated/prisma` después de cada cambio de schema.
 - Español en identificadores, comentarios y mensajes de error.
+- Una ruta nueva necesita su `@UseGuards(...)` explícito y su controller sumado a `CONTROLLERS` en `cobertura-permisos.spec.ts`.
+- Un cambio de esquema es una migración (`npx prisma migrate dev`) **y** regenerar/commitear el cliente. En otros entornos, `npx prisma migrate deploy`.
 - `request.usuario`, no `request.user`.
 - Antes de tocar cualquier cosa de KPIs/ISO, leer [`contexto-fase3-kpis-iso.md`](./contexto-fase3-kpis-iso.md).
 - No existe ningún concepto de "rol" genérico: la autorización es siempre por flags (`Permiso`, `AccesoIndicador`/`AccesoISO`) o por los booleanos `esAdmin`/`esAdminKpis`. Hubo un `RolesGuard` + `@Roles(...)` basado en un `request.user.rol` inexistente; se eliminó por código muerto. Para una ruta nueva, usar alguno de los guards de la tabla de arriba.

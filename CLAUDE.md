@@ -72,9 +72,8 @@ loads the mirror row with `permisos` + `accesosIndicador` + `accesoIso`, and att
 `EsAdminGuard`, and `AccesoCarpetaGuard` all read the `request.usuario` it populates.
 - CRUD modules (`fabricantes`, `productos`, `lotes`, `plantillas`): `SupabaseAuthGuard` +
   `PermisosGuard` with `@RequierePermiso('RECURSO', 'puedeVer'|'puedeCrear'|'puedeEditar'|'puedeEliminar')`.
-  `Recurso` enum: LOTES, PRODUCTOS, FABRICANTES, PLANTILLAS, COA, USUARIOS, ETIQUETAS, PEDIDOS.
-  `COA` is a leftover: no guard uses it (COA upload is `LOTES.puedeEditar`) and the Zod enum in
-  `usuarios.dto.ts` no longer accepts it; removing it from Prisma would need an enum migration.
+  `Recurso` enum: LOTES, PRODUCTOS, FABRICANTES, PLANTILLAS, USUARIOS, ETIQUETAS, PEDIDOS. There is no
+  `COA` resource (removed by the `quitar_recurso_coa` migration): COA upload is `LOTES.puedeEditar`.
   `clientes` and `pedidos` both gate on `PEDIDOS` — clients only exist today to feed the pedido
   form's autocomplete, they don't warrant their own `Recurso`.
 - `carpetas` module: `SupabaseAuthGuard` + `AccesoCarpetaGuard` with `@RequiereAccesoCarpeta({ accion })`.
@@ -83,6 +82,16 @@ loads the mirror row with `permisos` + `accesosIndicador` + `accesoIso`, and att
   (`AccesoIndicador` / `AccesoISO` tables). Special hardcoded rules live in the service, not tables:
   ISO "Obsoleto" folders and any ISO PDF are edit-total only.
 - Admin-only user routes: `EsAdminGuard`.
+- **Deactivated accounts.** `Usuario.activo=false` (set by `PATCH /usuarios/:id/activo`, admin only,
+  never on oneself) keeps the row and its history but `SupabaseAuthGuard` answers 403 with
+  `code: 'CUENTA_DESACTIVADA'` — the frontend keys off that code to sign the user out. Who/when is in
+  `desactivadoPorId`/`desactivadoEn`. It is the way out for users `DELETE /usuarios/:id` refuses (409:
+  they have labels, pedidos or files). Deletions leave no table trail, only a `Logger.warn` line.
+- **Permission coverage test.** `src/common/guards/cobertura-permisos.spec.ts` reads the Nest metadata of
+  every controller and fails if a route has no session guard, no restricting guard, a `PermisosGuard`
+  without a valid `@RequierePermiso`, or a write route gated only by `puedeVer`. **A new controller must be
+  added to its `CONTROLLERS` list** (a forgotten one is not detected). Routes that intentionally skip a
+  guard go in its `PUBLICAS` / `SOLO_SESION` lists, each with a reason.
 
 **Print job queue (not synchronous rendering).** `POST /api/etiquetas/generar` does not return a
 PNG. It creates a `TrabajoImpresion` row (status PENDIENTE) and returns its id. An external print

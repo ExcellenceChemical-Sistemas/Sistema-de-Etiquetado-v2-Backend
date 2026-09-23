@@ -22,6 +22,12 @@ model Usuario {
   esAdmin        Boolean   @default(false)
   esAdminKpis    Boolean   @default(false) // gestiona accesos de KPIs/ISO de otros; no implica acceso propio automático
   activo         Boolean   @default(true) // false = sin acceso al sistema pero conserva historial (ver PATCH /usuarios/:id/activo)
+  // Quién y cuándo desactivó la cuenta (null si está activa). Si ese admin se
+  // elimina después, desactivadoPorId queda en null pero desactivadoEn se conserva.
+  desactivadoEn    DateTime?
+  desactivadoPorId Int?
+  desactivadoPor   Usuario?  @relation("UsuarioDesactivadoPor", fields: [desactivadoPorId], references: [id], onDelete: SetNull)
+  desactivados     Usuario[] @relation("UsuarioDesactivadoPor")
   avatarUrl      String?
   permisos       Permiso[]
   createdAt      DateTime  @default(now())
@@ -51,7 +57,6 @@ enum Recurso {
   PRODUCTOS
   FABRICANTES
   PLANTILLAS
-  COA
   USUARIOS
   ETIQUETAS
   PEDIDOS

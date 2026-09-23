@@ -3,6 +3,7 @@ import {
   ConflictException,
   Injectable,
   InternalServerErrorException,
+  Logger,
   NotFoundException,
 } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
@@ -21,6 +22,14 @@ import { ActualizarRolKpisDto } from './dto/actualizar-rol-kpis.dto';
  * rol no tiene por qué ver permisos de los módulos CRUD (§1.1 punto 4).
  * Compartido para que las dos respuestas no se puedan desincronizar.
  */
+/** Incluye el nombre de quién desactivó la cuenta (solo lo ve el admin en la lista). */
+const INCLUDE_USUARIO_ADMIN = {
+  permisos: true,
+  accesosIndicador: true,
+  accesoIso: true,
+  desactivadoPor: { select: { id: true, nombre: true } },
+} satisfies Prisma.UsuarioInclude;
+
 const SELECT_ACCESOS_KPIS_ISO = {
   id: true,
   nombre: true,
@@ -49,6 +58,8 @@ const SELECT_ROL_KPIS = {
 
 @Injectable()
 export class UsuariosService {
+  private readonly logger = new Logger(UsuariosService.name);
+
   constructor(private readonly prisma: PrismaService) {}
 
   async crear(dto: CrearUsuarioDto) {
@@ -86,7 +97,7 @@ export class UsuariosService {
 
   async listar() {
     return this.prisma.usuario.findMany({
-      include: { permisos: true, accesosIndicador: true, accesoIso: true }, // ← agregado
+      include: INCLUDE_USUARIO_ADMIN,
       orderBy: { createdAt: 'desc' },
     });
   }
@@ -242,6 +253,10 @@ export class UsuariosService {
       throw error;
     }
 
+    // Sin tabla de auditoría: el usuario se borra y con él su fila, así que el
+    // único rastro de quién lo eliminó queda en el log del servidor.
+    this.logger.warn(`Usuario eliminado: id=${usuario.id} nombre="${usuario.nombre}" por usuarioId=${solicitanteId}`);
+
     const { error } = await supabaseAdmin.auth.admin.deleteUser(usuario.supabaseUserId);
     if (error) {
       throw new InternalServerErrorException(
@@ -266,8 +281,11 @@ export class UsuariosService {
 
     return this.prisma.usuario.update({
       where: { id: usuarioId },
-      data: { activo },
-      include: { permisos: true, accesosIndicador: true, accesoIso: true },
+      // Queda registrado quién y cuándo; al reactivar se limpia.
+      data: activo
+        ? { activo, desactivadoEn: null, desactivadoPorId: null }
+        : { activo, desactivadoEn: new Date(), desactivadoPorId: solicitanteId },
+      include: INCLUDE_USUARIO_ADMIN,
     });
   }
 

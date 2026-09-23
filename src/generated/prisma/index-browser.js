@@ -127,6 +127,8 @@ exports.Prisma.UsuarioScalarFieldEnum = {
   esAdmin: 'esAdmin',
   esAdminKpis: 'esAdminKpis',
   activo: 'activo',
+  desactivadoEn: 'desactivadoEn',
+  desactivadoPorId: 'desactivadoPorId',
   avatarUrl: 'avatarUrl',
   createdAt: 'createdAt'
 };
@@ -302,7 +304,6 @@ exports.Recurso = exports.$Enums.Recurso = {
   PRODUCTOS: 'PRODUCTOS',
   FABRICANTES: 'FABRICANTES',
   PLANTILLAS: 'PLANTILLAS',
-  COA: 'COA',
   USUARIOS: 'USUARIOS',
   ETIQUETAS: 'ETIQUETAS',
   PEDIDOS: 'PEDIDOS'

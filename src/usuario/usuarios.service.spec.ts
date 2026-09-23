@@ -119,7 +119,10 @@ describe('actualizarActivo', () => {
     const { servicio, update } = crearServicio();
     await servicio.actualizarActivo(6, false, 1);
 
-    expect((update.mock.calls[0][0] as any).data).toEqual({ activo: false });
+    const data = (update.mock.calls[0][0] as any).data;
+    // queda registrado quién (el solicitante) y cuándo
+    expect(data).toMatchObject({ activo: false, desactivadoPorId: 1 });
+    expect(data.desactivadoEn).toBeInstanceOf(Date);
     expect(mockDeleteUser).not.toHaveBeenCalled();
   });
 
@@ -127,7 +130,12 @@ describe('actualizarActivo', () => {
     const { servicio, update } = crearServicio();
     await servicio.actualizarActivo(6, true, 1);
 
-    expect((update.mock.calls[0][0] as any).data).toEqual({ activo: true });
+    // al reactivar se limpia el registro de la desactivación
+    expect((update.mock.calls[0][0] as any).data).toEqual({
+      activo: true,
+      desactivadoEn: null,
+      desactivadoPorId: null,
+    });
   });
 
   it('un admin no puede desactivarse a sí mismo', async () => {

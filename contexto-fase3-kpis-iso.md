@@ -16,7 +16,8 @@
 > `useAccesoKpisIso`, sidebar, middleware para `esAdminKpis`, visores de PDF y Word). Donde la
 > sección 4 diga "pendiente"/"desincronizado", está superado. También se agregó
 > `DELETE /usuarios/:id` (admin general, 409 si el usuario tiene historial) y `COA` salió del enum
-> de validación de permisos (sigue en el enum de Prisma, sin uso).
+> de permisos (validación y Prisma). También se pueden desactivar cuentas (`Usuario.activo`,
+> `PATCH /usuarios/:id/activo`) sin borrar su historial.
 >
 > ~~Falta todo el frontend~~ (sección 4) y enlazar el contexto a Claude Code en ese repo. Todo lo marcado como "resuelto/confirmado funcionando" en secciones anteriores sigue vigente tal cual.
 

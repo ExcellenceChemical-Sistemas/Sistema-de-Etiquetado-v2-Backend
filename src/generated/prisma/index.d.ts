@@ -88,7 +88,6 @@ export namespace $Enums {
   PRODUCTOS: 'PRODUCTOS',
   FABRICANTES: 'FABRICANTES',
   PLANTILLAS: 'PLANTILLAS',
-  COA: 'COA',
   USUARIOS: 'USUARIOS',
   ETIQUETAS: 'ETIQUETAS',
   PEDIDOS: 'PEDIDOS'
@@ -2111,6 +2110,7 @@ export namespace Prisma {
    */
 
   export type UsuarioCountOutputType = {
+    desactivados: number
     permisos: number
     trabajosImpresion: number
     archivosSubidos: number
@@ -2120,6 +2120,7 @@ export namespace Prisma {
   }
 
   export type UsuarioCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    desactivados?: boolean | UsuarioCountOutputTypeCountDesactivadosArgs
     permisos?: boolean | UsuarioCountOutputTypeCountPermisosArgs
     trabajosImpresion?: boolean | UsuarioCountOutputTypeCountTrabajosImpresionArgs
     archivosSubidos?: boolean | UsuarioCountOutputTypeCountArchivosSubidosArgs
@@ -2137,6 +2138,13 @@ export namespace Prisma {
      * Select specific fields to fetch from the UsuarioCountOutputType
      */
     select?: UsuarioCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * UsuarioCountOutputType without action
+   */
+  export type UsuarioCountOutputTypeCountDesactivadosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UsuarioWhereInput
   }
 
   /**
@@ -2395,10 +2403,12 @@ export namespace Prisma {
 
   export type UsuarioAvgAggregateOutputType = {
     id: number | null
+    desactivadoPorId: number | null
   }
 
   export type UsuarioSumAggregateOutputType = {
     id: number | null
+    desactivadoPorId: number | null
   }
 
   export type UsuarioMinAggregateOutputType = {
@@ -2408,6 +2418,8 @@ export namespace Prisma {
     esAdmin: boolean | null
     esAdminKpis: boolean | null
     activo: boolean | null
+    desactivadoEn: Date | null
+    desactivadoPorId: number | null
     avatarUrl: string | null
     createdAt: Date | null
   }
@@ -2419,6 +2431,8 @@ export namespace Prisma {
     esAdmin: boolean | null
     esAdminKpis: boolean | null
     activo: boolean | null
+    desactivadoEn: Date | null
+    desactivadoPorId: number | null
     avatarUrl: string | null
     createdAt: Date | null
   }
@@ -2430,6 +2444,8 @@ export namespace Prisma {
     esAdmin: number
     esAdminKpis: number
     activo: number
+    desactivadoEn: number
+    desactivadoPorId: number
     avatarUrl: number
     createdAt: number
     _all: number
@@ -2438,10 +2454,12 @@ export namespace Prisma {
 
   export type UsuarioAvgAggregateInputType = {
     id?: true
+    desactivadoPorId?: true
   }
 
   export type UsuarioSumAggregateInputType = {
     id?: true
+    desactivadoPorId?: true
   }
 
   export type UsuarioMinAggregateInputType = {
@@ -2451,6 +2469,8 @@ export namespace Prisma {
     esAdmin?: true
     esAdminKpis?: true
     activo?: true
+    desactivadoEn?: true
+    desactivadoPorId?: true
     avatarUrl?: true
     createdAt?: true
   }
@@ -2462,6 +2482,8 @@ export namespace Prisma {
     esAdmin?: true
     esAdminKpis?: true
     activo?: true
+    desactivadoEn?: true
+    desactivadoPorId?: true
     avatarUrl?: true
     createdAt?: true
   }
@@ -2473,6 +2495,8 @@ export namespace Prisma {
     esAdmin?: true
     esAdminKpis?: true
     activo?: true
+    desactivadoEn?: true
+    desactivadoPorId?: true
     avatarUrl?: true
     createdAt?: true
     _all?: true
@@ -2571,6 +2595,8 @@ export namespace Prisma {
     esAdmin: boolean
     esAdminKpis: boolean
     activo: boolean
+    desactivadoEn: Date | null
+    desactivadoPorId: number | null
     avatarUrl: string | null
     createdAt: Date
     _count: UsuarioCountAggregateOutputType | null
@@ -2601,8 +2627,12 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    desactivadoEn?: boolean
+    desactivadoPorId?: boolean
     avatarUrl?: boolean
     createdAt?: boolean
+    desactivadoPor?: boolean | Usuario$desactivadoPorArgs<ExtArgs>
+    desactivados?: boolean | Usuario$desactivadosArgs<ExtArgs>
     permisos?: boolean | Usuario$permisosArgs<ExtArgs>
     trabajosImpresion?: boolean | Usuario$trabajosImpresionArgs<ExtArgs>
     archivosSubidos?: boolean | Usuario$archivosSubidosArgs<ExtArgs>
@@ -2620,8 +2650,11 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    desactivadoEn?: boolean
+    desactivadoPorId?: boolean
     avatarUrl?: boolean
     createdAt?: boolean
+    desactivadoPor?: boolean | Usuario$desactivadoPorArgs<ExtArgs>
   }, ExtArgs["result"]["usuario"]>
 
   export type UsuarioSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2631,8 +2664,11 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    desactivadoEn?: boolean
+    desactivadoPorId?: boolean
     avatarUrl?: boolean
     createdAt?: boolean
+    desactivadoPor?: boolean | Usuario$desactivadoPorArgs<ExtArgs>
   }, ExtArgs["result"]["usuario"]>
 
   export type UsuarioSelectScalar = {
@@ -2642,12 +2678,16 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    desactivadoEn?: boolean
+    desactivadoPorId?: boolean
     avatarUrl?: boolean
     createdAt?: boolean
   }
 
-  export type UsuarioOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "supabaseUserId" | "nombre" | "esAdmin" | "esAdminKpis" | "activo" | "avatarUrl" | "createdAt", ExtArgs["result"]["usuario"]>
+  export type UsuarioOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "supabaseUserId" | "nombre" | "esAdmin" | "esAdminKpis" | "activo" | "desactivadoEn" | "desactivadoPorId" | "avatarUrl" | "createdAt", ExtArgs["result"]["usuario"]>
   export type UsuarioInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    desactivadoPor?: boolean | Usuario$desactivadoPorArgs<ExtArgs>
+    desactivados?: boolean | Usuario$desactivadosArgs<ExtArgs>
     permisos?: boolean | Usuario$permisosArgs<ExtArgs>
     trabajosImpresion?: boolean | Usuario$trabajosImpresionArgs<ExtArgs>
     archivosSubidos?: boolean | Usuario$archivosSubidosArgs<ExtArgs>
@@ -2657,12 +2697,18 @@ export namespace Prisma {
     pedidosEditados?: boolean | Usuario$pedidosEditadosArgs<ExtArgs>
     _count?: boolean | UsuarioCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type UsuarioIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type UsuarioIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type UsuarioIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    desactivadoPor?: boolean | Usuario$desactivadoPorArgs<ExtArgs>
+  }
+  export type UsuarioIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    desactivadoPor?: boolean | Usuario$desactivadoPorArgs<ExtArgs>
+  }
 
   export type $UsuarioPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Usuario"
     objects: {
+      desactivadoPor: Prisma.$UsuarioPayload<ExtArgs> | null
+      desactivados: Prisma.$UsuarioPayload<ExtArgs>[]
       permisos: Prisma.$PermisoPayload<ExtArgs>[]
       trabajosImpresion: Prisma.$TrabajoImpresionPayload<ExtArgs>[]
       archivosSubidos: Prisma.$ArchivoPayload<ExtArgs>[]
@@ -2678,6 +2724,8 @@ export namespace Prisma {
       esAdmin: boolean
       esAdminKpis: boolean
       activo: boolean
+      desactivadoEn: Date | null
+      desactivadoPorId: number | null
       avatarUrl: string | null
       createdAt: Date
     }, ExtArgs["result"]["usuario"]>
@@ -3074,6 +3122,8 @@ export namespace Prisma {
    */
   export interface Prisma__UsuarioClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    desactivadoPor<T extends Usuario$desactivadoPorArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$desactivadoPorArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    desactivados<T extends Usuario$desactivadosArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$desactivadosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     permisos<T extends Usuario$permisosArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$permisosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PermisoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     trabajosImpresion<T extends Usuario$trabajosImpresionArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$trabajosImpresionArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TrabajoImpresionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     archivosSubidos<T extends Usuario$archivosSubidosArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$archivosSubidosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ArchivoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -3116,6 +3166,8 @@ export namespace Prisma {
     readonly esAdmin: FieldRef<"Usuario", 'Boolean'>
     readonly esAdminKpis: FieldRef<"Usuario", 'Boolean'>
     readonly activo: FieldRef<"Usuario", 'Boolean'>
+    readonly desactivadoEn: FieldRef<"Usuario", 'DateTime'>
+    readonly desactivadoPorId: FieldRef<"Usuario", 'Int'>
     readonly avatarUrl: FieldRef<"Usuario", 'String'>
     readonly createdAt: FieldRef<"Usuario", 'DateTime'>
   }
@@ -3372,6 +3424,10 @@ export namespace Prisma {
      */
     data: UsuarioCreateManyInput | UsuarioCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UsuarioIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -3442,6 +3498,10 @@ export namespace Prisma {
      * Limit how many Usuarios to update.
      */
     limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UsuarioIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -3508,6 +3568,49 @@ export namespace Prisma {
      * Limit how many Usuarios to delete.
      */
     limit?: number
+  }
+
+  /**
+   * Usuario.desactivadoPor
+   */
+  export type Usuario$desactivadoPorArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Usuario
+     */
+    select?: UsuarioSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Usuario
+     */
+    omit?: UsuarioOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UsuarioInclude<ExtArgs> | null
+    where?: UsuarioWhereInput
+  }
+
+  /**
+   * Usuario.desactivados
+   */
+  export type Usuario$desactivadosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Usuario
+     */
+    select?: UsuarioSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Usuario
+     */
+    omit?: UsuarioOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UsuarioInclude<ExtArgs> | null
+    where?: UsuarioWhereInput
+    orderBy?: UsuarioOrderByWithRelationInput | UsuarioOrderByWithRelationInput[]
+    cursor?: UsuarioWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UsuarioScalarFieldEnum | UsuarioScalarFieldEnum[]
   }
 
   /**
@@ -17903,6 +18006,8 @@ export namespace Prisma {
     esAdmin: 'esAdmin',
     esAdminKpis: 'esAdminKpis',
     activo: 'activo',
+    desactivadoEn: 'desactivadoEn',
+    desactivadoPorId: 'desactivadoPorId',
     avatarUrl: 'avatarUrl',
     createdAt: 'createdAt'
   };
@@ -18315,8 +18420,12 @@ export namespace Prisma {
     esAdmin?: BoolFilter<"Usuario"> | boolean
     esAdminKpis?: BoolFilter<"Usuario"> | boolean
     activo?: BoolFilter<"Usuario"> | boolean
+    desactivadoEn?: DateTimeNullableFilter<"Usuario"> | Date | string | null
+    desactivadoPorId?: IntNullableFilter<"Usuario"> | number | null
     avatarUrl?: StringNullableFilter<"Usuario"> | string | null
     createdAt?: DateTimeFilter<"Usuario"> | Date | string
+    desactivadoPor?: XOR<UsuarioNullableScalarRelationFilter, UsuarioWhereInput> | null
+    desactivados?: UsuarioListRelationFilter
     permisos?: PermisoListRelationFilter
     trabajosImpresion?: TrabajoImpresionListRelationFilter
     archivosSubidos?: ArchivoListRelationFilter
@@ -18333,8 +18442,12 @@ export namespace Prisma {
     esAdmin?: SortOrder
     esAdminKpis?: SortOrder
     activo?: SortOrder
+    desactivadoEn?: SortOrderInput | SortOrder
+    desactivadoPorId?: SortOrderInput | SortOrder
     avatarUrl?: SortOrderInput | SortOrder
     createdAt?: SortOrder
+    desactivadoPor?: UsuarioOrderByWithRelationInput
+    desactivados?: UsuarioOrderByRelationAggregateInput
     permisos?: PermisoOrderByRelationAggregateInput
     trabajosImpresion?: TrabajoImpresionOrderByRelationAggregateInput
     archivosSubidos?: ArchivoOrderByRelationAggregateInput
@@ -18354,8 +18467,12 @@ export namespace Prisma {
     esAdmin?: BoolFilter<"Usuario"> | boolean
     esAdminKpis?: BoolFilter<"Usuario"> | boolean
     activo?: BoolFilter<"Usuario"> | boolean
+    desactivadoEn?: DateTimeNullableFilter<"Usuario"> | Date | string | null
+    desactivadoPorId?: IntNullableFilter<"Usuario"> | number | null
     avatarUrl?: StringNullableFilter<"Usuario"> | string | null
     createdAt?: DateTimeFilter<"Usuario"> | Date | string
+    desactivadoPor?: XOR<UsuarioNullableScalarRelationFilter, UsuarioWhereInput> | null
+    desactivados?: UsuarioListRelationFilter
     permisos?: PermisoListRelationFilter
     trabajosImpresion?: TrabajoImpresionListRelationFilter
     archivosSubidos?: ArchivoListRelationFilter
@@ -18372,6 +18489,8 @@ export namespace Prisma {
     esAdmin?: SortOrder
     esAdminKpis?: SortOrder
     activo?: SortOrder
+    desactivadoEn?: SortOrderInput | SortOrder
+    desactivadoPorId?: SortOrderInput | SortOrder
     avatarUrl?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     _count?: UsuarioCountOrderByAggregateInput
@@ -18391,6 +18510,8 @@ export namespace Prisma {
     esAdmin?: BoolWithAggregatesFilter<"Usuario"> | boolean
     esAdminKpis?: BoolWithAggregatesFilter<"Usuario"> | boolean
     activo?: BoolWithAggregatesFilter<"Usuario"> | boolean
+    desactivadoEn?: DateTimeNullableWithAggregatesFilter<"Usuario"> | Date | string | null
+    desactivadoPorId?: IntNullableWithAggregatesFilter<"Usuario"> | number | null
     avatarUrl?: StringNullableWithAggregatesFilter<"Usuario"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Usuario"> | Date | string
   }
@@ -19395,8 +19516,11 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    desactivadoEn?: Date | string | null
     avatarUrl?: string | null
     createdAt?: Date | string
+    desactivadoPor?: UsuarioCreateNestedOneWithoutDesactivadosInput
+    desactivados?: UsuarioCreateNestedManyWithoutDesactivadoPorInput
     permisos?: PermisoCreateNestedManyWithoutUsuarioInput
     trabajosImpresion?: TrabajoImpresionCreateNestedManyWithoutCreadoPorInput
     archivosSubidos?: ArchivoCreateNestedManyWithoutSubidoPorInput
@@ -19413,8 +19537,11 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    desactivadoEn?: Date | string | null
+    desactivadoPorId?: number | null
     avatarUrl?: string | null
     createdAt?: Date | string
+    desactivados?: UsuarioUncheckedCreateNestedManyWithoutDesactivadoPorInput
     permisos?: PermisoUncheckedCreateNestedManyWithoutUsuarioInput
     trabajosImpresion?: TrabajoImpresionUncheckedCreateNestedManyWithoutCreadoPorInput
     archivosSubidos?: ArchivoUncheckedCreateNestedManyWithoutSubidoPorInput
@@ -19430,8 +19557,11 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    desactivadoPor?: UsuarioUpdateOneWithoutDesactivadosNestedInput
+    desactivados?: UsuarioUpdateManyWithoutDesactivadoPorNestedInput
     permisos?: PermisoUpdateManyWithoutUsuarioNestedInput
     trabajosImpresion?: TrabajoImpresionUpdateManyWithoutCreadoPorNestedInput
     archivosSubidos?: ArchivoUpdateManyWithoutSubidoPorNestedInput
@@ -19448,8 +19578,11 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    desactivadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    desactivados?: UsuarioUncheckedUpdateManyWithoutDesactivadoPorNestedInput
     permisos?: PermisoUncheckedUpdateManyWithoutUsuarioNestedInput
     trabajosImpresion?: TrabajoImpresionUncheckedUpdateManyWithoutCreadoPorNestedInput
     archivosSubidos?: ArchivoUncheckedUpdateManyWithoutSubidoPorNestedInput
@@ -19466,6 +19599,8 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    desactivadoEn?: Date | string | null
+    desactivadoPorId?: number | null
     avatarUrl?: string | null
     createdAt?: Date | string
   }
@@ -19476,6 +19611,7 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -19487,6 +19623,8 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    desactivadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -20564,6 +20702,28 @@ export namespace Prisma {
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
   export type StringNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -20588,6 +20748,17 @@ export namespace Prisma {
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type UsuarioNullableScalarRelationFilter = {
+    is?: UsuarioWhereInput | null
+    isNot?: UsuarioWhereInput | null
+  }
+
+  export type UsuarioListRelationFilter = {
+    every?: UsuarioWhereInput
+    some?: UsuarioWhereInput
+    none?: UsuarioWhereInput
   }
 
   export type PermisoListRelationFilter = {
@@ -20630,6 +20801,10 @@ export namespace Prisma {
     nulls?: NullsOrder
   }
 
+  export type UsuarioOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type PermisoOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -20657,12 +20832,15 @@ export namespace Prisma {
     esAdmin?: SortOrder
     esAdminKpis?: SortOrder
     activo?: SortOrder
+    desactivadoEn?: SortOrder
+    desactivadoPorId?: SortOrder
     avatarUrl?: SortOrder
     createdAt?: SortOrder
   }
 
   export type UsuarioAvgOrderByAggregateInput = {
     id?: SortOrder
+    desactivadoPorId?: SortOrder
   }
 
   export type UsuarioMaxOrderByAggregateInput = {
@@ -20672,6 +20850,8 @@ export namespace Prisma {
     esAdmin?: SortOrder
     esAdminKpis?: SortOrder
     activo?: SortOrder
+    desactivadoEn?: SortOrder
+    desactivadoPorId?: SortOrder
     avatarUrl?: SortOrder
     createdAt?: SortOrder
   }
@@ -20683,12 +20863,15 @@ export namespace Prisma {
     esAdmin?: SortOrder
     esAdminKpis?: SortOrder
     activo?: SortOrder
+    desactivadoEn?: SortOrder
+    desactivadoPorId?: SortOrder
     avatarUrl?: SortOrder
     createdAt?: SortOrder
   }
 
   export type UsuarioSumOrderByAggregateInput = {
     id?: SortOrder
+    desactivadoPorId?: SortOrder
   }
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -20731,6 +20914,36 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedBoolFilter<$PrismaModel>
     _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
   export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -20874,17 +21087,6 @@ export namespace Prisma {
     id?: SortOrder
   }
 
-  export type IntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
-  }
-
   export type FloatNullableFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel> | null
     in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
@@ -20965,22 +21167,6 @@ export namespace Prisma {
     densidad?: SortOrder
   }
 
-  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedIntNullableFilter<$PrismaModel>
-    _max?: NestedIntNullableFilter<$PrismaModel>
-  }
-
   export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel> | null
     in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
@@ -21030,17 +21216,6 @@ export namespace Prisma {
 
   export type PlantillaSumOrderByAggregateInput = {
     id?: SortOrder
-  }
-
-  export type DateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
   export type ProductoScalarRelationFilter = {
@@ -21108,20 +21283,6 @@ export namespace Prisma {
     id?: SortOrder
     productoId?: SortOrder
     fabricanteId?: SortOrder
-  }
-
-  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type EnumEstadoTrabajoImpresionFilter<$PrismaModel = never> = {
@@ -21313,11 +21474,6 @@ export namespace Prisma {
   export type ClienteScalarRelationFilter = {
     is?: ClienteWhereInput
     isNot?: ClienteWhereInput
-  }
-
-  export type UsuarioNullableScalarRelationFilter = {
-    is?: UsuarioWhereInput | null
-    isNot?: UsuarioWhereInput | null
   }
 
   export type PedidoCountOrderByAggregateInput = {
@@ -21676,6 +21832,19 @@ export namespace Prisma {
     usuarioId?: SortOrder
   }
 
+  export type UsuarioCreateNestedOneWithoutDesactivadosInput = {
+    create?: XOR<UsuarioCreateWithoutDesactivadosInput, UsuarioUncheckedCreateWithoutDesactivadosInput>
+    connectOrCreate?: UsuarioCreateOrConnectWithoutDesactivadosInput
+    connect?: UsuarioWhereUniqueInput
+  }
+
+  export type UsuarioCreateNestedManyWithoutDesactivadoPorInput = {
+    create?: XOR<UsuarioCreateWithoutDesactivadoPorInput, UsuarioUncheckedCreateWithoutDesactivadoPorInput> | UsuarioCreateWithoutDesactivadoPorInput[] | UsuarioUncheckedCreateWithoutDesactivadoPorInput[]
+    connectOrCreate?: UsuarioCreateOrConnectWithoutDesactivadoPorInput | UsuarioCreateOrConnectWithoutDesactivadoPorInput[]
+    createMany?: UsuarioCreateManyDesactivadoPorInputEnvelope
+    connect?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
+  }
+
   export type PermisoCreateNestedManyWithoutUsuarioInput = {
     create?: XOR<PermisoCreateWithoutUsuarioInput, PermisoUncheckedCreateWithoutUsuarioInput> | PermisoCreateWithoutUsuarioInput[] | PermisoUncheckedCreateWithoutUsuarioInput[]
     connectOrCreate?: PermisoCreateOrConnectWithoutUsuarioInput | PermisoCreateOrConnectWithoutUsuarioInput[]
@@ -21722,6 +21891,13 @@ export namespace Prisma {
     connectOrCreate?: PedidoCreateOrConnectWithoutUltimoEditadoPorInput | PedidoCreateOrConnectWithoutUltimoEditadoPorInput[]
     createMany?: PedidoCreateManyUltimoEditadoPorInputEnvelope
     connect?: PedidoWhereUniqueInput | PedidoWhereUniqueInput[]
+  }
+
+  export type UsuarioUncheckedCreateNestedManyWithoutDesactivadoPorInput = {
+    create?: XOR<UsuarioCreateWithoutDesactivadoPorInput, UsuarioUncheckedCreateWithoutDesactivadoPorInput> | UsuarioCreateWithoutDesactivadoPorInput[] | UsuarioUncheckedCreateWithoutDesactivadoPorInput[]
+    connectOrCreate?: UsuarioCreateOrConnectWithoutDesactivadoPorInput | UsuarioCreateOrConnectWithoutDesactivadoPorInput[]
+    createMany?: UsuarioCreateManyDesactivadoPorInputEnvelope
+    connect?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
   }
 
   export type PermisoUncheckedCreateNestedManyWithoutUsuarioInput = {
@@ -21780,12 +21956,40 @@ export namespace Prisma {
     set?: boolean
   }
 
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
+  }
+
   export type NullableStringFieldUpdateOperationsInput = {
     set?: string | null
   }
 
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
+  }
+
+  export type UsuarioUpdateOneWithoutDesactivadosNestedInput = {
+    create?: XOR<UsuarioCreateWithoutDesactivadosInput, UsuarioUncheckedCreateWithoutDesactivadosInput>
+    connectOrCreate?: UsuarioCreateOrConnectWithoutDesactivadosInput
+    upsert?: UsuarioUpsertWithoutDesactivadosInput
+    disconnect?: UsuarioWhereInput | boolean
+    delete?: UsuarioWhereInput | boolean
+    connect?: UsuarioWhereUniqueInput
+    update?: XOR<XOR<UsuarioUpdateToOneWithWhereWithoutDesactivadosInput, UsuarioUpdateWithoutDesactivadosInput>, UsuarioUncheckedUpdateWithoutDesactivadosInput>
+  }
+
+  export type UsuarioUpdateManyWithoutDesactivadoPorNestedInput = {
+    create?: XOR<UsuarioCreateWithoutDesactivadoPorInput, UsuarioUncheckedCreateWithoutDesactivadoPorInput> | UsuarioCreateWithoutDesactivadoPorInput[] | UsuarioUncheckedCreateWithoutDesactivadoPorInput[]
+    connectOrCreate?: UsuarioCreateOrConnectWithoutDesactivadoPorInput | UsuarioCreateOrConnectWithoutDesactivadoPorInput[]
+    upsert?: UsuarioUpsertWithWhereUniqueWithoutDesactivadoPorInput | UsuarioUpsertWithWhereUniqueWithoutDesactivadoPorInput[]
+    createMany?: UsuarioCreateManyDesactivadoPorInputEnvelope
+    set?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
+    disconnect?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
+    delete?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
+    connect?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
+    update?: UsuarioUpdateWithWhereUniqueWithoutDesactivadoPorInput | UsuarioUpdateWithWhereUniqueWithoutDesactivadoPorInput[]
+    updateMany?: UsuarioUpdateManyWithWhereWithoutDesactivadoPorInput | UsuarioUpdateManyWithWhereWithoutDesactivadoPorInput[]
+    deleteMany?: UsuarioScalarWhereInput | UsuarioScalarWhereInput[]
   }
 
   export type PermisoUpdateManyWithoutUsuarioNestedInput = {
@@ -21888,6 +22092,28 @@ export namespace Prisma {
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type UsuarioUncheckedUpdateManyWithoutDesactivadoPorNestedInput = {
+    create?: XOR<UsuarioCreateWithoutDesactivadoPorInput, UsuarioUncheckedCreateWithoutDesactivadoPorInput> | UsuarioCreateWithoutDesactivadoPorInput[] | UsuarioUncheckedCreateWithoutDesactivadoPorInput[]
+    connectOrCreate?: UsuarioCreateOrConnectWithoutDesactivadoPorInput | UsuarioCreateOrConnectWithoutDesactivadoPorInput[]
+    upsert?: UsuarioUpsertWithWhereUniqueWithoutDesactivadoPorInput | UsuarioUpsertWithWhereUniqueWithoutDesactivadoPorInput[]
+    createMany?: UsuarioCreateManyDesactivadoPorInputEnvelope
+    set?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
+    disconnect?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
+    delete?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
+    connect?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
+    update?: UsuarioUpdateWithWhereUniqueWithoutDesactivadoPorInput | UsuarioUpdateWithWhereUniqueWithoutDesactivadoPorInput[]
+    updateMany?: UsuarioUpdateManyWithWhereWithoutDesactivadoPorInput | UsuarioUpdateManyWithWhereWithoutDesactivadoPorInput[]
+    deleteMany?: UsuarioScalarWhereInput | UsuarioScalarWhereInput[]
   }
 
   export type PermisoUncheckedUpdateManyWithoutUsuarioNestedInput = {
@@ -22070,14 +22296,6 @@ export namespace Prisma {
     connect?: LoteWhereUniqueInput | LoteWhereUniqueInput[]
   }
 
-  export type NullableIntFieldUpdateOperationsInput = {
-    set?: number | null
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
-  }
-
   export type NullableFloatFieldUpdateOperationsInput = {
     set?: number | null
     increment?: number
@@ -22195,10 +22413,6 @@ export namespace Prisma {
     connectOrCreate?: TrabajoImpresionCreateOrConnectWithoutLoteInput | TrabajoImpresionCreateOrConnectWithoutLoteInput[]
     createMany?: TrabajoImpresionCreateManyLoteInputEnvelope
     connect?: TrabajoImpresionWhereUniqueInput | TrabajoImpresionWhereUniqueInput[]
-  }
-
-  export type NullableDateTimeFieldUpdateOperationsInput = {
-    set?: Date | string | null
   }
 
   export type ProductoUpdateOneRequiredWithoutLotesNestedInput = {
@@ -22591,6 +22805,28 @@ export namespace Prisma {
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
   export type NestedStringNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -22668,6 +22904,47 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
+  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -22683,17 +22960,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
-  }
-
-  export type NestedIntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -22727,33 +22993,6 @@ export namespace Prisma {
     _max?: NestedEnumRecursoFilter<$PrismaModel>
   }
 
-  export type NestedFloatNullableFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
-  }
-
-  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedIntNullableFilter<$PrismaModel>
-    _max?: NestedIntNullableFilter<$PrismaModel>
-  }
-
   export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel> | null
     in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
@@ -22768,31 +23007,6 @@ export namespace Prisma {
     _sum?: NestedFloatNullableFilter<$PrismaModel>
     _min?: NestedFloatNullableFilter<$PrismaModel>
     _max?: NestedFloatNullableFilter<$PrismaModel>
-  }
-
-  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
-  }
-
-  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type NestedEnumEstadoTrabajoImpresionFilter<$PrismaModel = never> = {
@@ -22929,6 +23143,99 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumProcesoIndicadorFilter<$PrismaModel>
     _max?: NestedEnumProcesoIndicadorFilter<$PrismaModel>
+  }
+
+  export type UsuarioCreateWithoutDesactivadosInput = {
+    supabaseUserId: string
+    nombre: string
+    esAdmin?: boolean
+    esAdminKpis?: boolean
+    activo?: boolean
+    desactivadoEn?: Date | string | null
+    avatarUrl?: string | null
+    createdAt?: Date | string
+    desactivadoPor?: UsuarioCreateNestedOneWithoutDesactivadosInput
+    permisos?: PermisoCreateNestedManyWithoutUsuarioInput
+    trabajosImpresion?: TrabajoImpresionCreateNestedManyWithoutCreadoPorInput
+    archivosSubidos?: ArchivoCreateNestedManyWithoutSubidoPorInput
+    accesosIndicador?: AccesoIndicadorCreateNestedManyWithoutUsuarioInput
+    accesoIso?: AccesoISOCreateNestedOneWithoutUsuarioInput
+    pedidosCreados?: PedidoCreateNestedManyWithoutCreadoPorInput
+    pedidosEditados?: PedidoCreateNestedManyWithoutUltimoEditadoPorInput
+  }
+
+  export type UsuarioUncheckedCreateWithoutDesactivadosInput = {
+    id?: number
+    supabaseUserId: string
+    nombre: string
+    esAdmin?: boolean
+    esAdminKpis?: boolean
+    activo?: boolean
+    desactivadoEn?: Date | string | null
+    desactivadoPorId?: number | null
+    avatarUrl?: string | null
+    createdAt?: Date | string
+    permisos?: PermisoUncheckedCreateNestedManyWithoutUsuarioInput
+    trabajosImpresion?: TrabajoImpresionUncheckedCreateNestedManyWithoutCreadoPorInput
+    archivosSubidos?: ArchivoUncheckedCreateNestedManyWithoutSubidoPorInput
+    accesosIndicador?: AccesoIndicadorUncheckedCreateNestedManyWithoutUsuarioInput
+    accesoIso?: AccesoISOUncheckedCreateNestedOneWithoutUsuarioInput
+    pedidosCreados?: PedidoUncheckedCreateNestedManyWithoutCreadoPorInput
+    pedidosEditados?: PedidoUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+  }
+
+  export type UsuarioCreateOrConnectWithoutDesactivadosInput = {
+    where: UsuarioWhereUniqueInput
+    create: XOR<UsuarioCreateWithoutDesactivadosInput, UsuarioUncheckedCreateWithoutDesactivadosInput>
+  }
+
+  export type UsuarioCreateWithoutDesactivadoPorInput = {
+    supabaseUserId: string
+    nombre: string
+    esAdmin?: boolean
+    esAdminKpis?: boolean
+    activo?: boolean
+    desactivadoEn?: Date | string | null
+    avatarUrl?: string | null
+    createdAt?: Date | string
+    desactivados?: UsuarioCreateNestedManyWithoutDesactivadoPorInput
+    permisos?: PermisoCreateNestedManyWithoutUsuarioInput
+    trabajosImpresion?: TrabajoImpresionCreateNestedManyWithoutCreadoPorInput
+    archivosSubidos?: ArchivoCreateNestedManyWithoutSubidoPorInput
+    accesosIndicador?: AccesoIndicadorCreateNestedManyWithoutUsuarioInput
+    accesoIso?: AccesoISOCreateNestedOneWithoutUsuarioInput
+    pedidosCreados?: PedidoCreateNestedManyWithoutCreadoPorInput
+    pedidosEditados?: PedidoCreateNestedManyWithoutUltimoEditadoPorInput
+  }
+
+  export type UsuarioUncheckedCreateWithoutDesactivadoPorInput = {
+    id?: number
+    supabaseUserId: string
+    nombre: string
+    esAdmin?: boolean
+    esAdminKpis?: boolean
+    activo?: boolean
+    desactivadoEn?: Date | string | null
+    avatarUrl?: string | null
+    createdAt?: Date | string
+    desactivados?: UsuarioUncheckedCreateNestedManyWithoutDesactivadoPorInput
+    permisos?: PermisoUncheckedCreateNestedManyWithoutUsuarioInput
+    trabajosImpresion?: TrabajoImpresionUncheckedCreateNestedManyWithoutCreadoPorInput
+    archivosSubidos?: ArchivoUncheckedCreateNestedManyWithoutSubidoPorInput
+    accesosIndicador?: AccesoIndicadorUncheckedCreateNestedManyWithoutUsuarioInput
+    accesoIso?: AccesoISOUncheckedCreateNestedOneWithoutUsuarioInput
+    pedidosCreados?: PedidoUncheckedCreateNestedManyWithoutCreadoPorInput
+    pedidosEditados?: PedidoUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+  }
+
+  export type UsuarioCreateOrConnectWithoutDesactivadoPorInput = {
+    where: UsuarioWhereUniqueInput
+    create: XOR<UsuarioCreateWithoutDesactivadoPorInput, UsuarioUncheckedCreateWithoutDesactivadoPorInput>
+  }
+
+  export type UsuarioCreateManyDesactivadoPorInputEnvelope = {
+    data: UsuarioCreateManyDesactivadoPorInput | UsuarioCreateManyDesactivadoPorInput[]
+    skipDuplicates?: boolean
   }
 
   export type PermisoCreateWithoutUsuarioInput = {
@@ -23175,6 +23482,88 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type UsuarioUpsertWithoutDesactivadosInput = {
+    update: XOR<UsuarioUpdateWithoutDesactivadosInput, UsuarioUncheckedUpdateWithoutDesactivadosInput>
+    create: XOR<UsuarioCreateWithoutDesactivadosInput, UsuarioUncheckedCreateWithoutDesactivadosInput>
+    where?: UsuarioWhereInput
+  }
+
+  export type UsuarioUpdateToOneWithWhereWithoutDesactivadosInput = {
+    where?: UsuarioWhereInput
+    data: XOR<UsuarioUpdateWithoutDesactivadosInput, UsuarioUncheckedUpdateWithoutDesactivadosInput>
+  }
+
+  export type UsuarioUpdateWithoutDesactivadosInput = {
+    supabaseUserId?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    esAdmin?: BoolFieldUpdateOperationsInput | boolean
+    esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    desactivadoPor?: UsuarioUpdateOneWithoutDesactivadosNestedInput
+    permisos?: PermisoUpdateManyWithoutUsuarioNestedInput
+    trabajosImpresion?: TrabajoImpresionUpdateManyWithoutCreadoPorNestedInput
+    archivosSubidos?: ArchivoUpdateManyWithoutSubidoPorNestedInput
+    accesosIndicador?: AccesoIndicadorUpdateManyWithoutUsuarioNestedInput
+    accesoIso?: AccesoISOUpdateOneWithoutUsuarioNestedInput
+    pedidosCreados?: PedidoUpdateManyWithoutCreadoPorNestedInput
+    pedidosEditados?: PedidoUpdateManyWithoutUltimoEditadoPorNestedInput
+  }
+
+  export type UsuarioUncheckedUpdateWithoutDesactivadosInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    supabaseUserId?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    esAdmin?: BoolFieldUpdateOperationsInput | boolean
+    esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    desactivadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    permisos?: PermisoUncheckedUpdateManyWithoutUsuarioNestedInput
+    trabajosImpresion?: TrabajoImpresionUncheckedUpdateManyWithoutCreadoPorNestedInput
+    archivosSubidos?: ArchivoUncheckedUpdateManyWithoutSubidoPorNestedInput
+    accesosIndicador?: AccesoIndicadorUncheckedUpdateManyWithoutUsuarioNestedInput
+    accesoIso?: AccesoISOUncheckedUpdateOneWithoutUsuarioNestedInput
+    pedidosCreados?: PedidoUncheckedUpdateManyWithoutCreadoPorNestedInput
+    pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+  }
+
+  export type UsuarioUpsertWithWhereUniqueWithoutDesactivadoPorInput = {
+    where: UsuarioWhereUniqueInput
+    update: XOR<UsuarioUpdateWithoutDesactivadoPorInput, UsuarioUncheckedUpdateWithoutDesactivadoPorInput>
+    create: XOR<UsuarioCreateWithoutDesactivadoPorInput, UsuarioUncheckedCreateWithoutDesactivadoPorInput>
+  }
+
+  export type UsuarioUpdateWithWhereUniqueWithoutDesactivadoPorInput = {
+    where: UsuarioWhereUniqueInput
+    data: XOR<UsuarioUpdateWithoutDesactivadoPorInput, UsuarioUncheckedUpdateWithoutDesactivadoPorInput>
+  }
+
+  export type UsuarioUpdateManyWithWhereWithoutDesactivadoPorInput = {
+    where: UsuarioScalarWhereInput
+    data: XOR<UsuarioUpdateManyMutationInput, UsuarioUncheckedUpdateManyWithoutDesactivadoPorInput>
+  }
+
+  export type UsuarioScalarWhereInput = {
+    AND?: UsuarioScalarWhereInput | UsuarioScalarWhereInput[]
+    OR?: UsuarioScalarWhereInput[]
+    NOT?: UsuarioScalarWhereInput | UsuarioScalarWhereInput[]
+    id?: IntFilter<"Usuario"> | number
+    supabaseUserId?: StringFilter<"Usuario"> | string
+    nombre?: StringFilter<"Usuario"> | string
+    esAdmin?: BoolFilter<"Usuario"> | boolean
+    esAdminKpis?: BoolFilter<"Usuario"> | boolean
+    activo?: BoolFilter<"Usuario"> | boolean
+    desactivadoEn?: DateTimeNullableFilter<"Usuario"> | Date | string | null
+    desactivadoPorId?: IntNullableFilter<"Usuario"> | number | null
+    avatarUrl?: StringNullableFilter<"Usuario"> | string | null
+    createdAt?: DateTimeFilter<"Usuario"> | Date | string
+  }
+
   export type PermisoUpsertWithWhereUniqueWithoutUsuarioInput = {
     where: PermisoWhereUniqueInput
     update: XOR<PermisoUpdateWithoutUsuarioInput, PermisoUncheckedUpdateWithoutUsuarioInput>
@@ -23394,8 +23783,11 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    desactivadoEn?: Date | string | null
     avatarUrl?: string | null
     createdAt?: Date | string
+    desactivadoPor?: UsuarioCreateNestedOneWithoutDesactivadosInput
+    desactivados?: UsuarioCreateNestedManyWithoutDesactivadoPorInput
     trabajosImpresion?: TrabajoImpresionCreateNestedManyWithoutCreadoPorInput
     archivosSubidos?: ArchivoCreateNestedManyWithoutSubidoPorInput
     accesosIndicador?: AccesoIndicadorCreateNestedManyWithoutUsuarioInput
@@ -23411,8 +23803,11 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    desactivadoEn?: Date | string | null
+    desactivadoPorId?: number | null
     avatarUrl?: string | null
     createdAt?: Date | string
+    desactivados?: UsuarioUncheckedCreateNestedManyWithoutDesactivadoPorInput
     trabajosImpresion?: TrabajoImpresionUncheckedCreateNestedManyWithoutCreadoPorInput
     archivosSubidos?: ArchivoUncheckedCreateNestedManyWithoutSubidoPorInput
     accesosIndicador?: AccesoIndicadorUncheckedCreateNestedManyWithoutUsuarioInput
@@ -23443,8 +23838,11 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    desactivadoPor?: UsuarioUpdateOneWithoutDesactivadosNestedInput
+    desactivados?: UsuarioUpdateManyWithoutDesactivadoPorNestedInput
     trabajosImpresion?: TrabajoImpresionUpdateManyWithoutCreadoPorNestedInput
     archivosSubidos?: ArchivoUpdateManyWithoutSubidoPorNestedInput
     accesosIndicador?: AccesoIndicadorUpdateManyWithoutUsuarioNestedInput
@@ -23460,8 +23858,11 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    desactivadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    desactivados?: UsuarioUncheckedUpdateManyWithoutDesactivadoPorNestedInput
     trabajosImpresion?: TrabajoImpresionUncheckedUpdateManyWithoutCreadoPorNestedInput
     archivosSubidos?: ArchivoUncheckedUpdateManyWithoutSubidoPorNestedInput
     accesosIndicador?: AccesoIndicadorUncheckedUpdateManyWithoutUsuarioNestedInput
@@ -23916,8 +24317,11 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    desactivadoEn?: Date | string | null
     avatarUrl?: string | null
     createdAt?: Date | string
+    desactivadoPor?: UsuarioCreateNestedOneWithoutDesactivadosInput
+    desactivados?: UsuarioCreateNestedManyWithoutDesactivadoPorInput
     permisos?: PermisoCreateNestedManyWithoutUsuarioInput
     archivosSubidos?: ArchivoCreateNestedManyWithoutSubidoPorInput
     accesosIndicador?: AccesoIndicadorCreateNestedManyWithoutUsuarioInput
@@ -23933,8 +24337,11 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    desactivadoEn?: Date | string | null
+    desactivadoPorId?: number | null
     avatarUrl?: string | null
     createdAt?: Date | string
+    desactivados?: UsuarioUncheckedCreateNestedManyWithoutDesactivadoPorInput
     permisos?: PermisoUncheckedCreateNestedManyWithoutUsuarioInput
     archivosSubidos?: ArchivoUncheckedCreateNestedManyWithoutSubidoPorInput
     accesosIndicador?: AccesoIndicadorUncheckedCreateNestedManyWithoutUsuarioInput
@@ -24029,8 +24436,11 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    desactivadoPor?: UsuarioUpdateOneWithoutDesactivadosNestedInput
+    desactivados?: UsuarioUpdateManyWithoutDesactivadoPorNestedInput
     permisos?: PermisoUpdateManyWithoutUsuarioNestedInput
     archivosSubidos?: ArchivoUpdateManyWithoutSubidoPorNestedInput
     accesosIndicador?: AccesoIndicadorUpdateManyWithoutUsuarioNestedInput
@@ -24046,8 +24456,11 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    desactivadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    desactivados?: UsuarioUncheckedUpdateManyWithoutDesactivadoPorNestedInput
     permisos?: PermisoUncheckedUpdateManyWithoutUsuarioNestedInput
     archivosSubidos?: ArchivoUncheckedUpdateManyWithoutSubidoPorNestedInput
     accesosIndicador?: AccesoIndicadorUncheckedUpdateManyWithoutUsuarioNestedInput
@@ -24145,8 +24558,11 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    desactivadoEn?: Date | string | null
     avatarUrl?: string | null
     createdAt?: Date | string
+    desactivadoPor?: UsuarioCreateNestedOneWithoutDesactivadosInput
+    desactivados?: UsuarioCreateNestedManyWithoutDesactivadoPorInput
     permisos?: PermisoCreateNestedManyWithoutUsuarioInput
     trabajosImpresion?: TrabajoImpresionCreateNestedManyWithoutCreadoPorInput
     archivosSubidos?: ArchivoCreateNestedManyWithoutSubidoPorInput
@@ -24162,8 +24578,11 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    desactivadoEn?: Date | string | null
+    desactivadoPorId?: number | null
     avatarUrl?: string | null
     createdAt?: Date | string
+    desactivados?: UsuarioUncheckedCreateNestedManyWithoutDesactivadoPorInput
     permisos?: PermisoUncheckedCreateNestedManyWithoutUsuarioInput
     trabajosImpresion?: TrabajoImpresionUncheckedCreateNestedManyWithoutCreadoPorInput
     archivosSubidos?: ArchivoUncheckedCreateNestedManyWithoutSubidoPorInput
@@ -24183,8 +24602,11 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    desactivadoEn?: Date | string | null
     avatarUrl?: string | null
     createdAt?: Date | string
+    desactivadoPor?: UsuarioCreateNestedOneWithoutDesactivadosInput
+    desactivados?: UsuarioCreateNestedManyWithoutDesactivadoPorInput
     permisos?: PermisoCreateNestedManyWithoutUsuarioInput
     trabajosImpresion?: TrabajoImpresionCreateNestedManyWithoutCreadoPorInput
     archivosSubidos?: ArchivoCreateNestedManyWithoutSubidoPorInput
@@ -24200,8 +24622,11 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    desactivadoEn?: Date | string | null
+    desactivadoPorId?: number | null
     avatarUrl?: string | null
     createdAt?: Date | string
+    desactivados?: UsuarioUncheckedCreateNestedManyWithoutDesactivadoPorInput
     permisos?: PermisoUncheckedCreateNestedManyWithoutUsuarioInput
     trabajosImpresion?: TrabajoImpresionUncheckedCreateNestedManyWithoutCreadoPorInput
     archivosSubidos?: ArchivoUncheckedCreateNestedManyWithoutSubidoPorInput
@@ -24264,8 +24689,11 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    desactivadoPor?: UsuarioUpdateOneWithoutDesactivadosNestedInput
+    desactivados?: UsuarioUpdateManyWithoutDesactivadoPorNestedInput
     permisos?: PermisoUpdateManyWithoutUsuarioNestedInput
     trabajosImpresion?: TrabajoImpresionUpdateManyWithoutCreadoPorNestedInput
     archivosSubidos?: ArchivoUpdateManyWithoutSubidoPorNestedInput
@@ -24281,8 +24709,11 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    desactivadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    desactivados?: UsuarioUncheckedUpdateManyWithoutDesactivadoPorNestedInput
     permisos?: PermisoUncheckedUpdateManyWithoutUsuarioNestedInput
     trabajosImpresion?: TrabajoImpresionUncheckedUpdateManyWithoutCreadoPorNestedInput
     archivosSubidos?: ArchivoUncheckedUpdateManyWithoutSubidoPorNestedInput
@@ -24308,8 +24739,11 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    desactivadoPor?: UsuarioUpdateOneWithoutDesactivadosNestedInput
+    desactivados?: UsuarioUpdateManyWithoutDesactivadoPorNestedInput
     permisos?: PermisoUpdateManyWithoutUsuarioNestedInput
     trabajosImpresion?: TrabajoImpresionUpdateManyWithoutCreadoPorNestedInput
     archivosSubidos?: ArchivoUpdateManyWithoutSubidoPorNestedInput
@@ -24325,8 +24759,11 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    desactivadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    desactivados?: UsuarioUncheckedUpdateManyWithoutDesactivadoPorNestedInput
     permisos?: PermisoUncheckedUpdateManyWithoutUsuarioNestedInput
     trabajosImpresion?: TrabajoImpresionUncheckedUpdateManyWithoutCreadoPorNestedInput
     archivosSubidos?: ArchivoUncheckedUpdateManyWithoutSubidoPorNestedInput
@@ -24537,8 +24974,11 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    desactivadoEn?: Date | string | null
     avatarUrl?: string | null
     createdAt?: Date | string
+    desactivadoPor?: UsuarioCreateNestedOneWithoutDesactivadosInput
+    desactivados?: UsuarioCreateNestedManyWithoutDesactivadoPorInput
     permisos?: PermisoCreateNestedManyWithoutUsuarioInput
     trabajosImpresion?: TrabajoImpresionCreateNestedManyWithoutCreadoPorInput
     accesosIndicador?: AccesoIndicadorCreateNestedManyWithoutUsuarioInput
@@ -24554,8 +24994,11 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    desactivadoEn?: Date | string | null
+    desactivadoPorId?: number | null
     avatarUrl?: string | null
     createdAt?: Date | string
+    desactivados?: UsuarioUncheckedCreateNestedManyWithoutDesactivadoPorInput
     permisos?: PermisoUncheckedCreateNestedManyWithoutUsuarioInput
     trabajosImpresion?: TrabajoImpresionUncheckedCreateNestedManyWithoutCreadoPorInput
     accesosIndicador?: AccesoIndicadorUncheckedCreateNestedManyWithoutUsuarioInput
@@ -24620,8 +25063,11 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    desactivadoPor?: UsuarioUpdateOneWithoutDesactivadosNestedInput
+    desactivados?: UsuarioUpdateManyWithoutDesactivadoPorNestedInput
     permisos?: PermisoUpdateManyWithoutUsuarioNestedInput
     trabajosImpresion?: TrabajoImpresionUpdateManyWithoutCreadoPorNestedInput
     accesosIndicador?: AccesoIndicadorUpdateManyWithoutUsuarioNestedInput
@@ -24637,8 +25083,11 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    desactivadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    desactivados?: UsuarioUncheckedUpdateManyWithoutDesactivadoPorNestedInput
     permisos?: PermisoUncheckedUpdateManyWithoutUsuarioNestedInput
     trabajosImpresion?: TrabajoImpresionUncheckedUpdateManyWithoutCreadoPorNestedInput
     accesosIndicador?: AccesoIndicadorUncheckedUpdateManyWithoutUsuarioNestedInput
@@ -24653,8 +25102,11 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    desactivadoEn?: Date | string | null
     avatarUrl?: string | null
     createdAt?: Date | string
+    desactivadoPor?: UsuarioCreateNestedOneWithoutDesactivadosInput
+    desactivados?: UsuarioCreateNestedManyWithoutDesactivadoPorInput
     permisos?: PermisoCreateNestedManyWithoutUsuarioInput
     trabajosImpresion?: TrabajoImpresionCreateNestedManyWithoutCreadoPorInput
     archivosSubidos?: ArchivoCreateNestedManyWithoutSubidoPorInput
@@ -24670,8 +25122,11 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    desactivadoEn?: Date | string | null
+    desactivadoPorId?: number | null
     avatarUrl?: string | null
     createdAt?: Date | string
+    desactivados?: UsuarioUncheckedCreateNestedManyWithoutDesactivadoPorInput
     permisos?: PermisoUncheckedCreateNestedManyWithoutUsuarioInput
     trabajosImpresion?: TrabajoImpresionUncheckedCreateNestedManyWithoutCreadoPorInput
     archivosSubidos?: ArchivoUncheckedCreateNestedManyWithoutSubidoPorInput
@@ -24702,8 +25157,11 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    desactivadoPor?: UsuarioUpdateOneWithoutDesactivadosNestedInput
+    desactivados?: UsuarioUpdateManyWithoutDesactivadoPorNestedInput
     permisos?: PermisoUpdateManyWithoutUsuarioNestedInput
     trabajosImpresion?: TrabajoImpresionUpdateManyWithoutCreadoPorNestedInput
     archivosSubidos?: ArchivoUpdateManyWithoutSubidoPorNestedInput
@@ -24719,8 +25177,11 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    desactivadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    desactivados?: UsuarioUncheckedUpdateManyWithoutDesactivadoPorNestedInput
     permisos?: PermisoUncheckedUpdateManyWithoutUsuarioNestedInput
     trabajosImpresion?: TrabajoImpresionUncheckedUpdateManyWithoutCreadoPorNestedInput
     archivosSubidos?: ArchivoUncheckedUpdateManyWithoutSubidoPorNestedInput
@@ -24735,8 +25196,11 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    desactivadoEn?: Date | string | null
     avatarUrl?: string | null
     createdAt?: Date | string
+    desactivadoPor?: UsuarioCreateNestedOneWithoutDesactivadosInput
+    desactivados?: UsuarioCreateNestedManyWithoutDesactivadoPorInput
     permisos?: PermisoCreateNestedManyWithoutUsuarioInput
     trabajosImpresion?: TrabajoImpresionCreateNestedManyWithoutCreadoPorInput
     archivosSubidos?: ArchivoCreateNestedManyWithoutSubidoPorInput
@@ -24752,8 +25216,11 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    desactivadoEn?: Date | string | null
+    desactivadoPorId?: number | null
     avatarUrl?: string | null
     createdAt?: Date | string
+    desactivados?: UsuarioUncheckedCreateNestedManyWithoutDesactivadoPorInput
     permisos?: PermisoUncheckedCreateNestedManyWithoutUsuarioInput
     trabajosImpresion?: TrabajoImpresionUncheckedCreateNestedManyWithoutCreadoPorInput
     archivosSubidos?: ArchivoUncheckedCreateNestedManyWithoutSubidoPorInput
@@ -24784,8 +25251,11 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    desactivadoPor?: UsuarioUpdateOneWithoutDesactivadosNestedInput
+    desactivados?: UsuarioUpdateManyWithoutDesactivadoPorNestedInput
     permisos?: PermisoUpdateManyWithoutUsuarioNestedInput
     trabajosImpresion?: TrabajoImpresionUpdateManyWithoutCreadoPorNestedInput
     archivosSubidos?: ArchivoUpdateManyWithoutSubidoPorNestedInput
@@ -24801,14 +25271,29 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    desactivadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    desactivados?: UsuarioUncheckedUpdateManyWithoutDesactivadoPorNestedInput
     permisos?: PermisoUncheckedUpdateManyWithoutUsuarioNestedInput
     trabajosImpresion?: TrabajoImpresionUncheckedUpdateManyWithoutCreadoPorNestedInput
     archivosSubidos?: ArchivoUncheckedUpdateManyWithoutSubidoPorNestedInput
     accesosIndicador?: AccesoIndicadorUncheckedUpdateManyWithoutUsuarioNestedInput
     pedidosCreados?: PedidoUncheckedUpdateManyWithoutCreadoPorNestedInput
     pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+  }
+
+  export type UsuarioCreateManyDesactivadoPorInput = {
+    id?: number
+    supabaseUserId: string
+    nombre: string
+    esAdmin?: boolean
+    esAdminKpis?: boolean
+    activo?: boolean
+    desactivadoEn?: Date | string | null
+    avatarUrl?: string | null
+    createdAt?: Date | string
   }
 
   export type PermisoCreateManyUsuarioInput = {
@@ -24892,6 +25377,57 @@ export namespace Prisma {
     creadoPorId: number
     createdAt?: Date | string
     updatedAt?: Date | string
+  }
+
+  export type UsuarioUpdateWithoutDesactivadoPorInput = {
+    supabaseUserId?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    esAdmin?: BoolFieldUpdateOperationsInput | boolean
+    esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    desactivados?: UsuarioUpdateManyWithoutDesactivadoPorNestedInput
+    permisos?: PermisoUpdateManyWithoutUsuarioNestedInput
+    trabajosImpresion?: TrabajoImpresionUpdateManyWithoutCreadoPorNestedInput
+    archivosSubidos?: ArchivoUpdateManyWithoutSubidoPorNestedInput
+    accesosIndicador?: AccesoIndicadorUpdateManyWithoutUsuarioNestedInput
+    accesoIso?: AccesoISOUpdateOneWithoutUsuarioNestedInput
+    pedidosCreados?: PedidoUpdateManyWithoutCreadoPorNestedInput
+    pedidosEditados?: PedidoUpdateManyWithoutUltimoEditadoPorNestedInput
+  }
+
+  export type UsuarioUncheckedUpdateWithoutDesactivadoPorInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    supabaseUserId?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    esAdmin?: BoolFieldUpdateOperationsInput | boolean
+    esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    desactivados?: UsuarioUncheckedUpdateManyWithoutDesactivadoPorNestedInput
+    permisos?: PermisoUncheckedUpdateManyWithoutUsuarioNestedInput
+    trabajosImpresion?: TrabajoImpresionUncheckedUpdateManyWithoutCreadoPorNestedInput
+    archivosSubidos?: ArchivoUncheckedUpdateManyWithoutSubidoPorNestedInput
+    accesosIndicador?: AccesoIndicadorUncheckedUpdateManyWithoutUsuarioNestedInput
+    accesoIso?: AccesoISOUncheckedUpdateOneWithoutUsuarioNestedInput
+    pedidosCreados?: PedidoUncheckedUpdateManyWithoutCreadoPorNestedInput
+    pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+  }
+
+  export type UsuarioUncheckedUpdateManyWithoutDesactivadoPorInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    supabaseUserId?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    esAdmin?: BoolFieldUpdateOperationsInput | boolean
+    esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type PermisoUpdateWithoutUsuarioInput = {

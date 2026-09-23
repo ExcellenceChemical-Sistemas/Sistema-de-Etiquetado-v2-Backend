@@ -67,9 +67,9 @@ const SOLO_SESION = new Map<string, string>([
   ['GET /usuarios/me', 'el frontend necesita saber quién es y qué puede hacer'],
   ['PATCH /usuarios/me', 'cada quien edita su propio perfil'],
   ['GET /carpetas/raiz', 'lista solo las carpetas a las que el usuario tiene acceso (se filtra en el servicio)'],
-  ['GET /etiquetas/agente/estado', 'indicador de si el agente de impresión está conectado'],
-  ['GET /etiquetas/vista-previa/:id', 'consulta de una vista previa; quien genera etiquetas puede no tener ETIQUETAS.puedeVer'],
-  ['GET /etiquetas/trabajos/:id', 'seguimiento de un trabajo de impresión; mismo motivo que la vista previa'],
+  ['GET /etiquetas/agente/estado', 'el controller exige ETIQUETAS.puedeVer o puedeCrear dentro del método (no usa PermisosGuard porque acepta cualquiera de las dos)'],
+  ['GET /etiquetas/vista-previa/:id', 'VistaPreviaService.obtener solo la devuelve a quien la pidió (o admin); quien genera puede no tener ETIQUETAS.puedeVer'],
+  ['GET /etiquetas/trabajos/:id', 'TrabajosImpresionService.obtenerEstado solo lo devuelve a su creador (o admin) y da 404 si es ajeno; tiene tests'],
 ]);
 
 type Ruta = {

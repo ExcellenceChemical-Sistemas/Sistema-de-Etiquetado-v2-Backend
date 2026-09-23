@@ -1,0 +1,37 @@
+name: Salud del backend
+
+# Cada 15 minutos consulta GET /api/salud (servidor + base). Si no responde 200,
+# el workflow falla y GitHub avisa por correo. Para activarlo hay que definir la
+# variable del repositorio SALUD_URL (Settings > Secrets and variables > Actions
+# > Variables), por ejemplo https://mi-backend.onrender.com/api/salud
+# Sin la variable, el chequeo se salta sin fallar.
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+jobs:
+  salud:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Consultar /api/salud
+        env:
+          SALUD_URL: ${{ vars.SALUD_URL }}
+        run: |
+          if [ -z "$SALUD_URL" ]; then
+            echo "SALUD_URL no está definida: no hay nada que chequear."
+            exit 0
+          fi
+          # Render (plan gratuito) duerme el servicio y tarda en despertar:
+          # se reintenta antes de dar la alarma.
+          for i in 1 2 3; do
+            code=$(curl -s -o /tmp/salud.json -w "%{http_code}" --max-time 60 "$SALUD_URL" || echo 000)
+            if [ "$code" = "200" ]; then
+              echo "OK: $(cat /tmp/salud.json)"
+              exit 0
+            fi
+            echo "Intento $i: HTTP $code"
+            sleep 20
+          done
+          echo "El backend no respondió 200 en /api/salud"
+          exit 1

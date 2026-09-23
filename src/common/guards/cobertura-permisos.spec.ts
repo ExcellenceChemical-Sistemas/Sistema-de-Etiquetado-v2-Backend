@@ -54,6 +54,7 @@ const CONTROLLERS: any[] = [
 /** Rutas que a propósito NO piden sesión (públicas). */
 const PUBLICAS = new Set([
   'GET /', // health check
+  'GET /salud', // chequeo de salud para el monitoreo: sin datos, solo dice si el servidor y la base responden
   'GET /publico/etiquetas/:token', // página del QR: la abre quien escanea la etiqueta
   'GET /publico/etiquetas/:token/coa',
   'GET /publico/etiquetas/:token/fds',

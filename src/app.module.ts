@@ -3,6 +3,8 @@ import { Module } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { ScheduleModule } from '@nestjs/schedule';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 import { PrismaModule } from './prisma/prisma.module';
 import { FabricantesModule } from './fabricantes/fabricantes.module';
 import { ProductosModule } from './productos/productos.module';
@@ -34,7 +36,10 @@ import { PedidosModule } from './pedidos/pedidos.module';
     ClientesModule,
     PedidosModule,
   ],
+  // AppController expone GET /api/salud (monitoreo). Antes no estaba registrado y nunca se servía.
+  controllers: [AppController],
   providers: [
+    AppService,
     {
       provide: APP_GUARD,
       useClass: ThrottlerGuard,

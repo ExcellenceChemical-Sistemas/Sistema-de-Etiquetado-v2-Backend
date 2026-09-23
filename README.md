@@ -21,6 +21,10 @@ El código y el lenguaje de dominio están en español; los identificadores, com
 
 Prefijo global de rutas: **`/api`**.
 
+## Monitoreo
+
+`GET /api/salud` (público, sin datos) responde `200 { ok: true, db: true }` solo si el servidor está arriba **y** la base contesta; si la base no responde, `503`. El workflow `.github/workflows/salud.yml` lo consulta cada 15 minutos (con reintentos, porque Render puede dormir el servicio) y, si no responde 200, falla y GitHub avisa por correo. Para activarlo hay que definir la variable de repositorio `SALUD_URL` (por ejemplo `https://<tu-backend>.onrender.com/api/salud`); sin ella el chequeo se salta.
+
 ## Estructura de módulos
 
 | Módulo | Responsabilidad |

@@ -1,4 +1,4 @@
-import { Controller, Post, Get, Patch, Param, ParseIntPipe, Body, UseGuards, Req } from '@nestjs/common';
+import { Controller, Post, Get, Patch, Delete, Param, ParseIntPipe, Body, UseGuards, Req } from '@nestjs/common';
 import { UsuariosService } from './usuarios.service';
 import { crearUsuarioSchema, CrearUsuarioDto } from './dto/usuarios.dto';
 import { actualizarPermisosSchema, ActualizarPermisosDto } from './dto/actualizar-permisos.dto';
@@ -65,6 +65,13 @@ export class UsuariosController {
     const dto: ActualizarPermisosDto = actualizarPermisosSchema.parse(body);
     const usuario = await this.usuariosService.actualizarPermisos(id, dto.permisos);
     return { success: true, data: usuario };
+  }
+
+  @Delete(':id')
+  @UseGuards(SupabaseAuthGuard, EsAdminGuard)
+  async eliminar(@Param('id', ParseIntPipe) id: number, @Req() req: any) {
+    await this.usuariosService.eliminar(id, req.usuario.id);
+    return { success: true };
   }
 
   // Asignar/quitar el rol de Admin de KPIs: exclusivo del Admin general.

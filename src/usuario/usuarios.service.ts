@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  ConflictException,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
@@ -205,6 +206,48 @@ export class UsuariosService {
         select: SELECT_ACCESOS_KPIS_ISO,
       });
     });
+  }
+
+  /**
+   * Elimina el usuario de la BD y de Supabase Auth. Permisos y accesos KPIs/ISO
+   * caen en cascada; TrabajoImpresion, Pedido y Archivo referencian al usuario
+   * sin cascada, así que si tiene historial Postgres rechaza el borrado (P2003)
+   * y se responde 409.
+   *
+   * Orden: primero la BD, después Supabase. Si fuera al revés y la BD rechazara
+   * el borrado, la cuenta ya no podría iniciar sesión pero el usuario seguiría
+   * en el sistema, sin forma de deshacerlo.
+   *
+   * No hace falta chequear "último admin": el llamador es admin (EsAdminGuard)
+   * y no puede borrarse a sí mismo, así que siempre queda al menos uno.
+   */
+  async eliminar(usuarioId: number, solicitanteId: number) {
+    if (usuarioId === solicitanteId) {
+      throw new BadRequestException('No podés eliminar tu propio usuario');
+    }
+
+    const usuario = await this.prisma.usuario.findUnique({
+      where: { id: usuarioId },
+    });
+    if (!usuario) throw new NotFoundException('Usuario no encontrado');
+
+    try {
+      await this.prisma.usuario.delete({ where: { id: usuarioId } });
+    } catch (error) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2003') {
+        throw new ConflictException(
+          'No se puede eliminar: el usuario tiene historial (etiquetas impresas, pedidos o archivos subidos).',
+        );
+      }
+      throw error;
+    }
+
+    const { error } = await supabaseAdmin.auth.admin.deleteUser(usuario.supabaseUserId);
+    if (error) {
+      throw new InternalServerErrorException(
+        `El usuario se eliminó del sistema pero no de Supabase Auth: ${error.message}`,
+      );
+    }
   }
 
   async actualizarPerfil(usuarioId: number, dto: ActualizarPerfilDto) {

@@ -1,9 +1,12 @@
 // `usuarios.service` importa el cliente de Supabase, que se instancia al cargar
 // el modulo y necesita SUPABASE_URL/KEY. Nada de lo que se prueba aca lo usa.
+const mockDeleteUser = jest.fn();
 jest.mock('../infrastructure/supabase/supabase-admin.client', () => ({
-  supabaseAdmin: { auth: { admin: {} } },
+  supabaseAdmin: { auth: { admin: { deleteUser: (...a: unknown[]) => mockDeleteUser(...a) } } },
 }));
 
+import { BadRequestException, ConflictException, NotFoundException } from '@nestjs/common';
+import { Prisma } from '../generated/prisma';
 import { UsuariosService } from './usuarios.service';
 
 /**
@@ -61,5 +64,52 @@ describe('actualizarRolKpis — acceso minimo en la respuesta', () => {
       'id',
       'nombre',
     ]);
+  });
+});
+
+describe('eliminar', () => {
+  const OBJETIVO = { id: 6, supabaseUserId: 'sb-6' };
+
+  function crear(opciones: { existe?: boolean; errorDelete?: unknown } = {}) {
+    const remove = jest.fn(() =>
+      opciones.errorDelete ? Promise.reject(opciones.errorDelete) : Promise.resolve(OBJETIVO),
+    );
+    const prisma: any = {
+      usuario: {
+        findUnique: jest.fn(() => Promise.resolve(opciones.existe === false ? null : OBJETIVO)),
+        delete: remove,
+      },
+    };
+    return { servicio: new UsuariosService(prisma), remove };
+  }
+
+  beforeEach(() => mockDeleteUser.mockReset().mockResolvedValue({ error: null }));
+
+  it('borra la fila y la cuenta de Supabase', async () => {
+    const { servicio, remove } = crear();
+    await servicio.eliminar(6, 1);
+
+    expect(remove).toHaveBeenCalledWith({ where: { id: 6 } });
+    expect(mockDeleteUser).toHaveBeenCalledWith('sb-6');
+  });
+
+  it('no deja que un admin se elimine a sí mismo', async () => {
+    const { servicio, remove } = crear();
+    await expect(servicio.eliminar(6, 6)).rejects.toBeInstanceOf(BadRequestException);
+    expect(remove).not.toHaveBeenCalled();
+    expect(mockDeleteUser).not.toHaveBeenCalled();
+  });
+
+  it('404 si el usuario no existe', async () => {
+    const { servicio } = crear({ existe: false });
+    await expect(servicio.eliminar(99, 1)).rejects.toBeInstanceOf(NotFoundException);
+  });
+
+  it('409 si tiene historial, y NO toca Supabase (la cuenta sigue pudiendo entrar)', async () => {
+    const fk = new Prisma.PrismaClientKnownRequestError('fk', { code: 'P2003', clientVersion: 'test' });
+    const { servicio } = crear({ errorDelete: fk });
+
+    await expect(servicio.eliminar(6, 1)).rejects.toBeInstanceOf(ConflictException);
+    expect(mockDeleteUser).not.toHaveBeenCalled();
   });
 });

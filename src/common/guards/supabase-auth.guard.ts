@@ -43,7 +43,14 @@ export class SupabaseAuthGuard implements CanActivate {
     // Cuenta desactivada: el login de Supabase sigue funcionando, pero el
     // sistema la rechaza acá. Se conserva el historial (etiquetas, pedidos).
     if (!usuario.activo) {
-      throw new ForbiddenException('Tu cuenta está desactivada. Contactá a un administrador.');
+      // `code` deja al frontend distinguir este 403 de uno por falta de permiso
+      // y cerrar la sesión al instante en vez de dejarla navegando a ciegas.
+      throw new ForbiddenException({
+        statusCode: 403,
+        error: 'Forbidden',
+        message: 'Tu cuenta está desactivada. Contactá a un administrador.',
+        code: 'CUENTA_DESACTIVADA',
+      });
     }
 
     request.usuario = { ...usuario, email: data.user.email };

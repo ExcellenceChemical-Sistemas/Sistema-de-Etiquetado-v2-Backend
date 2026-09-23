@@ -21,7 +21,10 @@ describe('SupabaseAuthGuard — cuentas desactivadas', () => {
     const guard = crearGuard({ id: 2, activo: false, permisos: [] });
     const request = { headers: { authorization: 'Bearer t' } };
 
-    await expect(guard.canActivate(contexto(request))).rejects.toBeInstanceOf(ForbiddenException);
+    const rechazo = guard.canActivate(contexto(request));
+    await expect(rechazo).rejects.toBeInstanceOf(ForbiddenException);
+    // el frontend se apoya en este código para cerrar la sesión
+    await expect(rechazo).rejects.toMatchObject({ response: { code: 'CUENTA_DESACTIVADA' } });
   });
 
   it('deja pasar a un usuario activo y llena request.usuario', async () => {

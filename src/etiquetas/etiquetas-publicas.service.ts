@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { SupabaseStorageService } from '../storage/supabase-storage.service';
-import { limiteVigenciaQr } from './qr-vigencia';
+import { qrVigente } from './qr-vigencia';
 
 @Injectable()
 export class EtiquetasPublicasService {
@@ -17,7 +17,7 @@ export class EtiquetasPublicasService {
     });
     // 404 tanto si el token no existe, como si el trabajo nunca llegó a
     // imprimirse o si el enlace ya caducó: desde afuera no se distingue.
-    if (!trabajo || trabajo.estado === 'ERROR' || trabajo.createdAt < limiteVigenciaQr()) {
+    if (!trabajo || trabajo.estado === 'ERROR' || !qrVigente(trabajo)) {
       throw new NotFoundException('Etiqueta no encontrada');
     }
     return trabajo;

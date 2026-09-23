@@ -1,7 +1,7 @@
 import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { Prisma } from '../generated/prisma';
 import { PrismaService } from '../prisma/prisma.service';
-import { limiteVigenciaQr } from '../etiquetas/qr-vigencia';
+import { qrVigente } from '../etiquetas/qr-vigencia';
 import { parsearFechaVencimiento } from '../common/parsear-fecha-vencimiento';
 import { CreateLoteDto } from './dto/create-lote.dto';
 import { UpdateLoteDto } from './dto/update-lote.dto';
@@ -93,28 +93,29 @@ export class LotesService {
   }
 
   async remove(id: number) {
-    await this.findOne(id);
+    const lote = await this.findOne(id);
     // Un trabajo IMPRESO con token es el respaldo del QR ya pegado en un envase:
-    // mientras el enlace esté vigente, el lote no se puede eliminar.
-    const conQrVigente = await this.prisma.trabajoImpresion.count({
-      where: {
-        loteId: id,
-        estado: 'IMPRESO',
-        token: { not: null },
-        createdAt: { gte: limiteVigenciaQr() },
-      },
+    // mientras el enlace esté vigente, el lote no se puede eliminar. La vigencia
+    // depende del vencimiento del propio lote (+ margen de retención), así que
+    // no se puede filtrar directo en la consulta — hay que evaluar cada uno.
+    const impresos = await this.prisma.trabajoImpresion.findMany({
+      where: { loteId: id, estado: 'IMPRESO', token: { not: null } },
+      select: { createdAt: true },
     });
+    const conQrVigente = impresos.filter((t) =>
+      qrVigente({ createdAt: t.createdAt, lote: { fechaVencimientoOrden: lote.fechaVencimientoOrden } }),
+    ).length;
     if (conQrVigente > 0) {
       throw new ConflictException(
         `No se puede eliminar: el lote tiene ${conQrVigente} etiqueta${conQrVigente === 1 ? '' : 's'} impresa${conQrVigente === 1 ? '' : 's'} con QR en uso`,
       );
     }
     // El resto del historial (pendientes, fallidas, sin QR vigente) se borra con el lote.
-    const [, lote] = await this.prisma.$transaction([
+    const [, loteEliminado] = await this.prisma.$transaction([
       this.prisma.trabajoImpresion.deleteMany({ where: { loteId: id } }),
       this.prisma.lote.delete({ where: { id } }),
     ]);
-    return lote;
+    return loteEliminado;
   }
 
   // --- COA ---

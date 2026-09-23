@@ -14,4 +14,7 @@ COPY . .
 RUN npm run build
 
 EXPOSE 3000
-CMD ["npm", "run", "start:prod"]
+# Aplica las migraciones pendientes ANTES de arrancar. Si falla (o falta DIRECT_URL),
+# el contenedor no arranca y la plataforma conserva la versión anterior en vez de
+# publicar código que espera columnas que todavía no existen.
+CMD ["sh", "-c", "npx prisma migrate deploy && npm run start:prod"]

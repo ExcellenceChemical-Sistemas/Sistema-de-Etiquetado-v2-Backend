@@ -57,6 +57,12 @@ verdad de decisiones y pendientes de ese módulo, incluyendo el modelo de permis
 
 ## Architecture notes
 
+**Row Level Security is ON for every table** (migration `activar_rls`, no policies). Supabase exposes the
+`public` schema over HTTP and the anon key ships in the frontend, so without RLS anyone could read the tables
+directly, bypassing every guard. The backend is unaffected: it connects as `postgres` (table owner, BYPASSRLS).
+**Any migration that creates a table must also `ENABLE ROW LEVEL SECURITY` on it.** Deploys run
+`prisma migrate deploy` before starting (see `Dockerfile`), so `DIRECT_URL` must be set in the host's env.
+
 **Prisma 7 with driver adapter.** The client is generated to `src/generated/prisma` and is
 **committed to git** (regenerate and commit it after any schema change). Runtime instantiation
 uses `PrismaPg` (`@prisma/adapter-pg`) — see `src/prisma/prisma.service.ts` (Nest DI, global

@@ -73,6 +73,8 @@ loads the mirror row with `permisos` + `accesosIndicador` + `accesoIso`, and att
 - CRUD modules (`fabricantes`, `productos`, `lotes`, `plantillas`): `SupabaseAuthGuard` +
   `PermisosGuard` with `@RequierePermiso('RECURSO', 'puedeVer'|'puedeCrear'|'puedeEditar'|'puedeEliminar')`.
   `Recurso` enum: LOTES, PRODUCTOS, FABRICANTES, PLANTILLAS, COA, USUARIOS, ETIQUETAS, PEDIDOS.
+  `COA` is a leftover: no guard uses it (COA upload is `LOTES.puedeEditar`) and the Zod enum in
+  `usuarios.dto.ts` no longer accepts it; removing it from Prisma would need an enum migration.
   `clientes` and `pedidos` both gate on `PEDIDOS` — clients only exist today to feed the pedido
   form's autocomplete, they don't warrant their own `Recurso`.
 - `carpetas` module: `SupabaseAuthGuard` + `AccesoCarpetaGuard` with `@RequiereAccesoCarpeta({ accion })`.

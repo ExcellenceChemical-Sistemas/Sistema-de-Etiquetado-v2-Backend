@@ -12,7 +12,13 @@
 > - **Primer test unitario del módulo**: `acceso-documentos.service.spec.ts`, 7 casos sobre las reglas de archivo.
 > - **Validación end-to-end por HTTP**: los 6 casos de la prueba manual corrieron contra los endpoints reales, todos OK (matriz en la sección 3), cubriendo la regla dura de PDFs (punto 1) y el fix del gap de visibilidad (punto 5) cada uno por su propio camino. Como efecto colateral quedaron dos archivos nuevos en la base y se borró el id 3 (ver sección 2).
 >
-> **Falta todo el frontend** (sección 4) y enlazar el contexto a Claude Code en ese repo. Todo lo marcado como "resuelto/confirmado funcionando" en secciones anteriores sigue vigente tal cual.
+> **Actualización posterior:** el frontend ya se implementó al modelo granular (grid de 5 permisos,
+> `useAccesoKpisIso`, sidebar, middleware para `esAdminKpis`, visores de PDF y Word). Donde la
+> sección 4 diga "pendiente"/"desincronizado", está superado. También se agregó
+> `DELETE /usuarios/:id` (admin general, 409 si el usuario tiene historial) y `COA` salió del enum
+> de validación de permisos (sigue en el enum de Prisma, sin uso).
+>
+> ~~Falta todo el frontend~~ (sección 4) y enlazar el contexto a Claude Code en ese repo. Todo lo marcado como "resuelto/confirmado funcionando" en secciones anteriores sigue vigente tal cual.
 
 ---
 

@@ -28,6 +28,14 @@ export type AccionAuditoria =
   | 'USUARIO_ELIMINADO'
   | 'PERMISOS_ACTUALIZADOS';
 
+const AVATAR_BUCKET = 'avatars';
+const AVATAR_MAX_BYTES = 2 * 1024 * 1024;
+const AVATAR_EXTENSIONES: Record<string, string> = {
+  'image/png': 'png',
+  'image/jpeg': 'jpeg',
+  'image/webp': 'webp',
+};
+
 /** Incluye el nombre de quién desactivó la cuenta (solo lo ve el admin en la lista). */
 const INCLUDE_USUARIO_ADMIN = {
   permisos: true,
@@ -357,6 +365,34 @@ export class UsuariosService {
     return actualizado;
   }
 
+  /**
+   * Sube la foto de perfil del propio usuario. Se hace desde el backend (con la
+   * clave de servicio) y no desde el navegador: así el bucket `avatars` no
+   * necesita políticas de escritura para `authenticated`, que dejaban a cualquier
+   * usuario logueado pisar la foto de otro. Cada foto vive en `<id>.<ext>`.
+   */
+  async subirAvatar(usuarioId: number, file: { mimetype: string; size: number; buffer: Buffer }) {
+    const ext = AVATAR_EXTENSIONES[file.mimetype];
+    if (!ext) throw new BadRequestException('Formato no permitido. Usá PNG, JPEG o WEBP.');
+    if (file.size > AVATAR_MAX_BYTES) throw new BadRequestException('La imagen no puede superar 2 MB.');
+
+    const bucket = supabaseAdmin.storage.from(AVATAR_BUCKET);
+    const path = `${usuarioId}.${ext}`;
+    const { error } = await bucket.upload(path, file.buffer, { upsert: true, contentType: file.mimetype });
+    if (error) throw new InternalServerErrorException(`No se pudo subir la foto: ${error.message}`);
+
+    // Si antes tenía la foto en otro formato, esa queda huérfana: se borra (sin frenar si falla).
+    const otros = Object.values(AVATAR_EXTENSIONES)
+      .filter((e) => e !== ext)
+      .map((e) => `${usuarioId}.${e}`);
+    await bucket.remove(otros).catch(() => undefined);
+
+    // ?v= evita que el navegador siga mostrando la foto vieja: la URL base no cambia.
+    const avatarUrl = `${bucket.getPublicUrl(path).data.publicUrl}?v=${Date.now()}`;
+    await this.prisma.usuario.update({ where: { id: usuarioId }, data: { avatarUrl } });
+    return { avatarUrl };
+  }
+
   async actualizarPerfil(usuarioId: number, dto: ActualizarPerfilDto) {
     const usuario = await this.prisma.usuario.findUnique({
       where: { id: usuarioId },
@@ -365,7 +401,7 @@ export class UsuariosService {
 
     return this.prisma.usuario.update({
       where: { id: usuarioId },
-      data: dto, // solo nombre y/o avatarUrl, ambos opcionales
+      data: dto, // solo el nombre: la foto se sube por POST /usuarios/me/avatar
       include: { permisos: true },
     });
   }

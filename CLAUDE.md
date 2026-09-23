@@ -63,6 +63,8 @@ directly, bypassing every guard. The backend is unaffected: it connects as `post
 **Any migration that creates a table must also `ENABLE ROW LEVEL SECURITY` on it.** Deploys run
 `prisma migrate deploy` before starting (see `Dockerfile`), so `DIRECT_URL` must be set in the host's env.
 
+**Avatars go through the backend.** `POST /usuarios/me/avatar` (multipart `file`) uploads to the `avatars` bucket with the service key; the bucket is public-read with **no client write policies** (migration `avatars_solo_lectura_publica`). Don't upload from the browser and don't accept `avatarUrl` in `PATCH /usuarios/me`.
+
 **Prisma 7 with driver adapter.** The client is generated to `src/generated/prisma` and is
 **committed to git** (regenerate and commit it after any schema change). Runtime instantiation
 uses `PrismaPg` (`@prisma/adapter-pg`) — see `src/prisma/prisma.service.ts` (Nest DI, global

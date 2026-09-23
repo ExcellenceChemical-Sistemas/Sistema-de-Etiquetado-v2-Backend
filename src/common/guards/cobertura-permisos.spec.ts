@@ -67,6 +67,7 @@ const PUBLICAS = new Set([
 const SOLO_SESION = new Map<string, string>([
   ['GET /usuarios/me', 'el frontend necesita saber quién es y qué puede hacer'],
   ['PATCH /usuarios/me', 'cada quien edita su propio perfil'],
+  ['POST /usuarios/me/avatar', 'cada quien sube su propia foto; el id sale del token, no de la ruta'],
   ['GET /carpetas/raiz', 'lista solo las carpetas a las que el usuario tiene acceso (se filtra en el servicio)'],
   ['GET /etiquetas/agente/estado', 'el controller exige ETIQUETAS.puedeVer o puedeCrear dentro del método (no usa PermisosGuard porque acepta cualquiera de las dos)'],
   ['GET /etiquetas/vista-previa/:id', 'VistaPreviaService.obtener solo la devuelve a quien la pidió (o admin); quien genera puede no tener ETIQUETAS.puedeVer'],

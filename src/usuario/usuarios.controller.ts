@@ -1,4 +1,5 @@
-import { Controller, Post, Get, Patch, Delete, Param, ParseIntPipe, Body, Query, UseGuards, Req } from '@nestjs/common';
+import { Controller, Post, Get, Patch, Delete, Param, ParseIntPipe, Body, Query, UseGuards, UseInterceptors, UploadedFile, BadRequestException, Req } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { UsuariosService } from './usuarios.service';
 import { crearUsuarioSchema, CrearUsuarioDto } from './dto/usuarios.dto';
 import { actualizarPermisosSchema, ActualizarPermisosDto } from './dto/actualizar-permisos.dto';
@@ -34,6 +35,16 @@ export class UsuariosController {
     const dto: ActualizarPerfilDto = actualizarPerfilSchema.parse(body);
     const usuario = await this.usuariosService.actualizarPerfil(req.usuario.id, dto);
     return { success: true, data: usuario };
+  }
+
+  // Foto de perfil propia (multipart, campo `file`). Sin EsAdminGuard: cada quien sube la suya.
+  @Post('me/avatar')
+  @UseGuards(SupabaseAuthGuard)
+  @UseInterceptors(FileInterceptor('file', { limits: { fileSize: 2 * 1024 * 1024 } }))
+  async subirMiAvatar(@Req() req: any, @UploadedFile() file: Express.Multer.File) {
+    if (!file) throw new BadRequestException('No se recibió ninguna imagen');
+    const resultado = await this.usuariosService.subirAvatar(req.usuario.id, file);
+    return { success: true, data: resultado };
   }
 
   @Post()

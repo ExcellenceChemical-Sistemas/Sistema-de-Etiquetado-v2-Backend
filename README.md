@@ -315,6 +315,7 @@ Ningún seed crea filas de `Archivo`, así que **ninguna fila sembrada puede apu
 - **Importar tipos de Prisma desde `../generated/prisma`, nunca desde `@prisma/client`.**
 - Regenerar **y commitear** `src/generated/prisma` después de cada cambio de schema.
 - Español en identificadores, comentarios y mensajes de error.
+- **Las fotos de perfil se suben por el backend** (`POST /usuarios/me/avatar`, multipart `file`, PNG/JPEG/WEBP hasta 2 MB), no directo a Storage. El bucket `avatars` es de lectura pública y **no tiene políticas de escritura** para clientes: no volver a agregarlas. `PATCH /usuarios/me` ya no acepta `avatarUrl`.
 - **Toda tabla nueva activa RLS en su propia migración** (`ALTER TABLE "x" ENABLE ROW LEVEL SECURITY;`, sin políticas). Supabase expone el esquema `public` por HTTP con la clave pública del frontend; sin RLS esa clave lee la tabla sin pasar por los guards. El backend no se ve afectado (se conecta como `postgres`, con BYPASSRLS).
 - El `Dockerfile` corre `npx prisma migrate deploy` antes de arrancar: en el servidor tiene que estar definida `DIRECT_URL`. Si una migración falla, el contenedor no arranca y la plataforma conserva la versión anterior.
 - Una ruta nueva necesita su `@UseGuards(...)` explícito y su controller sumado a `CONTROLLERS` en `cobertura-permisos.spec.ts`.

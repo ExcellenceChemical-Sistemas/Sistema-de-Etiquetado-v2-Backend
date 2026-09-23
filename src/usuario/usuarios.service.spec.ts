@@ -1,8 +1,19 @@
 // `usuarios.service` importa el cliente de Supabase, que se instancia al cargar
 // el modulo y necesita SUPABASE_URL/KEY. Nada de lo que se prueba aca lo usa.
 const mockDeleteUser = jest.fn();
+const mockUpload = jest.fn();
+const mockRemove = jest.fn();
 jest.mock('../infrastructure/supabase/supabase-admin.client', () => ({
-  supabaseAdmin: { auth: { admin: { deleteUser: (...a: unknown[]) => mockDeleteUser(...a) } } },
+  supabaseAdmin: {
+    auth: { admin: { deleteUser: (...a: unknown[]) => mockDeleteUser(...a) } },
+    storage: {
+      from: () => ({
+        upload: (...a: unknown[]) => mockUpload(...a),
+        remove: (...a: unknown[]) => mockRemove(...a),
+        getPublicUrl: (path: string) => ({ data: { publicUrl: `https://cdn.test/avatars/${path}` } }),
+      }),
+    },
+  },
 }));
 
 import { BadRequestException, ConflictException, NotFoundException } from '@nestjs/common';
@@ -219,5 +230,55 @@ describe('auditoría', () => {
 
     expect(prisma.registroAuditoria.findMany.mock.calls[0][0].take).toBe(500);
     expect(prisma.registroAuditoria.findMany.mock.calls[1][0].take).toBe(1);
+  });
+});
+
+describe('subirAvatar', () => {
+  const imagen = (mimetype = 'image/png', size = 1000) => ({ mimetype, size, buffer: Buffer.alloc(4) });
+
+  beforeEach(() => {
+    mockUpload.mockReset().mockResolvedValue({ error: null });
+    mockRemove.mockReset().mockResolvedValue({ error: null });
+  });
+
+  it('sube a <id>.<ext> pisando la anterior y guarda la URL con cache-busting', async () => {
+    const { servicio, update } = crearServicio();
+    const { avatarUrl } = await servicio.subirAvatar(6, imagen('image/png'));
+
+    expect(mockUpload).toHaveBeenCalledWith('6.png', expect.any(Buffer), { upsert: true, contentType: 'image/png' });
+    expect(avatarUrl).toMatch(/^https:\/\/cdn\.test\/avatars\/6\.png\?v=\d+$/);
+    expect((update.mock.calls[0][0] as any).where).toEqual({ id: 6 });
+    expect((update.mock.calls[0][0] as any).data).toEqual({ avatarUrl });
+  });
+
+  it('borra las fotos que tenía en otros formatos', async () => {
+    const { servicio } = crearServicio();
+    await servicio.subirAvatar(6, imagen('image/webp'));
+
+    expect(mockRemove).toHaveBeenCalledWith(['6.png', '6.jpeg']);
+  });
+
+  it('rechaza formatos que no son imagen y no toca el storage', async () => {
+    const { servicio, update } = crearServicio();
+
+    await expect(servicio.subirAvatar(6, imagen('application/pdf'))).rejects.toBeInstanceOf(BadRequestException);
+    await expect(servicio.subirAvatar(6, imagen('image/svg+xml'))).rejects.toBeInstanceOf(BadRequestException);
+    expect(mockUpload).not.toHaveBeenCalled();
+    expect(update).not.toHaveBeenCalled();
+  });
+
+  it('rechaza imágenes de más de 2 MB', async () => {
+    const { servicio } = crearServicio();
+    await expect(servicio.subirAvatar(6, imagen('image/png', 2 * 1024 * 1024 + 1))).rejects.toBeInstanceOf(
+      BadRequestException,
+    );
+  });
+
+  it('si el storage falla no cambia el avatarUrl guardado', async () => {
+    mockUpload.mockResolvedValueOnce({ error: { message: 'sin espacio' } });
+    const { servicio, update } = crearServicio();
+
+    await expect(servicio.subirAvatar(6, imagen())).rejects.toThrow('sin espacio');
+    expect(update).not.toHaveBeenCalled();
   });
 });

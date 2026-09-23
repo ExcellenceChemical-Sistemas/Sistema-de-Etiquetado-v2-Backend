@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export const permisoSchema = z.object({
-  recurso: z.enum(['LOTES', 'PRODUCTOS', 'FABRICANTES', 'PLANTILLAS', 'COA', 'USUARIOS', 'ETIQUETAS']),
+  recurso: z.enum(['LOTES', 'PRODUCTOS', 'FABRICANTES', 'PLANTILLAS', 'COA', 'USUARIOS', 'ETIQUETAS', 'PEDIDOS']),
   puedeVer: z.boolean().default(false),
   puedeCrear: z.boolean().default(false),
   puedeEditar: z.boolean().default(false),

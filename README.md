@@ -79,6 +79,8 @@ La autenticación vive **100% en Supabase Auth**; el backend solo mantiene un es
 
 `SupabaseAuthGuard` valida el bearer JWT vía `supabaseAdmin.auth.getUser`, carga la fila espejo con `permisos` + `accesosIndicador` + `accesoIso`, y la deja en **`request.usuario`** (ojo: `.usuario`, **no** `.user`). Si la cuenta está desactivada (`activo = false`) responde **403** con `code: 'CUENTA_DESACTIVADA'`, para que el frontend cierre la sesión en vez de tratarlo como un simple "sin permiso".
 
+**Segundo factor (TOTP).** Cualquier usuario puede activar una app autenticadora desde Mi cuenta (todo va directo a Supabase Auth). Si la cuenta lo tiene activo, el guard exige que el JWT sea de nivel `aal2` (claim `aal`, `common/auth/mfa.ts`): una sesión de solo contraseña (`aal1`) recibe **403 `code: 'MFA_REQUERIDO'`** en cualquier endpoint, aunque el frontend no haya pedido el código. Con `EXIGIR_MFA_ADMIN=true`, además, los administradores (`esAdmin` / `esAdminKpis`) sin factor reciben **403 `MFA_ENROLAR`** en todo salvo `GET /usuarios/me` (para que el frontend cargue y los lleve a activarlo). Los usuarios comunes nunca quedan bloqueados por no tenerlo. Si alguien pierde el teléfono, se le quita el factor desde el panel de Supabase (Authentication → Users → el usuario → Multi-Factor).
+
 **El orden de los guards importa**: `SupabaseAuthGuard` va siempre primero, porque todos los demás leen el `request.usuario` que él popula.
 
 | Guard | Uso |
@@ -248,6 +250,7 @@ AGENTE_TIMEOUT_SEG=60      # sin aviso del agente en este tiempo, se considera d
 ALERTA_COLA_MINUTOS=5      # avisa si hay etiquetas pendientes más viejas que esto
 QR_MARGEN_RETENCION_DIAS=365  # cuánto después del vencimiento del lote sigue vigente el QR
 QR_VIGENCIA_DIAS=730       # respaldo para lotes sin fecha de vencimiento parseable
+EXIGIR_MFA_ADMIN=false     # true: los administradores deben tener el segundo factor (ver "Segundo factor")
 ```
 
 ⚠️ **`DATABASE_URL` y `DIRECT_URL` no son intercambiables.** El bloque `datasource` del schema **no tiene `url`** (la conexión viene del adapter), y la CLI de Prisma no lee `DATABASE_URL` en este proyecto: toma `DIRECT_URL` desde `prisma.config.ts`. Un `new PrismaClient()` pelado, sin `PrismaPg`, no se conecta.
@@ -302,7 +305,8 @@ Ningún seed crea filas de `Archivo`, así que **ninguna fila sembrada puede apu
 `npm test` corre Jest sobre `src/**/*.spec.ts` (211 casos, sin base de datos ni Supabase: los servicios se prueban con dobles). **GitHub Actions** (`.github/workflows/ci.yml`) corre `npm test` y `npm run build` en cada push y pull request.
 
 - `common/guards/cobertura-permisos.spec.ts` — el test de cobertura de permisos (ver "Autenticación y permisos"), ~110 casos.
-- `common/guards/supabase-auth.guard.spec.ts` — la cuenta desactivada responde 403 con `CUENTA_DESACTIVADA`.
+- `common/guards/supabase-auth.guard.spec.ts` — la cuenta desactivada responde 403 con `CUENTA_DESACTIVADA`; con el segundo factor activo una sesión `aal1` da `MFA_REQUERIDO` y una `aal2` pasa; `EXIGIR_MFA_ADMIN` bloquea a administradores sin factor salvo `GET /usuarios/me`.
+- `common/auth/mfa.spec.ts` — lectura del claim `aal` y la decisión de qué exigir.
 - `carpetas/acceso-documentos.service.spec.ts` — reglas de acceso a archivos: regla dura de PDFs de ISO, visibilidad por tipo, visibilidad previa a eliminar y la validación de descarga con su excepción del visor.
 - `usuario/usuarios.service.spec.ts` — respuestas mínimas de los endpoints, eliminación (409 con historial, no a uno mismo), desactivación/reactivación y auditoría.
 - `etiquetas/` — vigencia del QR (`qr-vigencia.spec.ts`), trabajos de impresión (solo el creador ve su trabajo), vista previa, estado del agente y cálculo de tara.

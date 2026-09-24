@@ -98,6 +98,11 @@ loads the mirror row with `permisos` + `accesosIndicador` + `accesoIso`, and att
   they have labels, pedidos or files). Every deactivate/reactivate/delete/permission change writes a
   `RegistroAuditoria` row (no foreign keys, names copied, so it survives deleting either user); read it with
   `GET /usuarios/auditoria` (admin only). A failure to write it never blocks the action itself.
+- **Second factor (TOTP).** `SupabaseAuthGuard` also calls `evaluarMfa` (`src/common/auth/mfa.ts`): if `getUser().factors`
+  has a *verified* factor, the JWT's `aal` claim must be `aal2`, else 403 `code: 'MFA_REQUERIDO'` — enforcement is here,
+  not just in the frontend, otherwise a password-only session could call the API directly. `EXIGIR_MFA_ADMIN=true` also
+  makes admins without a factor get 403 `MFA_ENROLAR` everywhere except `GET /usuarios/me`. Default is off (optional);
+  turn it on only after every admin has enrolled. The lost-phone recovery is removing the factor in the Supabase dashboard.
 - **Permission coverage test.** `src/common/guards/cobertura-permisos.spec.ts` reads the Nest metadata of
   every controller and fails if a route has no session guard, no restricting guard, a `PermisosGuard`
   without a valid `@RequierePermiso`, or a write route gated only by `puedeVer`. **A new controller must be

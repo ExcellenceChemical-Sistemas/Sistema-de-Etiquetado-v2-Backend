@@ -8,6 +8,7 @@ import {
 } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { supabaseAdmin } from '../../infrastructure/supabase/supabase-admin.client';
+import { evaluarMfa, leerAal } from '../auth/mfa';
 
 @Injectable()
 export class SupabaseAuthGuard implements CanActivate {
@@ -50,6 +51,35 @@ export class SupabaseAuthGuard implements CanActivate {
         error: 'Forbidden',
         message: 'Tu cuenta está desactivada. Contactá a un administrador.',
         code: 'CUENTA_DESACTIVADA',
+      });
+    }
+
+    // Segundo factor: la contraseña sola (sesión aal1) no alcanza si la cuenta lo
+    // tiene activado. Va después de validar la cuenta para no dar pistas de
+    // estados a quien no está autenticado.
+    const mfa = evaluarMfa({
+      aal: leerAal(token),
+      factors: data.user.factors,
+      esAdmin: usuario.esAdmin,
+      esAdminKpis: usuario.esAdminKpis,
+      exigirAdmin: process.env.EXIGIR_MFA_ADMIN === 'true',
+    });
+    if (mfa === 'MFA_REQUERIDO') {
+      throw new ForbiddenException({
+        statusCode: 403,
+        error: 'Forbidden',
+        message: 'Falta verificar el código de tu app autenticadora.',
+        code: 'MFA_REQUERIDO',
+      });
+    }
+    // Un administrador que aún no lo configuró solo puede leer su propio perfil,
+    // lo justo para que el frontend cargue y lo lleve a activarlo en Mi cuenta.
+    if (mfa === 'MFA_ENROLAR' && !(request.method === 'GET' && /\/usuarios\/me\/?$/.test(request.path ?? ''))) {
+      throw new ForbiddenException({
+        statusCode: 403,
+        error: 'Forbidden',
+        message: 'Los administradores deben activar la verificación en dos pasos en Mi cuenta.',
+        code: 'MFA_ENROLAR',
       });
     }
 

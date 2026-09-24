@@ -17,7 +17,7 @@ El código y el lenguaje de dominio están en español; los identificadores, com
 - **Supabase** (`@supabase/supabase-js`) como proveedor de autenticación (`auth.users`) y de almacenamiento (3 buckets, ver abajo)
 - `@nestjs/schedule` para la limpieza programada de trabajos de impresión
 - `@nestjs/throttler` para rate limiting (100 peticiones/IP/minuto, global)
-- `class-validator` / `class-transformer` (`ValidationPipe` global) en la mayoría de los módulos; el módulo `usuario` valida con **zod**
+- `class-validator` / `class-transformer` (`ValidationPipe` global) en la mayoría de los módulos; el módulo `usuario` valida con **zod** (`ZodExceptionFilter`, global, convierte un cuerpo inválido en 400 con el motivo en vez de 500; la contraseña inicial exige 10+ caracteres con letras y números — `passwordNuevaSchema`, igual que el frontend)
 
 Prefijo global de rutas: **`/api`**.
 

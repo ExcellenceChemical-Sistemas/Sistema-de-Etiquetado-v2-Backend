@@ -1,6 +1,7 @@
 // app.module.ts
 import { Module } from '@nestjs/common';
-import { APP_GUARD } from '@nestjs/core';
+import { APP_FILTER, APP_GUARD } from '@nestjs/core';
+import { ZodExceptionFilter } from './common/filters/zod-exception.filter';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { ScheduleModule } from '@nestjs/schedule';
 import { AppController } from './app.controller';
@@ -43,6 +44,11 @@ import { PedidosModule } from './pedidos/pedidos.module';
     {
       provide: APP_GUARD,
       useClass: ThrottlerGuard,
+    },
+    // Un cuerpo que no cumple el esquema Zod responde 400 con el motivo, no 500.
+    {
+      provide: APP_FILTER,
+      useClass: ZodExceptionFilter,
     },
   ],
 })

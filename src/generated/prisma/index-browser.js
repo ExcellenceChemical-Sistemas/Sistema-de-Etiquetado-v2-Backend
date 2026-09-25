@@ -164,6 +164,7 @@ exports.Prisma.ProductoScalarFieldEnum = {
   frasesH: 'frasesH',
   frasesP: 'frasesP',
   fichaSeguridadUrl: 'fichaSeguridadUrl',
+  fichaTecnicaUrl: 'fichaTecnicaUrl',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };

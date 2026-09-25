@@ -108,6 +108,8 @@ model Producto {
   // Path del objeto en el bucket, ej: "ficha-seguridad/producto-12/1234-ficha.pdf".
   // Opcional: un producto se puede registrar sin ficha y adjuntarla despues.
   fichaSeguridadUrl  String?
+  // Idem, ej: "ficha-tecnica/producto-12/1234-ficha.pdf". Opcional.
+  fichaTecnicaUrl    String?
   lotes              Lote[]
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt

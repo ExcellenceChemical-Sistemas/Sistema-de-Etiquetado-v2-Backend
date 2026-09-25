@@ -98,6 +98,32 @@ export class SupabaseStorageService {
     }
   }
 
+  // ── Ficha técnica de producto ────────────────────────────
+  // Mismo bucket, prefijo "ficha-tecnica/".
+  async uploadFichaTecnica(productoId: number, file: Express.Multer.File): Promise<string> {
+    const nombreSaneado = this.sanearNombreArchivo(file.originalname);
+    const path = `ficha-tecnica/producto-${productoId}/${Date.now()}-${nombreSaneado}`;
+
+    const { error } = await this.client.storage
+      .from(this.bucket)
+      .upload(path, file.buffer, {
+        contentType: file.mimetype,
+        upsert: false,
+      });
+
+    if (error) {
+      throw new InternalServerErrorException(`Error subiendo ficha técnica: ${error.message}`);
+    }
+    return path;
+  }
+
+  async deleteFichaTecnica(path: string): Promise<void> {
+    const { error } = await this.client.storage.from(this.bucket).remove([path]);
+    if (error) {
+      throw new InternalServerErrorException(`Error eliminando ficha técnica: ${error.message}`);
+    }
+  }
+
   // ── Trabajos de impresión (existente) ────────────────────
   async uploadTrabajoImpresion(imagen: Buffer): Promise<string> {
     const path = `${Date.now()}-${randomUUID()}.png`;

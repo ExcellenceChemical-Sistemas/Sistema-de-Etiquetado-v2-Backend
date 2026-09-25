@@ -99,6 +99,23 @@ export class ProductosService {
     });
   }
 
+  async setFichaTecnicaUrl(id: number, fichaTecnicaUrl: string) {
+    await this.findOne(id);
+    return this.prisma.producto.update({
+      where: { id },
+      data: { fichaTecnicaUrl },
+    });
+  }
+
+  async removeFichaTecnicaUrl(id: number) {
+    const producto = await this.findOne(id);
+    if (!producto.fichaTecnicaUrl) return producto;
+    return this.prisma.producto.update({
+      where: { id },
+      data: { fichaTecnicaUrl: null },
+    });
+  }
+
   private handleDuplicado(error: unknown): never {
     if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
       throw new ConflictException('Ya existe un producto con ese nombre');

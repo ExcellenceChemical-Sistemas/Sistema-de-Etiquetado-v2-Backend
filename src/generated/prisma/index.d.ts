@@ -6160,6 +6160,7 @@ export namespace Prisma {
     densidad: number | null
     palabraAdvertencia: string | null
     fichaSeguridadUrl: string | null
+    fichaTecnicaUrl: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -6174,6 +6175,7 @@ export namespace Prisma {
     densidad: number | null
     palabraAdvertencia: string | null
     fichaSeguridadUrl: string | null
+    fichaTecnicaUrl: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -6191,6 +6193,7 @@ export namespace Prisma {
     frasesH: number
     frasesP: number
     fichaSeguridadUrl: number
+    fichaTecnicaUrl: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -6223,6 +6226,7 @@ export namespace Prisma {
     densidad?: true
     palabraAdvertencia?: true
     fichaSeguridadUrl?: true
+    fichaTecnicaUrl?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -6237,6 +6241,7 @@ export namespace Prisma {
     densidad?: true
     palabraAdvertencia?: true
     fichaSeguridadUrl?: true
+    fichaTecnicaUrl?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -6254,6 +6259,7 @@ export namespace Prisma {
     frasesH?: true
     frasesP?: true
     fichaSeguridadUrl?: true
+    fichaTecnicaUrl?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -6358,6 +6364,7 @@ export namespace Prisma {
     frasesH: string[]
     frasesP: string[]
     fichaSeguridadUrl: string | null
+    fichaTecnicaUrl: string | null
     createdAt: Date
     updatedAt: Date
     _count: ProductoCountAggregateOutputType | null
@@ -6394,6 +6401,7 @@ export namespace Prisma {
     frasesH?: boolean
     frasesP?: boolean
     fichaSeguridadUrl?: boolean
+    fichaTecnicaUrl?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     lotes?: boolean | Producto$lotesArgs<ExtArgs>
@@ -6413,6 +6421,7 @@ export namespace Prisma {
     frasesH?: boolean
     frasesP?: boolean
     fichaSeguridadUrl?: boolean
+    fichaTecnicaUrl?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["producto"]>
@@ -6430,6 +6439,7 @@ export namespace Prisma {
     frasesH?: boolean
     frasesP?: boolean
     fichaSeguridadUrl?: boolean
+    fichaTecnicaUrl?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["producto"]>
@@ -6447,11 +6457,12 @@ export namespace Prisma {
     frasesH?: boolean
     frasesP?: boolean
     fichaSeguridadUrl?: boolean
+    fichaTecnicaUrl?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type ProductoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nombre" | "nombreNormalizado" | "nfpaSalud" | "nfpaInflamabilidad" | "nfpaReactividad" | "densidad" | "pictogramasGhs" | "palabraAdvertencia" | "frasesH" | "frasesP" | "fichaSeguridadUrl" | "createdAt" | "updatedAt", ExtArgs["result"]["producto"]>
+  export type ProductoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nombre" | "nombreNormalizado" | "nfpaSalud" | "nfpaInflamabilidad" | "nfpaReactividad" | "densidad" | "pictogramasGhs" | "palabraAdvertencia" | "frasesH" | "frasesP" | "fichaSeguridadUrl" | "fichaTecnicaUrl" | "createdAt" | "updatedAt", ExtArgs["result"]["producto"]>
   export type ProductoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     lotes?: boolean | Producto$lotesArgs<ExtArgs>
     _count?: boolean | ProductoCountOutputTypeDefaultArgs<ExtArgs>
@@ -6477,6 +6488,7 @@ export namespace Prisma {
       frasesH: string[]
       frasesP: string[]
       fichaSeguridadUrl: string | null
+      fichaTecnicaUrl: string | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["producto"]>
@@ -6915,6 +6927,7 @@ export namespace Prisma {
     readonly frasesH: FieldRef<"Producto", 'String[]'>
     readonly frasesP: FieldRef<"Producto", 'String[]'>
     readonly fichaSeguridadUrl: FieldRef<"Producto", 'String'>
+    readonly fichaTecnicaUrl: FieldRef<"Producto", 'String'>
     readonly createdAt: FieldRef<"Producto", 'DateTime'>
     readonly updatedAt: FieldRef<"Producto", 'DateTime'>
   }
@@ -19276,6 +19289,7 @@ export namespace Prisma {
     frasesH: 'frasesH',
     frasesP: 'frasesP',
     fichaSeguridadUrl: 'fichaSeguridadUrl',
+    fichaTecnicaUrl: 'fichaTecnicaUrl',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -19899,6 +19913,7 @@ export namespace Prisma {
     frasesH?: StringNullableListFilter<"Producto">
     frasesP?: StringNullableListFilter<"Producto">
     fichaSeguridadUrl?: StringNullableFilter<"Producto"> | string | null
+    fichaTecnicaUrl?: StringNullableFilter<"Producto"> | string | null
     createdAt?: DateTimeFilter<"Producto"> | Date | string
     updatedAt?: DateTimeFilter<"Producto"> | Date | string
     lotes?: LoteListRelationFilter
@@ -19917,6 +19932,7 @@ export namespace Prisma {
     frasesH?: SortOrder
     frasesP?: SortOrder
     fichaSeguridadUrl?: SortOrderInput | SortOrder
+    fichaTecnicaUrl?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     lotes?: LoteOrderByRelationAggregateInput
@@ -19938,6 +19954,7 @@ export namespace Prisma {
     frasesH?: StringNullableListFilter<"Producto">
     frasesP?: StringNullableListFilter<"Producto">
     fichaSeguridadUrl?: StringNullableFilter<"Producto"> | string | null
+    fichaTecnicaUrl?: StringNullableFilter<"Producto"> | string | null
     createdAt?: DateTimeFilter<"Producto"> | Date | string
     updatedAt?: DateTimeFilter<"Producto"> | Date | string
     lotes?: LoteListRelationFilter
@@ -19956,6 +19973,7 @@ export namespace Prisma {
     frasesH?: SortOrder
     frasesP?: SortOrder
     fichaSeguridadUrl?: SortOrderInput | SortOrder
+    fichaTecnicaUrl?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: ProductoCountOrderByAggregateInput
@@ -19981,6 +19999,7 @@ export namespace Prisma {
     frasesH?: StringNullableListFilter<"Producto">
     frasesP?: StringNullableListFilter<"Producto">
     fichaSeguridadUrl?: StringNullableWithAggregatesFilter<"Producto"> | string | null
+    fichaTecnicaUrl?: StringNullableWithAggregatesFilter<"Producto"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Producto"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Producto"> | Date | string
   }
@@ -21095,6 +21114,7 @@ export namespace Prisma {
     frasesH?: ProductoCreatefrasesHInput | string[]
     frasesP?: ProductoCreatefrasesPInput | string[]
     fichaSeguridadUrl?: string | null
+    fichaTecnicaUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     lotes?: LoteCreateNestedManyWithoutProductoInput
@@ -21113,6 +21133,7 @@ export namespace Prisma {
     frasesH?: ProductoCreatefrasesHInput | string[]
     frasesP?: ProductoCreatefrasesPInput | string[]
     fichaSeguridadUrl?: string | null
+    fichaTecnicaUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     lotes?: LoteUncheckedCreateNestedManyWithoutProductoInput
@@ -21130,6 +21151,7 @@ export namespace Prisma {
     frasesH?: ProductoUpdatefrasesHInput | string[]
     frasesP?: ProductoUpdatefrasesPInput | string[]
     fichaSeguridadUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    fichaTecnicaUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lotes?: LoteUpdateManyWithoutProductoNestedInput
@@ -21148,6 +21170,7 @@ export namespace Prisma {
     frasesH?: ProductoUpdatefrasesHInput | string[]
     frasesP?: ProductoUpdatefrasesPInput | string[]
     fichaSeguridadUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    fichaTecnicaUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lotes?: LoteUncheckedUpdateManyWithoutProductoNestedInput
@@ -21166,6 +21189,7 @@ export namespace Prisma {
     frasesH?: ProductoCreatefrasesHInput | string[]
     frasesP?: ProductoCreatefrasesPInput | string[]
     fichaSeguridadUrl?: string | null
+    fichaTecnicaUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -21182,6 +21206,7 @@ export namespace Prisma {
     frasesH?: ProductoUpdatefrasesHInput | string[]
     frasesP?: ProductoUpdatefrasesPInput | string[]
     fichaSeguridadUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    fichaTecnicaUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -21199,6 +21224,7 @@ export namespace Prisma {
     frasesH?: ProductoUpdatefrasesHInput | string[]
     frasesP?: ProductoUpdatefrasesPInput | string[]
     fichaSeguridadUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    fichaTecnicaUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -22552,6 +22578,7 @@ export namespace Prisma {
     frasesH?: SortOrder
     frasesP?: SortOrder
     fichaSeguridadUrl?: SortOrder
+    fichaTecnicaUrl?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -22574,6 +22601,7 @@ export namespace Prisma {
     densidad?: SortOrder
     palabraAdvertencia?: SortOrder
     fichaSeguridadUrl?: SortOrder
+    fichaTecnicaUrl?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -22588,6 +22616,7 @@ export namespace Prisma {
     densidad?: SortOrder
     palabraAdvertencia?: SortOrder
     fichaSeguridadUrl?: SortOrder
+    fichaTecnicaUrl?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -25577,6 +25606,7 @@ export namespace Prisma {
     frasesH?: ProductoCreatefrasesHInput | string[]
     frasesP?: ProductoCreatefrasesPInput | string[]
     fichaSeguridadUrl?: string | null
+    fichaTecnicaUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -25594,6 +25624,7 @@ export namespace Prisma {
     frasesH?: ProductoCreatefrasesHInput | string[]
     frasesP?: ProductoCreatefrasesPInput | string[]
     fichaSeguridadUrl?: string | null
+    fichaTecnicaUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -25701,6 +25732,7 @@ export namespace Prisma {
     frasesH?: ProductoUpdatefrasesHInput | string[]
     frasesP?: ProductoUpdatefrasesPInput | string[]
     fichaSeguridadUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    fichaTecnicaUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -25718,6 +25750,7 @@ export namespace Prisma {
     frasesH?: ProductoUpdatefrasesHInput | string[]
     frasesP?: ProductoUpdatefrasesPInput | string[]
     fichaSeguridadUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    fichaTecnicaUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

@@ -70,6 +70,11 @@ export class ProductosController {
         .deleteFichaSeguridad(producto.fichaSeguridadUrl)
         .catch(() => undefined);
     }
+    if (producto.fichaTecnicaUrl) {
+      await this.storageService
+        .deleteFichaTecnica(producto.fichaTecnicaUrl)
+        .catch(() => undefined);
+    }
     return eliminado;
   }
 
@@ -143,5 +148,54 @@ export class ProductosController {
       await this.storageService.deleteFichaSeguridad(producto.fichaSeguridadUrl);
     }
     return this.productosService.removeFichaSeguridadUrl(id);
+  }
+
+  // --- Ficha técnica: mismo criterio de permisos que la de seguridad ---
+
+  @Post(':id/ficha-tecnica')
+  @RequierePermiso('PRODUCTOS', 'puedeEditar') // subir/reemplazar ficha = editar el producto
+  @UseInterceptors(FileInterceptor('file', { limits: { fileSize: 10 * 1024 * 1024 } }))
+  async uploadFichaTecnica(
+    @Param('id', ParseIntPipe) id: number,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    if (!file) throw new BadRequestException('No se recibio ningun archivo');
+    if (file.mimetype !== 'application/pdf') throw new BadRequestException('Solo se acepta PDF');
+    exigirFirma(file);
+
+    const producto = await this.productosService.findOne(id);
+
+    const path = await this.storageService.uploadFichaTecnica(id, file);
+    const actualizado = await this.productosService.setFichaTecnicaUrl(id, path);
+
+    // La anterior se borra al final: si algo falla antes, el producto
+    // sigue apuntando a un archivo que existe.
+    if (producto.fichaTecnicaUrl) {
+      await this.storageService
+        .deleteFichaTecnica(producto.fichaTecnicaUrl)
+        .catch(() => undefined);
+    }
+    return actualizado;
+  }
+
+  @Get(':id/ficha-tecnica')
+  @RequierePermiso('PRODUCTOS', 'puedeVer')
+  async getFichaTecnicaUrl(@Param('id', ParseIntPipe) id: number) {
+    const producto = await this.productosService.findOne(id);
+    if (!producto.fichaTecnicaUrl) {
+      throw new NotFoundException('Este producto no tiene ficha técnica cargada');
+    }
+    const url = await this.storageService.getSignedUrl(producto.fichaTecnicaUrl);
+    return { url };
+  }
+
+  @Delete(':id/ficha-tecnica')
+  @RequierePermiso('PRODUCTOS', 'puedeEliminar')
+  async deleteFichaTecnica(@Param('id', ParseIntPipe) id: number) {
+    const producto = await this.productosService.findOne(id);
+    if (producto.fichaTecnicaUrl) {
+      await this.storageService.deleteFichaTecnica(producto.fichaTecnicaUrl);
+    }
+    return this.productosService.removeFichaTecnicaUrl(id);
   }
 }

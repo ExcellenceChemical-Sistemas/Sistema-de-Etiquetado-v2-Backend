@@ -2,6 +2,7 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { SupabaseStorageService } from '../storage/supabase-storage.service';
+import { exigirFirma } from '../common/firma-archivo';
 import { TipoArchivoDocumento } from '../generated/prisma';
 
 function inferirTipoArchivo(mimetype: string): TipoArchivoDocumento {
@@ -35,6 +36,7 @@ export class ArchivosService {
     if (!carpeta) throw new NotFoundException('Carpeta no encontrada');
 
     const tipo = inferirTipoArchivo(file.mimetype);
+    exigirFirma(file);
     const storagePath = await this.storage.uploadDocumento(carpetaId, carpeta.modulo, file);
 
     return this.prisma.archivo.create({

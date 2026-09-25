@@ -23,6 +23,7 @@ import { UpdateProductoDto } from './dto/update-producto.dto';
 import { SupabaseAuthGuard } from '../common/guards/supabase-auth.guard';
 import { PermisosGuard } from '../common/guards/permisos.guard';
 import { RequierePermiso } from '../common/decorators/requiere-permiso.decorator';
+import { exigirFirma } from '../common/firma-archivo';
 import { SupabaseStorageService } from '../storage/supabase-storage.service';
 
 @Controller('productos')
@@ -80,6 +81,7 @@ export class ProductosController {
   async analizarFicha(@UploadedFile() file: Express.Multer.File) {
     if (!file) throw new BadRequestException('No se recibio ningun archivo');
     if (file.mimetype !== 'application/pdf') throw new BadRequestException('Solo se acepta PDF');
+    exigirFirma(file);
     let texto: string;
     try {
       texto = (await pdfParse(file.buffer)).text;
@@ -105,6 +107,7 @@ export class ProductosController {
   ) {
     if (!file) throw new BadRequestException('No se recibio ningun archivo');
     if (file.mimetype !== 'application/pdf') throw new BadRequestException('Solo se acepta PDF');
+    exigirFirma(file);
 
     const producto = await this.productosService.findOne(id);
 

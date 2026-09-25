@@ -10,6 +10,7 @@ import { SupabaseStorageService } from '../storage/supabase-storage.service';
 import { SupabaseAuthGuard } from '../common/guards/supabase-auth.guard';
 import { PermisosGuard } from '../common/guards/permisos.guard';
 import { RequierePermiso } from '../common/decorators/requiere-permiso.decorator';
+import { exigirFirma } from '../common/firma-archivo';
 
 @Controller('lotes')
 @UseGuards(SupabaseAuthGuard, PermisosGuard)
@@ -60,6 +61,7 @@ export class LotesController {
   async uploadCoa(@Param('id', ParseIntPipe) id: number, @UploadedFile() file: Express.Multer.File) {
     if (!file) throw new BadRequestException('No se recibió ningún archivo');
     if (file.mimetype !== 'application/pdf') throw new BadRequestException('Solo se acepta PDF');
+    exigirFirma(file);
 
     const lote = await this.lotesService.findOne(id);
     if (lote.coaUrl) await this.storageService.deleteCoa(lote.coaUrl);

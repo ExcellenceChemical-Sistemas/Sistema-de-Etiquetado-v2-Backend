@@ -14,6 +14,7 @@ import { ActualizarPermisosDto } from './dto/actualizar-permisos.dto';
 import { ActualizarPerfilDto } from './dto/actualizar-perfil.dto';
 import { ActualizarAccesosKpisIsoDto } from './dto/actualizar-accesos-kpis-iso.dto';
 import { ActualizarRolKpisDto } from './dto/actualizar-rol-kpis.dto';
+import { coincideFirma } from '../common/firma-archivo';
 
 /**
  * Shape que devuelven los dos endpoints del panel de KPIs/ISO (el GET de lectura
@@ -374,6 +375,7 @@ export class UsuariosService {
   async subirAvatar(usuarioId: number, file: { mimetype: string; size: number; buffer: Buffer }) {
     const ext = AVATAR_EXTENSIONES[file.mimetype];
     if (!ext) throw new BadRequestException('Formato no permitido. Usá PNG, JPEG o WEBP.');
+    if (!coincideFirma(file.mimetype, file.buffer)) throw new BadRequestException('El contenido no es una imagen válida.');
     if (file.size > AVATAR_MAX_BYTES) throw new BadRequestException('La imagen no puede superar 2 MB.');
 
     const bucket = supabaseAdmin.storage.from(AVATAR_BUCKET);

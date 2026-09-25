@@ -234,11 +234,28 @@ describe('auditoría', () => {
 });
 
 describe('subirAvatar', () => {
-  const imagen = (mimetype = 'image/png', size = 1000) => ({ mimetype, size, buffer: Buffer.alloc(4) });
+  // Cabeceras reales de cada formato: el servicio comprueba que el contenido coincida con el tipo.
+  const CABECERAS: Record<string, Buffer> = {
+    'image/png': Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]),
+    'image/jpeg': Buffer.from([0xff, 0xd8, 0xff, 0xe0]),
+    'image/webp': Buffer.concat([Buffer.from('RIFF'), Buffer.alloc(4), Buffer.from('WEBP')]),
+  };
+  const imagen = (mimetype = 'image/png', size = 1000) => ({
+    mimetype,
+    size,
+    buffer: CABECERAS[mimetype] ?? Buffer.alloc(4),
+  });
 
   beforeEach(() => {
     mockUpload.mockReset().mockResolvedValue({ error: null });
     mockRemove.mockReset().mockResolvedValue({ error: null });
+  });
+
+  it('rechaza una imagen cuyo contenido no coincide con su tipo', async () => {
+    const { servicio } = crearServicio();
+    await expect(
+      servicio.subirAvatar(1, { mimetype: 'image/png', size: 100, buffer: Buffer.from('<html></html>') }),
+    ).rejects.toThrow('no es una imagen válida');
   });
 
   it('sube a <id>.<ext> pisando la anterior y guarda la URL con cache-busting', async () => {

@@ -2,6 +2,7 @@ import 'dotenv/config';
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import type { NestExpressApplication } from '@nestjs/platform-express';
+import { json } from 'express';
 import helmet from 'helmet';
 import { AppModule } from './app.module';
 
@@ -18,8 +19,13 @@ async function bootstrap() {
   // por fetch/CORS, así que se permite el uso entre orígenes de sus recursos.
   app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
 
-  // La imagen de la vista previa (PNG en base64) que devuelve el agente pesa más que el límite por defecto.
-  app.useBodyParser('json', { limit: '10mb' });
+  // Solo la imagen de la vista previa (PNG en base64) que devuelve el agente pesa más que el
+  // límite por defecto; ese cuerpo grande se admite únicamente en esa ruta. El resto de la
+  // API queda con el límite normal (100 kb), porque el límite alto no debe estar disponible
+  // para cualquiera que pueda llegar a cualquier endpoint.
+  app.use(/^\/api\/etiquetas\/vista-previa\/[^/]+\/imagen\/?$/, json({ limit: '10mb' }));
+  // Va después de la ruta grande: el primer parser que lee el cuerpo es el que manda.
+  app.useBodyParser('json', { limit: '100kb' });
 
   app.enableCors({
     origin: ['http://localhost:3000', 'http://localhost:3001', process.env.FRONTEND_URL].filter((o): o is string => !!o),

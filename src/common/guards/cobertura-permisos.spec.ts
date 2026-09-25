@@ -23,6 +23,7 @@ import { EtiquetasController } from '../../etiquetas/etiquetas.controller';
 import { FabricantesController } from '../../fabricantes/fabricantes.controller';
 import { LotesController } from '../../lotes/lotes.controller';
 import { PedidosController } from '../../pedidos/pedidos.controller';
+import { PedidosPublicosController } from '../../pedidos/pedidos-publicos.controller';
 import { PlantillasController } from '../../plantillas/plantillas.controller';
 import { ProductosController } from '../../productos/productos.controller';
 import { UsuariosController } from '../../usuario/usuarios.controller';
@@ -46,6 +47,7 @@ const CONTROLLERS: any[] = [
   FabricantesController,
   LotesController,
   PedidosController,
+  PedidosPublicosController,
   PlantillasController,
   ProductosController,
   UsuariosController,
@@ -58,6 +60,7 @@ const PUBLICAS = new Set([
   'GET /publico/etiquetas/:token', // página del QR: la abre quien escanea la etiqueta
   'GET /publico/etiquetas/:token/coa',
   'GET /publico/etiquetas/:token/fds',
+  'GET /publico/pedidos/:token', // seguimiento del pedido: lo abre el cliente con el enlace que le manda la empresa
 ]);
 
 /**

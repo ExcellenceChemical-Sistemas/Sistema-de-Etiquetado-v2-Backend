@@ -518,8 +518,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 7.9.1
-   * Query Engine version: e922089b7d7502aff4249d5da3420f6fa55fc6ad
+   * Prisma Client JS version: 7.10.0
+   * Query Engine version: 0edf323efd1d98336f3f0a68684b56f689b900d3
    */
   export type PrismaVersion = {
     client: string
@@ -12209,6 +12209,7 @@ export namespace Prisma {
     id: number | null
     clienteId: number | null
     numeroProforma: string | null
+    tokenSeguimiento: string | null
     recibidoEn: Date | null
     inicioPreparacionEn: Date | null
     preparadoEn: Date | null
@@ -12226,6 +12227,7 @@ export namespace Prisma {
     id: number | null
     clienteId: number | null
     numeroProforma: string | null
+    tokenSeguimiento: string | null
     recibidoEn: Date | null
     inicioPreparacionEn: Date | null
     preparadoEn: Date | null
@@ -12243,6 +12245,7 @@ export namespace Prisma {
     id: number
     clienteId: number
     numeroProforma: number
+    tokenSeguimiento: number
     recibidoEn: number
     inicioPreparacionEn: number
     preparadoEn: number
@@ -12276,6 +12279,7 @@ export namespace Prisma {
     id?: true
     clienteId?: true
     numeroProforma?: true
+    tokenSeguimiento?: true
     recibidoEn?: true
     inicioPreparacionEn?: true
     preparadoEn?: true
@@ -12293,6 +12297,7 @@ export namespace Prisma {
     id?: true
     clienteId?: true
     numeroProforma?: true
+    tokenSeguimiento?: true
     recibidoEn?: true
     inicioPreparacionEn?: true
     preparadoEn?: true
@@ -12310,6 +12315,7 @@ export namespace Prisma {
     id?: true
     clienteId?: true
     numeroProforma?: true
+    tokenSeguimiento?: true
     recibidoEn?: true
     inicioPreparacionEn?: true
     preparadoEn?: true
@@ -12414,6 +12420,7 @@ export namespace Prisma {
     id: number
     clienteId: number
     numeroProforma: string
+    tokenSeguimiento: string
     recibidoEn: Date
     inicioPreparacionEn: Date | null
     preparadoEn: Date | null
@@ -12450,6 +12457,7 @@ export namespace Prisma {
     id?: boolean
     clienteId?: boolean
     numeroProforma?: boolean
+    tokenSeguimiento?: boolean
     recibidoEn?: boolean
     inicioPreparacionEn?: boolean
     preparadoEn?: boolean
@@ -12470,6 +12478,7 @@ export namespace Prisma {
     id?: boolean
     clienteId?: boolean
     numeroProforma?: boolean
+    tokenSeguimiento?: boolean
     recibidoEn?: boolean
     inicioPreparacionEn?: boolean
     preparadoEn?: boolean
@@ -12490,6 +12499,7 @@ export namespace Prisma {
     id?: boolean
     clienteId?: boolean
     numeroProforma?: boolean
+    tokenSeguimiento?: boolean
     recibidoEn?: boolean
     inicioPreparacionEn?: boolean
     preparadoEn?: boolean
@@ -12510,6 +12520,7 @@ export namespace Prisma {
     id?: boolean
     clienteId?: boolean
     numeroProforma?: boolean
+    tokenSeguimiento?: boolean
     recibidoEn?: boolean
     inicioPreparacionEn?: boolean
     preparadoEn?: boolean
@@ -12523,7 +12534,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type PedidoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "clienteId" | "numeroProforma" | "recibidoEn" | "inicioPreparacionEn" | "preparadoEn" | "salioEn" | "entregadoEn" | "categoriaObservacion" | "detalleObservacion" | "creadoPorId" | "ultimoEditadoPorId" | "createdAt" | "updatedAt", ExtArgs["result"]["pedido"]>
+  export type PedidoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "clienteId" | "numeroProforma" | "tokenSeguimiento" | "recibidoEn" | "inicioPreparacionEn" | "preparadoEn" | "salioEn" | "entregadoEn" | "categoriaObservacion" | "detalleObservacion" | "creadoPorId" | "ultimoEditadoPorId" | "createdAt" | "updatedAt", ExtArgs["result"]["pedido"]>
   export type PedidoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     cliente?: boolean | ClienteDefaultArgs<ExtArgs>
     creadoPor?: boolean | UsuarioDefaultArgs<ExtArgs>
@@ -12551,6 +12562,7 @@ export namespace Prisma {
       id: number
       clienteId: number
       numeroProforma: string
+      tokenSeguimiento: string
       recibidoEn: Date
       inicioPreparacionEn: Date | null
       preparadoEn: Date | null
@@ -12991,6 +13003,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Pedido", 'Int'>
     readonly clienteId: FieldRef<"Pedido", 'Int'>
     readonly numeroProforma: FieldRef<"Pedido", 'String'>
+    readonly tokenSeguimiento: FieldRef<"Pedido", 'String'>
     readonly recibidoEn: FieldRef<"Pedido", 'DateTime'>
     readonly inicioPreparacionEn: FieldRef<"Pedido", 'DateTime'>
     readonly preparadoEn: FieldRef<"Pedido", 'DateTime'>
@@ -19304,6 +19317,7 @@ export namespace Prisma {
     id: 'id',
     clienteId: 'clienteId',
     numeroProforma: 'numeroProforma',
+    tokenSeguimiento: 'tokenSeguimiento',
     recibidoEn: 'recibidoEn',
     inicioPreparacionEn: 'inicioPreparacionEn',
     preparadoEn: 'preparadoEn',
@@ -20302,6 +20316,7 @@ export namespace Prisma {
     id?: IntFilter<"Pedido"> | number
     clienteId?: IntFilter<"Pedido"> | number
     numeroProforma?: StringFilter<"Pedido"> | string
+    tokenSeguimiento?: StringFilter<"Pedido"> | string
     recibidoEn?: DateTimeFilter<"Pedido"> | Date | string
     inicioPreparacionEn?: DateTimeNullableFilter<"Pedido"> | Date | string | null
     preparadoEn?: DateTimeNullableFilter<"Pedido"> | Date | string | null
@@ -20322,6 +20337,7 @@ export namespace Prisma {
     id?: SortOrder
     clienteId?: SortOrder
     numeroProforma?: SortOrder
+    tokenSeguimiento?: SortOrder
     recibidoEn?: SortOrder
     inicioPreparacionEn?: SortOrderInput | SortOrder
     preparadoEn?: SortOrderInput | SortOrder
@@ -20340,6 +20356,7 @@ export namespace Prisma {
 
   export type PedidoWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    tokenSeguimiento?: string
     AND?: PedidoWhereInput | PedidoWhereInput[]
     OR?: PedidoWhereInput[]
     NOT?: PedidoWhereInput | PedidoWhereInput[]
@@ -20359,12 +20376,13 @@ export namespace Prisma {
     cliente?: XOR<ClienteScalarRelationFilter, ClienteWhereInput>
     creadoPor?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
     ultimoEditadoPor?: XOR<UsuarioNullableScalarRelationFilter, UsuarioWhereInput> | null
-  }, "id">
+  }, "id" | "tokenSeguimiento">
 
   export type PedidoOrderByWithAggregationInput = {
     id?: SortOrder
     clienteId?: SortOrder
     numeroProforma?: SortOrder
+    tokenSeguimiento?: SortOrder
     recibidoEn?: SortOrder
     inicioPreparacionEn?: SortOrderInput | SortOrder
     preparadoEn?: SortOrderInput | SortOrder
@@ -20390,6 +20408,7 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"Pedido"> | number
     clienteId?: IntWithAggregatesFilter<"Pedido"> | number
     numeroProforma?: StringWithAggregatesFilter<"Pedido"> | string
+    tokenSeguimiento?: StringWithAggregatesFilter<"Pedido"> | string
     recibidoEn?: DateTimeWithAggregatesFilter<"Pedido"> | Date | string
     inicioPreparacionEn?: DateTimeNullableWithAggregatesFilter<"Pedido"> | Date | string | null
     preparadoEn?: DateTimeNullableWithAggregatesFilter<"Pedido"> | Date | string | null
@@ -21523,6 +21542,7 @@ export namespace Prisma {
 
   export type PedidoCreateInput = {
     numeroProforma: string
+    tokenSeguimiento?: string
     recibidoEn?: Date | string
     inicioPreparacionEn?: Date | string | null
     preparadoEn?: Date | string | null
@@ -21541,6 +21561,7 @@ export namespace Prisma {
     id?: number
     clienteId: number
     numeroProforma: string
+    tokenSeguimiento?: string
     recibidoEn?: Date | string
     inicioPreparacionEn?: Date | string | null
     preparadoEn?: Date | string | null
@@ -21556,6 +21577,7 @@ export namespace Prisma {
 
   export type PedidoUpdateInput = {
     numeroProforma?: StringFieldUpdateOperationsInput | string
+    tokenSeguimiento?: StringFieldUpdateOperationsInput | string
     recibidoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     inicioPreparacionEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     preparadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -21574,6 +21596,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     clienteId?: IntFieldUpdateOperationsInput | number
     numeroProforma?: StringFieldUpdateOperationsInput | string
+    tokenSeguimiento?: StringFieldUpdateOperationsInput | string
     recibidoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     inicioPreparacionEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     preparadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -21591,6 +21614,7 @@ export namespace Prisma {
     id?: number
     clienteId: number
     numeroProforma: string
+    tokenSeguimiento?: string
     recibidoEn?: Date | string
     inicioPreparacionEn?: Date | string | null
     preparadoEn?: Date | string | null
@@ -21606,6 +21630,7 @@ export namespace Prisma {
 
   export type PedidoUpdateManyMutationInput = {
     numeroProforma?: StringFieldUpdateOperationsInput | string
+    tokenSeguimiento?: StringFieldUpdateOperationsInput | string
     recibidoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     inicioPreparacionEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     preparadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -21621,6 +21646,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     clienteId?: IntFieldUpdateOperationsInput | number
     numeroProforma?: StringFieldUpdateOperationsInput | string
+    tokenSeguimiento?: StringFieldUpdateOperationsInput | string
     recibidoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     inicioPreparacionEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     preparadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -22809,6 +22835,7 @@ export namespace Prisma {
     id?: SortOrder
     clienteId?: SortOrder
     numeroProforma?: SortOrder
+    tokenSeguimiento?: SortOrder
     recibidoEn?: SortOrder
     inicioPreparacionEn?: SortOrder
     preparadoEn?: SortOrder
@@ -22833,6 +22860,7 @@ export namespace Prisma {
     id?: SortOrder
     clienteId?: SortOrder
     numeroProforma?: SortOrder
+    tokenSeguimiento?: SortOrder
     recibidoEn?: SortOrder
     inicioPreparacionEn?: SortOrder
     preparadoEn?: SortOrder
@@ -22850,6 +22878,7 @@ export namespace Prisma {
     id?: SortOrder
     clienteId?: SortOrder
     numeroProforma?: SortOrder
+    tokenSeguimiento?: SortOrder
     recibidoEn?: SortOrder
     inicioPreparacionEn?: SortOrder
     preparadoEn?: SortOrder
@@ -24776,6 +24805,7 @@ export namespace Prisma {
 
   export type PedidoCreateWithoutCreadoPorInput = {
     numeroProforma: string
+    tokenSeguimiento?: string
     recibidoEn?: Date | string
     inicioPreparacionEn?: Date | string | null
     preparadoEn?: Date | string | null
@@ -24793,6 +24823,7 @@ export namespace Prisma {
     id?: number
     clienteId: number
     numeroProforma: string
+    tokenSeguimiento?: string
     recibidoEn?: Date | string
     inicioPreparacionEn?: Date | string | null
     preparadoEn?: Date | string | null
@@ -24817,6 +24848,7 @@ export namespace Prisma {
 
   export type PedidoCreateWithoutUltimoEditadoPorInput = {
     numeroProforma: string
+    tokenSeguimiento?: string
     recibidoEn?: Date | string
     inicioPreparacionEn?: Date | string | null
     preparadoEn?: Date | string | null
@@ -24834,6 +24866,7 @@ export namespace Prisma {
     id?: number
     clienteId: number
     numeroProforma: string
+    tokenSeguimiento?: string
     recibidoEn?: Date | string
     inicioPreparacionEn?: Date | string | null
     preparadoEn?: Date | string | null
@@ -25122,6 +25155,7 @@ export namespace Prisma {
     id?: IntFilter<"Pedido"> | number
     clienteId?: IntFilter<"Pedido"> | number
     numeroProforma?: StringFilter<"Pedido"> | string
+    tokenSeguimiento?: StringFilter<"Pedido"> | string
     recibidoEn?: DateTimeFilter<"Pedido"> | Date | string
     inicioPreparacionEn?: DateTimeNullableFilter<"Pedido"> | Date | string | null
     preparadoEn?: DateTimeNullableFilter<"Pedido"> | Date | string | null
@@ -25845,6 +25879,7 @@ export namespace Prisma {
 
   export type PedidoCreateWithoutClienteInput = {
     numeroProforma: string
+    tokenSeguimiento?: string
     recibidoEn?: Date | string
     inicioPreparacionEn?: Date | string | null
     preparadoEn?: Date | string | null
@@ -25861,6 +25896,7 @@ export namespace Prisma {
   export type PedidoUncheckedCreateWithoutClienteInput = {
     id?: number
     numeroProforma: string
+    tokenSeguimiento?: string
     recibidoEn?: Date | string
     inicioPreparacionEn?: Date | string | null
     preparadoEn?: Date | string | null
@@ -26725,6 +26761,7 @@ export namespace Prisma {
     id?: number
     clienteId: number
     numeroProforma: string
+    tokenSeguimiento?: string
     recibidoEn?: Date | string
     inicioPreparacionEn?: Date | string | null
     preparadoEn?: Date | string | null
@@ -26741,6 +26778,7 @@ export namespace Prisma {
     id?: number
     clienteId: number
     numeroProforma: string
+    tokenSeguimiento?: string
     recibidoEn?: Date | string
     inicioPreparacionEn?: Date | string | null
     preparadoEn?: Date | string | null
@@ -26955,6 +26993,7 @@ export namespace Prisma {
 
   export type PedidoUpdateWithoutCreadoPorInput = {
     numeroProforma?: StringFieldUpdateOperationsInput | string
+    tokenSeguimiento?: StringFieldUpdateOperationsInput | string
     recibidoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     inicioPreparacionEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     preparadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -26972,6 +27011,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     clienteId?: IntFieldUpdateOperationsInput | number
     numeroProforma?: StringFieldUpdateOperationsInput | string
+    tokenSeguimiento?: StringFieldUpdateOperationsInput | string
     recibidoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     inicioPreparacionEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     preparadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -26988,6 +27028,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     clienteId?: IntFieldUpdateOperationsInput | number
     numeroProforma?: StringFieldUpdateOperationsInput | string
+    tokenSeguimiento?: StringFieldUpdateOperationsInput | string
     recibidoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     inicioPreparacionEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     preparadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -27002,6 +27043,7 @@ export namespace Prisma {
 
   export type PedidoUpdateWithoutUltimoEditadoPorInput = {
     numeroProforma?: StringFieldUpdateOperationsInput | string
+    tokenSeguimiento?: StringFieldUpdateOperationsInput | string
     recibidoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     inicioPreparacionEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     preparadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -27019,6 +27061,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     clienteId?: IntFieldUpdateOperationsInput | number
     numeroProforma?: StringFieldUpdateOperationsInput | string
+    tokenSeguimiento?: StringFieldUpdateOperationsInput | string
     recibidoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     inicioPreparacionEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     preparadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -27035,6 +27078,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     clienteId?: IntFieldUpdateOperationsInput | number
     numeroProforma?: StringFieldUpdateOperationsInput | string
+    tokenSeguimiento?: StringFieldUpdateOperationsInput | string
     recibidoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     inicioPreparacionEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     preparadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -27330,6 +27374,7 @@ export namespace Prisma {
   export type PedidoCreateManyClienteInput = {
     id?: number
     numeroProforma: string
+    tokenSeguimiento?: string
     recibidoEn?: Date | string
     inicioPreparacionEn?: Date | string | null
     preparadoEn?: Date | string | null
@@ -27345,6 +27390,7 @@ export namespace Prisma {
 
   export type PedidoUpdateWithoutClienteInput = {
     numeroProforma?: StringFieldUpdateOperationsInput | string
+    tokenSeguimiento?: StringFieldUpdateOperationsInput | string
     recibidoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     inicioPreparacionEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     preparadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -27361,6 +27407,7 @@ export namespace Prisma {
   export type PedidoUncheckedUpdateWithoutClienteInput = {
     id?: IntFieldUpdateOperationsInput | number
     numeroProforma?: StringFieldUpdateOperationsInput | string
+    tokenSeguimiento?: StringFieldUpdateOperationsInput | string
     recibidoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     inicioPreparacionEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     preparadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -27377,6 +27424,7 @@ export namespace Prisma {
   export type PedidoUncheckedUpdateManyWithoutClienteInput = {
     id?: IntFieldUpdateOperationsInput | number
     numeroProforma?: StringFieldUpdateOperationsInput | string
+    tokenSeguimiento?: StringFieldUpdateOperationsInput | string
     recibidoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     inicioPreparacionEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     preparadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null

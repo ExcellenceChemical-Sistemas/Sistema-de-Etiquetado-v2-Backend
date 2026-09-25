@@ -1,9 +1,11 @@
 import { Module } from '@nestjs/common';
 import { PedidosService } from './pedidos.service';
 import { PedidosController } from './pedidos.controller';
+import { PedidosPublicosController } from './pedidos-publicos.controller';
+import { PedidosPublicosService } from './pedidos-publicos.service';
 
 @Module({
-  controllers: [PedidosController],
-  providers: [PedidosService],
+  controllers: [PedidosController, PedidosPublicosController],
+  providers: [PedidosService, PedidosPublicosService],
 })
 export class PedidosModule {}

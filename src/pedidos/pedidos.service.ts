@@ -9,7 +9,7 @@ export type EstadoPedido = 'RECIBIDO' | 'EN_PREPARACION' | 'PREPARADO' | 'SALIO'
 // No hay columna `estado` en la tabla (ver comentario en schema.prisma): se
 // deriva de qué fechas están seteadas, así nunca puede desincronizarse de la
 // fecha real de cada etapa.
-function derivarEstado(pedido: {
+export function derivarEstado(pedido: {
   inicioPreparacionEn: Date | null;
   preparadoEn: Date | null;
   salioEn: Date | null;

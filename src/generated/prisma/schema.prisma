@@ -261,6 +261,9 @@ model Pedido {
   clienteId            Int
   cliente              Cliente                     @relation(fields: [clienteId], references: [id], onDelete: Restrict)
   numeroProforma       String
+  // Llave del enlace público de seguimiento (/p/<token>): la genera la base, 122 bits aleatorios.
+  // Es lo único que protege esa página, así que nunca debe ser el id ni algo predecible.
+  tokenSeguimiento     String                      @unique @default(dbgenerated("replace((gen_random_uuid())::text, '-'::text, ''::text)"))
   recibidoEn           DateTime                    @default(now())
   inicioPreparacionEn  DateTime?
   preparadoEn          DateTime?

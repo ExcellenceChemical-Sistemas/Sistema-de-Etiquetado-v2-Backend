@@ -48,6 +48,10 @@ pg driver adapter), `DIRECT_URL` (used by `prisma.config.ts` for migrations — 
 **not** read `DATABASE_URL` here), `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `AGENT_TOKEN`
 (shared secret for the print agent). Optional: `PORT` (3000), `FRONTEND_URL` (added to CORS),
 `EPSON_PRINTER_NAME`, `EPSON_PAPER_SIZE`.
+Avisos por correo al cliente (opcionales; sin ellos el envío queda apagado y el sistema funciona igual):
+`RESEND_API_KEY`, `MAIL_REMITENTE` (p. ej. `Excellence Chemical <pedidos@dominio>`, el dominio debe estar
+verificado en Resend), `MAIL_RESPONDER_A`. `SEGUIMIENTO_DIAS_TRAS_ENTREGA` (90) es cuánto sigue abriendo el
+enlace público `/p/<token>` de un pedido entregado.
 
 ## KPIs / ISO
 
@@ -148,6 +152,15 @@ day, so the real time has to be correctable, not locked in. `ultimoEditadoPorId`
 person who touched a pedido (not a full audit trail — see `contexto` discussion if that's ever
 needed). Clients were bulk-imported once from a real Excel client list; there's no seed script
 for it (was a throwaway one-off, not committed).
+
+**Seguimiento y avisos del pedido.** Cada `Pedido` tiene `tokenSeguimiento` (lo genera la base, 122 bits): es la
+única llave de la página pública `/p/<token>` (`GET /api/publico/pedidos/:token`, sin sesión, lista cerrada de campos,
+404 igual para inexistente y caducado). Al marcar "salió" o "entregado", `PedidosService.update` llama a
+`NotificacionesService.avisarPedido` (`src/notificaciones/`), que manda un correo por la API HTTP de Resend (no SMTP:
+Render Free lo bloquea) si el cliente tiene `email`. Reglas: solo al MARCAR la etapa (corregir la fecha no reenvía),
+una vez por etapa (`avisoSalioEnviadoEn` / `avisoEntregadoEnviadoEn`, reservadas con `updateMany` antes de enviar),
+nunca en pedidos CANCELADO, y un fallo de correo jamás rompe el cambio de etapa. El número de proforma se trata
+como texto no confiable en el correo (se limpia y se escapa).
 
 ## Global setup (`src/main.ts`)
 

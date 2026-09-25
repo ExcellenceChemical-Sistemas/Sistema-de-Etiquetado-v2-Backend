@@ -236,6 +236,8 @@ model Cliente {
   numeroDocumento   String?
   direccion         String?
   celular           String?
+  // Correo donde se avisa al cliente de su pedido (salio / entregado). Opcional: sin correo no se envia nada.
+  email             String?
   createdAt         DateTime              @default(now())
   pedidos           Pedido[]
 
@@ -257,26 +259,30 @@ enum CategoriaObservacionPedido {
 }
 
 model Pedido {
-  id                   Int                         @id @default(autoincrement())
-  clienteId            Int
-  cliente              Cliente                     @relation(fields: [clienteId], references: [id], onDelete: Restrict)
-  numeroProforma       String
+  id                      Int                         @id @default(autoincrement())
+  clienteId               Int
+  cliente                 Cliente                     @relation(fields: [clienteId], references: [id], onDelete: Restrict)
+  numeroProforma          String
   // Llave del enlace público de seguimiento (/p/<token>): la genera la base, 122 bits aleatorios.
   // Es lo único que protege esa página, así que nunca debe ser el id ni algo predecible.
-  tokenSeguimiento     String                      @unique @default(dbgenerated("replace((gen_random_uuid())::text, '-'::text, ''::text)"))
-  recibidoEn           DateTime                    @default(now())
-  inicioPreparacionEn  DateTime?
-  preparadoEn          DateTime?
-  salioEn              DateTime?
-  entregadoEn          DateTime?
-  categoriaObservacion CategoriaObservacionPedido?
-  detalleObservacion   String?
-  creadoPorId          Int
-  creadoPor            Usuario                     @relation("PedidosCreados", fields: [creadoPorId], references: [id])
-  ultimoEditadoPorId   Int?
-  ultimoEditadoPor     Usuario?                    @relation("PedidosEditados", fields: [ultimoEditadoPorId], references: [id])
-  createdAt            DateTime                    @default(now())
-  updatedAt            DateTime                    @updatedAt
+  tokenSeguimiento        String                      @unique @default(dbgenerated("replace((gen_random_uuid())::text, '-'::text, ''::text)"))
+  recibidoEn              DateTime                    @default(now())
+  inicioPreparacionEn     DateTime?
+  preparadoEn             DateTime?
+  salioEn                 DateTime?
+  entregadoEn             DateTime?
+  // Cuando se le aviso al cliente por correo. Sirve para no avisar dos veces la misma etapa
+  // (por ejemplo, si alguien corrige la fecha despues).
+  avisoSalioEnviadoEn     DateTime?
+  avisoEntregadoEnviadoEn DateTime?
+  categoriaObservacion    CategoriaObservacionPedido?
+  detalleObservacion      String?
+  creadoPorId             Int
+  creadoPor               Usuario                     @relation("PedidosCreados", fields: [creadoPorId], references: [id])
+  ultimoEditadoPorId      Int?
+  ultimoEditadoPor        Usuario?                    @relation("PedidosEditados", fields: [ultimoEditadoPorId], references: [id])
+  createdAt               DateTime                    @default(now())
+  updatedAt               DateTime                    @updatedAt
 
   @@index([clienteId])
   @@index([numeroProforma])

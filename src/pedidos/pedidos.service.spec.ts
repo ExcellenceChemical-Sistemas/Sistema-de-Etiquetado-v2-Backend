@@ -24,7 +24,9 @@ function crearServicio(pedidos: any[]) {
       update: jest.fn(({ data }: any) => Promise.resolve({ ...pedidos[0], ...data })),
     },
   };
-  return { servicio: new PedidosService(prisma), prisma };
+  // El aviso por correo se prueba aparte (notificaciones.service.spec.ts): acá es un doble.
+  const notificaciones: any = { avisarPedido: jest.fn(() => Promise.resolve(false)) };
+  return { servicio: new PedidosService(prisma, notificaciones), prisma, notificaciones };
 }
 
 describe('estado derivado del pedido', () => {
@@ -96,5 +98,39 @@ describe('update', () => {
     const { servicio, prisma } = crearServicio([]);
     await expect(servicio.update(99, {} as any, 7)).rejects.toBeInstanceOf(NotFoundException);
     expect(prisma.pedido.update).not.toHaveBeenCalled();
+  });
+});
+
+describe('update: aviso al cliente', () => {
+  it('le pasa al servicio de avisos el pedido de antes y el de después', async () => {
+    const { servicio, notificaciones } = crearServicio([{ ...PEDIDO_VACIO }]);
+    await servicio.update(1, { salioEn: '2026-09-02T08:00:00.000Z' } as any, 7);
+
+    expect(notificaciones.avisarPedido).toHaveBeenCalledTimes(1);
+    const [antes, despues] = notificaciones.avisarPedido.mock.calls[0];
+    expect(antes.salioEn).toBeNull();
+    expect(despues.salioEn).toBeInstanceOf(Date);
+  });
+
+  it('si el correo salió, devuelve el pedido releído (con la marca de aviso enviado)', async () => {
+    const { servicio, prisma, notificaciones } = crearServicio([{ ...PEDIDO_VACIO }]);
+    notificaciones.avisarPedido.mockResolvedValueOnce(true);
+    const lecturasAntes = prisma.pedido.findUnique.mock.calls.length;
+    await servicio.update(1, { salioEn: '2026-09-02T08:00:00.000Z' } as any, 7);
+    // una lectura al empezar (antes) y otra al final para devolver la marca
+    expect(prisma.pedido.findUnique.mock.calls.length - lecturasAntes).toBe(2);
+  });
+
+  it('si no hubo aviso, no relee: responde con lo que ya tiene', async () => {
+    const { servicio, prisma } = crearServicio([{ ...PEDIDO_VACIO }]);
+    const lecturasAntes = prisma.pedido.findUnique.mock.calls.length;
+    await servicio.update(1, { salioEn: '2026-09-02T08:00:00.000Z' } as any, 7);
+    expect(prisma.pedido.findUnique.mock.calls.length - lecturasAntes).toBe(1);
+  });
+
+  it('un pedido inexistente no llega a avisar', async () => {
+    const { servicio, notificaciones } = crearServicio([]);
+    await expect(servicio.update(99, {} as any, 7)).rejects.toBeInstanceOf(NotFoundException);
+    expect(notificaciones.avisarPedido).not.toHaveBeenCalled();
   });
 });

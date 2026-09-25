@@ -16,27 +16,27 @@ datasource db {
 // es el id (UUID) que devuelve Supabase Auth al crear la cuenta.
 // ──────────────────────────────────────────
 model Usuario {
-  id             Int       @id @default(autoincrement())
-  supabaseUserId String    @unique
-  nombre         String
-  esAdmin        Boolean   @default(false)
-  esAdminKpis    Boolean   @default(false) // gestiona accesos de KPIs/ISO de otros; no implica acceso propio automático
-  activo         Boolean   @default(true) // false = sin acceso al sistema pero conserva historial (ver PATCH /usuarios/:id/activo)
+  id                Int                @id @default(autoincrement())
+  supabaseUserId    String             @unique
+  nombre            String
+  esAdmin           Boolean            @default(false)
+  esAdminKpis       Boolean            @default(false) // gestiona accesos de KPIs/ISO de otros; no implica acceso propio automático
+  activo            Boolean            @default(true) // false = sin acceso al sistema pero conserva historial (ver PATCH /usuarios/:id/activo)
   // Quién y cuándo desactivó la cuenta (null si está activa). Si ese admin se
   // elimina después, desactivadoPorId queda en null pero desactivadoEn se conserva.
-  desactivadoEn    DateTime?
-  desactivadoPorId Int?
-  desactivadoPor   Usuario?  @relation("UsuarioDesactivadoPor", fields: [desactivadoPorId], references: [id], onDelete: SetNull)
-  desactivados     Usuario[] @relation("UsuarioDesactivadoPor")
-  avatarUrl      String?
-  permisos       Permiso[]
-  createdAt      DateTime  @default(now())
+  desactivadoEn     DateTime?
+  desactivadoPorId  Int?
+  desactivadoPor    Usuario?           @relation("UsuarioDesactivadoPor", fields: [desactivadoPorId], references: [id], onDelete: SetNull)
+  desactivados      Usuario[]          @relation("UsuarioDesactivadoPor")
+  avatarUrl         String?
+  permisos          Permiso[]
+  createdAt         DateTime           @default(now())
   trabajosImpresion TrabajoImpresion[]
   archivosSubidos   Archivo[]
   accesosIndicador  AccesoIndicador[]
   accesoIso         AccesoISO?
-  pedidosCreados    Pedido[]          @relation("PedidosCreados")
-  pedidosEditados   Pedido[]          @relation("PedidosEditados")
+  pedidosCreados    Pedido[]           @relation("PedidosCreados")
+  pedidosEditados   Pedido[]           @relation("PedidosEditados")
 }
 
 model Permiso {
@@ -120,13 +120,13 @@ model Producto {
 // Independiente de Producto — se elige recién al generar la etiqueta.
 // ──────────────────────────────────────────
 model Plantilla {
-  id        Int      @id @default(autoincrement())
-  nombre    String   @unique
-  archivo   String
-  activa    Boolean  @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-    trabajosImpresion TrabajoImpresion[]
+  id                Int                @id @default(autoincrement())
+  nombre            String             @unique
+  archivo           String
+  activa            Boolean            @default(true)
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  trabajosImpresion TrabajoImpresion[]
 
   @@map("plantillas")
 }
@@ -146,7 +146,7 @@ model Plantilla {
 // un único formato de fecha ni perder esa información.
 // ──────────────────────────────────────────
 model Lote {
-  id                    Int        @id @default(autoincrement())
+  id                    Int                @id @default(autoincrement())
   numeroLote            String
   fechaFabricacion      String
   fechaVencimiento      String
@@ -154,15 +154,15 @@ model Lote {
   // (parseando "MM/AAAA" como último día de ese mes, o "DD/MM/AAAA" tal cual).
   // Nunca se edita a mano — solo existe para poder ordenar/filtrar
   // ("lotes que vencen este mes") sin tocar el texto original.
-  fechaVencimientoOrden DateTime?  @db.Date
+  fechaVencimientoOrden DateTime?          @db.Date
   coaUrl                String? // path del objeto en el bucket, ej: "lote-123/coa.pdf"
   productoId            Int
-  producto              Producto   @relation(fields: [productoId], references: [id], onDelete: Restrict)
+  producto              Producto           @relation(fields: [productoId], references: [id], onDelete: Restrict)
   fabricanteId          Int
-  fabricante            Fabricante @relation(fields: [fabricanteId], references: [id], onDelete: Restrict)
-  createdAt             DateTime   @default(now())
-  updatedAt             DateTime   @updatedAt
-    trabajosImpresion TrabajoImpresion[]
+  fabricante            Fabricante         @relation(fields: [fabricanteId], references: [id], onDelete: Restrict)
+  createdAt             DateTime           @default(now())
+  updatedAt             DateTime           @updatedAt
+  trabajosImpresion     TrabajoImpresion[]
 
   @@unique([productoId, fabricanteId, numeroLote])
   @@index([numeroLote])
@@ -177,37 +177,37 @@ enum EstadoTrabajoImpresion {
 }
 
 model TrabajoImpresion {
-  id           Int                    @id @default(autoincrement())
-  loteId       Int
-  lote         Lote                   @relation(fields: [loteId], references: [id])
-  plantillaId  Int
-  plantilla    Plantilla              @relation(fields: [plantillaId], references: [id])
-  pesoBruto    String
-  unidadBruto  String
-  cantidadNeta String?
-  unidadNeta   String
-  tara         String?
+  id              Int                    @id @default(autoincrement())
+  loteId          Int
+  lote            Lote                   @relation(fields: [loteId], references: [id])
+  plantillaId     Int
+  plantilla       Plantilla              @relation(fields: [plantillaId], references: [id])
+  pesoBruto       String
+  unidadBruto     String
+  cantidadNeta    String?
+  unidadNeta      String
+  tara            String?
   // Código imposible de adivinar que va en el QR impreso; permite abrir la
   // página pública de trazabilidad de ESTA etiqueta (con sus pesos reales)
   // sin exponer ids autoincrementales. Null en trabajos anteriores al QR.
-  token        String?                @unique
+  token           String?                @unique
   // Cuántas veces se abrió la página pública de este QR y cuándo fue la última.
-  escaneos        Int                 @default(0)
+  escaneos        Int                    @default(0)
   ultimoEscaneoAt DateTime?
   // Cuántas veces, desde esa misma página pública, se vio/descargó el COA o
   // se vio la ficha de seguridad (FDS). Contadores aparte de `escaneos`
   // porque un escaneo no implica abrir ninguno de los dos documentos.
-  coaVistas       Int                 @default(0)
-  coaDescargas    Int                 @default(0)
-  fdsVistas       Int                 @default(0)
-  proforma     String
-imagenPath   String?
-  estado       EstadoTrabajoImpresion @default(PENDIENTE)
-  mensajeError String?
-  creadoPorId  Int
-  creadoPor    Usuario                @relation(fields: [creadoPorId], references: [id])
-  createdAt    DateTime               @default(now())
-  updatedAt    DateTime               @updatedAt
+  coaVistas       Int                    @default(0)
+  coaDescargas    Int                    @default(0)
+  fdsVistas       Int                    @default(0)
+  proforma        String
+  imagenPath      String?
+  estado          EstadoTrabajoImpresion @default(PENDIENTE)
+  mensajeError    String?
+  creadoPorId     Int
+  creadoPor       Usuario                @relation(fields: [creadoPorId], references: [id])
+  createdAt       DateTime               @default(now())
+  updatedAt       DateTime               @updatedAt
 
   @@map("trabajos_impresion")
 }
@@ -229,15 +229,17 @@ enum TipoDocumentoCliente {
 }
 
 model Cliente {
-  id                 Int                   @id @default(autoincrement())
-  nombre             String                @unique
-  nombreNormalizado  String                @unique
-  tipoDocumento      TipoDocumentoCliente?
-  numeroDocumento    String?
-  direccion          String?
-  celular            String?
-  createdAt          DateTime              @default(now())
-  pedidos            Pedido[]
+  id                Int                   @id @default(autoincrement())
+  nombre            String                @unique
+  nombreNormalizado String                @unique
+  tipoDocumento     TipoDocumentoCliente?
+  numeroDocumento   String?
+  direccion         String?
+  celular           String?
+  // Correo donde se avisa al cliente de su pedido (salio / entregado). Opcional: sin correo no se envia nada.
+  email             String?
+  createdAt         DateTime              @default(now())
+  pedidos           Pedido[]
 
   @@map("clientes")
 }
@@ -257,26 +259,30 @@ enum CategoriaObservacionPedido {
 }
 
 model Pedido {
-  id                     Int                         @id @default(autoincrement())
-  clienteId              Int
-  cliente                Cliente                     @relation(fields: [clienteId], references: [id], onDelete: Restrict)
-  numeroProforma         String
+  id                      Int                         @id @default(autoincrement())
+  clienteId               Int
+  cliente                 Cliente                     @relation(fields: [clienteId], references: [id], onDelete: Restrict)
+  numeroProforma          String
   // Llave del enlace público de seguimiento (/p/<token>): la genera la base, 122 bits aleatorios.
   // Es lo único que protege esa página, así que nunca debe ser el id ni algo predecible.
-  tokenSeguimiento       String                      @unique @default(dbgenerated("replace((gen_random_uuid())::text, '-'::text, ''::text)"))
-  recibidoEn             DateTime                    @default(now())
-  inicioPreparacionEn    DateTime?
-  preparadoEn            DateTime?
-  salioEn                DateTime?
-  entregadoEn            DateTime?
-  categoriaObservacion   CategoriaObservacionPedido?
-  detalleObservacion     String?
-  creadoPorId            Int
-  creadoPor              Usuario                     @relation("PedidosCreados", fields: [creadoPorId], references: [id])
-  ultimoEditadoPorId     Int?
-  ultimoEditadoPor       Usuario?                    @relation("PedidosEditados", fields: [ultimoEditadoPorId], references: [id])
-  createdAt              DateTime                    @default(now())
-  updatedAt              DateTime                    @updatedAt
+  tokenSeguimiento        String                      @unique @default(dbgenerated("replace((gen_random_uuid())::text, '-'::text, ''::text)"))
+  recibidoEn              DateTime                    @default(now())
+  inicioPreparacionEn     DateTime?
+  preparadoEn             DateTime?
+  salioEn                 DateTime?
+  entregadoEn             DateTime?
+  // Cuando se le aviso al cliente por correo. Sirve para no avisar dos veces la misma etapa
+  // (por ejemplo, si alguien corrige la fecha despues).
+  avisoSalioEnviadoEn     DateTime?
+  avisoEntregadoEnviadoEn DateTime?
+  categoriaObservacion    CategoriaObservacionPedido?
+  detalleObservacion      String?
+  creadoPorId             Int
+  creadoPor               Usuario                     @relation("PedidosCreados", fields: [creadoPorId], references: [id])
+  ultimoEditadoPorId      Int?
+  ultimoEditadoPor        Usuario?                    @relation("PedidosEditados", fields: [ultimoEditadoPorId], references: [id])
+  createdAt               DateTime                    @default(now())
+  updatedAt               DateTime                    @updatedAt
 
   @@index([clienteId])
   @@index([numeroProforma])
@@ -326,32 +332,32 @@ enum TipoArchivoDocumento {
 }
 
 model Carpeta {
-  id             Int              @id @default(autoincrement())
+  id             Int               @id @default(autoincrement())
   nombre         String
   carpetaPadreId Int?
-  carpetaPadre   Carpeta?         @relation("CarpetaHijos", fields: [carpetaPadreId], references: [id], onDelete: Cascade)
-  hijos          Carpeta[]        @relation("CarpetaHijos")
+  carpetaPadre   Carpeta?          @relation("CarpetaHijos", fields: [carpetaPadreId], references: [id], onDelete: Cascade)
+  hijos          Carpeta[]         @relation("CarpetaHijos")
   modulo         ModuloDocumentos
   tipo           TipoCarpeta?
   proceso        ProcesoIndicador?
   archivos       Archivo[]
-  createdAt      DateTime         @default(now())
-  updatedAt      DateTime         @updatedAt
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
 
   @@index([carpetaPadreId])
   @@map("carpetas")
 }
 
 model Archivo {
-  id           Int                  @id @default(autoincrement())
-  carpetaId    Int
-  carpeta      Carpeta              @relation(fields: [carpetaId], references: [id], onDelete: Cascade)
-  nombre       String
-  tipo         TipoArchivoDocumento
-  storagePath  String
-  subidoPorId  Int
-  subidoPor    Usuario              @relation(fields: [subidoPorId], references: [id])
-  fechaSubida  DateTime             @default(now())
+  id          Int                  @id @default(autoincrement())
+  carpetaId   Int
+  carpeta     Carpeta              @relation(fields: [carpetaId], references: [id], onDelete: Cascade)
+  nombre      String
+  tipo        TipoArchivoDocumento
+  storagePath String
+  subidoPorId Int
+  subidoPor   Usuario              @relation(fields: [subidoPorId], references: [id])
+  fechaSubida DateTime             @default(now())
 
   @@index([carpetaId])
   @@map("archivos")

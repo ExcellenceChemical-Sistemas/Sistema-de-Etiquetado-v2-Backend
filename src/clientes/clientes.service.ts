@@ -26,6 +26,7 @@ export class ClientesService {
           numeroDocumento: dto.numeroDocumento,
           direccion: dto.direccion,
           celular: dto.celular,
+          email: dto.email?.trim().toLowerCase(),
         },
       });
     } catch (error) {
@@ -62,6 +63,8 @@ export class ClientesService {
           ...(dto.numeroDocumento !== undefined && { numeroDocumento: dto.numeroDocumento }),
           ...(dto.direccion !== undefined && { direccion: dto.direccion }),
           ...(dto.celular !== undefined && { celular: dto.celular }),
+          // Cadena vacía = quitar el correo.
+          ...(dto.email !== undefined && { email: dto.email.trim().toLowerCase() || null }),
         },
       });
     } catch (error) {

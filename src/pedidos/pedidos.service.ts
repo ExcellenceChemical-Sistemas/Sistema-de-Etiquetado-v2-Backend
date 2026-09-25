@@ -3,6 +3,7 @@ import { Prisma } from '../generated/prisma';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreatePedidoDto } from './dto/create-pedido.dto';
 import { UpdatePedidoDto } from './dto/update-pedido.dto';
+import { NotificacionesService } from '../notificaciones/notificaciones.service';
 
 export type EstadoPedido = 'RECIBIDO' | 'EN_PREPARACION' | 'PREPARADO' | 'SALIO' | 'ENTREGADO';
 
@@ -38,7 +39,10 @@ const INCLUDE_PEDIDO = {
 
 @Injectable()
 export class PedidosService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private notificaciones: NotificacionesService,
+  ) {}
 
   async create(dto: CreatePedidoDto, creadoPorId: number) {
     const pedido = await this.prisma.pedido.create({
@@ -75,7 +79,7 @@ export class PedidosService {
   }
 
   async update(id: number, dto: UpdatePedidoDto, editadoPorId: number) {
-    await this.findOne(id);
+    const antes = await this.findOne(id);
     const pedido = await this.prisma.pedido.update({
       where: { id },
       data: {
@@ -94,6 +98,13 @@ export class PedidosService {
       },
       include: INCLUDE_PEDIDO,
     });
+
+    // Aviso al cliente por correo si se marcó "salió" o "entregado". No puede fallar el cambio:
+    // el servicio de notificaciones nunca lanza. Si el correo salió, se relee el pedido para
+    // devolver ya la marca de "aviso enviado".
+    const avisado = await this.notificaciones.avisarPedido(antes, pedido);
+    if (avisado) return this.findOne(id);
+
     return { ...pedido, estado: derivarEstado(pedido) };
   }
 

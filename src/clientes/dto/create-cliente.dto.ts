@@ -1,4 +1,4 @@
-import { IsEmail, IsEnum, IsNotEmpty, IsOptional, IsString, MaxLength } from 'class-validator';
+import { IsBoolean, IsEmail, IsEnum, IsNotEmpty, IsOptional, IsString, MaxLength } from 'class-validator';
 import { TipoDocumentoCliente } from '../../generated/prisma';
 
 export class CreateClienteDto {
@@ -31,4 +31,10 @@ export class CreateClienteDto {
   @IsEmail()
   @MaxLength(254)
   email?: string;
+
+  // El personal confirma que informó al cliente y este autoriza el uso de sus datos de
+  // contacto. El backend guarda la fecha (autorizaContactoEn), no este booleano.
+  @IsOptional()
+  @IsBoolean()
+  autorizaContacto?: boolean;
 }

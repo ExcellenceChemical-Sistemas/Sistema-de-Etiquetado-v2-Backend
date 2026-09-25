@@ -138,6 +138,10 @@ parseable, cae a un plazo fijo desde la impresión (`QR_VIGENCIA_DIAS`, 730 día
 exactly as they appear on the COA (formats vary by supplier). `fechaVencimientoOrden` (`Date?`) is
 computed by the service purely for sorting/filtering — never edit it by hand.
 
+**Cliente contact authorization.** `Cliente.autorizaContactoEn` (`DateTime?`) records when staff confirmed the client was
+informed and authorizes the use of celular/correo; the API takes `autorizaContacto: boolean` and stores the date
+(marking again keeps the original date, `false` clears it). Null = no record (legacy import). It does not gate sending.
+
 **Duplicate prevention.** `Fabricante`, `Producto`, and `Cliente` all have both `nombre` and
 `nombreNormalizado` (lowercase, no accents) as unique columns; services must set
 `nombreNormalizado` on write.

@@ -224,6 +224,7 @@ exports.Prisma.ClienteScalarFieldEnum = {
   direccion: 'direccion',
   celular: 'celular',
   email: 'email',
+  autorizaContactoEn: 'autorizaContactoEn',
   createdAt: 'createdAt'
 };
 

@@ -27,6 +27,7 @@ export class ClientesService {
           direccion: dto.direccion,
           celular: dto.celular,
           email: dto.email?.trim().toLowerCase(),
+          autorizaContactoEn: dto.autorizaContacto ? new Date() : null,
         },
       });
     } catch (error) {
@@ -50,7 +51,7 @@ export class ClientesService {
   }
 
   async update(id: number, dto: UpdateClienteDto) {
-    await this.findOne(id);
+    const actual = await this.findOne(id);
     try {
       return await this.prisma.cliente.update({
         where: { id },
@@ -65,6 +66,11 @@ export class ClientesService {
           ...(dto.celular !== undefined && { celular: dto.celular }),
           // Cadena vacía = quitar el correo.
           ...(dto.email !== undefined && { email: dto.email.trim().toLowerCase() || null }),
+          // Marcar registra la fecha (sin pisar la de una autorización anterior); desmarcar la retira.
+          ...(dto.autorizaContacto === true && {
+            autorizaContactoEn: actual.autorizaContactoEn ?? new Date(),
+          }),
+          ...(dto.autorizaContacto === false && { autorizaContactoEn: null }),
         },
       });
     } catch (error) {

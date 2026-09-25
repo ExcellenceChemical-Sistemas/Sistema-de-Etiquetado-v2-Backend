@@ -231,17 +231,21 @@ enum TipoDocumentoCliente {
 }
 
 model Cliente {
-  id                Int                   @id @default(autoincrement())
-  nombre            String                @unique
-  nombreNormalizado String                @unique
-  tipoDocumento     TipoDocumentoCliente?
-  numeroDocumento   String?
-  direccion         String?
-  celular           String?
+  id                 Int                   @id @default(autoincrement())
+  nombre             String                @unique
+  nombreNormalizado  String                @unique
+  tipoDocumento      TipoDocumentoCliente?
+  numeroDocumento    String?
+  direccion          String?
+  celular            String?
   // Correo donde se avisa al cliente de su pedido (salio / entregado). Opcional: sin correo no se envia nada.
-  email             String?
-  createdAt         DateTime              @default(now())
-  pedidos           Pedido[]
+  email              String?
+  // Cuando el personal registró que informó al cliente y este autorizó el uso de sus
+  // datos de contacto (celular/correo) para avisarle de sus pedidos. Null = sin registro
+  // (por ejemplo, clientes cargados antes de existir este campo).
+  autorizaContactoEn DateTime?
+  createdAt          DateTime              @default(now())
+  pedidos            Pedido[]
 
   @@map("clientes")
 }

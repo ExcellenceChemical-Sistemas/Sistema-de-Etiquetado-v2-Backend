@@ -11073,6 +11073,7 @@ export namespace Prisma {
     direccion: string | null
     celular: string | null
     email: string | null
+    autorizaContactoEn: Date | null
     createdAt: Date | null
   }
 
@@ -11085,6 +11086,7 @@ export namespace Prisma {
     direccion: string | null
     celular: string | null
     email: string | null
+    autorizaContactoEn: Date | null
     createdAt: Date | null
   }
 
@@ -11097,6 +11099,7 @@ export namespace Prisma {
     direccion: number
     celular: number
     email: number
+    autorizaContactoEn: number
     createdAt: number
     _all: number
   }
@@ -11119,6 +11122,7 @@ export namespace Prisma {
     direccion?: true
     celular?: true
     email?: true
+    autorizaContactoEn?: true
     createdAt?: true
   }
 
@@ -11131,6 +11135,7 @@ export namespace Prisma {
     direccion?: true
     celular?: true
     email?: true
+    autorizaContactoEn?: true
     createdAt?: true
   }
 
@@ -11143,6 +11148,7 @@ export namespace Prisma {
     direccion?: true
     celular?: true
     email?: true
+    autorizaContactoEn?: true
     createdAt?: true
     _all?: true
   }
@@ -11242,6 +11248,7 @@ export namespace Prisma {
     direccion: string | null
     celular: string | null
     email: string | null
+    autorizaContactoEn: Date | null
     createdAt: Date
     _count: ClienteCountAggregateOutputType | null
     _avg: ClienteAvgAggregateOutputType | null
@@ -11273,6 +11280,7 @@ export namespace Prisma {
     direccion?: boolean
     celular?: boolean
     email?: boolean
+    autorizaContactoEn?: boolean
     createdAt?: boolean
     pedidos?: boolean | Cliente$pedidosArgs<ExtArgs>
     _count?: boolean | ClienteCountOutputTypeDefaultArgs<ExtArgs>
@@ -11287,6 +11295,7 @@ export namespace Prisma {
     direccion?: boolean
     celular?: boolean
     email?: boolean
+    autorizaContactoEn?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["cliente"]>
 
@@ -11299,6 +11308,7 @@ export namespace Prisma {
     direccion?: boolean
     celular?: boolean
     email?: boolean
+    autorizaContactoEn?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["cliente"]>
 
@@ -11311,10 +11321,11 @@ export namespace Prisma {
     direccion?: boolean
     celular?: boolean
     email?: boolean
+    autorizaContactoEn?: boolean
     createdAt?: boolean
   }
 
-  export type ClienteOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nombre" | "nombreNormalizado" | "tipoDocumento" | "numeroDocumento" | "direccion" | "celular" | "email" | "createdAt", ExtArgs["result"]["cliente"]>
+  export type ClienteOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nombre" | "nombreNormalizado" | "tipoDocumento" | "numeroDocumento" | "direccion" | "celular" | "email" | "autorizaContactoEn" | "createdAt", ExtArgs["result"]["cliente"]>
   export type ClienteInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     pedidos?: boolean | Cliente$pedidosArgs<ExtArgs>
     _count?: boolean | ClienteCountOutputTypeDefaultArgs<ExtArgs>
@@ -11336,6 +11347,7 @@ export namespace Prisma {
       direccion: string | null
       celular: string | null
       email: string | null
+      autorizaContactoEn: Date | null
       createdAt: Date
     }, ExtArgs["result"]["cliente"]>
     composites: {}
@@ -11769,6 +11781,7 @@ export namespace Prisma {
     readonly direccion: FieldRef<"Cliente", 'String'>
     readonly celular: FieldRef<"Cliente", 'String'>
     readonly email: FieldRef<"Cliente", 'String'>
+    readonly autorizaContactoEn: FieldRef<"Cliente", 'DateTime'>
     readonly createdAt: FieldRef<"Cliente", 'DateTime'>
   }
     
@@ -19361,6 +19374,7 @@ export namespace Prisma {
     direccion: 'direccion',
     celular: 'celular',
     email: 'email',
+    autorizaContactoEn: 'autorizaContactoEn',
     createdAt: 'createdAt'
   };
 
@@ -20310,6 +20324,7 @@ export namespace Prisma {
     direccion?: StringNullableFilter<"Cliente"> | string | null
     celular?: StringNullableFilter<"Cliente"> | string | null
     email?: StringNullableFilter<"Cliente"> | string | null
+    autorizaContactoEn?: DateTimeNullableFilter<"Cliente"> | Date | string | null
     createdAt?: DateTimeFilter<"Cliente"> | Date | string
     pedidos?: PedidoListRelationFilter
   }
@@ -20323,6 +20338,7 @@ export namespace Prisma {
     direccion?: SortOrderInput | SortOrder
     celular?: SortOrderInput | SortOrder
     email?: SortOrderInput | SortOrder
+    autorizaContactoEn?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     pedidos?: PedidoOrderByRelationAggregateInput
   }
@@ -20339,6 +20355,7 @@ export namespace Prisma {
     direccion?: StringNullableFilter<"Cliente"> | string | null
     celular?: StringNullableFilter<"Cliente"> | string | null
     email?: StringNullableFilter<"Cliente"> | string | null
+    autorizaContactoEn?: DateTimeNullableFilter<"Cliente"> | Date | string | null
     createdAt?: DateTimeFilter<"Cliente"> | Date | string
     pedidos?: PedidoListRelationFilter
   }, "id" | "nombre" | "nombreNormalizado">
@@ -20352,6 +20369,7 @@ export namespace Prisma {
     direccion?: SortOrderInput | SortOrder
     celular?: SortOrderInput | SortOrder
     email?: SortOrderInput | SortOrder
+    autorizaContactoEn?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     _count?: ClienteCountOrderByAggregateInput
     _avg?: ClienteAvgOrderByAggregateInput
@@ -20372,6 +20390,7 @@ export namespace Prisma {
     direccion?: StringNullableWithAggregatesFilter<"Cliente"> | string | null
     celular?: StringNullableWithAggregatesFilter<"Cliente"> | string | null
     email?: StringNullableWithAggregatesFilter<"Cliente"> | string | null
+    autorizaContactoEn?: DateTimeNullableWithAggregatesFilter<"Cliente"> | Date | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Cliente"> | Date | string
   }
 
@@ -21553,6 +21572,7 @@ export namespace Prisma {
     direccion?: string | null
     celular?: string | null
     email?: string | null
+    autorizaContactoEn?: Date | string | null
     createdAt?: Date | string
     pedidos?: PedidoCreateNestedManyWithoutClienteInput
   }
@@ -21566,6 +21586,7 @@ export namespace Prisma {
     direccion?: string | null
     celular?: string | null
     email?: string | null
+    autorizaContactoEn?: Date | string | null
     createdAt?: Date | string
     pedidos?: PedidoUncheckedCreateNestedManyWithoutClienteInput
   }
@@ -21578,6 +21599,7 @@ export namespace Prisma {
     direccion?: NullableStringFieldUpdateOperationsInput | string | null
     celular?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
+    autorizaContactoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     pedidos?: PedidoUpdateManyWithoutClienteNestedInput
   }
@@ -21591,6 +21613,7 @@ export namespace Prisma {
     direccion?: NullableStringFieldUpdateOperationsInput | string | null
     celular?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
+    autorizaContactoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     pedidos?: PedidoUncheckedUpdateManyWithoutClienteNestedInput
   }
@@ -21604,6 +21627,7 @@ export namespace Prisma {
     direccion?: string | null
     celular?: string | null
     email?: string | null
+    autorizaContactoEn?: Date | string | null
     createdAt?: Date | string
   }
 
@@ -21615,6 +21639,7 @@ export namespace Prisma {
     direccion?: NullableStringFieldUpdateOperationsInput | string | null
     celular?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
+    autorizaContactoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -21627,6 +21652,7 @@ export namespace Prisma {
     direccion?: NullableStringFieldUpdateOperationsInput | string | null
     celular?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
+    autorizaContactoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -22884,6 +22910,7 @@ export namespace Prisma {
     direccion?: SortOrder
     celular?: SortOrder
     email?: SortOrder
+    autorizaContactoEn?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -22900,6 +22927,7 @@ export namespace Prisma {
     direccion?: SortOrder
     celular?: SortOrder
     email?: SortOrder
+    autorizaContactoEn?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -22912,6 +22940,7 @@ export namespace Prisma {
     direccion?: SortOrder
     celular?: SortOrder
     email?: SortOrder
+    autorizaContactoEn?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -26078,6 +26107,7 @@ export namespace Prisma {
     direccion?: string | null
     celular?: string | null
     email?: string | null
+    autorizaContactoEn?: Date | string | null
     createdAt?: Date | string
   }
 
@@ -26090,6 +26120,7 @@ export namespace Prisma {
     direccion?: string | null
     celular?: string | null
     email?: string | null
+    autorizaContactoEn?: Date | string | null
     createdAt?: Date | string
   }
 
@@ -26205,6 +26236,7 @@ export namespace Prisma {
     direccion?: NullableStringFieldUpdateOperationsInput | string | null
     celular?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
+    autorizaContactoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -26217,6 +26249,7 @@ export namespace Prisma {
     direccion?: NullableStringFieldUpdateOperationsInput | string | null
     celular?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
+    autorizaContactoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 

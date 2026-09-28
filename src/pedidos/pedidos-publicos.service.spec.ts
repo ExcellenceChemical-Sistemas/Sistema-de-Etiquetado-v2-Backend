@@ -61,9 +61,24 @@ describe('PedidosPublicosService.obtener', () => {
       'numeroProforma',
       'preparadoEn',
       'recibidoEn',
+      'recojeEnAlmacen',
       'salioEn',
     ]);
-    expect(JSON.stringify(r)).not.toMatch(/Santa Rosa|facturas|20123456789/);
+    expect(JSON.stringify(r)).not.toMatch(/Santa Rosa|facturas|20123456789|DEMORA/);
+  });
+
+  it('recojeEnAlmacen solo es true para la categoría RECOGE_EN_ALMACEN', async () => {
+    const conRecojo = { ...PEDIDO_COMPLETO, categoriaObservacion: 'RECOGE_EN_ALMACEN' };
+    const r1 = await crearServicio(conRecojo).servicio.obtener('abc');
+    expect(r1.recojeEnAlmacen).toBe(true);
+
+    const sinRecojo = { ...PEDIDO_COMPLETO, categoriaObservacion: 'DEMORA' };
+    const r2 = await crearServicio(sinRecojo).servicio.obtener('abc');
+    expect(r2.recojeEnAlmacen).toBe(false);
+
+    const sinObservacion = { ...PEDIDO_COMPLETO, categoriaObservacion: null };
+    const r3 = await crearServicio(sinObservacion).servicio.obtener('abc');
+    expect(r3.recojeEnAlmacen).toBe(false);
   });
 
   it('busca por token, no por id', async () => {

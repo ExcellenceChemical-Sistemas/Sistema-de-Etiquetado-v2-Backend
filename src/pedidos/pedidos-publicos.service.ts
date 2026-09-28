@@ -30,12 +30,21 @@ export class PedidosPublicosService {
         preparadoEn: true,
         salioEn: true,
         entregadoEn: true,
+        categoriaObservacion: true,
       },
     });
     // Mismo 404 si no existe o si ya caducó: desde afuera no se distingue.
     if (!pedido || !seguimientoVigente(pedido.entregadoEn)) {
       throw new NotFoundException('Pedido no encontrado');
     }
-    return { ...pedido, estado: derivarEstado(pedido) };
+    const { categoriaObservacion, ...resto } = pedido;
+    return {
+      ...resto,
+      // Solo se expone si el pedido es de recojo en almacén (para que la línea de
+      // tiempo pública se salte el paso "En camino", que no aplica ahí). El resto de
+      // categorías son internas (ej. DEMORA, CANCELADO) y no se muestran al cliente.
+      recojeEnAlmacen: categoriaObservacion === 'RECOGE_EN_ALMACEN',
+      estado: derivarEstado(pedido),
+    };
   }
 }

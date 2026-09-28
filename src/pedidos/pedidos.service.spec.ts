@@ -135,3 +135,24 @@ describe('create', () => {
     await expect(servicio.create({ clienteId: 1, numeroProforma: 'PF01-1' } as any, 7)).rejects.toBe(otro);
   });
 });
+
+describe('regenerarToken', () => {
+  it('emite un token distinto al actual y registra quién lo hizo', async () => {
+    const { servicio, prisma } = crearServicio([
+      { ...PEDIDO_VACIO, tokenSeguimiento: 'token-viejo' },
+    ]);
+    await servicio.regenerarToken(1, 7);
+
+    const data = prisma.pedido.update.mock.calls[0][0].data;
+    expect(data.tokenSeguimiento).toEqual(expect.any(String));
+    expect(data.tokenSeguimiento).not.toBe('token-viejo');
+    expect(data.tokenSeguimiento).toMatch(/^[0-9a-f]{32}$/);
+    expect(data.ultimoEditadoPorId).toBe(7);
+  });
+
+  it('un pedido inexistente → NotFound y no escribe', async () => {
+    const { servicio, prisma } = crearServicio([]);
+    await expect(servicio.regenerarToken(99, 7)).rejects.toBeInstanceOf(NotFoundException);
+    expect(prisma.pedido.update).not.toHaveBeenCalled();
+  });
+});

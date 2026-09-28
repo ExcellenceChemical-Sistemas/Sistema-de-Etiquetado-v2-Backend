@@ -1,4 +1,5 @@
 import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import { randomBytes } from 'crypto';
 import { Prisma } from '../generated/prisma';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreatePedidoDto } from './dto/create-pedido.dto';
@@ -110,5 +111,21 @@ export class PedidosService {
   async remove(id: number) {
     await this.findOne(id);
     return this.prisma.pedido.delete({ where: { id } });
+  }
+
+  // Invalida el enlace público (/p/<token>) actual y emite uno nuevo, por ejemplo si el
+  // cliente perdió el link o se compartió por error. Mismo formato que el que genera la
+  // base al crear el pedido (32 hex = 128 bits al azar).
+  async regenerarToken(id: number, editadoPorId: number) {
+    await this.findOne(id);
+    const pedido = await this.prisma.pedido.update({
+      where: { id },
+      data: {
+        tokenSeguimiento: randomBytes(16).toString('hex'),
+        ultimoEditadoPorId: editadoPorId,
+      },
+      include: INCLUDE_PEDIDO,
+    });
+    return { ...pedido, estado: derivarEstado(pedido) };
   }
 }

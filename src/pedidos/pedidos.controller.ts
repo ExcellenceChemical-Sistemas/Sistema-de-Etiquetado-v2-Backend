@@ -44,4 +44,11 @@ export class PedidosController {
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.pedidosService.remove(id);
   }
+
+  @Post(':id/regenerar-token')
+  @RequierePermiso('PEDIDOS', 'puedeEditar')
+  regenerarToken(@Param('id', ParseIntPipe) id: number, @Req() req: Request) {
+    const usuario = (req as any).usuario;
+    return this.pedidosService.regenerarToken(id, usuario.id);
+  }
 }

@@ -20445,12 +20445,12 @@ export namespace Prisma {
 
   export type PedidoWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    numeroProforma?: string
     tokenSeguimiento?: string
     AND?: PedidoWhereInput | PedidoWhereInput[]
     OR?: PedidoWhereInput[]
     NOT?: PedidoWhereInput | PedidoWhereInput[]
     clienteId?: IntFilter<"Pedido"> | number
-    numeroProforma?: StringFilter<"Pedido"> | string
     recibidoEn?: DateTimeFilter<"Pedido"> | Date | string
     inicioPreparacionEn?: DateTimeNullableFilter<"Pedido"> | Date | string | null
     preparadoEn?: DateTimeNullableFilter<"Pedido"> | Date | string | null
@@ -20467,7 +20467,7 @@ export namespace Prisma {
     cliente?: XOR<ClienteScalarRelationFilter, ClienteWhereInput>
     creadoPor?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
     ultimoEditadoPor?: XOR<UsuarioNullableScalarRelationFilter, UsuarioWhereInput> | null
-  }, "id" | "tokenSeguimiento">
+  }, "id" | "numeroProforma" | "tokenSeguimiento">
 
   export type PedidoOrderByWithAggregationInput = {
     id?: SortOrder

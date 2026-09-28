@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { Prisma } from '../generated/prisma';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreatePedidoDto } from './dto/create-pedido.dto';
@@ -41,17 +41,26 @@ export class PedidosService {
   constructor(private prisma: PrismaService) {}
 
   async create(dto: CreatePedidoDto, creadoPorId: number) {
-    const pedido = await this.prisma.pedido.create({
-      data: {
-        clienteId: dto.clienteId,
-        numeroProforma: dto.numeroProforma.trim(),
-        recibidoEn: dto.recibidoEn ? new Date(dto.recibidoEn) : undefined,
-        creadoPorId,
-        ultimoEditadoPorId: creadoPorId,
-      },
-      include: INCLUDE_PEDIDO,
-    });
-    return { ...pedido, estado: derivarEstado(pedido) };
+    try {
+      const pedido = await this.prisma.pedido.create({
+        data: {
+          clienteId: dto.clienteId,
+          numeroProforma: dto.numeroProforma.trim(),
+          recibidoEn: dto.recibidoEn ? new Date(dto.recibidoEn) : undefined,
+          creadoPorId,
+          ultimoEditadoPorId: creadoPorId,
+        },
+        include: INCLUDE_PEDIDO,
+      });
+      return { ...pedido, estado: derivarEstado(pedido) };
+    } catch (error) {
+      // P2002: violación de la restricción única de numeroProforma (dos pedidos no pueden
+      // compartir el mismo número de proforma).
+      if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
+        throw new ConflictException(`Ya existe un pedido con la proforma "${dto.numeroProforma.trim()}"`);
+      }
+      throw error;
+    }
   }
 
   async findAll(estado?: EstadoPedido) {

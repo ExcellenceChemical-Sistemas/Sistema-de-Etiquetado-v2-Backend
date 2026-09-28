@@ -1,4 +1,5 @@
-import { NotFoundException } from '@nestjs/common';
+import { ConflictException, NotFoundException } from '@nestjs/common';
+import { Prisma } from '../generated/prisma';
 import { PedidosService } from './pedidos.service';
 
 /**
@@ -16,12 +17,16 @@ const PEDIDO_VACIO = {
   entregadoEn: null,
 };
 
-function crearServicio(pedidos: any[]) {
+function crearServicio(pedidos: any[], opts: { errorCreate?: Error } = {}) {
   const prisma: any = {
     pedido: {
       findMany: jest.fn(() => Promise.resolve(pedidos)),
       findUnique: jest.fn(() => Promise.resolve(pedidos[0] ?? null)),
       update: jest.fn(({ data }: any) => Promise.resolve({ ...pedidos[0], ...data })),
+      create: jest.fn(({ data }: any) => {
+        if (opts.errorCreate) return Promise.reject(opts.errorCreate);
+        return Promise.resolve({ ...PEDIDO_VACIO, ...data });
+      }),
     },
   };
   return { servicio: new PedidosService(prisma), prisma };
@@ -96,5 +101,37 @@ describe('update', () => {
     const { servicio, prisma } = crearServicio([]);
     await expect(servicio.update(99, {} as any, 7)).rejects.toBeInstanceOf(NotFoundException);
     expect(prisma.pedido.update).not.toHaveBeenCalled();
+  });
+});
+
+describe('create', () => {
+  it('crea el pedido con el estado derivado', async () => {
+    const { servicio } = crearServicio([]);
+    const pedido = await servicio.create({ clienteId: 1, numeroProforma: 'PF01-1' } as any, 7);
+    expect(pedido.numeroProforma).toBe('PF01-1');
+    expect(pedido.estado).toBe('RECIBIDO');
+  });
+
+  it('recorta espacios del número de proforma', async () => {
+    const { servicio, prisma } = crearServicio([]);
+    await servicio.create({ clienteId: 1, numeroProforma: '  PF01-1  ' } as any, 7);
+    expect(prisma.pedido.create.mock.calls[0][0].data.numeroProforma).toBe('PF01-1');
+  });
+
+  it('una proforma repetida → Conflict, no un 500 genérico', async () => {
+    const duplicada = new Prisma.PrismaClientKnownRequestError('unique', {
+      code: 'P2002',
+      clientVersion: 'test',
+    });
+    const { servicio } = crearServicio([], { errorCreate: duplicada });
+    await expect(servicio.create({ clienteId: 1, numeroProforma: 'PF01-1' } as any, 7)).rejects.toBeInstanceOf(
+      ConflictException,
+    );
+  });
+
+  it('otros errores de Prisma no se confunden con el de proforma duplicada', async () => {
+    const otro = new Prisma.PrismaClientKnownRequestError('fk', { code: 'P2003', clientVersion: 'test' });
+    const { servicio } = crearServicio([], { errorCreate: otro });
+    await expect(servicio.create({ clienteId: 1, numeroProforma: 'PF01-1' } as any, 7)).rejects.toBe(otro);
   });
 });

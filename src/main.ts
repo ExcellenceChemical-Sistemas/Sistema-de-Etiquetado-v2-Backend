@@ -27,8 +27,16 @@ async function bootstrap() {
   // Va después de la ruta grande: el primer parser que lee el cuerpo es el que manda.
   app.useBodyParser('json', { limit: '100kb' });
 
+  // FRONTEND_URLS acepta varios orígenes separados por coma (útil durante una migración de
+  // hosting, cuando el frontend vive temporalmente en dos dominios a la vez). FRONTEND_URL
+  // (singular) se mantiene por compatibilidad con la configuración actual de Render.
+  const origenesFrontend = (process.env.FRONTEND_URLS ?? process.env.FRONTEND_URL ?? '')
+    .split(',')
+    .map((origen) => origen.trim())
+    .filter((origen) => origen.length > 0);
+
   app.enableCors({
-    origin: ['http://localhost:3000', 'http://localhost:3001', process.env.FRONTEND_URL].filter((o): o is string => !!o),
+    origin: ['http://localhost:3000', 'http://localhost:3001', ...origenesFrontend],
     credentials: true,
   });
 

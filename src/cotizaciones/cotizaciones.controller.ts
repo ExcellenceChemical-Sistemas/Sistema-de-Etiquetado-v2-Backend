@@ -1,16 +1,16 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Query, Req, UseGuards } from '@nestjs/common';
 import type { Request } from 'express';
 import { CotizacionesService } from './cotizaciones.service';
-import type { EstadoCotizacion } from '../generated/prisma';
+import type { EstadoCotizacion } from './cotizaciones.service';
 import { CreateCotizacionDto } from './dto/create-cotizacion.dto';
 import { UpdateCotizacionDto } from './dto/update-cotizacion.dto';
 import { SupabaseAuthGuard } from '../common/guards/supabase-auth.guard';
 import { PermisosGuard } from '../common/guards/permisos.guard';
 import { RequierePermiso } from '../common/decorators/requiere-permiso.decorator';
 
-// Referencia liviana de "cotización en camino a almacén" (ver comentario en schema.prisma).
-// Gatilla con el mismo recurso PEDIDOS que /clientes y /pedidos: es parte del mismo flujo,
-// no amerita un Recurso propio.
+// Seguimiento del proceso de cotización de Joel (ver comentario en schema.prisma). Gatilla con
+// el mismo recurso PEDIDOS que /clientes y /pedidos: es parte del mismo flujo, no amerita un
+// Recurso propio.
 @Controller('cotizaciones')
 @UseGuards(SupabaseAuthGuard, PermisosGuard)
 export class CotizacionesController {
@@ -36,7 +36,7 @@ export class CotizacionesController {
   @Post('recordatorios/despachar')
   @RequierePermiso('PEDIDOS', 'puedeVer')
   despacharRecordatorios(@Query('horas') horas?: string) {
-    const h = horas ? Number(horas) : 4;
+    const h = horas ? Number(horas) : 1; // SLA real: 1h entre aprobación y aviso a almacén
     return this.cotizacionesService.findPendientesDeRecordatorio(h);
   }
 
@@ -48,15 +48,9 @@ export class CotizacionesController {
 
   @Patch(':id')
   @RequierePermiso('PEDIDOS', 'puedeEditar')
-  update(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateCotizacionDto) {
-    return this.cotizacionesService.update(id, dto);
-  }
-
-  @Post(':id/marcar-enviada')
-  @RequierePermiso('PEDIDOS', 'puedeEditar')
-  marcarEnviada(@Param('id', ParseIntPipe) id: number, @Req() req: Request) {
+  update(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateCotizacionDto, @Req() req: Request) {
     const usuario = (req as any).usuario;
-    return this.cotizacionesService.marcarEnviada(id, usuario.id);
+    return this.cotizacionesService.update(id, dto, usuario.id);
   }
 
   @Delete(':id')

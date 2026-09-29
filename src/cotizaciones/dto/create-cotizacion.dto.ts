@@ -1,4 +1,4 @@
-import { IsInt, IsNotEmpty, IsOptional, IsString, MaxLength } from 'class-validator';
+import { IsDateString, IsInt, IsNotEmpty, IsOptional, IsString, MaxLength } from 'class-validator';
 
 export class CreateCotizacionDto {
   @IsInt()
@@ -13,4 +13,9 @@ export class CreateCotizacionDto {
   @IsString()
   @MaxLength(1000)
   notas?: string;
+
+  // Opcional: si no se manda, el service usa la hora actual del servidor.
+  @IsOptional()
+  @IsDateString()
+  requerimientoEn?: string;
 }

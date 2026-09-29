@@ -253,11 +253,13 @@ exports.Prisma.CotizacionScalarFieldEnum = {
   clienteId: 'clienteId',
   numeroProforma: 'numeroProforma',
   notas: 'notas',
-  estado: 'estado',
-  enviadoEn: 'enviadoEn',
-  enviadoPorId: 'enviadoPorId',
+  requerimientoEn: 'requerimientoEn',
+  cotizacionEnviadaEn: 'cotizacionEnviadaEn',
+  pedidoAprobadoEn: 'pedidoAprobadoEn',
+  avisoAlmacenEn: 'avisoAlmacenEn',
   recordatorioEnviadoEn: 'recordatorioEnviadoEn',
   creadoPorId: 'creadoPorId',
+  ultimoEditadoPorId: 'ultimoEditadoPorId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -359,11 +361,6 @@ exports.CategoriaObservacionPedido = exports.$Enums.CategoriaObservacionPedido =
   IMPORTACION_EXPORTACION: 'IMPORTACION_EXPORTACION',
   CANCELADO: 'CANCELADO',
   OTRO: 'OTRO'
-};
-
-exports.EstadoCotizacion = exports.$Enums.EstadoCotizacion = {
-  PENDIENTE_ENVIO: 'PENDIENTE_ENVIO',
-  ENVIADO: 'ENVIADO'
 };
 
 exports.ModuloDocumentos = exports.$Enums.ModuloDocumentos = {

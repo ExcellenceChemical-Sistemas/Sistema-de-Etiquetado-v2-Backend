@@ -38,7 +38,7 @@ model Usuario {
   pedidosCreados    Pedido[]           @relation("PedidosCreados")
   pedidosEditados   Pedido[]           @relation("PedidosEditados")
   cotizacionesCreadas Cotizacion[]     @relation("CotizacionesCreadas")
-  cotizacionesEnviadas Cotizacion[]    @relation("CotizacionesEnviadas")
+  cotizacionesEditadas Cotizacion[]    @relation("CotizacionesEditadas")
 }
 
 model Permiso {
@@ -297,37 +297,33 @@ model Pedido {
   @@map("pedidos")
 }
 
-// Cotización armada por Joel en KEYFACIL ERP (insumos, cantidades y precio viven ahí, no acá).
-// Esto es solo una referencia liviana para que no se pierda camino a almacén: cliente + número
-// de proforma de KEYFACIL + un estado de envío. Cuando Charlie la recibe y arma el Pedido real
-// (con su propio numeroProforma), esta fila queda como registro histórico de que se avisó a tiempo.
-enum EstadoCotizacion {
-  PENDIENTE_ENVIO
-  ENVIADO
-}
-
+// Seguimiento del proceso de cotización de Joel: mismo patrón que Pedido (fechas por etapa,
+// sin columna "estado" propia — se deriva de cuáles están seteadas, ver derivarEstadoCotizacion
+// en cotizaciones.service.ts). Insumos, cantidades y precio quedan en KEYFACIL ERP, acá solo se
+// registran los 4 momentos que hoy Katherine carga a mano en Excel (DS del indicador comercial):
+// llega el pedido del cliente -> Joel cotiza -> el cliente aprueba -> Joel avisa a almacén.
 model Cotizacion {
-  id                    Int              @id @default(autoincrement())
-  clienteId             Int
-  cliente               Cliente          @relation(fields: [clienteId], references: [id], onDelete: Restrict)
+  id                  Int       @id @default(autoincrement())
+  clienteId           Int
+  cliente             Cliente   @relation(fields: [clienteId], references: [id], onDelete: Restrict)
   // Número de proforma de KEYFACIL (siempre "PF01-..."), única igual que en Pedido.
-  numeroProforma        String           @unique
-  notas                 String?
-  estado                EstadoCotizacion @default(PENDIENTE_ENVIO)
-  enviadoEn             DateTime?
-  enviadoPorId          Int?
-  enviadoPor            Usuario?         @relation("CotizacionesEnviadas", fields: [enviadoPorId], references: [id])
-  // Cuándo se mandó el recordatorio de "falta enviar a almacén". Null = todavía no hizo falta
-  // (o ya se marcó ENVIADO antes de que se cumpliera el plazo). Evita mandar el mismo recordatorio
-  // más de una vez.
+  numeroProforma      String    @unique
+  notas               String?
+  requerimientoEn     DateTime  @default(now())
+  cotizacionEnviadaEn DateTime?
+  pedidoAprobadoEn    DateTime?
+  avisoAlmacenEn      DateTime?
+  // Cuándo se mandó el recordatorio de "falta avisar a almacén" (aprobado hace más de 1h sin
+  // avisoAlmacenEn). Null = todavía no hizo falta. Evita mandar el mismo recordatorio dos veces.
   recordatorioEnviadoEn DateTime?
-  creadoPorId           Int
-  creadoPor             Usuario          @relation("CotizacionesCreadas", fields: [creadoPorId], references: [id])
-  createdAt             DateTime         @default(now())
-  updatedAt             DateTime         @updatedAt
+  creadoPorId         Int
+  creadoPor           Usuario   @relation("CotizacionesCreadas", fields: [creadoPorId], references: [id])
+  ultimoEditadoPorId  Int?
+  ultimoEditadoPor    Usuario?  @relation("CotizacionesEditadas", fields: [ultimoEditadoPorId], references: [id])
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
 
   @@index([clienteId])
-  @@index([estado])
   @@map("cotizaciones")
 }
 

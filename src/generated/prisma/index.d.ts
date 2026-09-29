@@ -22032,11 +22032,11 @@ export namespace Prisma {
 
   export type CotizacionWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    numeroProforma?: string
     AND?: CotizacionWhereInput | CotizacionWhereInput[]
     OR?: CotizacionWhereInput[]
     NOT?: CotizacionWhereInput | CotizacionWhereInput[]
     clienteId?: IntFilter<"Cotizacion"> | number
-    numeroProforma?: StringFilter<"Cotizacion"> | string
     notas?: StringNullableFilter<"Cotizacion"> | string | null
     estado?: EnumEstadoCotizacionFilter<"Cotizacion"> | $Enums.EstadoCotizacion
     enviadoEn?: DateTimeNullableFilter<"Cotizacion"> | Date | string | null
@@ -22048,7 +22048,7 @@ export namespace Prisma {
     cliente?: XOR<ClienteScalarRelationFilter, ClienteWhereInput>
     enviadoPor?: XOR<UsuarioNullableScalarRelationFilter, UsuarioWhereInput> | null
     creadoPor?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
-  }, "id">
+  }, "id" | "numeroProforma">
 
   export type CotizacionOrderByWithAggregationInput = {
     id?: SortOrder

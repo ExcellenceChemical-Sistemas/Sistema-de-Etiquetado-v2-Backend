@@ -14,16 +14,23 @@ const INCLUDE_COTIZACION = {
 export class CotizacionesService {
   constructor(private prisma: PrismaService) {}
 
-  create(dto: CreateCotizacionDto, creadoPorId: number) {
-    return this.prisma.cotizacion.create({
-      data: {
-        clienteId: dto.clienteId,
-        numeroProforma: dto.numeroProforma.trim(),
-        notas: dto.notas?.trim() || undefined,
-        creadoPorId,
-      },
-      include: INCLUDE_COTIZACION,
-    });
+  async create(dto: CreateCotizacionDto, creadoPorId: number) {
+    try {
+      return await this.prisma.cotizacion.create({
+        data: {
+          clienteId: dto.clienteId,
+          numeroProforma: dto.numeroProforma.trim(),
+          notas: dto.notas?.trim() || undefined,
+          creadoPorId,
+        },
+        include: INCLUDE_COTIZACION,
+      });
+    } catch (error) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
+        throw new ConflictException(`Ya existe una cotización con la proforma "${dto.numeroProforma.trim()}"`);
+      }
+      throw error;
+    }
   }
 
   findAll(estado?: EstadoCotizacion) {
@@ -47,15 +54,22 @@ export class CotizacionesService {
 
   async update(id: number, dto: UpdateCotizacionDto) {
     await this.findOne(id);
-    return this.prisma.cotizacion.update({
-      where: { id },
-      data: {
-        ...(dto.clienteId !== undefined && { clienteId: dto.clienteId }),
-        ...(dto.numeroProforma !== undefined && { numeroProforma: dto.numeroProforma.trim() }),
-        ...(dto.notas !== undefined && { notas: dto.notas.trim() || null }),
-      },
-      include: INCLUDE_COTIZACION,
-    });
+    try {
+      return await this.prisma.cotizacion.update({
+        where: { id },
+        data: {
+          ...(dto.clienteId !== undefined && { clienteId: dto.clienteId }),
+          ...(dto.numeroProforma !== undefined && { numeroProforma: dto.numeroProforma.trim() }),
+          ...(dto.notas !== undefined && { notas: dto.notas.trim() || null }),
+        },
+        include: INCLUDE_COTIZACION,
+      });
+    } catch (error) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
+        throw new ConflictException(`Ya existe una cotización con la proforma "${dto.numeroProforma?.trim()}"`);
+      }
+      throw error;
+    }
   }
 
   // Marca que ya se envió a almacén. Solo procede desde PENDIENTE_ENVIO: una cotización ya

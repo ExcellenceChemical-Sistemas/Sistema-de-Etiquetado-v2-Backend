@@ -310,10 +310,8 @@ model Cotizacion {
   id                    Int              @id @default(autoincrement())
   clienteId             Int
   cliente               Cliente          @relation(fields: [clienteId], references: [id], onDelete: Restrict)
-  // Número de proforma tal como quedó en KEYFACIL ERP. No es @unique acá: si Joel se equivoca
-  // al tipearlo, corrige el registro en vez de chocar con una restricción que no le sirve a este
-  // panel (la proforma "de verdad" ya vive en KEYFACIL, esto es una referencia, no la fuente).
-  numeroProforma        String
+  // Número de proforma de KEYFACIL (siempre "PF01-..."), única igual que en Pedido.
+  numeroProforma        String           @unique
   notas                 String?
   estado                EstadoCotizacion @default(PENDIENTE_ENVIO)
   enviadoEn             DateTime?

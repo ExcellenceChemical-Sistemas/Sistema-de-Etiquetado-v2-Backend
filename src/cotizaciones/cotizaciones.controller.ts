@@ -29,6 +29,17 @@ export class CotizacionesController {
     return this.cotizacionesService.findAll(estado);
   }
 
+  // Ruta literal antes de ':id': si no, Nest intentaría parsear "recordatorios" como id numérico.
+  // La llama el workflow de n8n del recordatorio (cron), no la UI. Reserva el envío antes de
+  // devolver la lista (ver comentario en el service) — por eso es POST y no GET, y por eso va
+  // en la lista de excepciones del test que prohíbe puedeVer en rutas de escritura.
+  @Post('recordatorios/despachar')
+  @RequierePermiso('PEDIDOS', 'puedeVer')
+  despacharRecordatorios(@Query('horas') horas?: string) {
+    const h = horas ? Number(horas) : 4;
+    return this.cotizacionesService.findPendientesDeRecordatorio(h);
+  }
+
   @Get(':id')
   @RequierePermiso('PEDIDOS', 'puedeVer')
   findOne(@Param('id', ParseIntPipe) id: number) {

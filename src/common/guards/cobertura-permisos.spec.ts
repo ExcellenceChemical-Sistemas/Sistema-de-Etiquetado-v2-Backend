@@ -193,6 +193,7 @@ describe('cobertura de guards en los controllers', () => {
     // Las acciones de "consulta" que usan POST van en EXCEPCIONES, con motivo.
     const EXCEPCIONES = new Set<string>([
       'POST /productos/analizar-ficha', // lee un PDF y propone datos, no guarda nada
+      'POST /cotizaciones/recordatorios/despachar', // lo llama el cron de n8n; reserva el envío pero no cambia datos de negocio
     ]);
     const sospechosas = privadas
       .filter((r) => ['POST', 'PATCH', 'PUT', 'DELETE'].includes(r.metodo))

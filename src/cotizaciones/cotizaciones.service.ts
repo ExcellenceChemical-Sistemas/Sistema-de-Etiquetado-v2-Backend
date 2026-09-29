@@ -72,6 +72,33 @@ export class CotizacionesService {
     }
   }
 
+  // Para el recordatorio automático (n8n): devuelve las que llevan más de `horas` sin marcarse
+  // ENVIADO y sin recordatorio previo, y de una vez reserva el envío (recordatorioEnviadoEn) con
+  // un updateMany antes de devolver la lista — mismo patrón que avisoSalioEnviadoEn en Pedidos.
+  // Así, si n8n falla al mandar el correo después de esta llamada, no se vuelve a preguntar por
+  // la misma cotización en la próxima corrida (hay que resetear el campo a mano si hace falta
+  // reintentar).
+  async findPendientesDeRecordatorio(horas: number) {
+    const limite = new Date(Date.now() - horas * 3_600_000);
+    const candidatas = await this.prisma.cotizacion.findMany({
+      where: {
+        estado: EstadoCotizacion.PENDIENTE_ENVIO,
+        createdAt: { lt: limite },
+        recordatorioEnviadoEn: null,
+      },
+      include: INCLUDE_COTIZACION,
+      orderBy: { createdAt: 'asc' },
+    });
+    if (candidatas.length === 0) return candidatas;
+
+    const ids = candidatas.map((c) => c.id);
+    await this.prisma.cotizacion.updateMany({
+      where: { id: { in: ids }, recordatorioEnviadoEn: null },
+      data: { recordatorioEnviadoEn: new Date() },
+    });
+    return candidatas;
+  }
+
   // Marca que ya se envió a almacén. Solo procede desde PENDIENTE_ENVIO: una cotización ya
   // enviada no se puede "reenviar" desde acá (evita pisar enviadoEn/enviadoPorId por error).
   async marcarEnviada(id: number, enviadoPorId: number) {

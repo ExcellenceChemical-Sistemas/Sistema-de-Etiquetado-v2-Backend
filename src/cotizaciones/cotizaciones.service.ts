@@ -1,4 +1,4 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { Prisma } from '../generated/prisma';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateCotizacionDto } from './dto/create-cotizacion.dto';
@@ -37,25 +37,17 @@ export class CotizacionesService {
   constructor(private prisma: PrismaService) {}
 
   async create(dto: CreateCotizacionDto, creadoPorId: number) {
-    try {
-      const cotizacion = await this.prisma.cotizacion.create({
-        data: {
-          clienteId: dto.clienteId,
-          numeroProforma: dto.numeroProforma.trim(),
-          notas: dto.notas?.trim() || undefined,
-          requerimientoEn: dto.requerimientoEn ? new Date(dto.requerimientoEn) : undefined,
-          creadoPorId,
-          ultimoEditadoPorId: creadoPorId,
-        },
-        include: INCLUDE_COTIZACION,
-      });
-      return { ...cotizacion, estado: derivarEstadoCotizacion(cotizacion) };
-    } catch (error) {
-      if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
-        throw new ConflictException(`Ya existe una cotización con la proforma "${dto.numeroProforma.trim()}"`);
-      }
-      throw error;
-    }
+    const cotizacion = await this.prisma.cotizacion.create({
+      data: {
+        clienteId: dto.clienteId,
+        notas: dto.notas?.trim() || undefined,
+        requerimientoEn: dto.requerimientoEn ? new Date(dto.requerimientoEn) : undefined,
+        creadoPorId,
+        ultimoEditadoPorId: creadoPorId,
+      },
+      include: INCLUDE_COTIZACION,
+    });
+    return { ...cotizacion, estado: derivarEstadoCotizacion(cotizacion) };
   }
 
   async findAll(estado?: EstadoCotizacion) {
@@ -79,13 +71,21 @@ export class CotizacionesService {
   }
 
   async update(id: number, dto: UpdateCotizacionDto, editadoPorId: number) {
-    await this.findOne(id);
+    const actual = await this.findOne(id);
+
+    // No se puede marcar "cotización enviada" sin saber la proforma de KEYFACIL — o ya está
+    // guardada de antes, o viene en este mismo PATCH.
+    const proformaFinal = dto.numeroProforma !== undefined ? dto.numeroProforma.trim() : actual.numeroProforma;
+    if (dto.cotizacionEnviadaEn && !proformaFinal) {
+      throw new BadRequestException('Para marcar la cotización como enviada hace falta el número de proforma de KEYFACIL');
+    }
+
     try {
       const cotizacion = await this.prisma.cotizacion.update({
         where: { id },
         data: {
           ...(dto.clienteId !== undefined && { clienteId: dto.clienteId }),
-          ...(dto.numeroProforma !== undefined && { numeroProforma: dto.numeroProforma.trim() }),
+          ...(dto.numeroProforma !== undefined && { numeroProforma: dto.numeroProforma.trim() || null }),
           ...(dto.notas !== undefined && { notas: dto.notas.trim() || null }),
           ...(dto.requerimientoEn && { requerimientoEn: new Date(dto.requerimientoEn) }),
           ...(dto.cotizacionEnviadaEn && { cotizacionEnviadaEn: new Date(dto.cotizacionEnviadaEn) }),

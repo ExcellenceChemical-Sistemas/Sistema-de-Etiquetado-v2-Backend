@@ -1,13 +1,11 @@
-import { IsDateString, IsInt, IsNotEmpty, IsOptional, IsString, MaxLength } from 'class-validator';
+import { IsDateString, IsInt, IsOptional, IsString, MaxLength } from 'class-validator';
 
+// Se crea apenas llega el pedido del cliente, antes de que exista proforma (KEYFACIL la genera
+// recién cuando Joel cotiza) — por eso numeroProforma no va acá, se completa junto con
+// cotizacionEnviadaEn en el PATCH (ver UpdateCotizacionDto).
 export class CreateCotizacionDto {
   @IsInt()
   clienteId: number;
-
-  @IsString()
-  @IsNotEmpty()
-  @MaxLength(50)
-  numeroProforma: string;
 
   @IsOptional()
   @IsString()

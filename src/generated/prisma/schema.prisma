@@ -306,8 +306,10 @@ model Cotizacion {
   id                    Int       @id @default(autoincrement())
   clienteId             Int
   cliente               Cliente   @relation(fields: [clienteId], references: [id], onDelete: Restrict)
-  // Número de proforma de KEYFACIL (siempre "PF01-..."), única igual que en Pedido.
-  numeroProforma        String    @unique
+  // Número de proforma de KEYFACIL (siempre "PF01-..."). Nulo hasta que Joel cotiza: no existe
+  // todavía cuando recién llega el pedido del cliente. Postgres permite varios NULL en una
+  // columna @unique, así que no choca entre sí mientras no se haya cotizado.
+  numeroProforma        String?   @unique
   notas                 String?
   requerimientoEn       DateTime  @default(now())
   cotizacionEnviadaEn   DateTime?

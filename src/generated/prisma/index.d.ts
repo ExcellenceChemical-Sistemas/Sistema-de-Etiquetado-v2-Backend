@@ -13948,7 +13948,7 @@ export namespace Prisma {
   export type CotizacionGroupByOutputType = {
     id: number
     clienteId: number
-    numeroProforma: string
+    numeroProforma: string | null
     notas: string | null
     requerimientoEn: Date
     cotizacionEnviadaEn: Date | null
@@ -14080,7 +14080,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: number
       clienteId: number
-      numeroProforma: string
+      numeroProforma: string | null
       notas: string | null
       requerimientoEn: Date
       cotizacionEnviadaEn: Date | null
@@ -22001,7 +22001,7 @@ export namespace Prisma {
     NOT?: CotizacionWhereInput | CotizacionWhereInput[]
     id?: IntFilter<"Cotizacion"> | number
     clienteId?: IntFilter<"Cotizacion"> | number
-    numeroProforma?: StringFilter<"Cotizacion"> | string
+    numeroProforma?: StringNullableFilter<"Cotizacion"> | string | null
     notas?: StringNullableFilter<"Cotizacion"> | string | null
     requerimientoEn?: DateTimeFilter<"Cotizacion"> | Date | string
     cotizacionEnviadaEn?: DateTimeNullableFilter<"Cotizacion"> | Date | string | null
@@ -22020,7 +22020,7 @@ export namespace Prisma {
   export type CotizacionOrderByWithRelationInput = {
     id?: SortOrder
     clienteId?: SortOrder
-    numeroProforma?: SortOrder
+    numeroProforma?: SortOrderInput | SortOrder
     notas?: SortOrderInput | SortOrder
     requerimientoEn?: SortOrder
     cotizacionEnviadaEn?: SortOrderInput | SortOrder
@@ -22061,7 +22061,7 @@ export namespace Prisma {
   export type CotizacionOrderByWithAggregationInput = {
     id?: SortOrder
     clienteId?: SortOrder
-    numeroProforma?: SortOrder
+    numeroProforma?: SortOrderInput | SortOrder
     notas?: SortOrderInput | SortOrder
     requerimientoEn?: SortOrder
     cotizacionEnviadaEn?: SortOrderInput | SortOrder
@@ -22085,7 +22085,7 @@ export namespace Prisma {
     NOT?: CotizacionScalarWhereWithAggregatesInput | CotizacionScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Cotizacion"> | number
     clienteId?: IntWithAggregatesFilter<"Cotizacion"> | number
-    numeroProforma?: StringWithAggregatesFilter<"Cotizacion"> | string
+    numeroProforma?: StringNullableWithAggregatesFilter<"Cotizacion"> | string | null
     notas?: StringNullableWithAggregatesFilter<"Cotizacion"> | string | null
     requerimientoEn?: DateTimeWithAggregatesFilter<"Cotizacion"> | Date | string
     cotizacionEnviadaEn?: DateTimeNullableWithAggregatesFilter<"Cotizacion"> | Date | string | null
@@ -23384,7 +23384,7 @@ export namespace Prisma {
   }
 
   export type CotizacionCreateInput = {
-    numeroProforma: string
+    numeroProforma?: string | null
     notas?: string | null
     requerimientoEn?: Date | string
     cotizacionEnviadaEn?: Date | string | null
@@ -23401,7 +23401,7 @@ export namespace Prisma {
   export type CotizacionUncheckedCreateInput = {
     id?: number
     clienteId: number
-    numeroProforma: string
+    numeroProforma?: string | null
     notas?: string | null
     requerimientoEn?: Date | string
     cotizacionEnviadaEn?: Date | string | null
@@ -23415,7 +23415,7 @@ export namespace Prisma {
   }
 
   export type CotizacionUpdateInput = {
-    numeroProforma?: StringFieldUpdateOperationsInput | string
+    numeroProforma?: NullableStringFieldUpdateOperationsInput | string | null
     notas?: NullableStringFieldUpdateOperationsInput | string | null
     requerimientoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     cotizacionEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -23432,7 +23432,7 @@ export namespace Prisma {
   export type CotizacionUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     clienteId?: IntFieldUpdateOperationsInput | number
-    numeroProforma?: StringFieldUpdateOperationsInput | string
+    numeroProforma?: NullableStringFieldUpdateOperationsInput | string | null
     notas?: NullableStringFieldUpdateOperationsInput | string | null
     requerimientoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     cotizacionEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -23448,7 +23448,7 @@ export namespace Prisma {
   export type CotizacionCreateManyInput = {
     id?: number
     clienteId: number
-    numeroProforma: string
+    numeroProforma?: string | null
     notas?: string | null
     requerimientoEn?: Date | string
     cotizacionEnviadaEn?: Date | string | null
@@ -23462,7 +23462,7 @@ export namespace Prisma {
   }
 
   export type CotizacionUpdateManyMutationInput = {
-    numeroProforma?: StringFieldUpdateOperationsInput | string
+    numeroProforma?: NullableStringFieldUpdateOperationsInput | string | null
     notas?: NullableStringFieldUpdateOperationsInput | string | null
     requerimientoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     cotizacionEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -23476,7 +23476,7 @@ export namespace Prisma {
   export type CotizacionUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     clienteId?: IntFieldUpdateOperationsInput | number
-    numeroProforma?: StringFieldUpdateOperationsInput | string
+    numeroProforma?: NullableStringFieldUpdateOperationsInput | string | null
     notas?: NullableStringFieldUpdateOperationsInput | string | null
     requerimientoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     cotizacionEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -26992,7 +26992,7 @@ export namespace Prisma {
   }
 
   export type CotizacionCreateWithoutCreadoPorInput = {
-    numeroProforma: string
+    numeroProforma?: string | null
     notas?: string | null
     requerimientoEn?: Date | string
     cotizacionEnviadaEn?: Date | string | null
@@ -27008,7 +27008,7 @@ export namespace Prisma {
   export type CotizacionUncheckedCreateWithoutCreadoPorInput = {
     id?: number
     clienteId: number
-    numeroProforma: string
+    numeroProforma?: string | null
     notas?: string | null
     requerimientoEn?: Date | string
     cotizacionEnviadaEn?: Date | string | null
@@ -27031,7 +27031,7 @@ export namespace Prisma {
   }
 
   export type CotizacionCreateWithoutUltimoEditadoPorInput = {
-    numeroProforma: string
+    numeroProforma?: string | null
     notas?: string | null
     requerimientoEn?: Date | string
     cotizacionEnviadaEn?: Date | string | null
@@ -27047,7 +27047,7 @@ export namespace Prisma {
   export type CotizacionUncheckedCreateWithoutUltimoEditadoPorInput = {
     id?: number
     clienteId: number
-    numeroProforma: string
+    numeroProforma?: string | null
     notas?: string | null
     requerimientoEn?: Date | string
     cotizacionEnviadaEn?: Date | string | null
@@ -27393,7 +27393,7 @@ export namespace Prisma {
     NOT?: CotizacionScalarWhereInput | CotizacionScalarWhereInput[]
     id?: IntFilter<"Cotizacion"> | number
     clienteId?: IntFilter<"Cotizacion"> | number
-    numeroProforma?: StringFilter<"Cotizacion"> | string
+    numeroProforma?: StringNullableFilter<"Cotizacion"> | string | null
     notas?: StringNullableFilter<"Cotizacion"> | string | null
     requerimientoEn?: DateTimeFilter<"Cotizacion"> | Date | string
     cotizacionEnviadaEn?: DateTimeNullableFilter<"Cotizacion"> | Date | string | null
@@ -28182,7 +28182,7 @@ export namespace Prisma {
   }
 
   export type CotizacionCreateWithoutClienteInput = {
-    numeroProforma: string
+    numeroProforma?: string | null
     notas?: string | null
     requerimientoEn?: Date | string
     cotizacionEnviadaEn?: Date | string | null
@@ -28197,7 +28197,7 @@ export namespace Prisma {
 
   export type CotizacionUncheckedCreateWithoutClienteInput = {
     id?: number
-    numeroProforma: string
+    numeroProforma?: string | null
     notas?: string | null
     requerimientoEn?: Date | string
     cotizacionEnviadaEn?: Date | string | null
@@ -29440,7 +29440,7 @@ export namespace Prisma {
   export type CotizacionCreateManyCreadoPorInput = {
     id?: number
     clienteId: number
-    numeroProforma: string
+    numeroProforma?: string | null
     notas?: string | null
     requerimientoEn?: Date | string
     cotizacionEnviadaEn?: Date | string | null
@@ -29455,7 +29455,7 @@ export namespace Prisma {
   export type CotizacionCreateManyUltimoEditadoPorInput = {
     id?: number
     clienteId: number
-    numeroProforma: string
+    numeroProforma?: string | null
     notas?: string | null
     requerimientoEn?: Date | string
     cotizacionEnviadaEn?: Date | string | null
@@ -29784,7 +29784,7 @@ export namespace Prisma {
   }
 
   export type CotizacionUpdateWithoutCreadoPorInput = {
-    numeroProforma?: StringFieldUpdateOperationsInput | string
+    numeroProforma?: NullableStringFieldUpdateOperationsInput | string | null
     notas?: NullableStringFieldUpdateOperationsInput | string | null
     requerimientoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     cotizacionEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -29800,7 +29800,7 @@ export namespace Prisma {
   export type CotizacionUncheckedUpdateWithoutCreadoPorInput = {
     id?: IntFieldUpdateOperationsInput | number
     clienteId?: IntFieldUpdateOperationsInput | number
-    numeroProforma?: StringFieldUpdateOperationsInput | string
+    numeroProforma?: NullableStringFieldUpdateOperationsInput | string | null
     notas?: NullableStringFieldUpdateOperationsInput | string | null
     requerimientoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     cotizacionEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -29815,7 +29815,7 @@ export namespace Prisma {
   export type CotizacionUncheckedUpdateManyWithoutCreadoPorInput = {
     id?: IntFieldUpdateOperationsInput | number
     clienteId?: IntFieldUpdateOperationsInput | number
-    numeroProforma?: StringFieldUpdateOperationsInput | string
+    numeroProforma?: NullableStringFieldUpdateOperationsInput | string | null
     notas?: NullableStringFieldUpdateOperationsInput | string | null
     requerimientoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     cotizacionEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -29828,7 +29828,7 @@ export namespace Prisma {
   }
 
   export type CotizacionUpdateWithoutUltimoEditadoPorInput = {
-    numeroProforma?: StringFieldUpdateOperationsInput | string
+    numeroProforma?: NullableStringFieldUpdateOperationsInput | string | null
     notas?: NullableStringFieldUpdateOperationsInput | string | null
     requerimientoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     cotizacionEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -29844,7 +29844,7 @@ export namespace Prisma {
   export type CotizacionUncheckedUpdateWithoutUltimoEditadoPorInput = {
     id?: IntFieldUpdateOperationsInput | number
     clienteId?: IntFieldUpdateOperationsInput | number
-    numeroProforma?: StringFieldUpdateOperationsInput | string
+    numeroProforma?: NullableStringFieldUpdateOperationsInput | string | null
     notas?: NullableStringFieldUpdateOperationsInput | string | null
     requerimientoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     cotizacionEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -29859,7 +29859,7 @@ export namespace Prisma {
   export type CotizacionUncheckedUpdateManyWithoutUltimoEditadoPorInput = {
     id?: IntFieldUpdateOperationsInput | number
     clienteId?: IntFieldUpdateOperationsInput | number
-    numeroProforma?: StringFieldUpdateOperationsInput | string
+    numeroProforma?: NullableStringFieldUpdateOperationsInput | string | null
     notas?: NullableStringFieldUpdateOperationsInput | string | null
     requerimientoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     cotizacionEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -30172,7 +30172,7 @@ export namespace Prisma {
 
   export type CotizacionCreateManyClienteInput = {
     id?: number
-    numeroProforma: string
+    numeroProforma?: string | null
     notas?: string | null
     requerimientoEn?: Date | string
     cotizacionEnviadaEn?: Date | string | null
@@ -30242,7 +30242,7 @@ export namespace Prisma {
   }
 
   export type CotizacionUpdateWithoutClienteInput = {
-    numeroProforma?: StringFieldUpdateOperationsInput | string
+    numeroProforma?: NullableStringFieldUpdateOperationsInput | string | null
     notas?: NullableStringFieldUpdateOperationsInput | string | null
     requerimientoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     cotizacionEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -30257,7 +30257,7 @@ export namespace Prisma {
 
   export type CotizacionUncheckedUpdateWithoutClienteInput = {
     id?: IntFieldUpdateOperationsInput | number
-    numeroProforma?: StringFieldUpdateOperationsInput | string
+    numeroProforma?: NullableStringFieldUpdateOperationsInput | string | null
     notas?: NullableStringFieldUpdateOperationsInput | string | null
     requerimientoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     cotizacionEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -30272,7 +30272,7 @@ export namespace Prisma {
 
   export type CotizacionUncheckedUpdateManyWithoutClienteInput = {
     id?: IntFieldUpdateOperationsInput | number
-    numeroProforma?: StringFieldUpdateOperationsInput | string
+    numeroProforma?: NullableStringFieldUpdateOperationsInput | string | null
     notas?: NullableStringFieldUpdateOperationsInput | string | null
     requerimientoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     cotizacionEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null

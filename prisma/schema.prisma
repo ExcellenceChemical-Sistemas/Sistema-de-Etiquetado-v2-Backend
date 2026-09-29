@@ -37,6 +37,8 @@ model Usuario {
   accesoIso         AccesoISO?
   pedidosCreados    Pedido[]           @relation("PedidosCreados")
   pedidosEditados   Pedido[]           @relation("PedidosEditados")
+  cotizacionesCreadas Cotizacion[]     @relation("CotizacionesCreadas")
+  cotizacionesEnviadas Cotizacion[]    @relation("CotizacionesEnviadas")
 }
 
 model Permiso {
@@ -246,6 +248,7 @@ model Cliente {
   autorizaContactoEn DateTime?
   createdAt         DateTime              @default(now())
   pedidos           Pedido[]
+  cotizaciones      Cotizacion[]
 
   @@map("clientes")
 }
@@ -292,6 +295,42 @@ model Pedido {
 
   @@index([clienteId])
   @@map("pedidos")
+}
+
+// Cotización armada por Joel en KEYFACIL ERP (insumos, cantidades y precio viven ahí, no acá).
+// Esto es solo una referencia liviana para que no se pierda camino a almacén: cliente + número
+// de proforma de KEYFACIL + un estado de envío. Cuando Charlie la recibe y arma el Pedido real
+// (con su propio numeroProforma), esta fila queda como registro histórico de que se avisó a tiempo.
+enum EstadoCotizacion {
+  PENDIENTE_ENVIO
+  ENVIADO
+}
+
+model Cotizacion {
+  id                    Int              @id @default(autoincrement())
+  clienteId             Int
+  cliente               Cliente          @relation(fields: [clienteId], references: [id], onDelete: Restrict)
+  // Número de proforma tal como quedó en KEYFACIL ERP. No es @unique acá: si Joel se equivoca
+  // al tipearlo, corrige el registro en vez de chocar con una restricción que no le sirve a este
+  // panel (la proforma "de verdad" ya vive en KEYFACIL, esto es una referencia, no la fuente).
+  numeroProforma        String
+  notas                 String?
+  estado                EstadoCotizacion @default(PENDIENTE_ENVIO)
+  enviadoEn             DateTime?
+  enviadoPorId          Int?
+  enviadoPor            Usuario?         @relation("CotizacionesEnviadas", fields: [enviadoPorId], references: [id])
+  // Cuándo se mandó el recordatorio de "falta enviar a almacén". Null = todavía no hizo falta
+  // (o ya se marcó ENVIADO antes de que se cumpliera el plazo). Evita mandar el mismo recordatorio
+  // más de una vez.
+  recordatorioEnviadoEn DateTime?
+  creadoPorId           Int
+  creadoPor             Usuario          @relation("CotizacionesCreadas", fields: [creadoPorId], references: [id])
+  createdAt             DateTime         @default(now())
+  updatedAt             DateTime         @updatedAt
+
+  @@index([clienteId])
+  @@index([estado])
+  @@map("cotizaciones")
 }
 
 // ──────────────────────────────────────────

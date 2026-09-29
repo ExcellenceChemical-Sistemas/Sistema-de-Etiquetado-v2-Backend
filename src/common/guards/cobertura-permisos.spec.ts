@@ -18,6 +18,7 @@ import { AppController } from '../../app.controller';
 import { ArchivosController } from '../../carpetas/archivos.controller';
 import { CarpetasController } from '../../carpetas/carpetas.controller';
 import { ClientesController } from '../../clientes/clientes.controller';
+import { CotizacionesController } from '../../cotizaciones/cotizaciones.controller';
 import { EtiquetasPublicasController } from '../../etiquetas/etiquetas-publicas.controller';
 import { EtiquetasController } from '../../etiquetas/etiquetas.controller';
 import { FabricantesController } from '../../fabricantes/fabricantes.controller';
@@ -42,6 +43,7 @@ const CONTROLLERS: any[] = [
   ArchivosController,
   CarpetasController,
   ClientesController,
+  CotizacionesController,
   EtiquetasPublicasController,
   EtiquetasController,
   FabricantesController,

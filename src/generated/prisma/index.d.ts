@@ -59,6 +59,11 @@ export type Cliente = $Result.DefaultSelection<Prisma.$ClientePayload>
  */
 export type Pedido = $Result.DefaultSelection<Prisma.$PedidoPayload>
 /**
+ * Model Cotizacion
+ * 
+ */
+export type Cotizacion = $Result.DefaultSelection<Prisma.$CotizacionPayload>
+/**
  * Model Carpeta
  * 
  */
@@ -131,6 +136,14 @@ export const CategoriaObservacionPedido: {
 export type CategoriaObservacionPedido = (typeof CategoriaObservacionPedido)[keyof typeof CategoriaObservacionPedido]
 
 
+export const EstadoCotizacion: {
+  PENDIENTE_ENVIO: 'PENDIENTE_ENVIO',
+  ENVIADO: 'ENVIADO'
+};
+
+export type EstadoCotizacion = (typeof EstadoCotizacion)[keyof typeof EstadoCotizacion]
+
+
 export const ModuloDocumentos: {
   KPIS: 'KPIS',
   ISO: 'ISO'
@@ -191,6 +204,10 @@ export const TipoDocumentoCliente: typeof $Enums.TipoDocumentoCliente
 export type CategoriaObservacionPedido = $Enums.CategoriaObservacionPedido
 
 export const CategoriaObservacionPedido: typeof $Enums.CategoriaObservacionPedido
+
+export type EstadoCotizacion = $Enums.EstadoCotizacion
+
+export const EstadoCotizacion: typeof $Enums.EstadoCotizacion
 
 export type ModuloDocumentos = $Enums.ModuloDocumentos
 
@@ -418,6 +435,16 @@ export class PrismaClient<
     * ```
     */
   get pedido(): Prisma.PedidoDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.cotizacion`: Exposes CRUD operations for the **Cotizacion** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Cotizacions
+    * const cotizacions = await prisma.cotizacion.findMany()
+    * ```
+    */
+  get cotizacion(): Prisma.CotizacionDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.carpeta`: Exposes CRUD operations for the **Carpeta** model.
@@ -924,6 +951,7 @@ export namespace Prisma {
     TrabajoImpresion: 'TrabajoImpresion',
     Cliente: 'Cliente',
     Pedido: 'Pedido',
+    Cotizacion: 'Cotizacion',
     Carpeta: 'Carpeta',
     Archivo: 'Archivo',
     AccesoIndicador: 'AccesoIndicador',
@@ -944,7 +972,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "usuario" | "permiso" | "fabricante" | "producto" | "plantilla" | "lote" | "trabajoImpresion" | "cliente" | "pedido" | "carpeta" | "archivo" | "accesoIndicador" | "accesoISO" | "registroAuditoria"
+      modelProps: "usuario" | "permiso" | "fabricante" | "producto" | "plantilla" | "lote" | "trabajoImpresion" | "cliente" | "pedido" | "cotizacion" | "carpeta" | "archivo" | "accesoIndicador" | "accesoISO" | "registroAuditoria"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1614,6 +1642,80 @@ export namespace Prisma {
           }
         }
       }
+      Cotizacion: {
+        payload: Prisma.$CotizacionPayload<ExtArgs>
+        fields: Prisma.CotizacionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CotizacionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CotizacionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CotizacionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CotizacionPayload>
+          }
+          findFirst: {
+            args: Prisma.CotizacionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CotizacionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CotizacionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CotizacionPayload>
+          }
+          findMany: {
+            args: Prisma.CotizacionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CotizacionPayload>[]
+          }
+          create: {
+            args: Prisma.CotizacionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CotizacionPayload>
+          }
+          createMany: {
+            args: Prisma.CotizacionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CotizacionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CotizacionPayload>[]
+          }
+          delete: {
+            args: Prisma.CotizacionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CotizacionPayload>
+          }
+          update: {
+            args: Prisma.CotizacionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CotizacionPayload>
+          }
+          deleteMany: {
+            args: Prisma.CotizacionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CotizacionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.CotizacionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CotizacionPayload>[]
+          }
+          upsert: {
+            args: Prisma.CotizacionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CotizacionPayload>
+          }
+          aggregate: {
+            args: Prisma.CotizacionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCotizacion>
+          }
+          groupBy: {
+            args: Prisma.CotizacionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CotizacionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CotizacionCountArgs<ExtArgs>
+            result: $Utils.Optional<CotizacionCountAggregateOutputType> | number
+          }
+        }
+      }
       Carpeta: {
         payload: Prisma.$CarpetaPayload<ExtArgs>
         fields: Prisma.CarpetaFieldRefs
@@ -2116,6 +2218,7 @@ export namespace Prisma {
     trabajoImpresion?: TrabajoImpresionOmit
     cliente?: ClienteOmit
     pedido?: PedidoOmit
+    cotizacion?: CotizacionOmit
     carpeta?: CarpetaOmit
     archivo?: ArchivoOmit
     accesoIndicador?: AccesoIndicadorOmit
@@ -2208,6 +2311,8 @@ export namespace Prisma {
     accesosIndicador: number
     pedidosCreados: number
     pedidosEditados: number
+    cotizacionesCreadas: number
+    cotizacionesEnviadas: number
   }
 
   export type UsuarioCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2218,6 +2323,8 @@ export namespace Prisma {
     accesosIndicador?: boolean | UsuarioCountOutputTypeCountAccesosIndicadorArgs
     pedidosCreados?: boolean | UsuarioCountOutputTypeCountPedidosCreadosArgs
     pedidosEditados?: boolean | UsuarioCountOutputTypeCountPedidosEditadosArgs
+    cotizacionesCreadas?: boolean | UsuarioCountOutputTypeCountCotizacionesCreadasArgs
+    cotizacionesEnviadas?: boolean | UsuarioCountOutputTypeCountCotizacionesEnviadasArgs
   }
 
   // Custom InputTypes
@@ -2278,6 +2385,20 @@ export namespace Prisma {
    */
   export type UsuarioCountOutputTypeCountPedidosEditadosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: PedidoWhereInput
+  }
+
+  /**
+   * UsuarioCountOutputType without action
+   */
+  export type UsuarioCountOutputTypeCountCotizacionesCreadasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CotizacionWhereInput
+  }
+
+  /**
+   * UsuarioCountOutputType without action
+   */
+  export type UsuarioCountOutputTypeCountCotizacionesEnviadasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CotizacionWhereInput
   }
 
 
@@ -2411,10 +2532,12 @@ export namespace Prisma {
 
   export type ClienteCountOutputType = {
     pedidos: number
+    cotizaciones: number
   }
 
   export type ClienteCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     pedidos?: boolean | ClienteCountOutputTypeCountPedidosArgs
+    cotizaciones?: boolean | ClienteCountOutputTypeCountCotizacionesArgs
   }
 
   // Custom InputTypes
@@ -2433,6 +2556,13 @@ export namespace Prisma {
    */
   export type ClienteCountOutputTypeCountPedidosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: PedidoWhereInput
+  }
+
+  /**
+   * ClienteCountOutputType without action
+   */
+  export type ClienteCountOutputTypeCountCotizacionesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CotizacionWhereInput
   }
 
 
@@ -2731,6 +2861,8 @@ export namespace Prisma {
     accesoIso?: boolean | Usuario$accesoIsoArgs<ExtArgs>
     pedidosCreados?: boolean | Usuario$pedidosCreadosArgs<ExtArgs>
     pedidosEditados?: boolean | Usuario$pedidosEditadosArgs<ExtArgs>
+    cotizacionesCreadas?: boolean | Usuario$cotizacionesCreadasArgs<ExtArgs>
+    cotizacionesEnviadas?: boolean | Usuario$cotizacionesEnviadasArgs<ExtArgs>
     _count?: boolean | UsuarioCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["usuario"]>
 
@@ -2786,6 +2918,8 @@ export namespace Prisma {
     accesoIso?: boolean | Usuario$accesoIsoArgs<ExtArgs>
     pedidosCreados?: boolean | Usuario$pedidosCreadosArgs<ExtArgs>
     pedidosEditados?: boolean | Usuario$pedidosEditadosArgs<ExtArgs>
+    cotizacionesCreadas?: boolean | Usuario$cotizacionesCreadasArgs<ExtArgs>
+    cotizacionesEnviadas?: boolean | Usuario$cotizacionesEnviadasArgs<ExtArgs>
     _count?: boolean | UsuarioCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UsuarioIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2807,6 +2941,8 @@ export namespace Prisma {
       accesoIso: Prisma.$AccesoISOPayload<ExtArgs> | null
       pedidosCreados: Prisma.$PedidoPayload<ExtArgs>[]
       pedidosEditados: Prisma.$PedidoPayload<ExtArgs>[]
+      cotizacionesCreadas: Prisma.$CotizacionPayload<ExtArgs>[]
+      cotizacionesEnviadas: Prisma.$CotizacionPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -3222,6 +3358,8 @@ export namespace Prisma {
     accesoIso<T extends Usuario$accesoIsoArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$accesoIsoArgs<ExtArgs>>): Prisma__AccesoISOClient<$Result.GetResult<Prisma.$AccesoISOPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     pedidosCreados<T extends Usuario$pedidosCreadosArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$pedidosCreadosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PedidoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     pedidosEditados<T extends Usuario$pedidosEditadosArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$pedidosEditadosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PedidoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    cotizacionesCreadas<T extends Usuario$cotizacionesCreadasArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$cotizacionesCreadasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CotizacionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    cotizacionesEnviadas<T extends Usuario$cotizacionesEnviadasArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$cotizacionesEnviadasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CotizacionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3865,6 +4003,54 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: PedidoScalarFieldEnum | PedidoScalarFieldEnum[]
+  }
+
+  /**
+   * Usuario.cotizacionesCreadas
+   */
+  export type Usuario$cotizacionesCreadasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cotizacion
+     */
+    select?: CotizacionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Cotizacion
+     */
+    omit?: CotizacionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CotizacionInclude<ExtArgs> | null
+    where?: CotizacionWhereInput
+    orderBy?: CotizacionOrderByWithRelationInput | CotizacionOrderByWithRelationInput[]
+    cursor?: CotizacionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CotizacionScalarFieldEnum | CotizacionScalarFieldEnum[]
+  }
+
+  /**
+   * Usuario.cotizacionesEnviadas
+   */
+  export type Usuario$cotizacionesEnviadasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cotizacion
+     */
+    select?: CotizacionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Cotizacion
+     */
+    omit?: CotizacionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CotizacionInclude<ExtArgs> | null
+    where?: CotizacionWhereInput
+    orderBy?: CotizacionOrderByWithRelationInput | CotizacionOrderByWithRelationInput[]
+    cursor?: CotizacionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CotizacionScalarFieldEnum | CotizacionScalarFieldEnum[]
   }
 
   /**
@@ -11283,6 +11469,7 @@ export namespace Prisma {
     autorizaContactoEn?: boolean
     createdAt?: boolean
     pedidos?: boolean | Cliente$pedidosArgs<ExtArgs>
+    cotizaciones?: boolean | Cliente$cotizacionesArgs<ExtArgs>
     _count?: boolean | ClienteCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["cliente"]>
 
@@ -11328,6 +11515,7 @@ export namespace Prisma {
   export type ClienteOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nombre" | "nombreNormalizado" | "tipoDocumento" | "numeroDocumento" | "direccion" | "celular" | "email" | "autorizaContactoEn" | "createdAt", ExtArgs["result"]["cliente"]>
   export type ClienteInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     pedidos?: boolean | Cliente$pedidosArgs<ExtArgs>
+    cotizaciones?: boolean | Cliente$cotizacionesArgs<ExtArgs>
     _count?: boolean | ClienteCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ClienteIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -11337,6 +11525,7 @@ export namespace Prisma {
     name: "Cliente"
     objects: {
       pedidos: Prisma.$PedidoPayload<ExtArgs>[]
+      cotizaciones: Prisma.$CotizacionPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -11744,6 +11933,7 @@ export namespace Prisma {
   export interface Prisma__ClienteClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     pedidos<T extends Cliente$pedidosArgs<ExtArgs> = {}>(args?: Subset<T, Cliente$pedidosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PedidoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    cotizaciones<T extends Cliente$cotizacionesArgs<ExtArgs> = {}>(args?: Subset<T, Cliente$cotizacionesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CotizacionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -12197,6 +12387,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: PedidoScalarFieldEnum | PedidoScalarFieldEnum[]
+  }
+
+  /**
+   * Cliente.cotizaciones
+   */
+  export type Cliente$cotizacionesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cotizacion
+     */
+    select?: CotizacionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Cotizacion
+     */
+    omit?: CotizacionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CotizacionInclude<ExtArgs> | null
+    where?: CotizacionWhereInput
+    orderBy?: CotizacionOrderByWithRelationInput | CotizacionOrderByWithRelationInput[]
+    cursor?: CotizacionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CotizacionScalarFieldEnum | CotizacionScalarFieldEnum[]
   }
 
   /**
@@ -13515,6 +13729,1228 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: PedidoInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Cotizacion
+   */
+
+  export type AggregateCotizacion = {
+    _count: CotizacionCountAggregateOutputType | null
+    _avg: CotizacionAvgAggregateOutputType | null
+    _sum: CotizacionSumAggregateOutputType | null
+    _min: CotizacionMinAggregateOutputType | null
+    _max: CotizacionMaxAggregateOutputType | null
+  }
+
+  export type CotizacionAvgAggregateOutputType = {
+    id: number | null
+    clienteId: number | null
+    enviadoPorId: number | null
+    creadoPorId: number | null
+  }
+
+  export type CotizacionSumAggregateOutputType = {
+    id: number | null
+    clienteId: number | null
+    enviadoPorId: number | null
+    creadoPorId: number | null
+  }
+
+  export type CotizacionMinAggregateOutputType = {
+    id: number | null
+    clienteId: number | null
+    numeroProforma: string | null
+    notas: string | null
+    estado: $Enums.EstadoCotizacion | null
+    enviadoEn: Date | null
+    enviadoPorId: number | null
+    recordatorioEnviadoEn: Date | null
+    creadoPorId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type CotizacionMaxAggregateOutputType = {
+    id: number | null
+    clienteId: number | null
+    numeroProforma: string | null
+    notas: string | null
+    estado: $Enums.EstadoCotizacion | null
+    enviadoEn: Date | null
+    enviadoPorId: number | null
+    recordatorioEnviadoEn: Date | null
+    creadoPorId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type CotizacionCountAggregateOutputType = {
+    id: number
+    clienteId: number
+    numeroProforma: number
+    notas: number
+    estado: number
+    enviadoEn: number
+    enviadoPorId: number
+    recordatorioEnviadoEn: number
+    creadoPorId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type CotizacionAvgAggregateInputType = {
+    id?: true
+    clienteId?: true
+    enviadoPorId?: true
+    creadoPorId?: true
+  }
+
+  export type CotizacionSumAggregateInputType = {
+    id?: true
+    clienteId?: true
+    enviadoPorId?: true
+    creadoPorId?: true
+  }
+
+  export type CotizacionMinAggregateInputType = {
+    id?: true
+    clienteId?: true
+    numeroProforma?: true
+    notas?: true
+    estado?: true
+    enviadoEn?: true
+    enviadoPorId?: true
+    recordatorioEnviadoEn?: true
+    creadoPorId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type CotizacionMaxAggregateInputType = {
+    id?: true
+    clienteId?: true
+    numeroProforma?: true
+    notas?: true
+    estado?: true
+    enviadoEn?: true
+    enviadoPorId?: true
+    recordatorioEnviadoEn?: true
+    creadoPorId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type CotizacionCountAggregateInputType = {
+    id?: true
+    clienteId?: true
+    numeroProforma?: true
+    notas?: true
+    estado?: true
+    enviadoEn?: true
+    enviadoPorId?: true
+    recordatorioEnviadoEn?: true
+    creadoPorId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type CotizacionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Cotizacion to aggregate.
+     */
+    where?: CotizacionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Cotizacions to fetch.
+     */
+    orderBy?: CotizacionOrderByWithRelationInput | CotizacionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CotizacionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Cotizacions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Cotizacions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Cotizacions
+    **/
+    _count?: true | CotizacionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: CotizacionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: CotizacionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CotizacionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CotizacionMaxAggregateInputType
+  }
+
+  export type GetCotizacionAggregateType<T extends CotizacionAggregateArgs> = {
+        [P in keyof T & keyof AggregateCotizacion]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCotizacion[P]>
+      : GetScalarType<T[P], AggregateCotizacion[P]>
+  }
+
+
+
+
+  export type CotizacionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CotizacionWhereInput
+    orderBy?: CotizacionOrderByWithAggregationInput | CotizacionOrderByWithAggregationInput[]
+    by: CotizacionScalarFieldEnum[] | CotizacionScalarFieldEnum
+    having?: CotizacionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CotizacionCountAggregateInputType | true
+    _avg?: CotizacionAvgAggregateInputType
+    _sum?: CotizacionSumAggregateInputType
+    _min?: CotizacionMinAggregateInputType
+    _max?: CotizacionMaxAggregateInputType
+  }
+
+  export type CotizacionGroupByOutputType = {
+    id: number
+    clienteId: number
+    numeroProforma: string
+    notas: string | null
+    estado: $Enums.EstadoCotizacion
+    enviadoEn: Date | null
+    enviadoPorId: number | null
+    recordatorioEnviadoEn: Date | null
+    creadoPorId: number
+    createdAt: Date
+    updatedAt: Date
+    _count: CotizacionCountAggregateOutputType | null
+    _avg: CotizacionAvgAggregateOutputType | null
+    _sum: CotizacionSumAggregateOutputType | null
+    _min: CotizacionMinAggregateOutputType | null
+    _max: CotizacionMaxAggregateOutputType | null
+  }
+
+  type GetCotizacionGroupByPayload<T extends CotizacionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CotizacionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CotizacionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CotizacionGroupByOutputType[P]>
+            : GetScalarType<T[P], CotizacionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CotizacionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    clienteId?: boolean
+    numeroProforma?: boolean
+    notas?: boolean
+    estado?: boolean
+    enviadoEn?: boolean
+    enviadoPorId?: boolean
+    recordatorioEnviadoEn?: boolean
+    creadoPorId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    cliente?: boolean | ClienteDefaultArgs<ExtArgs>
+    enviadoPor?: boolean | Cotizacion$enviadoPorArgs<ExtArgs>
+    creadoPor?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["cotizacion"]>
+
+  export type CotizacionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    clienteId?: boolean
+    numeroProforma?: boolean
+    notas?: boolean
+    estado?: boolean
+    enviadoEn?: boolean
+    enviadoPorId?: boolean
+    recordatorioEnviadoEn?: boolean
+    creadoPorId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    cliente?: boolean | ClienteDefaultArgs<ExtArgs>
+    enviadoPor?: boolean | Cotizacion$enviadoPorArgs<ExtArgs>
+    creadoPor?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["cotizacion"]>
+
+  export type CotizacionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    clienteId?: boolean
+    numeroProforma?: boolean
+    notas?: boolean
+    estado?: boolean
+    enviadoEn?: boolean
+    enviadoPorId?: boolean
+    recordatorioEnviadoEn?: boolean
+    creadoPorId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    cliente?: boolean | ClienteDefaultArgs<ExtArgs>
+    enviadoPor?: boolean | Cotizacion$enviadoPorArgs<ExtArgs>
+    creadoPor?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["cotizacion"]>
+
+  export type CotizacionSelectScalar = {
+    id?: boolean
+    clienteId?: boolean
+    numeroProforma?: boolean
+    notas?: boolean
+    estado?: boolean
+    enviadoEn?: boolean
+    enviadoPorId?: boolean
+    recordatorioEnviadoEn?: boolean
+    creadoPorId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type CotizacionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "clienteId" | "numeroProforma" | "notas" | "estado" | "enviadoEn" | "enviadoPorId" | "recordatorioEnviadoEn" | "creadoPorId" | "createdAt" | "updatedAt", ExtArgs["result"]["cotizacion"]>
+  export type CotizacionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    cliente?: boolean | ClienteDefaultArgs<ExtArgs>
+    enviadoPor?: boolean | Cotizacion$enviadoPorArgs<ExtArgs>
+    creadoPor?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }
+  export type CotizacionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    cliente?: boolean | ClienteDefaultArgs<ExtArgs>
+    enviadoPor?: boolean | Cotizacion$enviadoPorArgs<ExtArgs>
+    creadoPor?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }
+  export type CotizacionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    cliente?: boolean | ClienteDefaultArgs<ExtArgs>
+    enviadoPor?: boolean | Cotizacion$enviadoPorArgs<ExtArgs>
+    creadoPor?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }
+
+  export type $CotizacionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Cotizacion"
+    objects: {
+      cliente: Prisma.$ClientePayload<ExtArgs>
+      enviadoPor: Prisma.$UsuarioPayload<ExtArgs> | null
+      creadoPor: Prisma.$UsuarioPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      clienteId: number
+      numeroProforma: string
+      notas: string | null
+      estado: $Enums.EstadoCotizacion
+      enviadoEn: Date | null
+      enviadoPorId: number | null
+      recordatorioEnviadoEn: Date | null
+      creadoPorId: number
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["cotizacion"]>
+    composites: {}
+  }
+
+  type CotizacionGetPayload<S extends boolean | null | undefined | CotizacionDefaultArgs> = $Result.GetResult<Prisma.$CotizacionPayload, S>
+
+  type CotizacionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CotizacionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CotizacionCountAggregateInputType | true
+    }
+
+  export interface CotizacionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Cotizacion'], meta: { name: 'Cotizacion' } }
+    /**
+     * Find zero or one Cotizacion that matches the filter.
+     * @param {CotizacionFindUniqueArgs} args - Arguments to find a Cotizacion
+     * @example
+     * // Get one Cotizacion
+     * const cotizacion = await prisma.cotizacion.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CotizacionFindUniqueArgs>(args: SelectSubset<T, CotizacionFindUniqueArgs<ExtArgs>>): Prisma__CotizacionClient<$Result.GetResult<Prisma.$CotizacionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Cotizacion that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CotizacionFindUniqueOrThrowArgs} args - Arguments to find a Cotizacion
+     * @example
+     * // Get one Cotizacion
+     * const cotizacion = await prisma.cotizacion.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CotizacionFindUniqueOrThrowArgs>(args: SelectSubset<T, CotizacionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CotizacionClient<$Result.GetResult<Prisma.$CotizacionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Cotizacion that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CotizacionFindFirstArgs} args - Arguments to find a Cotizacion
+     * @example
+     * // Get one Cotizacion
+     * const cotizacion = await prisma.cotizacion.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CotizacionFindFirstArgs>(args?: SelectSubset<T, CotizacionFindFirstArgs<ExtArgs>>): Prisma__CotizacionClient<$Result.GetResult<Prisma.$CotizacionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Cotizacion that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CotizacionFindFirstOrThrowArgs} args - Arguments to find a Cotizacion
+     * @example
+     * // Get one Cotizacion
+     * const cotizacion = await prisma.cotizacion.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CotizacionFindFirstOrThrowArgs>(args?: SelectSubset<T, CotizacionFindFirstOrThrowArgs<ExtArgs>>): Prisma__CotizacionClient<$Result.GetResult<Prisma.$CotizacionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Cotizacions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CotizacionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Cotizacions
+     * const cotizacions = await prisma.cotizacion.findMany()
+     * 
+     * // Get first 10 Cotizacions
+     * const cotizacions = await prisma.cotizacion.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const cotizacionWithIdOnly = await prisma.cotizacion.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CotizacionFindManyArgs>(args?: SelectSubset<T, CotizacionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CotizacionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Cotizacion.
+     * @param {CotizacionCreateArgs} args - Arguments to create a Cotizacion.
+     * @example
+     * // Create one Cotizacion
+     * const Cotizacion = await prisma.cotizacion.create({
+     *   data: {
+     *     // ... data to create a Cotizacion
+     *   }
+     * })
+     * 
+     */
+    create<T extends CotizacionCreateArgs>(args: SelectSubset<T, CotizacionCreateArgs<ExtArgs>>): Prisma__CotizacionClient<$Result.GetResult<Prisma.$CotizacionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Cotizacions.
+     * @param {CotizacionCreateManyArgs} args - Arguments to create many Cotizacions.
+     * @example
+     * // Create many Cotizacions
+     * const cotizacion = await prisma.cotizacion.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CotizacionCreateManyArgs>(args?: SelectSubset<T, CotizacionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Cotizacions and returns the data saved in the database.
+     * @param {CotizacionCreateManyAndReturnArgs} args - Arguments to create many Cotizacions.
+     * @example
+     * // Create many Cotizacions
+     * const cotizacion = await prisma.cotizacion.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Cotizacions and only return the `id`
+     * const cotizacionWithIdOnly = await prisma.cotizacion.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CotizacionCreateManyAndReturnArgs>(args?: SelectSubset<T, CotizacionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CotizacionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Cotizacion.
+     * @param {CotizacionDeleteArgs} args - Arguments to delete one Cotizacion.
+     * @example
+     * // Delete one Cotizacion
+     * const Cotizacion = await prisma.cotizacion.delete({
+     *   where: {
+     *     // ... filter to delete one Cotizacion
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CotizacionDeleteArgs>(args: SelectSubset<T, CotizacionDeleteArgs<ExtArgs>>): Prisma__CotizacionClient<$Result.GetResult<Prisma.$CotizacionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Cotizacion.
+     * @param {CotizacionUpdateArgs} args - Arguments to update one Cotizacion.
+     * @example
+     * // Update one Cotizacion
+     * const cotizacion = await prisma.cotizacion.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CotizacionUpdateArgs>(args: SelectSubset<T, CotizacionUpdateArgs<ExtArgs>>): Prisma__CotizacionClient<$Result.GetResult<Prisma.$CotizacionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Cotizacions.
+     * @param {CotizacionDeleteManyArgs} args - Arguments to filter Cotizacions to delete.
+     * @example
+     * // Delete a few Cotizacions
+     * const { count } = await prisma.cotizacion.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CotizacionDeleteManyArgs>(args?: SelectSubset<T, CotizacionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Cotizacions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CotizacionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Cotizacions
+     * const cotizacion = await prisma.cotizacion.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CotizacionUpdateManyArgs>(args: SelectSubset<T, CotizacionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Cotizacions and returns the data updated in the database.
+     * @param {CotizacionUpdateManyAndReturnArgs} args - Arguments to update many Cotizacions.
+     * @example
+     * // Update many Cotizacions
+     * const cotizacion = await prisma.cotizacion.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Cotizacions and only return the `id`
+     * const cotizacionWithIdOnly = await prisma.cotizacion.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends CotizacionUpdateManyAndReturnArgs>(args: SelectSubset<T, CotizacionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CotizacionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Cotizacion.
+     * @param {CotizacionUpsertArgs} args - Arguments to update or create a Cotizacion.
+     * @example
+     * // Update or create a Cotizacion
+     * const cotizacion = await prisma.cotizacion.upsert({
+     *   create: {
+     *     // ... data to create a Cotizacion
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Cotizacion we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CotizacionUpsertArgs>(args: SelectSubset<T, CotizacionUpsertArgs<ExtArgs>>): Prisma__CotizacionClient<$Result.GetResult<Prisma.$CotizacionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Cotizacions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CotizacionCountArgs} args - Arguments to filter Cotizacions to count.
+     * @example
+     * // Count the number of Cotizacions
+     * const count = await prisma.cotizacion.count({
+     *   where: {
+     *     // ... the filter for the Cotizacions we want to count
+     *   }
+     * })
+    **/
+    count<T extends CotizacionCountArgs>(
+      args?: Subset<T, CotizacionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CotizacionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Cotizacion.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CotizacionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CotizacionAggregateArgs>(args: Subset<T, CotizacionAggregateArgs>): Prisma.PrismaPromise<GetCotizacionAggregateType<T>>
+
+    /**
+     * Group by Cotizacion.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CotizacionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CotizacionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CotizacionGroupByArgs['orderBy'] }
+        : { orderBy?: CotizacionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CotizacionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCotizacionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Cotizacion model
+   */
+  readonly fields: CotizacionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Cotizacion.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CotizacionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    cliente<T extends ClienteDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ClienteDefaultArgs<ExtArgs>>): Prisma__ClienteClient<$Result.GetResult<Prisma.$ClientePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    enviadoPor<T extends Cotizacion$enviadoPorArgs<ExtArgs> = {}>(args?: Subset<T, Cotizacion$enviadoPorArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    creadoPor<T extends UsuarioDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UsuarioDefaultArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Cotizacion model
+   */
+  interface CotizacionFieldRefs {
+    readonly id: FieldRef<"Cotizacion", 'Int'>
+    readonly clienteId: FieldRef<"Cotizacion", 'Int'>
+    readonly numeroProforma: FieldRef<"Cotizacion", 'String'>
+    readonly notas: FieldRef<"Cotizacion", 'String'>
+    readonly estado: FieldRef<"Cotizacion", 'EstadoCotizacion'>
+    readonly enviadoEn: FieldRef<"Cotizacion", 'DateTime'>
+    readonly enviadoPorId: FieldRef<"Cotizacion", 'Int'>
+    readonly recordatorioEnviadoEn: FieldRef<"Cotizacion", 'DateTime'>
+    readonly creadoPorId: FieldRef<"Cotizacion", 'Int'>
+    readonly createdAt: FieldRef<"Cotizacion", 'DateTime'>
+    readonly updatedAt: FieldRef<"Cotizacion", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Cotizacion findUnique
+   */
+  export type CotizacionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cotizacion
+     */
+    select?: CotizacionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Cotizacion
+     */
+    omit?: CotizacionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CotizacionInclude<ExtArgs> | null
+    /**
+     * Filter, which Cotizacion to fetch.
+     */
+    where: CotizacionWhereUniqueInput
+  }
+
+  /**
+   * Cotizacion findUniqueOrThrow
+   */
+  export type CotizacionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cotizacion
+     */
+    select?: CotizacionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Cotizacion
+     */
+    omit?: CotizacionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CotizacionInclude<ExtArgs> | null
+    /**
+     * Filter, which Cotizacion to fetch.
+     */
+    where: CotizacionWhereUniqueInput
+  }
+
+  /**
+   * Cotizacion findFirst
+   */
+  export type CotizacionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cotizacion
+     */
+    select?: CotizacionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Cotizacion
+     */
+    omit?: CotizacionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CotizacionInclude<ExtArgs> | null
+    /**
+     * Filter, which Cotizacion to fetch.
+     */
+    where?: CotizacionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Cotizacions to fetch.
+     */
+    orderBy?: CotizacionOrderByWithRelationInput | CotizacionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Cotizacions.
+     */
+    cursor?: CotizacionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Cotizacions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Cotizacions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Cotizacions.
+     */
+    distinct?: CotizacionScalarFieldEnum | CotizacionScalarFieldEnum[]
+  }
+
+  /**
+   * Cotizacion findFirstOrThrow
+   */
+  export type CotizacionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cotizacion
+     */
+    select?: CotizacionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Cotizacion
+     */
+    omit?: CotizacionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CotizacionInclude<ExtArgs> | null
+    /**
+     * Filter, which Cotizacion to fetch.
+     */
+    where?: CotizacionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Cotizacions to fetch.
+     */
+    orderBy?: CotizacionOrderByWithRelationInput | CotizacionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Cotizacions.
+     */
+    cursor?: CotizacionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Cotizacions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Cotizacions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Cotizacions.
+     */
+    distinct?: CotizacionScalarFieldEnum | CotizacionScalarFieldEnum[]
+  }
+
+  /**
+   * Cotizacion findMany
+   */
+  export type CotizacionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cotizacion
+     */
+    select?: CotizacionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Cotizacion
+     */
+    omit?: CotizacionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CotizacionInclude<ExtArgs> | null
+    /**
+     * Filter, which Cotizacions to fetch.
+     */
+    where?: CotizacionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Cotizacions to fetch.
+     */
+    orderBy?: CotizacionOrderByWithRelationInput | CotizacionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Cotizacions.
+     */
+    cursor?: CotizacionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Cotizacions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Cotizacions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Cotizacions.
+     */
+    distinct?: CotizacionScalarFieldEnum | CotizacionScalarFieldEnum[]
+  }
+
+  /**
+   * Cotizacion create
+   */
+  export type CotizacionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cotizacion
+     */
+    select?: CotizacionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Cotizacion
+     */
+    omit?: CotizacionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CotizacionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Cotizacion.
+     */
+    data: XOR<CotizacionCreateInput, CotizacionUncheckedCreateInput>
+  }
+
+  /**
+   * Cotizacion createMany
+   */
+  export type CotizacionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Cotizacions.
+     */
+    data: CotizacionCreateManyInput | CotizacionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Cotizacion createManyAndReturn
+   */
+  export type CotizacionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cotizacion
+     */
+    select?: CotizacionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Cotizacion
+     */
+    omit?: CotizacionOmit<ExtArgs> | null
+    /**
+     * The data used to create many Cotizacions.
+     */
+    data: CotizacionCreateManyInput | CotizacionCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CotizacionIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Cotizacion update
+   */
+  export type CotizacionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cotizacion
+     */
+    select?: CotizacionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Cotizacion
+     */
+    omit?: CotizacionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CotizacionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Cotizacion.
+     */
+    data: XOR<CotizacionUpdateInput, CotizacionUncheckedUpdateInput>
+    /**
+     * Choose, which Cotizacion to update.
+     */
+    where: CotizacionWhereUniqueInput
+  }
+
+  /**
+   * Cotizacion updateMany
+   */
+  export type CotizacionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Cotizacions.
+     */
+    data: XOR<CotizacionUpdateManyMutationInput, CotizacionUncheckedUpdateManyInput>
+    /**
+     * Filter which Cotizacions to update
+     */
+    where?: CotizacionWhereInput
+    /**
+     * Limit how many Cotizacions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Cotizacion updateManyAndReturn
+   */
+  export type CotizacionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cotizacion
+     */
+    select?: CotizacionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Cotizacion
+     */
+    omit?: CotizacionOmit<ExtArgs> | null
+    /**
+     * The data used to update Cotizacions.
+     */
+    data: XOR<CotizacionUpdateManyMutationInput, CotizacionUncheckedUpdateManyInput>
+    /**
+     * Filter which Cotizacions to update
+     */
+    where?: CotizacionWhereInput
+    /**
+     * Limit how many Cotizacions to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CotizacionIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Cotizacion upsert
+   */
+  export type CotizacionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cotizacion
+     */
+    select?: CotizacionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Cotizacion
+     */
+    omit?: CotizacionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CotizacionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Cotizacion to update in case it exists.
+     */
+    where: CotizacionWhereUniqueInput
+    /**
+     * In case the Cotizacion found by the `where` argument doesn't exist, create a new Cotizacion with this data.
+     */
+    create: XOR<CotizacionCreateInput, CotizacionUncheckedCreateInput>
+    /**
+     * In case the Cotizacion was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CotizacionUpdateInput, CotizacionUncheckedUpdateInput>
+  }
+
+  /**
+   * Cotizacion delete
+   */
+  export type CotizacionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cotizacion
+     */
+    select?: CotizacionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Cotizacion
+     */
+    omit?: CotizacionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CotizacionInclude<ExtArgs> | null
+    /**
+     * Filter which Cotizacion to delete.
+     */
+    where: CotizacionWhereUniqueInput
+  }
+
+  /**
+   * Cotizacion deleteMany
+   */
+  export type CotizacionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Cotizacions to delete
+     */
+    where?: CotizacionWhereInput
+    /**
+     * Limit how many Cotizacions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Cotizacion.enviadoPor
+   */
+  export type Cotizacion$enviadoPorArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Usuario
+     */
+    select?: UsuarioSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Usuario
+     */
+    omit?: UsuarioOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UsuarioInclude<ExtArgs> | null
+    where?: UsuarioWhereInput
+  }
+
+  /**
+   * Cotizacion without action
+   */
+  export type CotizacionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cotizacion
+     */
+    select?: CotizacionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Cotizacion
+     */
+    omit?: CotizacionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CotizacionInclude<ExtArgs> | null
   }
 
 
@@ -19404,6 +20840,23 @@ export namespace Prisma {
   export type PedidoScalarFieldEnum = (typeof PedidoScalarFieldEnum)[keyof typeof PedidoScalarFieldEnum]
 
 
+  export const CotizacionScalarFieldEnum: {
+    id: 'id',
+    clienteId: 'clienteId',
+    numeroProforma: 'numeroProforma',
+    notas: 'notas',
+    estado: 'estado',
+    enviadoEn: 'enviadoEn',
+    enviadoPorId: 'enviadoPorId',
+    recordatorioEnviadoEn: 'recordatorioEnviadoEn',
+    creadoPorId: 'creadoPorId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type CotizacionScalarFieldEnum = (typeof CotizacionScalarFieldEnum)[keyof typeof CotizacionScalarFieldEnum]
+
+
   export const CarpetaScalarFieldEnum: {
     id: 'id',
     nombre: 'nombre',
@@ -19622,6 +21075,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'EstadoCotizacion'
+   */
+  export type EnumEstadoCotizacionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EstadoCotizacion'>
+    
+
+
+  /**
+   * Reference to a field of type 'EstadoCotizacion[]'
+   */
+  export type ListEnumEstadoCotizacionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EstadoCotizacion[]'>
+    
+
+
+  /**
    * Reference to a field of type 'ModuloDocumentos'
    */
   export type EnumModuloDocumentosFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ModuloDocumentos'>
@@ -19703,6 +21170,8 @@ export namespace Prisma {
     accesoIso?: XOR<AccesoISONullableScalarRelationFilter, AccesoISOWhereInput> | null
     pedidosCreados?: PedidoListRelationFilter
     pedidosEditados?: PedidoListRelationFilter
+    cotizacionesCreadas?: CotizacionListRelationFilter
+    cotizacionesEnviadas?: CotizacionListRelationFilter
   }
 
   export type UsuarioOrderByWithRelationInput = {
@@ -19725,6 +21194,8 @@ export namespace Prisma {
     accesoIso?: AccesoISOOrderByWithRelationInput
     pedidosCreados?: PedidoOrderByRelationAggregateInput
     pedidosEditados?: PedidoOrderByRelationAggregateInput
+    cotizacionesCreadas?: CotizacionOrderByRelationAggregateInput
+    cotizacionesEnviadas?: CotizacionOrderByRelationAggregateInput
   }
 
   export type UsuarioWhereUniqueInput = Prisma.AtLeast<{
@@ -19750,6 +21221,8 @@ export namespace Prisma {
     accesoIso?: XOR<AccesoISONullableScalarRelationFilter, AccesoISOWhereInput> | null
     pedidosCreados?: PedidoListRelationFilter
     pedidosEditados?: PedidoListRelationFilter
+    cotizacionesCreadas?: CotizacionListRelationFilter
+    cotizacionesEnviadas?: CotizacionListRelationFilter
   }, "id" | "supabaseUserId">
 
   export type UsuarioOrderByWithAggregationInput = {
@@ -20327,6 +21800,7 @@ export namespace Prisma {
     autorizaContactoEn?: DateTimeNullableFilter<"Cliente"> | Date | string | null
     createdAt?: DateTimeFilter<"Cliente"> | Date | string
     pedidos?: PedidoListRelationFilter
+    cotizaciones?: CotizacionListRelationFilter
   }
 
   export type ClienteOrderByWithRelationInput = {
@@ -20341,6 +21815,7 @@ export namespace Prisma {
     autorizaContactoEn?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     pedidos?: PedidoOrderByRelationAggregateInput
+    cotizaciones?: CotizacionOrderByRelationAggregateInput
   }
 
   export type ClienteWhereUniqueInput = Prisma.AtLeast<{
@@ -20358,6 +21833,7 @@ export namespace Prisma {
     autorizaContactoEn?: DateTimeNullableFilter<"Cliente"> | Date | string | null
     createdAt?: DateTimeFilter<"Cliente"> | Date | string
     pedidos?: PedidoListRelationFilter
+    cotizaciones?: CotizacionListRelationFilter
   }, "id" | "nombre" | "nombreNormalizado">
 
   export type ClienteOrderByWithAggregationInput = {
@@ -20515,6 +21991,99 @@ export namespace Prisma {
     ultimoEditadoPorId?: IntNullableWithAggregatesFilter<"Pedido"> | number | null
     createdAt?: DateTimeWithAggregatesFilter<"Pedido"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Pedido"> | Date | string
+  }
+
+  export type CotizacionWhereInput = {
+    AND?: CotizacionWhereInput | CotizacionWhereInput[]
+    OR?: CotizacionWhereInput[]
+    NOT?: CotizacionWhereInput | CotizacionWhereInput[]
+    id?: IntFilter<"Cotizacion"> | number
+    clienteId?: IntFilter<"Cotizacion"> | number
+    numeroProforma?: StringFilter<"Cotizacion"> | string
+    notas?: StringNullableFilter<"Cotizacion"> | string | null
+    estado?: EnumEstadoCotizacionFilter<"Cotizacion"> | $Enums.EstadoCotizacion
+    enviadoEn?: DateTimeNullableFilter<"Cotizacion"> | Date | string | null
+    enviadoPorId?: IntNullableFilter<"Cotizacion"> | number | null
+    recordatorioEnviadoEn?: DateTimeNullableFilter<"Cotizacion"> | Date | string | null
+    creadoPorId?: IntFilter<"Cotizacion"> | number
+    createdAt?: DateTimeFilter<"Cotizacion"> | Date | string
+    updatedAt?: DateTimeFilter<"Cotizacion"> | Date | string
+    cliente?: XOR<ClienteScalarRelationFilter, ClienteWhereInput>
+    enviadoPor?: XOR<UsuarioNullableScalarRelationFilter, UsuarioWhereInput> | null
+    creadoPor?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
+  }
+
+  export type CotizacionOrderByWithRelationInput = {
+    id?: SortOrder
+    clienteId?: SortOrder
+    numeroProforma?: SortOrder
+    notas?: SortOrderInput | SortOrder
+    estado?: SortOrder
+    enviadoEn?: SortOrderInput | SortOrder
+    enviadoPorId?: SortOrderInput | SortOrder
+    recordatorioEnviadoEn?: SortOrderInput | SortOrder
+    creadoPorId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    cliente?: ClienteOrderByWithRelationInput
+    enviadoPor?: UsuarioOrderByWithRelationInput
+    creadoPor?: UsuarioOrderByWithRelationInput
+  }
+
+  export type CotizacionWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: CotizacionWhereInput | CotizacionWhereInput[]
+    OR?: CotizacionWhereInput[]
+    NOT?: CotizacionWhereInput | CotizacionWhereInput[]
+    clienteId?: IntFilter<"Cotizacion"> | number
+    numeroProforma?: StringFilter<"Cotizacion"> | string
+    notas?: StringNullableFilter<"Cotizacion"> | string | null
+    estado?: EnumEstadoCotizacionFilter<"Cotizacion"> | $Enums.EstadoCotizacion
+    enviadoEn?: DateTimeNullableFilter<"Cotizacion"> | Date | string | null
+    enviadoPorId?: IntNullableFilter<"Cotizacion"> | number | null
+    recordatorioEnviadoEn?: DateTimeNullableFilter<"Cotizacion"> | Date | string | null
+    creadoPorId?: IntFilter<"Cotizacion"> | number
+    createdAt?: DateTimeFilter<"Cotizacion"> | Date | string
+    updatedAt?: DateTimeFilter<"Cotizacion"> | Date | string
+    cliente?: XOR<ClienteScalarRelationFilter, ClienteWhereInput>
+    enviadoPor?: XOR<UsuarioNullableScalarRelationFilter, UsuarioWhereInput> | null
+    creadoPor?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
+  }, "id">
+
+  export type CotizacionOrderByWithAggregationInput = {
+    id?: SortOrder
+    clienteId?: SortOrder
+    numeroProforma?: SortOrder
+    notas?: SortOrderInput | SortOrder
+    estado?: SortOrder
+    enviadoEn?: SortOrderInput | SortOrder
+    enviadoPorId?: SortOrderInput | SortOrder
+    recordatorioEnviadoEn?: SortOrderInput | SortOrder
+    creadoPorId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: CotizacionCountOrderByAggregateInput
+    _avg?: CotizacionAvgOrderByAggregateInput
+    _max?: CotizacionMaxOrderByAggregateInput
+    _min?: CotizacionMinOrderByAggregateInput
+    _sum?: CotizacionSumOrderByAggregateInput
+  }
+
+  export type CotizacionScalarWhereWithAggregatesInput = {
+    AND?: CotizacionScalarWhereWithAggregatesInput | CotizacionScalarWhereWithAggregatesInput[]
+    OR?: CotizacionScalarWhereWithAggregatesInput[]
+    NOT?: CotizacionScalarWhereWithAggregatesInput | CotizacionScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Cotizacion"> | number
+    clienteId?: IntWithAggregatesFilter<"Cotizacion"> | number
+    numeroProforma?: StringWithAggregatesFilter<"Cotizacion"> | string
+    notas?: StringNullableWithAggregatesFilter<"Cotizacion"> | string | null
+    estado?: EnumEstadoCotizacionWithAggregatesFilter<"Cotizacion"> | $Enums.EstadoCotizacion
+    enviadoEn?: DateTimeNullableWithAggregatesFilter<"Cotizacion"> | Date | string | null
+    enviadoPorId?: IntNullableWithAggregatesFilter<"Cotizacion"> | number | null
+    recordatorioEnviadoEn?: DateTimeNullableWithAggregatesFilter<"Cotizacion"> | Date | string | null
+    creadoPorId?: IntWithAggregatesFilter<"Cotizacion"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"Cotizacion"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Cotizacion"> | Date | string
   }
 
   export type CarpetaWhereInput = {
@@ -20897,6 +22466,8 @@ export namespace Prisma {
     accesoIso?: AccesoISOCreateNestedOneWithoutUsuarioInput
     pedidosCreados?: PedidoCreateNestedManyWithoutCreadoPorInput
     pedidosEditados?: PedidoCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesCreadas?: CotizacionCreateNestedManyWithoutCreadoPorInput
+    cotizacionesEnviadas?: CotizacionCreateNestedManyWithoutEnviadoPorInput
   }
 
   export type UsuarioUncheckedCreateInput = {
@@ -20918,6 +22489,8 @@ export namespace Prisma {
     accesoIso?: AccesoISOUncheckedCreateNestedOneWithoutUsuarioInput
     pedidosCreados?: PedidoUncheckedCreateNestedManyWithoutCreadoPorInput
     pedidosEditados?: PedidoUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesCreadas?: CotizacionUncheckedCreateNestedManyWithoutCreadoPorInput
+    cotizacionesEnviadas?: CotizacionUncheckedCreateNestedManyWithoutEnviadoPorInput
   }
 
   export type UsuarioUpdateInput = {
@@ -20938,6 +22511,8 @@ export namespace Prisma {
     accesoIso?: AccesoISOUpdateOneWithoutUsuarioNestedInput
     pedidosCreados?: PedidoUpdateManyWithoutCreadoPorNestedInput
     pedidosEditados?: PedidoUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesCreadas?: CotizacionUpdateManyWithoutCreadoPorNestedInput
+    cotizacionesEnviadas?: CotizacionUpdateManyWithoutEnviadoPorNestedInput
   }
 
   export type UsuarioUncheckedUpdateInput = {
@@ -20959,6 +22534,8 @@ export namespace Prisma {
     accesoIso?: AccesoISOUncheckedUpdateOneWithoutUsuarioNestedInput
     pedidosCreados?: PedidoUncheckedUpdateManyWithoutCreadoPorNestedInput
     pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesCreadas?: CotizacionUncheckedUpdateManyWithoutCreadoPorNestedInput
+    cotizacionesEnviadas?: CotizacionUncheckedUpdateManyWithoutEnviadoPorNestedInput
   }
 
   export type UsuarioCreateManyInput = {
@@ -21575,6 +23152,7 @@ export namespace Prisma {
     autorizaContactoEn?: Date | string | null
     createdAt?: Date | string
     pedidos?: PedidoCreateNestedManyWithoutClienteInput
+    cotizaciones?: CotizacionCreateNestedManyWithoutClienteInput
   }
 
   export type ClienteUncheckedCreateInput = {
@@ -21589,6 +23167,7 @@ export namespace Prisma {
     autorizaContactoEn?: Date | string | null
     createdAt?: Date | string
     pedidos?: PedidoUncheckedCreateNestedManyWithoutClienteInput
+    cotizaciones?: CotizacionUncheckedCreateNestedManyWithoutClienteInput
   }
 
   export type ClienteUpdateInput = {
@@ -21602,6 +23181,7 @@ export namespace Prisma {
     autorizaContactoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     pedidos?: PedidoUpdateManyWithoutClienteNestedInput
+    cotizaciones?: CotizacionUpdateManyWithoutClienteNestedInput
   }
 
   export type ClienteUncheckedUpdateInput = {
@@ -21616,6 +23196,7 @@ export namespace Prisma {
     autorizaContactoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     pedidos?: PedidoUncheckedUpdateManyWithoutClienteNestedInput
+    cotizaciones?: CotizacionUncheckedUpdateManyWithoutClienteNestedInput
   }
 
   export type ClienteCreateManyInput = {
@@ -21786,6 +23367,98 @@ export namespace Prisma {
     detalleObservacion?: NullableStringFieldUpdateOperationsInput | string | null
     creadoPorId?: IntFieldUpdateOperationsInput | number
     ultimoEditadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CotizacionCreateInput = {
+    numeroProforma: string
+    notas?: string | null
+    estado?: $Enums.EstadoCotizacion
+    enviadoEn?: Date | string | null
+    recordatorioEnviadoEn?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    cliente: ClienteCreateNestedOneWithoutCotizacionesInput
+    enviadoPor?: UsuarioCreateNestedOneWithoutCotizacionesEnviadasInput
+    creadoPor: UsuarioCreateNestedOneWithoutCotizacionesCreadasInput
+  }
+
+  export type CotizacionUncheckedCreateInput = {
+    id?: number
+    clienteId: number
+    numeroProforma: string
+    notas?: string | null
+    estado?: $Enums.EstadoCotizacion
+    enviadoEn?: Date | string | null
+    enviadoPorId?: number | null
+    recordatorioEnviadoEn?: Date | string | null
+    creadoPorId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CotizacionUpdateInput = {
+    numeroProforma?: StringFieldUpdateOperationsInput | string
+    notas?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: EnumEstadoCotizacionFieldUpdateOperationsInput | $Enums.EstadoCotizacion
+    enviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    recordatorioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    cliente?: ClienteUpdateOneRequiredWithoutCotizacionesNestedInput
+    enviadoPor?: UsuarioUpdateOneWithoutCotizacionesEnviadasNestedInput
+    creadoPor?: UsuarioUpdateOneRequiredWithoutCotizacionesCreadasNestedInput
+  }
+
+  export type CotizacionUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    clienteId?: IntFieldUpdateOperationsInput | number
+    numeroProforma?: StringFieldUpdateOperationsInput | string
+    notas?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: EnumEstadoCotizacionFieldUpdateOperationsInput | $Enums.EstadoCotizacion
+    enviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enviadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
+    recordatorioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    creadoPorId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CotizacionCreateManyInput = {
+    id?: number
+    clienteId: number
+    numeroProforma: string
+    notas?: string | null
+    estado?: $Enums.EstadoCotizacion
+    enviadoEn?: Date | string | null
+    enviadoPorId?: number | null
+    recordatorioEnviadoEn?: Date | string | null
+    creadoPorId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CotizacionUpdateManyMutationInput = {
+    numeroProforma?: StringFieldUpdateOperationsInput | string
+    notas?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: EnumEstadoCotizacionFieldUpdateOperationsInput | $Enums.EstadoCotizacion
+    enviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    recordatorioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CotizacionUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    clienteId?: IntFieldUpdateOperationsInput | number
+    numeroProforma?: StringFieldUpdateOperationsInput | string
+    notas?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: EnumEstadoCotizacionFieldUpdateOperationsInput | $Enums.EstadoCotizacion
+    enviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enviadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
+    recordatorioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    creadoPorId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -22281,6 +23954,12 @@ export namespace Prisma {
     none?: PedidoWhereInput
   }
 
+  export type CotizacionListRelationFilter = {
+    every?: CotizacionWhereInput
+    some?: CotizacionWhereInput
+    none?: CotizacionWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -22307,6 +23986,10 @@ export namespace Prisma {
   }
 
   export type PedidoOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type CotizacionOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -23054,6 +24737,79 @@ export namespace Prisma {
     _max?: NestedEnumCategoriaObservacionPedidoNullableFilter<$PrismaModel>
   }
 
+  export type EnumEstadoCotizacionFilter<$PrismaModel = never> = {
+    equals?: $Enums.EstadoCotizacion | EnumEstadoCotizacionFieldRefInput<$PrismaModel>
+    in?: $Enums.EstadoCotizacion[] | ListEnumEstadoCotizacionFieldRefInput<$PrismaModel>
+    notIn?: $Enums.EstadoCotizacion[] | ListEnumEstadoCotizacionFieldRefInput<$PrismaModel>
+    not?: NestedEnumEstadoCotizacionFilter<$PrismaModel> | $Enums.EstadoCotizacion
+  }
+
+  export type CotizacionCountOrderByAggregateInput = {
+    id?: SortOrder
+    clienteId?: SortOrder
+    numeroProforma?: SortOrder
+    notas?: SortOrder
+    estado?: SortOrder
+    enviadoEn?: SortOrder
+    enviadoPorId?: SortOrder
+    recordatorioEnviadoEn?: SortOrder
+    creadoPorId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CotizacionAvgOrderByAggregateInput = {
+    id?: SortOrder
+    clienteId?: SortOrder
+    enviadoPorId?: SortOrder
+    creadoPorId?: SortOrder
+  }
+
+  export type CotizacionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    clienteId?: SortOrder
+    numeroProforma?: SortOrder
+    notas?: SortOrder
+    estado?: SortOrder
+    enviadoEn?: SortOrder
+    enviadoPorId?: SortOrder
+    recordatorioEnviadoEn?: SortOrder
+    creadoPorId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CotizacionMinOrderByAggregateInput = {
+    id?: SortOrder
+    clienteId?: SortOrder
+    numeroProforma?: SortOrder
+    notas?: SortOrder
+    estado?: SortOrder
+    enviadoEn?: SortOrder
+    enviadoPorId?: SortOrder
+    recordatorioEnviadoEn?: SortOrder
+    creadoPorId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CotizacionSumOrderByAggregateInput = {
+    id?: SortOrder
+    clienteId?: SortOrder
+    enviadoPorId?: SortOrder
+    creadoPorId?: SortOrder
+  }
+
+  export type EnumEstadoCotizacionWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.EstadoCotizacion | EnumEstadoCotizacionFieldRefInput<$PrismaModel>
+    in?: $Enums.EstadoCotizacion[] | ListEnumEstadoCotizacionFieldRefInput<$PrismaModel>
+    notIn?: $Enums.EstadoCotizacion[] | ListEnumEstadoCotizacionFieldRefInput<$PrismaModel>
+    not?: NestedEnumEstadoCotizacionWithAggregatesFilter<$PrismaModel> | $Enums.EstadoCotizacion
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumEstadoCotizacionFilter<$PrismaModel>
+    _max?: NestedEnumEstadoCotizacionFilter<$PrismaModel>
+  }
+
   export type EnumModuloDocumentosFilter<$PrismaModel = never> = {
     equals?: $Enums.ModuloDocumentos | EnumModuloDocumentosFieldRefInput<$PrismaModel>
     in?: $Enums.ModuloDocumentos[] | ListEnumModuloDocumentosFieldRefInput<$PrismaModel>
@@ -23441,6 +25197,20 @@ export namespace Prisma {
     connect?: PedidoWhereUniqueInput | PedidoWhereUniqueInput[]
   }
 
+  export type CotizacionCreateNestedManyWithoutCreadoPorInput = {
+    create?: XOR<CotizacionCreateWithoutCreadoPorInput, CotizacionUncheckedCreateWithoutCreadoPorInput> | CotizacionCreateWithoutCreadoPorInput[] | CotizacionUncheckedCreateWithoutCreadoPorInput[]
+    connectOrCreate?: CotizacionCreateOrConnectWithoutCreadoPorInput | CotizacionCreateOrConnectWithoutCreadoPorInput[]
+    createMany?: CotizacionCreateManyCreadoPorInputEnvelope
+    connect?: CotizacionWhereUniqueInput | CotizacionWhereUniqueInput[]
+  }
+
+  export type CotizacionCreateNestedManyWithoutEnviadoPorInput = {
+    create?: XOR<CotizacionCreateWithoutEnviadoPorInput, CotizacionUncheckedCreateWithoutEnviadoPorInput> | CotizacionCreateWithoutEnviadoPorInput[] | CotizacionUncheckedCreateWithoutEnviadoPorInput[]
+    connectOrCreate?: CotizacionCreateOrConnectWithoutEnviadoPorInput | CotizacionCreateOrConnectWithoutEnviadoPorInput[]
+    createMany?: CotizacionCreateManyEnviadoPorInputEnvelope
+    connect?: CotizacionWhereUniqueInput | CotizacionWhereUniqueInput[]
+  }
+
   export type UsuarioUncheckedCreateNestedManyWithoutDesactivadoPorInput = {
     create?: XOR<UsuarioCreateWithoutDesactivadoPorInput, UsuarioUncheckedCreateWithoutDesactivadoPorInput> | UsuarioCreateWithoutDesactivadoPorInput[] | UsuarioUncheckedCreateWithoutDesactivadoPorInput[]
     connectOrCreate?: UsuarioCreateOrConnectWithoutDesactivadoPorInput | UsuarioCreateOrConnectWithoutDesactivadoPorInput[]
@@ -23494,6 +25264,20 @@ export namespace Prisma {
     connectOrCreate?: PedidoCreateOrConnectWithoutUltimoEditadoPorInput | PedidoCreateOrConnectWithoutUltimoEditadoPorInput[]
     createMany?: PedidoCreateManyUltimoEditadoPorInputEnvelope
     connect?: PedidoWhereUniqueInput | PedidoWhereUniqueInput[]
+  }
+
+  export type CotizacionUncheckedCreateNestedManyWithoutCreadoPorInput = {
+    create?: XOR<CotizacionCreateWithoutCreadoPorInput, CotizacionUncheckedCreateWithoutCreadoPorInput> | CotizacionCreateWithoutCreadoPorInput[] | CotizacionUncheckedCreateWithoutCreadoPorInput[]
+    connectOrCreate?: CotizacionCreateOrConnectWithoutCreadoPorInput | CotizacionCreateOrConnectWithoutCreadoPorInput[]
+    createMany?: CotizacionCreateManyCreadoPorInputEnvelope
+    connect?: CotizacionWhereUniqueInput | CotizacionWhereUniqueInput[]
+  }
+
+  export type CotizacionUncheckedCreateNestedManyWithoutEnviadoPorInput = {
+    create?: XOR<CotizacionCreateWithoutEnviadoPorInput, CotizacionUncheckedCreateWithoutEnviadoPorInput> | CotizacionCreateWithoutEnviadoPorInput[] | CotizacionUncheckedCreateWithoutEnviadoPorInput[]
+    connectOrCreate?: CotizacionCreateOrConnectWithoutEnviadoPorInput | CotizacionCreateOrConnectWithoutEnviadoPorInput[]
+    createMany?: CotizacionCreateManyEnviadoPorInputEnvelope
+    connect?: CotizacionWhereUniqueInput | CotizacionWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -23634,6 +25418,34 @@ export namespace Prisma {
     deleteMany?: PedidoScalarWhereInput | PedidoScalarWhereInput[]
   }
 
+  export type CotizacionUpdateManyWithoutCreadoPorNestedInput = {
+    create?: XOR<CotizacionCreateWithoutCreadoPorInput, CotizacionUncheckedCreateWithoutCreadoPorInput> | CotizacionCreateWithoutCreadoPorInput[] | CotizacionUncheckedCreateWithoutCreadoPorInput[]
+    connectOrCreate?: CotizacionCreateOrConnectWithoutCreadoPorInput | CotizacionCreateOrConnectWithoutCreadoPorInput[]
+    upsert?: CotizacionUpsertWithWhereUniqueWithoutCreadoPorInput | CotizacionUpsertWithWhereUniqueWithoutCreadoPorInput[]
+    createMany?: CotizacionCreateManyCreadoPorInputEnvelope
+    set?: CotizacionWhereUniqueInput | CotizacionWhereUniqueInput[]
+    disconnect?: CotizacionWhereUniqueInput | CotizacionWhereUniqueInput[]
+    delete?: CotizacionWhereUniqueInput | CotizacionWhereUniqueInput[]
+    connect?: CotizacionWhereUniqueInput | CotizacionWhereUniqueInput[]
+    update?: CotizacionUpdateWithWhereUniqueWithoutCreadoPorInput | CotizacionUpdateWithWhereUniqueWithoutCreadoPorInput[]
+    updateMany?: CotizacionUpdateManyWithWhereWithoutCreadoPorInput | CotizacionUpdateManyWithWhereWithoutCreadoPorInput[]
+    deleteMany?: CotizacionScalarWhereInput | CotizacionScalarWhereInput[]
+  }
+
+  export type CotizacionUpdateManyWithoutEnviadoPorNestedInput = {
+    create?: XOR<CotizacionCreateWithoutEnviadoPorInput, CotizacionUncheckedCreateWithoutEnviadoPorInput> | CotizacionCreateWithoutEnviadoPorInput[] | CotizacionUncheckedCreateWithoutEnviadoPorInput[]
+    connectOrCreate?: CotizacionCreateOrConnectWithoutEnviadoPorInput | CotizacionCreateOrConnectWithoutEnviadoPorInput[]
+    upsert?: CotizacionUpsertWithWhereUniqueWithoutEnviadoPorInput | CotizacionUpsertWithWhereUniqueWithoutEnviadoPorInput[]
+    createMany?: CotizacionCreateManyEnviadoPorInputEnvelope
+    set?: CotizacionWhereUniqueInput | CotizacionWhereUniqueInput[]
+    disconnect?: CotizacionWhereUniqueInput | CotizacionWhereUniqueInput[]
+    delete?: CotizacionWhereUniqueInput | CotizacionWhereUniqueInput[]
+    connect?: CotizacionWhereUniqueInput | CotizacionWhereUniqueInput[]
+    update?: CotizacionUpdateWithWhereUniqueWithoutEnviadoPorInput | CotizacionUpdateWithWhereUniqueWithoutEnviadoPorInput[]
+    updateMany?: CotizacionUpdateManyWithWhereWithoutEnviadoPorInput | CotizacionUpdateManyWithWhereWithoutEnviadoPorInput[]
+    deleteMany?: CotizacionScalarWhereInput | CotizacionScalarWhereInput[]
+  }
+
   export type IntFieldUpdateOperationsInput = {
     set?: number
     increment?: number
@@ -23756,6 +25568,34 @@ export namespace Prisma {
     update?: PedidoUpdateWithWhereUniqueWithoutUltimoEditadoPorInput | PedidoUpdateWithWhereUniqueWithoutUltimoEditadoPorInput[]
     updateMany?: PedidoUpdateManyWithWhereWithoutUltimoEditadoPorInput | PedidoUpdateManyWithWhereWithoutUltimoEditadoPorInput[]
     deleteMany?: PedidoScalarWhereInput | PedidoScalarWhereInput[]
+  }
+
+  export type CotizacionUncheckedUpdateManyWithoutCreadoPorNestedInput = {
+    create?: XOR<CotizacionCreateWithoutCreadoPorInput, CotizacionUncheckedCreateWithoutCreadoPorInput> | CotizacionCreateWithoutCreadoPorInput[] | CotizacionUncheckedCreateWithoutCreadoPorInput[]
+    connectOrCreate?: CotizacionCreateOrConnectWithoutCreadoPorInput | CotizacionCreateOrConnectWithoutCreadoPorInput[]
+    upsert?: CotizacionUpsertWithWhereUniqueWithoutCreadoPorInput | CotizacionUpsertWithWhereUniqueWithoutCreadoPorInput[]
+    createMany?: CotizacionCreateManyCreadoPorInputEnvelope
+    set?: CotizacionWhereUniqueInput | CotizacionWhereUniqueInput[]
+    disconnect?: CotizacionWhereUniqueInput | CotizacionWhereUniqueInput[]
+    delete?: CotizacionWhereUniqueInput | CotizacionWhereUniqueInput[]
+    connect?: CotizacionWhereUniqueInput | CotizacionWhereUniqueInput[]
+    update?: CotizacionUpdateWithWhereUniqueWithoutCreadoPorInput | CotizacionUpdateWithWhereUniqueWithoutCreadoPorInput[]
+    updateMany?: CotizacionUpdateManyWithWhereWithoutCreadoPorInput | CotizacionUpdateManyWithWhereWithoutCreadoPorInput[]
+    deleteMany?: CotizacionScalarWhereInput | CotizacionScalarWhereInput[]
+  }
+
+  export type CotizacionUncheckedUpdateManyWithoutEnviadoPorNestedInput = {
+    create?: XOR<CotizacionCreateWithoutEnviadoPorInput, CotizacionUncheckedCreateWithoutEnviadoPorInput> | CotizacionCreateWithoutEnviadoPorInput[] | CotizacionUncheckedCreateWithoutEnviadoPorInput[]
+    connectOrCreate?: CotizacionCreateOrConnectWithoutEnviadoPorInput | CotizacionCreateOrConnectWithoutEnviadoPorInput[]
+    upsert?: CotizacionUpsertWithWhereUniqueWithoutEnviadoPorInput | CotizacionUpsertWithWhereUniqueWithoutEnviadoPorInput[]
+    createMany?: CotizacionCreateManyEnviadoPorInputEnvelope
+    set?: CotizacionWhereUniqueInput | CotizacionWhereUniqueInput[]
+    disconnect?: CotizacionWhereUniqueInput | CotizacionWhereUniqueInput[]
+    delete?: CotizacionWhereUniqueInput | CotizacionWhereUniqueInput[]
+    connect?: CotizacionWhereUniqueInput | CotizacionWhereUniqueInput[]
+    update?: CotizacionUpdateWithWhereUniqueWithoutEnviadoPorInput | CotizacionUpdateWithWhereUniqueWithoutEnviadoPorInput[]
+    updateMany?: CotizacionUpdateManyWithWhereWithoutEnviadoPorInput | CotizacionUpdateManyWithWhereWithoutEnviadoPorInput[]
+    deleteMany?: CotizacionScalarWhereInput | CotizacionScalarWhereInput[]
   }
 
   export type UsuarioCreateNestedOneWithoutPermisosInput = {
@@ -24060,11 +25900,25 @@ export namespace Prisma {
     connect?: PedidoWhereUniqueInput | PedidoWhereUniqueInput[]
   }
 
+  export type CotizacionCreateNestedManyWithoutClienteInput = {
+    create?: XOR<CotizacionCreateWithoutClienteInput, CotizacionUncheckedCreateWithoutClienteInput> | CotizacionCreateWithoutClienteInput[] | CotizacionUncheckedCreateWithoutClienteInput[]
+    connectOrCreate?: CotizacionCreateOrConnectWithoutClienteInput | CotizacionCreateOrConnectWithoutClienteInput[]
+    createMany?: CotizacionCreateManyClienteInputEnvelope
+    connect?: CotizacionWhereUniqueInput | CotizacionWhereUniqueInput[]
+  }
+
   export type PedidoUncheckedCreateNestedManyWithoutClienteInput = {
     create?: XOR<PedidoCreateWithoutClienteInput, PedidoUncheckedCreateWithoutClienteInput> | PedidoCreateWithoutClienteInput[] | PedidoUncheckedCreateWithoutClienteInput[]
     connectOrCreate?: PedidoCreateOrConnectWithoutClienteInput | PedidoCreateOrConnectWithoutClienteInput[]
     createMany?: PedidoCreateManyClienteInputEnvelope
     connect?: PedidoWhereUniqueInput | PedidoWhereUniqueInput[]
+  }
+
+  export type CotizacionUncheckedCreateNestedManyWithoutClienteInput = {
+    create?: XOR<CotizacionCreateWithoutClienteInput, CotizacionUncheckedCreateWithoutClienteInput> | CotizacionCreateWithoutClienteInput[] | CotizacionUncheckedCreateWithoutClienteInput[]
+    connectOrCreate?: CotizacionCreateOrConnectWithoutClienteInput | CotizacionCreateOrConnectWithoutClienteInput[]
+    createMany?: CotizacionCreateManyClienteInputEnvelope
+    connect?: CotizacionWhereUniqueInput | CotizacionWhereUniqueInput[]
   }
 
   export type NullableEnumTipoDocumentoClienteFieldUpdateOperationsInput = {
@@ -24085,6 +25939,20 @@ export namespace Prisma {
     deleteMany?: PedidoScalarWhereInput | PedidoScalarWhereInput[]
   }
 
+  export type CotizacionUpdateManyWithoutClienteNestedInput = {
+    create?: XOR<CotizacionCreateWithoutClienteInput, CotizacionUncheckedCreateWithoutClienteInput> | CotizacionCreateWithoutClienteInput[] | CotizacionUncheckedCreateWithoutClienteInput[]
+    connectOrCreate?: CotizacionCreateOrConnectWithoutClienteInput | CotizacionCreateOrConnectWithoutClienteInput[]
+    upsert?: CotizacionUpsertWithWhereUniqueWithoutClienteInput | CotizacionUpsertWithWhereUniqueWithoutClienteInput[]
+    createMany?: CotizacionCreateManyClienteInputEnvelope
+    set?: CotizacionWhereUniqueInput | CotizacionWhereUniqueInput[]
+    disconnect?: CotizacionWhereUniqueInput | CotizacionWhereUniqueInput[]
+    delete?: CotizacionWhereUniqueInput | CotizacionWhereUniqueInput[]
+    connect?: CotizacionWhereUniqueInput | CotizacionWhereUniqueInput[]
+    update?: CotizacionUpdateWithWhereUniqueWithoutClienteInput | CotizacionUpdateWithWhereUniqueWithoutClienteInput[]
+    updateMany?: CotizacionUpdateManyWithWhereWithoutClienteInput | CotizacionUpdateManyWithWhereWithoutClienteInput[]
+    deleteMany?: CotizacionScalarWhereInput | CotizacionScalarWhereInput[]
+  }
+
   export type PedidoUncheckedUpdateManyWithoutClienteNestedInput = {
     create?: XOR<PedidoCreateWithoutClienteInput, PedidoUncheckedCreateWithoutClienteInput> | PedidoCreateWithoutClienteInput[] | PedidoUncheckedCreateWithoutClienteInput[]
     connectOrCreate?: PedidoCreateOrConnectWithoutClienteInput | PedidoCreateOrConnectWithoutClienteInput[]
@@ -24097,6 +25965,20 @@ export namespace Prisma {
     update?: PedidoUpdateWithWhereUniqueWithoutClienteInput | PedidoUpdateWithWhereUniqueWithoutClienteInput[]
     updateMany?: PedidoUpdateManyWithWhereWithoutClienteInput | PedidoUpdateManyWithWhereWithoutClienteInput[]
     deleteMany?: PedidoScalarWhereInput | PedidoScalarWhereInput[]
+  }
+
+  export type CotizacionUncheckedUpdateManyWithoutClienteNestedInput = {
+    create?: XOR<CotizacionCreateWithoutClienteInput, CotizacionUncheckedCreateWithoutClienteInput> | CotizacionCreateWithoutClienteInput[] | CotizacionUncheckedCreateWithoutClienteInput[]
+    connectOrCreate?: CotizacionCreateOrConnectWithoutClienteInput | CotizacionCreateOrConnectWithoutClienteInput[]
+    upsert?: CotizacionUpsertWithWhereUniqueWithoutClienteInput | CotizacionUpsertWithWhereUniqueWithoutClienteInput[]
+    createMany?: CotizacionCreateManyClienteInputEnvelope
+    set?: CotizacionWhereUniqueInput | CotizacionWhereUniqueInput[]
+    disconnect?: CotizacionWhereUniqueInput | CotizacionWhereUniqueInput[]
+    delete?: CotizacionWhereUniqueInput | CotizacionWhereUniqueInput[]
+    connect?: CotizacionWhereUniqueInput | CotizacionWhereUniqueInput[]
+    update?: CotizacionUpdateWithWhereUniqueWithoutClienteInput | CotizacionUpdateWithWhereUniqueWithoutClienteInput[]
+    updateMany?: CotizacionUpdateManyWithWhereWithoutClienteInput | CotizacionUpdateManyWithWhereWithoutClienteInput[]
+    deleteMany?: CotizacionScalarWhereInput | CotizacionScalarWhereInput[]
   }
 
   export type ClienteCreateNestedOneWithoutPedidosInput = {
@@ -24145,6 +26027,54 @@ export namespace Prisma {
     delete?: UsuarioWhereInput | boolean
     connect?: UsuarioWhereUniqueInput
     update?: XOR<XOR<UsuarioUpdateToOneWithWhereWithoutPedidosEditadosInput, UsuarioUpdateWithoutPedidosEditadosInput>, UsuarioUncheckedUpdateWithoutPedidosEditadosInput>
+  }
+
+  export type ClienteCreateNestedOneWithoutCotizacionesInput = {
+    create?: XOR<ClienteCreateWithoutCotizacionesInput, ClienteUncheckedCreateWithoutCotizacionesInput>
+    connectOrCreate?: ClienteCreateOrConnectWithoutCotizacionesInput
+    connect?: ClienteWhereUniqueInput
+  }
+
+  export type UsuarioCreateNestedOneWithoutCotizacionesEnviadasInput = {
+    create?: XOR<UsuarioCreateWithoutCotizacionesEnviadasInput, UsuarioUncheckedCreateWithoutCotizacionesEnviadasInput>
+    connectOrCreate?: UsuarioCreateOrConnectWithoutCotizacionesEnviadasInput
+    connect?: UsuarioWhereUniqueInput
+  }
+
+  export type UsuarioCreateNestedOneWithoutCotizacionesCreadasInput = {
+    create?: XOR<UsuarioCreateWithoutCotizacionesCreadasInput, UsuarioUncheckedCreateWithoutCotizacionesCreadasInput>
+    connectOrCreate?: UsuarioCreateOrConnectWithoutCotizacionesCreadasInput
+    connect?: UsuarioWhereUniqueInput
+  }
+
+  export type EnumEstadoCotizacionFieldUpdateOperationsInput = {
+    set?: $Enums.EstadoCotizacion
+  }
+
+  export type ClienteUpdateOneRequiredWithoutCotizacionesNestedInput = {
+    create?: XOR<ClienteCreateWithoutCotizacionesInput, ClienteUncheckedCreateWithoutCotizacionesInput>
+    connectOrCreate?: ClienteCreateOrConnectWithoutCotizacionesInput
+    upsert?: ClienteUpsertWithoutCotizacionesInput
+    connect?: ClienteWhereUniqueInput
+    update?: XOR<XOR<ClienteUpdateToOneWithWhereWithoutCotizacionesInput, ClienteUpdateWithoutCotizacionesInput>, ClienteUncheckedUpdateWithoutCotizacionesInput>
+  }
+
+  export type UsuarioUpdateOneWithoutCotizacionesEnviadasNestedInput = {
+    create?: XOR<UsuarioCreateWithoutCotizacionesEnviadasInput, UsuarioUncheckedCreateWithoutCotizacionesEnviadasInput>
+    connectOrCreate?: UsuarioCreateOrConnectWithoutCotizacionesEnviadasInput
+    upsert?: UsuarioUpsertWithoutCotizacionesEnviadasInput
+    disconnect?: UsuarioWhereInput | boolean
+    delete?: UsuarioWhereInput | boolean
+    connect?: UsuarioWhereUniqueInput
+    update?: XOR<XOR<UsuarioUpdateToOneWithWhereWithoutCotizacionesEnviadasInput, UsuarioUpdateWithoutCotizacionesEnviadasInput>, UsuarioUncheckedUpdateWithoutCotizacionesEnviadasInput>
+  }
+
+  export type UsuarioUpdateOneRequiredWithoutCotizacionesCreadasNestedInput = {
+    create?: XOR<UsuarioCreateWithoutCotizacionesCreadasInput, UsuarioUncheckedCreateWithoutCotizacionesCreadasInput>
+    connectOrCreate?: UsuarioCreateOrConnectWithoutCotizacionesCreadasInput
+    upsert?: UsuarioUpsertWithoutCotizacionesCreadasInput
+    connect?: UsuarioWhereUniqueInput
+    update?: XOR<XOR<UsuarioUpdateToOneWithWhereWithoutCotizacionesCreadasInput, UsuarioUpdateWithoutCotizacionesCreadasInput>, UsuarioUncheckedUpdateWithoutCotizacionesCreadasInput>
   }
 
   export type CarpetaCreateNestedOneWithoutHijosInput = {
@@ -24608,6 +26538,23 @@ export namespace Prisma {
     _max?: NestedEnumCategoriaObservacionPedidoNullableFilter<$PrismaModel>
   }
 
+  export type NestedEnumEstadoCotizacionFilter<$PrismaModel = never> = {
+    equals?: $Enums.EstadoCotizacion | EnumEstadoCotizacionFieldRefInput<$PrismaModel>
+    in?: $Enums.EstadoCotizacion[] | ListEnumEstadoCotizacionFieldRefInput<$PrismaModel>
+    notIn?: $Enums.EstadoCotizacion[] | ListEnumEstadoCotizacionFieldRefInput<$PrismaModel>
+    not?: NestedEnumEstadoCotizacionFilter<$PrismaModel> | $Enums.EstadoCotizacion
+  }
+
+  export type NestedEnumEstadoCotizacionWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.EstadoCotizacion | EnumEstadoCotizacionFieldRefInput<$PrismaModel>
+    in?: $Enums.EstadoCotizacion[] | ListEnumEstadoCotizacionFieldRefInput<$PrismaModel>
+    notIn?: $Enums.EstadoCotizacion[] | ListEnumEstadoCotizacionFieldRefInput<$PrismaModel>
+    not?: NestedEnumEstadoCotizacionWithAggregatesFilter<$PrismaModel> | $Enums.EstadoCotizacion
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumEstadoCotizacionFilter<$PrismaModel>
+    _max?: NestedEnumEstadoCotizacionFilter<$PrismaModel>
+  }
+
   export type NestedEnumModuloDocumentosFilter<$PrismaModel = never> = {
     equals?: $Enums.ModuloDocumentos | EnumModuloDocumentosFieldRefInput<$PrismaModel>
     in?: $Enums.ModuloDocumentos[] | ListEnumModuloDocumentosFieldRefInput<$PrismaModel>
@@ -24710,6 +26657,8 @@ export namespace Prisma {
     accesoIso?: AccesoISOCreateNestedOneWithoutUsuarioInput
     pedidosCreados?: PedidoCreateNestedManyWithoutCreadoPorInput
     pedidosEditados?: PedidoCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesCreadas?: CotizacionCreateNestedManyWithoutCreadoPorInput
+    cotizacionesEnviadas?: CotizacionCreateNestedManyWithoutEnviadoPorInput
   }
 
   export type UsuarioUncheckedCreateWithoutDesactivadosInput = {
@@ -24730,6 +26679,8 @@ export namespace Prisma {
     accesoIso?: AccesoISOUncheckedCreateNestedOneWithoutUsuarioInput
     pedidosCreados?: PedidoUncheckedCreateNestedManyWithoutCreadoPorInput
     pedidosEditados?: PedidoUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesCreadas?: CotizacionUncheckedCreateNestedManyWithoutCreadoPorInput
+    cotizacionesEnviadas?: CotizacionUncheckedCreateNestedManyWithoutEnviadoPorInput
   }
 
   export type UsuarioCreateOrConnectWithoutDesactivadosInput = {
@@ -24754,6 +26705,8 @@ export namespace Prisma {
     accesoIso?: AccesoISOCreateNestedOneWithoutUsuarioInput
     pedidosCreados?: PedidoCreateNestedManyWithoutCreadoPorInput
     pedidosEditados?: PedidoCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesCreadas?: CotizacionCreateNestedManyWithoutCreadoPorInput
+    cotizacionesEnviadas?: CotizacionCreateNestedManyWithoutEnviadoPorInput
   }
 
   export type UsuarioUncheckedCreateWithoutDesactivadoPorInput = {
@@ -24774,6 +26727,8 @@ export namespace Prisma {
     accesoIso?: AccesoISOUncheckedCreateNestedOneWithoutUsuarioInput
     pedidosCreados?: PedidoUncheckedCreateNestedManyWithoutCreadoPorInput
     pedidosEditados?: PedidoUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesCreadas?: CotizacionUncheckedCreateNestedManyWithoutCreadoPorInput
+    cotizacionesEnviadas?: CotizacionUncheckedCreateNestedManyWithoutEnviadoPorInput
   }
 
   export type UsuarioCreateOrConnectWithoutDesactivadoPorInput = {
@@ -25042,6 +26997,76 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type CotizacionCreateWithoutCreadoPorInput = {
+    numeroProforma: string
+    notas?: string | null
+    estado?: $Enums.EstadoCotizacion
+    enviadoEn?: Date | string | null
+    recordatorioEnviadoEn?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    cliente: ClienteCreateNestedOneWithoutCotizacionesInput
+    enviadoPor?: UsuarioCreateNestedOneWithoutCotizacionesEnviadasInput
+  }
+
+  export type CotizacionUncheckedCreateWithoutCreadoPorInput = {
+    id?: number
+    clienteId: number
+    numeroProforma: string
+    notas?: string | null
+    estado?: $Enums.EstadoCotizacion
+    enviadoEn?: Date | string | null
+    enviadoPorId?: number | null
+    recordatorioEnviadoEn?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CotizacionCreateOrConnectWithoutCreadoPorInput = {
+    where: CotizacionWhereUniqueInput
+    create: XOR<CotizacionCreateWithoutCreadoPorInput, CotizacionUncheckedCreateWithoutCreadoPorInput>
+  }
+
+  export type CotizacionCreateManyCreadoPorInputEnvelope = {
+    data: CotizacionCreateManyCreadoPorInput | CotizacionCreateManyCreadoPorInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type CotizacionCreateWithoutEnviadoPorInput = {
+    numeroProforma: string
+    notas?: string | null
+    estado?: $Enums.EstadoCotizacion
+    enviadoEn?: Date | string | null
+    recordatorioEnviadoEn?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    cliente: ClienteCreateNestedOneWithoutCotizacionesInput
+    creadoPor: UsuarioCreateNestedOneWithoutCotizacionesCreadasInput
+  }
+
+  export type CotizacionUncheckedCreateWithoutEnviadoPorInput = {
+    id?: number
+    clienteId: number
+    numeroProforma: string
+    notas?: string | null
+    estado?: $Enums.EstadoCotizacion
+    enviadoEn?: Date | string | null
+    recordatorioEnviadoEn?: Date | string | null
+    creadoPorId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CotizacionCreateOrConnectWithoutEnviadoPorInput = {
+    where: CotizacionWhereUniqueInput
+    create: XOR<CotizacionCreateWithoutEnviadoPorInput, CotizacionUncheckedCreateWithoutEnviadoPorInput>
+  }
+
+  export type CotizacionCreateManyEnviadoPorInputEnvelope = {
+    data: CotizacionCreateManyEnviadoPorInput | CotizacionCreateManyEnviadoPorInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UsuarioUpsertWithoutDesactivadosInput = {
     update: XOR<UsuarioUpdateWithoutDesactivadosInput, UsuarioUncheckedUpdateWithoutDesactivadosInput>
     create: XOR<UsuarioCreateWithoutDesactivadosInput, UsuarioUncheckedCreateWithoutDesactivadosInput>
@@ -25070,6 +27095,8 @@ export namespace Prisma {
     accesoIso?: AccesoISOUpdateOneWithoutUsuarioNestedInput
     pedidosCreados?: PedidoUpdateManyWithoutCreadoPorNestedInput
     pedidosEditados?: PedidoUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesCreadas?: CotizacionUpdateManyWithoutCreadoPorNestedInput
+    cotizacionesEnviadas?: CotizacionUpdateManyWithoutEnviadoPorNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutDesactivadosInput = {
@@ -25090,6 +27117,8 @@ export namespace Prisma {
     accesoIso?: AccesoISOUncheckedUpdateOneWithoutUsuarioNestedInput
     pedidosCreados?: PedidoUncheckedUpdateManyWithoutCreadoPorNestedInput
     pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesCreadas?: CotizacionUncheckedUpdateManyWithoutCreadoPorNestedInput
+    cotizacionesEnviadas?: CotizacionUncheckedUpdateManyWithoutEnviadoPorNestedInput
   }
 
   export type UsuarioUpsertWithWhereUniqueWithoutDesactivadoPorInput = {
@@ -25340,6 +27369,55 @@ export namespace Prisma {
     data: XOR<PedidoUpdateManyMutationInput, PedidoUncheckedUpdateManyWithoutUltimoEditadoPorInput>
   }
 
+  export type CotizacionUpsertWithWhereUniqueWithoutCreadoPorInput = {
+    where: CotizacionWhereUniqueInput
+    update: XOR<CotizacionUpdateWithoutCreadoPorInput, CotizacionUncheckedUpdateWithoutCreadoPorInput>
+    create: XOR<CotizacionCreateWithoutCreadoPorInput, CotizacionUncheckedCreateWithoutCreadoPorInput>
+  }
+
+  export type CotizacionUpdateWithWhereUniqueWithoutCreadoPorInput = {
+    where: CotizacionWhereUniqueInput
+    data: XOR<CotizacionUpdateWithoutCreadoPorInput, CotizacionUncheckedUpdateWithoutCreadoPorInput>
+  }
+
+  export type CotizacionUpdateManyWithWhereWithoutCreadoPorInput = {
+    where: CotizacionScalarWhereInput
+    data: XOR<CotizacionUpdateManyMutationInput, CotizacionUncheckedUpdateManyWithoutCreadoPorInput>
+  }
+
+  export type CotizacionScalarWhereInput = {
+    AND?: CotizacionScalarWhereInput | CotizacionScalarWhereInput[]
+    OR?: CotizacionScalarWhereInput[]
+    NOT?: CotizacionScalarWhereInput | CotizacionScalarWhereInput[]
+    id?: IntFilter<"Cotizacion"> | number
+    clienteId?: IntFilter<"Cotizacion"> | number
+    numeroProforma?: StringFilter<"Cotizacion"> | string
+    notas?: StringNullableFilter<"Cotizacion"> | string | null
+    estado?: EnumEstadoCotizacionFilter<"Cotizacion"> | $Enums.EstadoCotizacion
+    enviadoEn?: DateTimeNullableFilter<"Cotizacion"> | Date | string | null
+    enviadoPorId?: IntNullableFilter<"Cotizacion"> | number | null
+    recordatorioEnviadoEn?: DateTimeNullableFilter<"Cotizacion"> | Date | string | null
+    creadoPorId?: IntFilter<"Cotizacion"> | number
+    createdAt?: DateTimeFilter<"Cotizacion"> | Date | string
+    updatedAt?: DateTimeFilter<"Cotizacion"> | Date | string
+  }
+
+  export type CotizacionUpsertWithWhereUniqueWithoutEnviadoPorInput = {
+    where: CotizacionWhereUniqueInput
+    update: XOR<CotizacionUpdateWithoutEnviadoPorInput, CotizacionUncheckedUpdateWithoutEnviadoPorInput>
+    create: XOR<CotizacionCreateWithoutEnviadoPorInput, CotizacionUncheckedCreateWithoutEnviadoPorInput>
+  }
+
+  export type CotizacionUpdateWithWhereUniqueWithoutEnviadoPorInput = {
+    where: CotizacionWhereUniqueInput
+    data: XOR<CotizacionUpdateWithoutEnviadoPorInput, CotizacionUncheckedUpdateWithoutEnviadoPorInput>
+  }
+
+  export type CotizacionUpdateManyWithWhereWithoutEnviadoPorInput = {
+    where: CotizacionScalarWhereInput
+    data: XOR<CotizacionUpdateManyMutationInput, CotizacionUncheckedUpdateManyWithoutEnviadoPorInput>
+  }
+
   export type UsuarioCreateWithoutPermisosInput = {
     supabaseUserId: string
     nombre: string
@@ -25357,6 +27435,8 @@ export namespace Prisma {
     accesoIso?: AccesoISOCreateNestedOneWithoutUsuarioInput
     pedidosCreados?: PedidoCreateNestedManyWithoutCreadoPorInput
     pedidosEditados?: PedidoCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesCreadas?: CotizacionCreateNestedManyWithoutCreadoPorInput
+    cotizacionesEnviadas?: CotizacionCreateNestedManyWithoutEnviadoPorInput
   }
 
   export type UsuarioUncheckedCreateWithoutPermisosInput = {
@@ -25377,6 +27457,8 @@ export namespace Prisma {
     accesoIso?: AccesoISOUncheckedCreateNestedOneWithoutUsuarioInput
     pedidosCreados?: PedidoUncheckedCreateNestedManyWithoutCreadoPorInput
     pedidosEditados?: PedidoUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesCreadas?: CotizacionUncheckedCreateNestedManyWithoutCreadoPorInput
+    cotizacionesEnviadas?: CotizacionUncheckedCreateNestedManyWithoutEnviadoPorInput
   }
 
   export type UsuarioCreateOrConnectWithoutPermisosInput = {
@@ -25412,6 +27494,8 @@ export namespace Prisma {
     accesoIso?: AccesoISOUpdateOneWithoutUsuarioNestedInput
     pedidosCreados?: PedidoUpdateManyWithoutCreadoPorNestedInput
     pedidosEditados?: PedidoUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesCreadas?: CotizacionUpdateManyWithoutCreadoPorNestedInput
+    cotizacionesEnviadas?: CotizacionUpdateManyWithoutEnviadoPorNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutPermisosInput = {
@@ -25432,6 +27516,8 @@ export namespace Prisma {
     accesoIso?: AccesoISOUncheckedUpdateOneWithoutUsuarioNestedInput
     pedidosCreados?: PedidoUncheckedUpdateManyWithoutCreadoPorNestedInput
     pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesCreadas?: CotizacionUncheckedUpdateManyWithoutCreadoPorNestedInput
+    cotizacionesEnviadas?: CotizacionUncheckedUpdateManyWithoutEnviadoPorNestedInput
   }
 
   export type LoteCreateWithoutFabricanteInput = {
@@ -25895,6 +27981,8 @@ export namespace Prisma {
     accesoIso?: AccesoISOCreateNestedOneWithoutUsuarioInput
     pedidosCreados?: PedidoCreateNestedManyWithoutCreadoPorInput
     pedidosEditados?: PedidoCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesCreadas?: CotizacionCreateNestedManyWithoutCreadoPorInput
+    cotizacionesEnviadas?: CotizacionCreateNestedManyWithoutEnviadoPorInput
   }
 
   export type UsuarioUncheckedCreateWithoutTrabajosImpresionInput = {
@@ -25915,6 +28003,8 @@ export namespace Prisma {
     accesoIso?: AccesoISOUncheckedCreateNestedOneWithoutUsuarioInput
     pedidosCreados?: PedidoUncheckedCreateNestedManyWithoutCreadoPorInput
     pedidosEditados?: PedidoUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesCreadas?: CotizacionUncheckedCreateNestedManyWithoutCreadoPorInput
+    cotizacionesEnviadas?: CotizacionUncheckedCreateNestedManyWithoutEnviadoPorInput
   }
 
   export type UsuarioCreateOrConnectWithoutTrabajosImpresionInput = {
@@ -26014,6 +28104,8 @@ export namespace Prisma {
     accesoIso?: AccesoISOUpdateOneWithoutUsuarioNestedInput
     pedidosCreados?: PedidoUpdateManyWithoutCreadoPorNestedInput
     pedidosEditados?: PedidoUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesCreadas?: CotizacionUpdateManyWithoutCreadoPorNestedInput
+    cotizacionesEnviadas?: CotizacionUpdateManyWithoutEnviadoPorNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutTrabajosImpresionInput = {
@@ -26034,6 +28126,8 @@ export namespace Prisma {
     accesoIso?: AccesoISOUncheckedUpdateOneWithoutUsuarioNestedInput
     pedidosCreados?: PedidoUncheckedUpdateManyWithoutCreadoPorNestedInput
     pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesCreadas?: CotizacionUncheckedUpdateManyWithoutCreadoPorNestedInput
+    cotizacionesEnviadas?: CotizacionUncheckedUpdateManyWithoutEnviadoPorNestedInput
   }
 
   export type PedidoCreateWithoutClienteInput = {
@@ -26083,6 +28177,41 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type CotizacionCreateWithoutClienteInput = {
+    numeroProforma: string
+    notas?: string | null
+    estado?: $Enums.EstadoCotizacion
+    enviadoEn?: Date | string | null
+    recordatorioEnviadoEn?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    enviadoPor?: UsuarioCreateNestedOneWithoutCotizacionesEnviadasInput
+    creadoPor: UsuarioCreateNestedOneWithoutCotizacionesCreadasInput
+  }
+
+  export type CotizacionUncheckedCreateWithoutClienteInput = {
+    id?: number
+    numeroProforma: string
+    notas?: string | null
+    estado?: $Enums.EstadoCotizacion
+    enviadoEn?: Date | string | null
+    enviadoPorId?: number | null
+    recordatorioEnviadoEn?: Date | string | null
+    creadoPorId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CotizacionCreateOrConnectWithoutClienteInput = {
+    where: CotizacionWhereUniqueInput
+    create: XOR<CotizacionCreateWithoutClienteInput, CotizacionUncheckedCreateWithoutClienteInput>
+  }
+
+  export type CotizacionCreateManyClienteInputEnvelope = {
+    data: CotizacionCreateManyClienteInput | CotizacionCreateManyClienteInput[]
+    skipDuplicates?: boolean
+  }
+
   export type PedidoUpsertWithWhereUniqueWithoutClienteInput = {
     where: PedidoWhereUniqueInput
     update: XOR<PedidoUpdateWithoutClienteInput, PedidoUncheckedUpdateWithoutClienteInput>
@@ -26099,6 +28228,22 @@ export namespace Prisma {
     data: XOR<PedidoUpdateManyMutationInput, PedidoUncheckedUpdateManyWithoutClienteInput>
   }
 
+  export type CotizacionUpsertWithWhereUniqueWithoutClienteInput = {
+    where: CotizacionWhereUniqueInput
+    update: XOR<CotizacionUpdateWithoutClienteInput, CotizacionUncheckedUpdateWithoutClienteInput>
+    create: XOR<CotizacionCreateWithoutClienteInput, CotizacionUncheckedCreateWithoutClienteInput>
+  }
+
+  export type CotizacionUpdateWithWhereUniqueWithoutClienteInput = {
+    where: CotizacionWhereUniqueInput
+    data: XOR<CotizacionUpdateWithoutClienteInput, CotizacionUncheckedUpdateWithoutClienteInput>
+  }
+
+  export type CotizacionUpdateManyWithWhereWithoutClienteInput = {
+    where: CotizacionScalarWhereInput
+    data: XOR<CotizacionUpdateManyMutationInput, CotizacionUncheckedUpdateManyWithoutClienteInput>
+  }
+
   export type ClienteCreateWithoutPedidosInput = {
     nombre: string
     nombreNormalizado: string
@@ -26109,6 +28254,7 @@ export namespace Prisma {
     email?: string | null
     autorizaContactoEn?: Date | string | null
     createdAt?: Date | string
+    cotizaciones?: CotizacionCreateNestedManyWithoutClienteInput
   }
 
   export type ClienteUncheckedCreateWithoutPedidosInput = {
@@ -26122,6 +28268,7 @@ export namespace Prisma {
     email?: string | null
     autorizaContactoEn?: Date | string | null
     createdAt?: Date | string
+    cotizaciones?: CotizacionUncheckedCreateNestedManyWithoutClienteInput
   }
 
   export type ClienteCreateOrConnectWithoutPedidosInput = {
@@ -26146,6 +28293,8 @@ export namespace Prisma {
     accesosIndicador?: AccesoIndicadorCreateNestedManyWithoutUsuarioInput
     accesoIso?: AccesoISOCreateNestedOneWithoutUsuarioInput
     pedidosEditados?: PedidoCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesCreadas?: CotizacionCreateNestedManyWithoutCreadoPorInput
+    cotizacionesEnviadas?: CotizacionCreateNestedManyWithoutEnviadoPorInput
   }
 
   export type UsuarioUncheckedCreateWithoutPedidosCreadosInput = {
@@ -26166,6 +28315,8 @@ export namespace Prisma {
     accesosIndicador?: AccesoIndicadorUncheckedCreateNestedManyWithoutUsuarioInput
     accesoIso?: AccesoISOUncheckedCreateNestedOneWithoutUsuarioInput
     pedidosEditados?: PedidoUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesCreadas?: CotizacionUncheckedCreateNestedManyWithoutCreadoPorInput
+    cotizacionesEnviadas?: CotizacionUncheckedCreateNestedManyWithoutEnviadoPorInput
   }
 
   export type UsuarioCreateOrConnectWithoutPedidosCreadosInput = {
@@ -26190,6 +28341,8 @@ export namespace Prisma {
     accesosIndicador?: AccesoIndicadorCreateNestedManyWithoutUsuarioInput
     accesoIso?: AccesoISOCreateNestedOneWithoutUsuarioInput
     pedidosCreados?: PedidoCreateNestedManyWithoutCreadoPorInput
+    cotizacionesCreadas?: CotizacionCreateNestedManyWithoutCreadoPorInput
+    cotizacionesEnviadas?: CotizacionCreateNestedManyWithoutEnviadoPorInput
   }
 
   export type UsuarioUncheckedCreateWithoutPedidosEditadosInput = {
@@ -26210,6 +28363,8 @@ export namespace Prisma {
     accesosIndicador?: AccesoIndicadorUncheckedCreateNestedManyWithoutUsuarioInput
     accesoIso?: AccesoISOUncheckedCreateNestedOneWithoutUsuarioInput
     pedidosCreados?: PedidoUncheckedCreateNestedManyWithoutCreadoPorInput
+    cotizacionesCreadas?: CotizacionUncheckedCreateNestedManyWithoutCreadoPorInput
+    cotizacionesEnviadas?: CotizacionUncheckedCreateNestedManyWithoutEnviadoPorInput
   }
 
   export type UsuarioCreateOrConnectWithoutPedidosEditadosInput = {
@@ -26238,6 +28393,7 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     autorizaContactoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    cotizaciones?: CotizacionUpdateManyWithoutClienteNestedInput
   }
 
   export type ClienteUncheckedUpdateWithoutPedidosInput = {
@@ -26251,6 +28407,7 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     autorizaContactoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    cotizaciones?: CotizacionUncheckedUpdateManyWithoutClienteNestedInput
   }
 
   export type UsuarioUpsertWithoutPedidosCreadosInput = {
@@ -26281,6 +28438,8 @@ export namespace Prisma {
     accesosIndicador?: AccesoIndicadorUpdateManyWithoutUsuarioNestedInput
     accesoIso?: AccesoISOUpdateOneWithoutUsuarioNestedInput
     pedidosEditados?: PedidoUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesCreadas?: CotizacionUpdateManyWithoutCreadoPorNestedInput
+    cotizacionesEnviadas?: CotizacionUpdateManyWithoutEnviadoPorNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutPedidosCreadosInput = {
@@ -26301,6 +28460,8 @@ export namespace Prisma {
     accesosIndicador?: AccesoIndicadorUncheckedUpdateManyWithoutUsuarioNestedInput
     accesoIso?: AccesoISOUncheckedUpdateOneWithoutUsuarioNestedInput
     pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesCreadas?: CotizacionUncheckedUpdateManyWithoutCreadoPorNestedInput
+    cotizacionesEnviadas?: CotizacionUncheckedUpdateManyWithoutEnviadoPorNestedInput
   }
 
   export type UsuarioUpsertWithoutPedidosEditadosInput = {
@@ -26331,6 +28492,8 @@ export namespace Prisma {
     accesosIndicador?: AccesoIndicadorUpdateManyWithoutUsuarioNestedInput
     accesoIso?: AccesoISOUpdateOneWithoutUsuarioNestedInput
     pedidosCreados?: PedidoUpdateManyWithoutCreadoPorNestedInput
+    cotizacionesCreadas?: CotizacionUpdateManyWithoutCreadoPorNestedInput
+    cotizacionesEnviadas?: CotizacionUpdateManyWithoutEnviadoPorNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutPedidosEditadosInput = {
@@ -26351,6 +28514,282 @@ export namespace Prisma {
     accesosIndicador?: AccesoIndicadorUncheckedUpdateManyWithoutUsuarioNestedInput
     accesoIso?: AccesoISOUncheckedUpdateOneWithoutUsuarioNestedInput
     pedidosCreados?: PedidoUncheckedUpdateManyWithoutCreadoPorNestedInput
+    cotizacionesCreadas?: CotizacionUncheckedUpdateManyWithoutCreadoPorNestedInput
+    cotizacionesEnviadas?: CotizacionUncheckedUpdateManyWithoutEnviadoPorNestedInput
+  }
+
+  export type ClienteCreateWithoutCotizacionesInput = {
+    nombre: string
+    nombreNormalizado: string
+    tipoDocumento?: $Enums.TipoDocumentoCliente | null
+    numeroDocumento?: string | null
+    direccion?: string | null
+    celular?: string | null
+    email?: string | null
+    autorizaContactoEn?: Date | string | null
+    createdAt?: Date | string
+    pedidos?: PedidoCreateNestedManyWithoutClienteInput
+  }
+
+  export type ClienteUncheckedCreateWithoutCotizacionesInput = {
+    id?: number
+    nombre: string
+    nombreNormalizado: string
+    tipoDocumento?: $Enums.TipoDocumentoCliente | null
+    numeroDocumento?: string | null
+    direccion?: string | null
+    celular?: string | null
+    email?: string | null
+    autorizaContactoEn?: Date | string | null
+    createdAt?: Date | string
+    pedidos?: PedidoUncheckedCreateNestedManyWithoutClienteInput
+  }
+
+  export type ClienteCreateOrConnectWithoutCotizacionesInput = {
+    where: ClienteWhereUniqueInput
+    create: XOR<ClienteCreateWithoutCotizacionesInput, ClienteUncheckedCreateWithoutCotizacionesInput>
+  }
+
+  export type UsuarioCreateWithoutCotizacionesEnviadasInput = {
+    supabaseUserId: string
+    nombre: string
+    esAdmin?: boolean
+    esAdminKpis?: boolean
+    activo?: boolean
+    desactivadoEn?: Date | string | null
+    avatarUrl?: string | null
+    createdAt?: Date | string
+    desactivadoPor?: UsuarioCreateNestedOneWithoutDesactivadosInput
+    desactivados?: UsuarioCreateNestedManyWithoutDesactivadoPorInput
+    permisos?: PermisoCreateNestedManyWithoutUsuarioInput
+    trabajosImpresion?: TrabajoImpresionCreateNestedManyWithoutCreadoPorInput
+    archivosSubidos?: ArchivoCreateNestedManyWithoutSubidoPorInput
+    accesosIndicador?: AccesoIndicadorCreateNestedManyWithoutUsuarioInput
+    accesoIso?: AccesoISOCreateNestedOneWithoutUsuarioInput
+    pedidosCreados?: PedidoCreateNestedManyWithoutCreadoPorInput
+    pedidosEditados?: PedidoCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesCreadas?: CotizacionCreateNestedManyWithoutCreadoPorInput
+  }
+
+  export type UsuarioUncheckedCreateWithoutCotizacionesEnviadasInput = {
+    id?: number
+    supabaseUserId: string
+    nombre: string
+    esAdmin?: boolean
+    esAdminKpis?: boolean
+    activo?: boolean
+    desactivadoEn?: Date | string | null
+    desactivadoPorId?: number | null
+    avatarUrl?: string | null
+    createdAt?: Date | string
+    desactivados?: UsuarioUncheckedCreateNestedManyWithoutDesactivadoPorInput
+    permisos?: PermisoUncheckedCreateNestedManyWithoutUsuarioInput
+    trabajosImpresion?: TrabajoImpresionUncheckedCreateNestedManyWithoutCreadoPorInput
+    archivosSubidos?: ArchivoUncheckedCreateNestedManyWithoutSubidoPorInput
+    accesosIndicador?: AccesoIndicadorUncheckedCreateNestedManyWithoutUsuarioInput
+    accesoIso?: AccesoISOUncheckedCreateNestedOneWithoutUsuarioInput
+    pedidosCreados?: PedidoUncheckedCreateNestedManyWithoutCreadoPorInput
+    pedidosEditados?: PedidoUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesCreadas?: CotizacionUncheckedCreateNestedManyWithoutCreadoPorInput
+  }
+
+  export type UsuarioCreateOrConnectWithoutCotizacionesEnviadasInput = {
+    where: UsuarioWhereUniqueInput
+    create: XOR<UsuarioCreateWithoutCotizacionesEnviadasInput, UsuarioUncheckedCreateWithoutCotizacionesEnviadasInput>
+  }
+
+  export type UsuarioCreateWithoutCotizacionesCreadasInput = {
+    supabaseUserId: string
+    nombre: string
+    esAdmin?: boolean
+    esAdminKpis?: boolean
+    activo?: boolean
+    desactivadoEn?: Date | string | null
+    avatarUrl?: string | null
+    createdAt?: Date | string
+    desactivadoPor?: UsuarioCreateNestedOneWithoutDesactivadosInput
+    desactivados?: UsuarioCreateNestedManyWithoutDesactivadoPorInput
+    permisos?: PermisoCreateNestedManyWithoutUsuarioInput
+    trabajosImpresion?: TrabajoImpresionCreateNestedManyWithoutCreadoPorInput
+    archivosSubidos?: ArchivoCreateNestedManyWithoutSubidoPorInput
+    accesosIndicador?: AccesoIndicadorCreateNestedManyWithoutUsuarioInput
+    accesoIso?: AccesoISOCreateNestedOneWithoutUsuarioInput
+    pedidosCreados?: PedidoCreateNestedManyWithoutCreadoPorInput
+    pedidosEditados?: PedidoCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesEnviadas?: CotizacionCreateNestedManyWithoutEnviadoPorInput
+  }
+
+  export type UsuarioUncheckedCreateWithoutCotizacionesCreadasInput = {
+    id?: number
+    supabaseUserId: string
+    nombre: string
+    esAdmin?: boolean
+    esAdminKpis?: boolean
+    activo?: boolean
+    desactivadoEn?: Date | string | null
+    desactivadoPorId?: number | null
+    avatarUrl?: string | null
+    createdAt?: Date | string
+    desactivados?: UsuarioUncheckedCreateNestedManyWithoutDesactivadoPorInput
+    permisos?: PermisoUncheckedCreateNestedManyWithoutUsuarioInput
+    trabajosImpresion?: TrabajoImpresionUncheckedCreateNestedManyWithoutCreadoPorInput
+    archivosSubidos?: ArchivoUncheckedCreateNestedManyWithoutSubidoPorInput
+    accesosIndicador?: AccesoIndicadorUncheckedCreateNestedManyWithoutUsuarioInput
+    accesoIso?: AccesoISOUncheckedCreateNestedOneWithoutUsuarioInput
+    pedidosCreados?: PedidoUncheckedCreateNestedManyWithoutCreadoPorInput
+    pedidosEditados?: PedidoUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesEnviadas?: CotizacionUncheckedCreateNestedManyWithoutEnviadoPorInput
+  }
+
+  export type UsuarioCreateOrConnectWithoutCotizacionesCreadasInput = {
+    where: UsuarioWhereUniqueInput
+    create: XOR<UsuarioCreateWithoutCotizacionesCreadasInput, UsuarioUncheckedCreateWithoutCotizacionesCreadasInput>
+  }
+
+  export type ClienteUpsertWithoutCotizacionesInput = {
+    update: XOR<ClienteUpdateWithoutCotizacionesInput, ClienteUncheckedUpdateWithoutCotizacionesInput>
+    create: XOR<ClienteCreateWithoutCotizacionesInput, ClienteUncheckedCreateWithoutCotizacionesInput>
+    where?: ClienteWhereInput
+  }
+
+  export type ClienteUpdateToOneWithWhereWithoutCotizacionesInput = {
+    where?: ClienteWhereInput
+    data: XOR<ClienteUpdateWithoutCotizacionesInput, ClienteUncheckedUpdateWithoutCotizacionesInput>
+  }
+
+  export type ClienteUpdateWithoutCotizacionesInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    nombreNormalizado?: StringFieldUpdateOperationsInput | string
+    tipoDocumento?: NullableEnumTipoDocumentoClienteFieldUpdateOperationsInput | $Enums.TipoDocumentoCliente | null
+    numeroDocumento?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    celular?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    autorizaContactoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    pedidos?: PedidoUpdateManyWithoutClienteNestedInput
+  }
+
+  export type ClienteUncheckedUpdateWithoutCotizacionesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    nombreNormalizado?: StringFieldUpdateOperationsInput | string
+    tipoDocumento?: NullableEnumTipoDocumentoClienteFieldUpdateOperationsInput | $Enums.TipoDocumentoCliente | null
+    numeroDocumento?: NullableStringFieldUpdateOperationsInput | string | null
+    direccion?: NullableStringFieldUpdateOperationsInput | string | null
+    celular?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    autorizaContactoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    pedidos?: PedidoUncheckedUpdateManyWithoutClienteNestedInput
+  }
+
+  export type UsuarioUpsertWithoutCotizacionesEnviadasInput = {
+    update: XOR<UsuarioUpdateWithoutCotizacionesEnviadasInput, UsuarioUncheckedUpdateWithoutCotizacionesEnviadasInput>
+    create: XOR<UsuarioCreateWithoutCotizacionesEnviadasInput, UsuarioUncheckedCreateWithoutCotizacionesEnviadasInput>
+    where?: UsuarioWhereInput
+  }
+
+  export type UsuarioUpdateToOneWithWhereWithoutCotizacionesEnviadasInput = {
+    where?: UsuarioWhereInput
+    data: XOR<UsuarioUpdateWithoutCotizacionesEnviadasInput, UsuarioUncheckedUpdateWithoutCotizacionesEnviadasInput>
+  }
+
+  export type UsuarioUpdateWithoutCotizacionesEnviadasInput = {
+    supabaseUserId?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    esAdmin?: BoolFieldUpdateOperationsInput | boolean
+    esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    desactivadoPor?: UsuarioUpdateOneWithoutDesactivadosNestedInput
+    desactivados?: UsuarioUpdateManyWithoutDesactivadoPorNestedInput
+    permisos?: PermisoUpdateManyWithoutUsuarioNestedInput
+    trabajosImpresion?: TrabajoImpresionUpdateManyWithoutCreadoPorNestedInput
+    archivosSubidos?: ArchivoUpdateManyWithoutSubidoPorNestedInput
+    accesosIndicador?: AccesoIndicadorUpdateManyWithoutUsuarioNestedInput
+    accesoIso?: AccesoISOUpdateOneWithoutUsuarioNestedInput
+    pedidosCreados?: PedidoUpdateManyWithoutCreadoPorNestedInput
+    pedidosEditados?: PedidoUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesCreadas?: CotizacionUpdateManyWithoutCreadoPorNestedInput
+  }
+
+  export type UsuarioUncheckedUpdateWithoutCotizacionesEnviadasInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    supabaseUserId?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    esAdmin?: BoolFieldUpdateOperationsInput | boolean
+    esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    desactivadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    desactivados?: UsuarioUncheckedUpdateManyWithoutDesactivadoPorNestedInput
+    permisos?: PermisoUncheckedUpdateManyWithoutUsuarioNestedInput
+    trabajosImpresion?: TrabajoImpresionUncheckedUpdateManyWithoutCreadoPorNestedInput
+    archivosSubidos?: ArchivoUncheckedUpdateManyWithoutSubidoPorNestedInput
+    accesosIndicador?: AccesoIndicadorUncheckedUpdateManyWithoutUsuarioNestedInput
+    accesoIso?: AccesoISOUncheckedUpdateOneWithoutUsuarioNestedInput
+    pedidosCreados?: PedidoUncheckedUpdateManyWithoutCreadoPorNestedInput
+    pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesCreadas?: CotizacionUncheckedUpdateManyWithoutCreadoPorNestedInput
+  }
+
+  export type UsuarioUpsertWithoutCotizacionesCreadasInput = {
+    update: XOR<UsuarioUpdateWithoutCotizacionesCreadasInput, UsuarioUncheckedUpdateWithoutCotizacionesCreadasInput>
+    create: XOR<UsuarioCreateWithoutCotizacionesCreadasInput, UsuarioUncheckedCreateWithoutCotizacionesCreadasInput>
+    where?: UsuarioWhereInput
+  }
+
+  export type UsuarioUpdateToOneWithWhereWithoutCotizacionesCreadasInput = {
+    where?: UsuarioWhereInput
+    data: XOR<UsuarioUpdateWithoutCotizacionesCreadasInput, UsuarioUncheckedUpdateWithoutCotizacionesCreadasInput>
+  }
+
+  export type UsuarioUpdateWithoutCotizacionesCreadasInput = {
+    supabaseUserId?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    esAdmin?: BoolFieldUpdateOperationsInput | boolean
+    esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    desactivadoPor?: UsuarioUpdateOneWithoutDesactivadosNestedInput
+    desactivados?: UsuarioUpdateManyWithoutDesactivadoPorNestedInput
+    permisos?: PermisoUpdateManyWithoutUsuarioNestedInput
+    trabajosImpresion?: TrabajoImpresionUpdateManyWithoutCreadoPorNestedInput
+    archivosSubidos?: ArchivoUpdateManyWithoutSubidoPorNestedInput
+    accesosIndicador?: AccesoIndicadorUpdateManyWithoutUsuarioNestedInput
+    accesoIso?: AccesoISOUpdateOneWithoutUsuarioNestedInput
+    pedidosCreados?: PedidoUpdateManyWithoutCreadoPorNestedInput
+    pedidosEditados?: PedidoUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesEnviadas?: CotizacionUpdateManyWithoutEnviadoPorNestedInput
+  }
+
+  export type UsuarioUncheckedUpdateWithoutCotizacionesCreadasInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    supabaseUserId?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    esAdmin?: BoolFieldUpdateOperationsInput | boolean
+    esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    desactivadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    desactivados?: UsuarioUncheckedUpdateManyWithoutDesactivadoPorNestedInput
+    permisos?: PermisoUncheckedUpdateManyWithoutUsuarioNestedInput
+    trabajosImpresion?: TrabajoImpresionUncheckedUpdateManyWithoutCreadoPorNestedInput
+    archivosSubidos?: ArchivoUncheckedUpdateManyWithoutSubidoPorNestedInput
+    accesosIndicador?: AccesoIndicadorUncheckedUpdateManyWithoutUsuarioNestedInput
+    accesoIso?: AccesoISOUncheckedUpdateOneWithoutUsuarioNestedInput
+    pedidosCreados?: PedidoUncheckedUpdateManyWithoutCreadoPorNestedInput
+    pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesEnviadas?: CotizacionUncheckedUpdateManyWithoutEnviadoPorNestedInput
   }
 
   export type CarpetaCreateWithoutHijosInput = {
@@ -26566,6 +29005,8 @@ export namespace Prisma {
     accesoIso?: AccesoISOCreateNestedOneWithoutUsuarioInput
     pedidosCreados?: PedidoCreateNestedManyWithoutCreadoPorInput
     pedidosEditados?: PedidoCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesCreadas?: CotizacionCreateNestedManyWithoutCreadoPorInput
+    cotizacionesEnviadas?: CotizacionCreateNestedManyWithoutEnviadoPorInput
   }
 
   export type UsuarioUncheckedCreateWithoutArchivosSubidosInput = {
@@ -26586,6 +29027,8 @@ export namespace Prisma {
     accesoIso?: AccesoISOUncheckedCreateNestedOneWithoutUsuarioInput
     pedidosCreados?: PedidoUncheckedCreateNestedManyWithoutCreadoPorInput
     pedidosEditados?: PedidoUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesCreadas?: CotizacionUncheckedCreateNestedManyWithoutCreadoPorInput
+    cotizacionesEnviadas?: CotizacionUncheckedCreateNestedManyWithoutEnviadoPorInput
   }
 
   export type UsuarioCreateOrConnectWithoutArchivosSubidosInput = {
@@ -26655,6 +29098,8 @@ export namespace Prisma {
     accesoIso?: AccesoISOUpdateOneWithoutUsuarioNestedInput
     pedidosCreados?: PedidoUpdateManyWithoutCreadoPorNestedInput
     pedidosEditados?: PedidoUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesCreadas?: CotizacionUpdateManyWithoutCreadoPorNestedInput
+    cotizacionesEnviadas?: CotizacionUpdateManyWithoutEnviadoPorNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutArchivosSubidosInput = {
@@ -26675,6 +29120,8 @@ export namespace Prisma {
     accesoIso?: AccesoISOUncheckedUpdateOneWithoutUsuarioNestedInput
     pedidosCreados?: PedidoUncheckedUpdateManyWithoutCreadoPorNestedInput
     pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesCreadas?: CotizacionUncheckedUpdateManyWithoutCreadoPorNestedInput
+    cotizacionesEnviadas?: CotizacionUncheckedUpdateManyWithoutEnviadoPorNestedInput
   }
 
   export type UsuarioCreateWithoutAccesosIndicadorInput = {
@@ -26694,6 +29141,8 @@ export namespace Prisma {
     accesoIso?: AccesoISOCreateNestedOneWithoutUsuarioInput
     pedidosCreados?: PedidoCreateNestedManyWithoutCreadoPorInput
     pedidosEditados?: PedidoCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesCreadas?: CotizacionCreateNestedManyWithoutCreadoPorInput
+    cotizacionesEnviadas?: CotizacionCreateNestedManyWithoutEnviadoPorInput
   }
 
   export type UsuarioUncheckedCreateWithoutAccesosIndicadorInput = {
@@ -26714,6 +29163,8 @@ export namespace Prisma {
     accesoIso?: AccesoISOUncheckedCreateNestedOneWithoutUsuarioInput
     pedidosCreados?: PedidoUncheckedCreateNestedManyWithoutCreadoPorInput
     pedidosEditados?: PedidoUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesCreadas?: CotizacionUncheckedCreateNestedManyWithoutCreadoPorInput
+    cotizacionesEnviadas?: CotizacionUncheckedCreateNestedManyWithoutEnviadoPorInput
   }
 
   export type UsuarioCreateOrConnectWithoutAccesosIndicadorInput = {
@@ -26749,6 +29200,8 @@ export namespace Prisma {
     accesoIso?: AccesoISOUpdateOneWithoutUsuarioNestedInput
     pedidosCreados?: PedidoUpdateManyWithoutCreadoPorNestedInput
     pedidosEditados?: PedidoUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesCreadas?: CotizacionUpdateManyWithoutCreadoPorNestedInput
+    cotizacionesEnviadas?: CotizacionUpdateManyWithoutEnviadoPorNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutAccesosIndicadorInput = {
@@ -26769,6 +29222,8 @@ export namespace Prisma {
     accesoIso?: AccesoISOUncheckedUpdateOneWithoutUsuarioNestedInput
     pedidosCreados?: PedidoUncheckedUpdateManyWithoutCreadoPorNestedInput
     pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesCreadas?: CotizacionUncheckedUpdateManyWithoutCreadoPorNestedInput
+    cotizacionesEnviadas?: CotizacionUncheckedUpdateManyWithoutEnviadoPorNestedInput
   }
 
   export type UsuarioCreateWithoutAccesoIsoInput = {
@@ -26788,6 +29243,8 @@ export namespace Prisma {
     accesosIndicador?: AccesoIndicadorCreateNestedManyWithoutUsuarioInput
     pedidosCreados?: PedidoCreateNestedManyWithoutCreadoPorInput
     pedidosEditados?: PedidoCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesCreadas?: CotizacionCreateNestedManyWithoutCreadoPorInput
+    cotizacionesEnviadas?: CotizacionCreateNestedManyWithoutEnviadoPorInput
   }
 
   export type UsuarioUncheckedCreateWithoutAccesoIsoInput = {
@@ -26808,6 +29265,8 @@ export namespace Prisma {
     accesosIndicador?: AccesoIndicadorUncheckedCreateNestedManyWithoutUsuarioInput
     pedidosCreados?: PedidoUncheckedCreateNestedManyWithoutCreadoPorInput
     pedidosEditados?: PedidoUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesCreadas?: CotizacionUncheckedCreateNestedManyWithoutCreadoPorInput
+    cotizacionesEnviadas?: CotizacionUncheckedCreateNestedManyWithoutEnviadoPorInput
   }
 
   export type UsuarioCreateOrConnectWithoutAccesoIsoInput = {
@@ -26843,6 +29302,8 @@ export namespace Prisma {
     accesosIndicador?: AccesoIndicadorUpdateManyWithoutUsuarioNestedInput
     pedidosCreados?: PedidoUpdateManyWithoutCreadoPorNestedInput
     pedidosEditados?: PedidoUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesCreadas?: CotizacionUpdateManyWithoutCreadoPorNestedInput
+    cotizacionesEnviadas?: CotizacionUpdateManyWithoutEnviadoPorNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutAccesoIsoInput = {
@@ -26863,6 +29324,8 @@ export namespace Prisma {
     accesosIndicador?: AccesoIndicadorUncheckedUpdateManyWithoutUsuarioNestedInput
     pedidosCreados?: PedidoUncheckedUpdateManyWithoutCreadoPorNestedInput
     pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesCreadas?: CotizacionUncheckedUpdateManyWithoutCreadoPorNestedInput
+    cotizacionesEnviadas?: CotizacionUncheckedUpdateManyWithoutEnviadoPorNestedInput
   }
 
   export type UsuarioCreateManyDesactivadoPorInput = {
@@ -26966,6 +29429,32 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type CotizacionCreateManyCreadoPorInput = {
+    id?: number
+    clienteId: number
+    numeroProforma: string
+    notas?: string | null
+    estado?: $Enums.EstadoCotizacion
+    enviadoEn?: Date | string | null
+    enviadoPorId?: number | null
+    recordatorioEnviadoEn?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CotizacionCreateManyEnviadoPorInput = {
+    id?: number
+    clienteId: number
+    numeroProforma: string
+    notas?: string | null
+    estado?: $Enums.EstadoCotizacion
+    enviadoEn?: Date | string | null
+    recordatorioEnviadoEn?: Date | string | null
+    creadoPorId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type UsuarioUpdateWithoutDesactivadoPorInput = {
     supabaseUserId?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
@@ -26983,6 +29472,8 @@ export namespace Prisma {
     accesoIso?: AccesoISOUpdateOneWithoutUsuarioNestedInput
     pedidosCreados?: PedidoUpdateManyWithoutCreadoPorNestedInput
     pedidosEditados?: PedidoUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesCreadas?: CotizacionUpdateManyWithoutCreadoPorNestedInput
+    cotizacionesEnviadas?: CotizacionUpdateManyWithoutEnviadoPorNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutDesactivadoPorInput = {
@@ -27003,6 +29494,8 @@ export namespace Prisma {
     accesoIso?: AccesoISOUncheckedUpdateOneWithoutUsuarioNestedInput
     pedidosCreados?: PedidoUncheckedUpdateManyWithoutCreadoPorNestedInput
     pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesCreadas?: CotizacionUncheckedUpdateManyWithoutCreadoPorNestedInput
+    cotizacionesEnviadas?: CotizacionUncheckedUpdateManyWithoutEnviadoPorNestedInput
   }
 
   export type UsuarioUncheckedUpdateManyWithoutDesactivadoPorInput = {
@@ -27273,6 +29766,82 @@ export namespace Prisma {
     avisoEntregadoEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     categoriaObservacion?: NullableEnumCategoriaObservacionPedidoFieldUpdateOperationsInput | $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoPorId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CotizacionUpdateWithoutCreadoPorInput = {
+    numeroProforma?: StringFieldUpdateOperationsInput | string
+    notas?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: EnumEstadoCotizacionFieldUpdateOperationsInput | $Enums.EstadoCotizacion
+    enviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    recordatorioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    cliente?: ClienteUpdateOneRequiredWithoutCotizacionesNestedInput
+    enviadoPor?: UsuarioUpdateOneWithoutCotizacionesEnviadasNestedInput
+  }
+
+  export type CotizacionUncheckedUpdateWithoutCreadoPorInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    clienteId?: IntFieldUpdateOperationsInput | number
+    numeroProforma?: StringFieldUpdateOperationsInput | string
+    notas?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: EnumEstadoCotizacionFieldUpdateOperationsInput | $Enums.EstadoCotizacion
+    enviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enviadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
+    recordatorioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CotizacionUncheckedUpdateManyWithoutCreadoPorInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    clienteId?: IntFieldUpdateOperationsInput | number
+    numeroProforma?: StringFieldUpdateOperationsInput | string
+    notas?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: EnumEstadoCotizacionFieldUpdateOperationsInput | $Enums.EstadoCotizacion
+    enviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enviadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
+    recordatorioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CotizacionUpdateWithoutEnviadoPorInput = {
+    numeroProforma?: StringFieldUpdateOperationsInput | string
+    notas?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: EnumEstadoCotizacionFieldUpdateOperationsInput | $Enums.EstadoCotizacion
+    enviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    recordatorioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    cliente?: ClienteUpdateOneRequiredWithoutCotizacionesNestedInput
+    creadoPor?: UsuarioUpdateOneRequiredWithoutCotizacionesCreadasNestedInput
+  }
+
+  export type CotizacionUncheckedUpdateWithoutEnviadoPorInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    clienteId?: IntFieldUpdateOperationsInput | number
+    numeroProforma?: StringFieldUpdateOperationsInput | string
+    notas?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: EnumEstadoCotizacionFieldUpdateOperationsInput | $Enums.EstadoCotizacion
+    enviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    recordatorioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    creadoPorId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CotizacionUncheckedUpdateManyWithoutEnviadoPorInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    clienteId?: IntFieldUpdateOperationsInput | number
+    numeroProforma?: StringFieldUpdateOperationsInput | string
+    notas?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: EnumEstadoCotizacionFieldUpdateOperationsInput | $Enums.EstadoCotizacion
+    enviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    recordatorioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     creadoPorId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -27577,6 +30146,19 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type CotizacionCreateManyClienteInput = {
+    id?: number
+    numeroProforma: string
+    notas?: string | null
+    estado?: $Enums.EstadoCotizacion
+    enviadoEn?: Date | string | null
+    enviadoPorId?: number | null
+    recordatorioEnviadoEn?: Date | string | null
+    creadoPorId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type PedidoUpdateWithoutClienteInput = {
     numeroProforma?: StringFieldUpdateOperationsInput | string
     tokenSeguimiento?: StringFieldUpdateOperationsInput | string
@@ -27629,6 +30211,44 @@ export namespace Prisma {
     detalleObservacion?: NullableStringFieldUpdateOperationsInput | string | null
     creadoPorId?: IntFieldUpdateOperationsInput | number
     ultimoEditadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CotizacionUpdateWithoutClienteInput = {
+    numeroProforma?: StringFieldUpdateOperationsInput | string
+    notas?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: EnumEstadoCotizacionFieldUpdateOperationsInput | $Enums.EstadoCotizacion
+    enviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    recordatorioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    enviadoPor?: UsuarioUpdateOneWithoutCotizacionesEnviadasNestedInput
+    creadoPor?: UsuarioUpdateOneRequiredWithoutCotizacionesCreadasNestedInput
+  }
+
+  export type CotizacionUncheckedUpdateWithoutClienteInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    numeroProforma?: StringFieldUpdateOperationsInput | string
+    notas?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: EnumEstadoCotizacionFieldUpdateOperationsInput | $Enums.EstadoCotizacion
+    enviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enviadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
+    recordatorioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    creadoPorId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CotizacionUncheckedUpdateManyWithoutClienteInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    numeroProforma?: StringFieldUpdateOperationsInput | string
+    notas?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: EnumEstadoCotizacionFieldUpdateOperationsInput | $Enums.EstadoCotizacion
+    enviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enviadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
+    recordatorioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    creadoPorId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

@@ -349,6 +349,7 @@ enum TipoNotificacion {
   PEDIDO_SALIO_SIN_ENTREGAR
   COTIZACION_SIN_AVISO_ALMACEN
   COTIZACION_RESPUESTA_LENTA
+  RESUMEN_DIARIO
 }
 
 // Seguimiento del proceso de cotización de Joel: mismo patrón que Pedido (fechas por etapa,

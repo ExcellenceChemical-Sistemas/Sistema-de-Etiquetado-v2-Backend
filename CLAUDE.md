@@ -210,6 +210,19 @@ correo.** Antes lo disparaba un cron de n8n que llamaba `POST /cotizaciones/reco
 Ambas notifican a cada usuario con `COTIZACIONES.puedeEditar` o `esAdmin`; el refrigerio que se
 descuenta en la segunda es el de ese mismo grupo (Joel/Alice), no el de Pedidos.
 
+**`ResumenDiarioService` (`notificaciones/resumen-diario.service.ts`) manda un único mensaje
+diario con lo que sigue abierto, para que las alertas puntuales de arriba no dependan de que
+alguien revise Mensajería seguido.** Cron `0 8 * * 1-5` (L-V 8am): cuenta, con `Prisma.count()`,
+las entidades que ya dispararon alguna de las 4 alertas puntuales y siguen sin resolverse
+(`alerta48hEnviadaEn`/`alertaSalioSinEntregarEnviadaEn` en Pedido con la etapa siguiente aún null;
+`recordatorioEnviadoEn`/`alertaLentaEnviadaEn` en Cotizacion igual) — no vuelve a calcular horas
+hábiles, reusa el trabajo que ya hicieron los crons puntuales. Si no hay nada pendiente **no manda
+nada** (día tranquilo se queda tranquilo, a propósito para no volverse tedioso). Dedupe: si ya
+existe una `Notificacion` `RESUMEN_DIARIO` creada desde la medianoche, no manda otra — cubre
+reinicios del proceso el mismo día, no hace falta un campo nuevo en ningún modelo. Destinatarios:
+unión de quienes reciben alertas de Pedidos (`PEDIDOS.puedeVer`) y de Cotizaciones
+(`COTIZACIONES.puedeEditar`) + admins.
+
 **`Cotizacion` (módulo `cotizaciones`) — seguimiento del proceso de Joel, con auditoría contra
 manipulación de fechas.** Mismo patrón que `Pedido` (sin columna `estado`, derivado en
 `cotizaciones.service.ts` de qué de `cotizacionEnviadaEn`/`pedidoAprobadoEn`/`avisoAlmacenEn` está

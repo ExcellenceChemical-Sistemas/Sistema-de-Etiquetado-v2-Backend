@@ -320,19 +320,22 @@ model Pedido {
 }
 
 // Notificación interna (no correo) para avisar dentro del sistema, ej. "este pedido lleva
-// más de 48h hábiles sin marcarse como entregado" (AlertasPedidosService). No reemplaza el
-// aviso por correo al cliente (ese sigue siendo el workflow de n8n, ver CLAUDE.md) — este es
-// un aviso interno para el personal (quien tiene acceso a PEDIDOS + los admins).
+// más de 48h hábiles sin marcarse como entregado" (AlertasPedidosService) o "esta cotización
+// está aprobada hace más de 1h sin avisar a almacén" (AlertasCotizacionesService). El aviso al
+// CLIENTE de un pedido (salió/entregado) sigue siendo un correo externo vía n8n — ver CLAUDE.md;
+// esto es solo para avisos internos al personal (quien tiene acceso al recurso + los admins).
 model Notificacion {
-  id        Int              @id @default(autoincrement())
-  usuarioId Int
-  usuario   Usuario          @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
-  tipo      TipoNotificacion
-  mensaje   String
-  pedidoId  Int?
-  pedido    Pedido?          @relation(fields: [pedidoId], references: [id], onDelete: Cascade)
-  leidaEn   DateTime?
-  createdAt DateTime         @default(now())
+  id           Int              @id @default(autoincrement())
+  usuarioId    Int
+  usuario      Usuario          @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  tipo         TipoNotificacion
+  mensaje      String
+  pedidoId     Int?
+  pedido       Pedido?          @relation(fields: [pedidoId], references: [id], onDelete: Cascade)
+  cotizacionId Int?
+  cotizacion   Cotizacion?      @relation(fields: [cotizacionId], references: [id], onDelete: Cascade)
+  leidaEn      DateTime?
+  createdAt    DateTime         @default(now())
 
   @@index([usuarioId])
   @@map("notificaciones")
@@ -340,6 +343,7 @@ model Notificacion {
 
 enum TipoNotificacion {
   PEDIDO_VENCIDO
+  COTIZACION_SIN_AVISO_ALMACEN
 }
 
 // Seguimiento del proceso de cotización de Joel: mismo patrón que Pedido (fechas por etapa,
@@ -370,6 +374,7 @@ model Cotizacion {
   createdAt             DateTime              @default(now())
   updatedAt             DateTime              @updatedAt
   historial             CotizacionHistorial[]
+  notificaciones        Notificacion[]
 
   @@index([clienteId])
   @@map("cotizaciones")

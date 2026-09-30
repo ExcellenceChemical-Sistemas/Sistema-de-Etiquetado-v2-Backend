@@ -400,9 +400,10 @@ export class CotizacionesService {
     return this.prisma.cotizacion.delete({ where: { id } });
   }
 
-  // Recordatorio (n8n): cotizaciones aprobadas hace más de `horas` que todavía no se avisaron a
-  // almacén. Reserva (recordatorioEnviadoEn) con updateMany antes de devolver la lista, mismo
-  // patrón que avisoSalioEnviadoEn en Pedidos — así no se manda el mismo aviso dos veces.
+  // Recordatorio (AlertasCotizacionesService, notificación interna — ya no correo vía n8n):
+  // cotizaciones aprobadas hace más de `horas` que todavía no se avisaron a almacén. Reserva
+  // (recordatorioEnviadoEn) con updateMany antes de devolver la lista, mismo patrón que
+  // avisoSalioEnviadoEn en Pedidos — así no se manda el mismo aviso dos veces.
   async findPendientesDeRecordatorio(horas: number) {
     const limite = new Date(Date.now() - horas * 3_600_000);
     const candidatas = await this.prisma.cotizacion.findMany({

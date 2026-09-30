@@ -257,6 +257,7 @@ exports.Prisma.NotificacionScalarFieldEnum = {
   tipo: 'tipo',
   mensaje: 'mensaje',
   pedidoId: 'pedidoId',
+  cotizacionId: 'cotizacionId',
   leidaEn: 'leidaEn',
   createdAt: 'createdAt'
 };
@@ -400,7 +401,8 @@ exports.CategoriaObservacionPedido = exports.$Enums.CategoriaObservacionPedido =
 };
 
 exports.TipoNotificacion = exports.$Enums.TipoNotificacion = {
-  PEDIDO_VENCIDO: 'PEDIDO_VENCIDO'
+  PEDIDO_VENCIDO: 'PEDIDO_VENCIDO',
+  COTIZACION_SIN_AVISO_ALMACEN: 'COTIZACION_SIN_AVISO_ALMACEN'
 };
 
 exports.ModuloDocumentos = exports.$Enums.ModuloDocumentos = {

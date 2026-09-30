@@ -184,7 +184,19 @@ cron `@nestjs/schedule` cada 30 min) revisa pedidos sin `entregadoEn` que acumul
 fines de semana) desde `recibidoEn`, y crea una `Notificacion` para cada usuario con
 `esAdmin=true` o `PEDIDOS.puedeVer=true`. `Pedido.alerta48hEnviadaEn` evita mandarla dos veces,
 mismo patrón que `avisoSalioEnviadoEn`. Es un sistema separado del aviso por correo al cliente de
-arriba — uno es interno (personal de la empresa), el otro es externo (al cliente).
+arriba — uno es interno (personal de la empresa), el otro es externo (al cliente). El refrigerio de
+cada `Usuario` (`refrigerioInicioMinutos`/`refrigerioFinMinutos`, minutos desde medianoche, editado
+por un Admin vía `PATCH /usuarios/:id/refrigerio`) se descuenta del conteo: `horasHabilesEntre()`
+toma la intersección de los refrigerios de quienes pueden marcar el pedido como entregado
+(`PEDIDOS.puedeEditar` + admins) — si están escalonados, no se descuenta nada.
+
+**El recordatorio de "cotización sin avisar a almacén" también es notificación interna, ya no
+correo.** Antes lo disparaba un cron de n8n que llamaba `POST /cotizaciones/recordatorios/despachar`
+(ruta eliminada) y mandaba un correo — se sacó porque el correo se revisaba poco.
+`AlertasCotizacionesService` (`cotizaciones/alertas-cotizaciones.service.ts`, cron cada 15 min)
+llama directo a `CotizacionesService.findPendientesDeRecordatorio()` (cotizaciones aprobadas hace
+más de 1h sin `avisoAlmacenEn`, SLA de reloj real, no horas hábiles) y crea una `Notificacion` para
+cada usuario con `COTIZACIONES.puedeEditar` o `esAdmin`.
 
 **`Cotizacion` (módulo `cotizaciones`) — seguimiento del proceso de Joel, con auditoría contra
 manipulación de fechas.** Mismo patrón que `Pedido` (sin columna `estado`, derivado en

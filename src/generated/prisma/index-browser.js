@@ -127,6 +127,8 @@ exports.Prisma.UsuarioScalarFieldEnum = {
   esAdmin: 'esAdmin',
   esAdminKpis: 'esAdminKpis',
   activo: 'activo',
+  refrigerioInicioMinutos: 'refrigerioInicioMinutos',
+  refrigerioFinMinutos: 'refrigerioFinMinutos',
   desactivadoEn: 'desactivadoEn',
   desactivadoPorId: 'desactivadoPorId',
   avatarUrl: 'avatarUrl',

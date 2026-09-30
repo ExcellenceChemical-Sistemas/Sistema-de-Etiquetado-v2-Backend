@@ -7,6 +7,7 @@ import { actualizarPerfilSchema, ActualizarPerfilDto } from './dto/actualizar-pe
 import { actualizarAccesosKpisIsoSchema, ActualizarAccesosKpisIsoDto } from './dto/actualizar-accesos-kpis-iso.dto';
 import { actualizarActivoSchema, ActualizarActivoDto } from './dto/actualizar-activo.dto';
 import { actualizarRolKpisSchema, ActualizarRolKpisDto } from './dto/actualizar-rol-kpis.dto';
+import { actualizarRefrigerioSchema, ActualizarRefrigerioDto } from './dto/actualizar-refrigerio.dto';
 import { SupabaseAuthGuard } from '../common/guards/supabase-auth.guard';
 import { EsAdminGuard } from '../common/guards/es-admin.guard';
 import { EsAdminKpisGuard } from '../common/guards/es-admin-kpis.guard';
@@ -105,6 +106,16 @@ export class UsuariosController {
   async eliminar(@Param('id', ParseIntPipe) id: number, @Req() req: any) {
     await this.usuariosService.eliminar(id, req.usuario.id);
     return { success: true };
+  }
+
+  // Refrigerio del usuario (minutos desde medianoche), usado por AlertasPedidosService para no
+  // contarlo como hora hábil. Exclusivo de Admin, igual que el resto del panel de usuarios.
+  @Patch(':id/refrigerio')
+  @UseGuards(SupabaseAuthGuard, EsAdminGuard)
+  async actualizarRefrigerio(@Param('id', ParseIntPipe) id: number, @Body() body: unknown) {
+    const dto: ActualizarRefrigerioDto = actualizarRefrigerioSchema.parse(body);
+    const usuario = await this.usuariosService.actualizarRefrigerio(id, dto);
+    return { success: true, data: usuario };
   }
 
   // Asignar/quitar el rol de Admin de KPIs: exclusivo del Admin general.

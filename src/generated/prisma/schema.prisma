@@ -22,6 +22,12 @@ model Usuario {
   esAdmin                      Boolean               @default(false)
   esAdminKpis                  Boolean               @default(false) // gestiona accesos de KPIs/ISO de otros; no implica acceso propio automático
   activo                       Boolean               @default(true) // false = sin acceso al sistema pero conserva historial (ver PATCH /usuarios/:id/activo)
+  // Refrigerio de cada usuario, en minutos desde medianoche (ej. 720 = 12:00pm). Null = sin
+  // configurar, no se descuenta nada. Es escalonado por persona (ver PATCH /usuarios/:id/refrigerio,
+  // exclusivo de Admin) — AlertasPedidosService lo usa para no contar el refrigerio como horas
+  // hábiles al calcular si un pedido lleva 48h sin entregarse.
+  refrigerioInicioMinutos      Int?
+  refrigerioFinMinutos         Int?
   // Quién y cuándo desactivó la cuenta (null si está activa). Si ese admin se
   // elimina después, desactivadoPorId queda en null pero desactivadoEn se conserva.
   desactivadoEn                DateTime?

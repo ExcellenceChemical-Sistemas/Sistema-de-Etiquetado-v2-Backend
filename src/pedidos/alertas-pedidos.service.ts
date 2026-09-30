@@ -33,8 +33,25 @@ export class AlertasPedidosService {
         cliente: { select: { nombre: true } },
       },
     });
+    if (!candidatos.length) return;
 
-    const vencidos = candidatos.filter((p) => horasHabilesEntre(p.recibidoEn, ahora) >= UMBRAL_HORAS_HABILES);
+    // Refrigerio de quienes pueden marcar un pedido como entregado (editan PEDIDOS): solo se
+    // descuenta la intersección de sus horarios — si están escalonados, siempre hay alguien
+    // disponible y no se descuenta nada (ver horasHabilesEntre).
+    const editoresPedidos = await this.prisma.usuario.findMany({
+      where: {
+        activo: true,
+        OR: [{ esAdmin: true }, { permisos: { some: { recurso: 'PEDIDOS', puedeEditar: true } } }],
+      },
+      select: { refrigerioInicioMinutos: true, refrigerioFinMinutos: true },
+    });
+    const refrigerios = editoresPedidos
+      .filter((u) => u.refrigerioInicioMinutos != null && u.refrigerioFinMinutos != null)
+      .map((u) => ({ inicioMinutos: u.refrigerioInicioMinutos!, finMinutos: u.refrigerioFinMinutos! }));
+
+    const vencidos = candidatos.filter(
+      (p) => horasHabilesEntre(p.recibidoEn, ahora, refrigerios) >= UMBRAL_HORAS_HABILES,
+    );
     if (!vencidos.length) return;
 
     const destinatarios = await this.prisma.usuario.findMany({

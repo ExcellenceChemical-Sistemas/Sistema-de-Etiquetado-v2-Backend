@@ -14,6 +14,7 @@ import { ActualizarPermisosDto } from './dto/actualizar-permisos.dto';
 import { ActualizarPerfilDto } from './dto/actualizar-perfil.dto';
 import { ActualizarAccesosKpisIsoDto } from './dto/actualizar-accesos-kpis-iso.dto';
 import { ActualizarRolKpisDto } from './dto/actualizar-rol-kpis.dto';
+import { ActualizarRefrigerioDto } from './dto/actualizar-refrigerio.dto';
 import { coincideFirma } from '../common/firma-archivo';
 
 /**
@@ -69,6 +70,15 @@ const SELECT_ROL_KPIS = {
   avatarUrl: true,
   esAdmin: true,
   esAdminKpis: true,
+} satisfies Prisma.UsuarioSelect;
+
+/** Mismo criterio de acceso mínimo que SELECT_ROL_KPIS: el endpoint solo cambia estos 2 campos. */
+const SELECT_REFRIGERIO = {
+  id: true,
+  nombre: true,
+  avatarUrl: true,
+  refrigerioInicioMinutos: true,
+  refrigerioFinMinutos: true,
 } satisfies Prisma.UsuarioSelect;
 
 @Injectable()
@@ -228,6 +238,23 @@ export class UsuariosService {
       where: { id: usuarioId },
       data: { esAdminKpis: dto.esAdminKpis },
       select: SELECT_ROL_KPIS,
+    });
+  }
+
+  /** Refrigerio del usuario, en minutos desde medianoche — ver comentario en schema.prisma. */
+  async actualizarRefrigerio(usuarioId: number, dto: ActualizarRefrigerioDto) {
+    const usuario = await this.prisma.usuario.findUnique({
+      where: { id: usuarioId },
+    });
+    if (!usuario) throw new NotFoundException('Usuario no encontrado');
+
+    return this.prisma.usuario.update({
+      where: { id: usuarioId },
+      data: {
+        refrigerioInicioMinutos: dto.refrigerioInicioMinutos,
+        refrigerioFinMinutos: dto.refrigerioFinMinutos,
+      },
+      select: SELECT_REFRIGERIO,
     });
   }
 

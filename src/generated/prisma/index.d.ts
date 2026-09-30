@@ -2996,11 +2996,15 @@ export namespace Prisma {
 
   export type UsuarioAvgAggregateOutputType = {
     id: number | null
+    refrigerioInicioMinutos: number | null
+    refrigerioFinMinutos: number | null
     desactivadoPorId: number | null
   }
 
   export type UsuarioSumAggregateOutputType = {
     id: number | null
+    refrigerioInicioMinutos: number | null
+    refrigerioFinMinutos: number | null
     desactivadoPorId: number | null
   }
 
@@ -3011,6 +3015,8 @@ export namespace Prisma {
     esAdmin: boolean | null
     esAdminKpis: boolean | null
     activo: boolean | null
+    refrigerioInicioMinutos: number | null
+    refrigerioFinMinutos: number | null
     desactivadoEn: Date | null
     desactivadoPorId: number | null
     avatarUrl: string | null
@@ -3024,6 +3030,8 @@ export namespace Prisma {
     esAdmin: boolean | null
     esAdminKpis: boolean | null
     activo: boolean | null
+    refrigerioInicioMinutos: number | null
+    refrigerioFinMinutos: number | null
     desactivadoEn: Date | null
     desactivadoPorId: number | null
     avatarUrl: string | null
@@ -3037,6 +3045,8 @@ export namespace Prisma {
     esAdmin: number
     esAdminKpis: number
     activo: number
+    refrigerioInicioMinutos: number
+    refrigerioFinMinutos: number
     desactivadoEn: number
     desactivadoPorId: number
     avatarUrl: number
@@ -3047,11 +3057,15 @@ export namespace Prisma {
 
   export type UsuarioAvgAggregateInputType = {
     id?: true
+    refrigerioInicioMinutos?: true
+    refrigerioFinMinutos?: true
     desactivadoPorId?: true
   }
 
   export type UsuarioSumAggregateInputType = {
     id?: true
+    refrigerioInicioMinutos?: true
+    refrigerioFinMinutos?: true
     desactivadoPorId?: true
   }
 
@@ -3062,6 +3076,8 @@ export namespace Prisma {
     esAdmin?: true
     esAdminKpis?: true
     activo?: true
+    refrigerioInicioMinutos?: true
+    refrigerioFinMinutos?: true
     desactivadoEn?: true
     desactivadoPorId?: true
     avatarUrl?: true
@@ -3075,6 +3091,8 @@ export namespace Prisma {
     esAdmin?: true
     esAdminKpis?: true
     activo?: true
+    refrigerioInicioMinutos?: true
+    refrigerioFinMinutos?: true
     desactivadoEn?: true
     desactivadoPorId?: true
     avatarUrl?: true
@@ -3088,6 +3106,8 @@ export namespace Prisma {
     esAdmin?: true
     esAdminKpis?: true
     activo?: true
+    refrigerioInicioMinutos?: true
+    refrigerioFinMinutos?: true
     desactivadoEn?: true
     desactivadoPorId?: true
     avatarUrl?: true
@@ -3188,6 +3208,8 @@ export namespace Prisma {
     esAdmin: boolean
     esAdminKpis: boolean
     activo: boolean
+    refrigerioInicioMinutos: number | null
+    refrigerioFinMinutos: number | null
     desactivadoEn: Date | null
     desactivadoPorId: number | null
     avatarUrl: string | null
@@ -3220,6 +3242,8 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    refrigerioInicioMinutos?: boolean
+    refrigerioFinMinutos?: boolean
     desactivadoEn?: boolean
     desactivadoPorId?: boolean
     avatarUrl?: boolean
@@ -3249,6 +3273,8 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    refrigerioInicioMinutos?: boolean
+    refrigerioFinMinutos?: boolean
     desactivadoEn?: boolean
     desactivadoPorId?: boolean
     avatarUrl?: boolean
@@ -3263,6 +3289,8 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    refrigerioInicioMinutos?: boolean
+    refrigerioFinMinutos?: boolean
     desactivadoEn?: boolean
     desactivadoPorId?: boolean
     avatarUrl?: boolean
@@ -3277,13 +3305,15 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    refrigerioInicioMinutos?: boolean
+    refrigerioFinMinutos?: boolean
     desactivadoEn?: boolean
     desactivadoPorId?: boolean
     avatarUrl?: boolean
     createdAt?: boolean
   }
 
-  export type UsuarioOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "supabaseUserId" | "nombre" | "esAdmin" | "esAdminKpis" | "activo" | "desactivadoEn" | "desactivadoPorId" | "avatarUrl" | "createdAt", ExtArgs["result"]["usuario"]>
+  export type UsuarioOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "supabaseUserId" | "nombre" | "esAdmin" | "esAdminKpis" | "activo" | "refrigerioInicioMinutos" | "refrigerioFinMinutos" | "desactivadoEn" | "desactivadoPorId" | "avatarUrl" | "createdAt", ExtArgs["result"]["usuario"]>
   export type UsuarioInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     desactivadoPor?: boolean | Usuario$desactivadoPorArgs<ExtArgs>
     desactivados?: boolean | Usuario$desactivadosArgs<ExtArgs>
@@ -3335,6 +3365,8 @@ export namespace Prisma {
       esAdmin: boolean
       esAdminKpis: boolean
       activo: boolean
+      refrigerioInicioMinutos: number | null
+      refrigerioFinMinutos: number | null
       desactivadoEn: Date | null
       desactivadoPorId: number | null
       avatarUrl: string | null
@@ -3783,6 +3815,8 @@ export namespace Prisma {
     readonly esAdmin: FieldRef<"Usuario", 'Boolean'>
     readonly esAdminKpis: FieldRef<"Usuario", 'Boolean'>
     readonly activo: FieldRef<"Usuario", 'Boolean'>
+    readonly refrigerioInicioMinutos: FieldRef<"Usuario", 'Int'>
+    readonly refrigerioFinMinutos: FieldRef<"Usuario", 'Int'>
     readonly desactivadoEn: FieldRef<"Usuario", 'DateTime'>
     readonly desactivadoPorId: FieldRef<"Usuario", 'Int'>
     readonly avatarUrl: FieldRef<"Usuario", 'String'>
@@ -24724,6 +24758,8 @@ export namespace Prisma {
     esAdmin: 'esAdmin',
     esAdminKpis: 'esAdminKpis',
     activo: 'activo',
+    refrigerioInicioMinutos: 'refrigerioInicioMinutos',
+    refrigerioFinMinutos: 'refrigerioFinMinutos',
     desactivadoEn: 'desactivadoEn',
     desactivadoPorId: 'desactivadoPorId',
     avatarUrl: 'avatarUrl',
@@ -25232,6 +25268,8 @@ export namespace Prisma {
     esAdmin?: BoolFilter<"Usuario"> | boolean
     esAdminKpis?: BoolFilter<"Usuario"> | boolean
     activo?: BoolFilter<"Usuario"> | boolean
+    refrigerioInicioMinutos?: IntNullableFilter<"Usuario"> | number | null
+    refrigerioFinMinutos?: IntNullableFilter<"Usuario"> | number | null
     desactivadoEn?: DateTimeNullableFilter<"Usuario"> | Date | string | null
     desactivadoPorId?: IntNullableFilter<"Usuario"> | number | null
     avatarUrl?: StringNullableFilter<"Usuario"> | string | null
@@ -25260,6 +25298,8 @@ export namespace Prisma {
     esAdmin?: SortOrder
     esAdminKpis?: SortOrder
     activo?: SortOrder
+    refrigerioInicioMinutos?: SortOrderInput | SortOrder
+    refrigerioFinMinutos?: SortOrderInput | SortOrder
     desactivadoEn?: SortOrderInput | SortOrder
     desactivadoPorId?: SortOrderInput | SortOrder
     avatarUrl?: SortOrderInput | SortOrder
@@ -25291,6 +25331,8 @@ export namespace Prisma {
     esAdmin?: BoolFilter<"Usuario"> | boolean
     esAdminKpis?: BoolFilter<"Usuario"> | boolean
     activo?: BoolFilter<"Usuario"> | boolean
+    refrigerioInicioMinutos?: IntNullableFilter<"Usuario"> | number | null
+    refrigerioFinMinutos?: IntNullableFilter<"Usuario"> | number | null
     desactivadoEn?: DateTimeNullableFilter<"Usuario"> | Date | string | null
     desactivadoPorId?: IntNullableFilter<"Usuario"> | number | null
     avatarUrl?: StringNullableFilter<"Usuario"> | string | null
@@ -25319,6 +25361,8 @@ export namespace Prisma {
     esAdmin?: SortOrder
     esAdminKpis?: SortOrder
     activo?: SortOrder
+    refrigerioInicioMinutos?: SortOrderInput | SortOrder
+    refrigerioFinMinutos?: SortOrderInput | SortOrder
     desactivadoEn?: SortOrderInput | SortOrder
     desactivadoPorId?: SortOrderInput | SortOrder
     avatarUrl?: SortOrderInput | SortOrder
@@ -25340,6 +25384,8 @@ export namespace Prisma {
     esAdmin?: BoolWithAggregatesFilter<"Usuario"> | boolean
     esAdminKpis?: BoolWithAggregatesFilter<"Usuario"> | boolean
     activo?: BoolWithAggregatesFilter<"Usuario"> | boolean
+    refrigerioInicioMinutos?: IntNullableWithAggregatesFilter<"Usuario"> | number | null
+    refrigerioFinMinutos?: IntNullableWithAggregatesFilter<"Usuario"> | number | null
     desactivadoEn?: DateTimeNullableWithAggregatesFilter<"Usuario"> | Date | string | null
     desactivadoPorId?: IntNullableWithAggregatesFilter<"Usuario"> | number | null
     avatarUrl?: StringNullableWithAggregatesFilter<"Usuario"> | string | null
@@ -26777,6 +26823,8 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    refrigerioInicioMinutos?: number | null
+    refrigerioFinMinutos?: number | null
     desactivadoEn?: Date | string | null
     avatarUrl?: string | null
     createdAt?: Date | string
@@ -26804,6 +26852,8 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    refrigerioInicioMinutos?: number | null
+    refrigerioFinMinutos?: number | null
     desactivadoEn?: Date | string | null
     desactivadoPorId?: number | null
     avatarUrl?: string | null
@@ -26830,6 +26880,8 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    refrigerioInicioMinutos?: NullableIntFieldUpdateOperationsInput | number | null
+    refrigerioFinMinutos?: NullableIntFieldUpdateOperationsInput | number | null
     desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -26857,6 +26909,8 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    refrigerioInicioMinutos?: NullableIntFieldUpdateOperationsInput | number | null
+    refrigerioFinMinutos?: NullableIntFieldUpdateOperationsInput | number | null
     desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     desactivadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -26884,6 +26938,8 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    refrigerioInicioMinutos?: number | null
+    refrigerioFinMinutos?: number | null
     desactivadoEn?: Date | string | null
     desactivadoPorId?: number | null
     avatarUrl?: string | null
@@ -26896,6 +26952,8 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    refrigerioInicioMinutos?: NullableIntFieldUpdateOperationsInput | number | null
+    refrigerioFinMinutos?: NullableIntFieldUpdateOperationsInput | number | null
     desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -26908,6 +26966,8 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    refrigerioInicioMinutos?: NullableIntFieldUpdateOperationsInput | number | null
+    refrigerioFinMinutos?: NullableIntFieldUpdateOperationsInput | number | null
     desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     desactivadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -28430,17 +28490,6 @@ export namespace Prisma {
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
-  export type DateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
-  }
-
   export type IntNullableFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
@@ -28450,6 +28499,17 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
   export type StringNullableFilter<$PrismaModel = never> = {
@@ -28600,6 +28660,8 @@ export namespace Prisma {
     esAdmin?: SortOrder
     esAdminKpis?: SortOrder
     activo?: SortOrder
+    refrigerioInicioMinutos?: SortOrder
+    refrigerioFinMinutos?: SortOrder
     desactivadoEn?: SortOrder
     desactivadoPorId?: SortOrder
     avatarUrl?: SortOrder
@@ -28608,6 +28670,8 @@ export namespace Prisma {
 
   export type UsuarioAvgOrderByAggregateInput = {
     id?: SortOrder
+    refrigerioInicioMinutos?: SortOrder
+    refrigerioFinMinutos?: SortOrder
     desactivadoPorId?: SortOrder
   }
 
@@ -28618,6 +28682,8 @@ export namespace Prisma {
     esAdmin?: SortOrder
     esAdminKpis?: SortOrder
     activo?: SortOrder
+    refrigerioInicioMinutos?: SortOrder
+    refrigerioFinMinutos?: SortOrder
     desactivadoEn?: SortOrder
     desactivadoPorId?: SortOrder
     avatarUrl?: SortOrder
@@ -28631,6 +28697,8 @@ export namespace Prisma {
     esAdmin?: SortOrder
     esAdminKpis?: SortOrder
     activo?: SortOrder
+    refrigerioInicioMinutos?: SortOrder
+    refrigerioFinMinutos?: SortOrder
     desactivadoEn?: SortOrder
     desactivadoPorId?: SortOrder
     avatarUrl?: SortOrder
@@ -28639,6 +28707,8 @@ export namespace Prisma {
 
   export type UsuarioSumOrderByAggregateInput = {
     id?: SortOrder
+    refrigerioInicioMinutos?: SortOrder
+    refrigerioFinMinutos?: SortOrder
     desactivadoPorId?: SortOrder
   }
 
@@ -28684,20 +28754,6 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
-  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
-  }
-
   export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
@@ -28712,6 +28768,20 @@ export namespace Prisma {
     _sum?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedIntNullableFilter<$PrismaModel>
     _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -30092,6 +30162,14 @@ export namespace Prisma {
     set?: boolean
   }
 
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
   export type NullableDateTimeFieldUpdateOperationsInput = {
     set?: Date | string | null
   }
@@ -30308,14 +30386,6 @@ export namespace Prisma {
 
   export type IntFieldUpdateOperationsInput = {
     set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
-  }
-
-  export type NullableIntFieldUpdateOperationsInput = {
-    set?: number | null
     increment?: number
     decrement?: number
     multiply?: number
@@ -31369,17 +31439,6 @@ export namespace Prisma {
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
-  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
-  }
-
   export type NestedIntNullableFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
@@ -31389,6 +31448,17 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
   export type NestedStringNullableFilter<$PrismaModel = never> = {
@@ -31468,20 +31538,6 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
-  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
-  }
-
   export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
@@ -31507,6 +31563,20 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -31732,6 +31802,8 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    refrigerioInicioMinutos?: number | null
+    refrigerioFinMinutos?: number | null
     desactivadoEn?: Date | string | null
     avatarUrl?: string | null
     createdAt?: Date | string
@@ -31758,6 +31830,8 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    refrigerioInicioMinutos?: number | null
+    refrigerioFinMinutos?: number | null
     desactivadoEn?: Date | string | null
     desactivadoPorId?: number | null
     avatarUrl?: string | null
@@ -31788,6 +31862,8 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    refrigerioInicioMinutos?: number | null
+    refrigerioFinMinutos?: number | null
     desactivadoEn?: Date | string | null
     avatarUrl?: string | null
     createdAt?: Date | string
@@ -31814,6 +31890,8 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    refrigerioInicioMinutos?: number | null
+    refrigerioFinMinutos?: number | null
     desactivadoEn?: Date | string | null
     avatarUrl?: string | null
     createdAt?: Date | string
@@ -32316,6 +32394,8 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    refrigerioInicioMinutos?: NullableIntFieldUpdateOperationsInput | number | null
+    refrigerioFinMinutos?: NullableIntFieldUpdateOperationsInput | number | null
     desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32342,6 +32422,8 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    refrigerioInicioMinutos?: NullableIntFieldUpdateOperationsInput | number | null
+    refrigerioFinMinutos?: NullableIntFieldUpdateOperationsInput | number | null
     desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     desactivadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -32387,6 +32469,8 @@ export namespace Prisma {
     esAdmin?: BoolFilter<"Usuario"> | boolean
     esAdminKpis?: BoolFilter<"Usuario"> | boolean
     activo?: BoolFilter<"Usuario"> | boolean
+    refrigerioInicioMinutos?: IntNullableFilter<"Usuario"> | number | null
+    refrigerioFinMinutos?: IntNullableFilter<"Usuario"> | number | null
     desactivadoEn?: DateTimeNullableFilter<"Usuario"> | Date | string | null
     desactivadoPorId?: IntNullableFilter<"Usuario"> | number | null
     avatarUrl?: StringNullableFilter<"Usuario"> | string | null
@@ -32771,6 +32855,8 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    refrigerioInicioMinutos?: number | null
+    refrigerioFinMinutos?: number | null
     desactivadoEn?: Date | string | null
     avatarUrl?: string | null
     createdAt?: Date | string
@@ -32797,6 +32883,8 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    refrigerioInicioMinutos?: number | null
+    refrigerioFinMinutos?: number | null
     desactivadoEn?: Date | string | null
     desactivadoPorId?: number | null
     avatarUrl?: string | null
@@ -32838,6 +32926,8 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    refrigerioInicioMinutos?: NullableIntFieldUpdateOperationsInput | number | null
+    refrigerioFinMinutos?: NullableIntFieldUpdateOperationsInput | number | null
     desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32864,6 +32954,8 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    refrigerioInicioMinutos?: NullableIntFieldUpdateOperationsInput | number | null
+    refrigerioFinMinutos?: NullableIntFieldUpdateOperationsInput | number | null
     desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     desactivadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -33333,6 +33425,8 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    refrigerioInicioMinutos?: number | null
+    refrigerioFinMinutos?: number | null
     desactivadoEn?: Date | string | null
     avatarUrl?: string | null
     createdAt?: Date | string
@@ -33359,6 +33453,8 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    refrigerioInicioMinutos?: number | null
+    refrigerioFinMinutos?: number | null
     desactivadoEn?: Date | string | null
     desactivadoPorId?: number | null
     avatarUrl?: string | null
@@ -33464,6 +33560,8 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    refrigerioInicioMinutos?: NullableIntFieldUpdateOperationsInput | number | null
+    refrigerioFinMinutos?: NullableIntFieldUpdateOperationsInput | number | null
     desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -33490,6 +33588,8 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    refrigerioInicioMinutos?: NullableIntFieldUpdateOperationsInput | number | null
+    refrigerioFinMinutos?: NullableIntFieldUpdateOperationsInput | number | null
     desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     desactivadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -33671,6 +33771,8 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    refrigerioInicioMinutos?: number | null
+    refrigerioFinMinutos?: number | null
     desactivadoEn?: Date | string | null
     avatarUrl?: string | null
     createdAt?: Date | string
@@ -33697,6 +33799,8 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    refrigerioInicioMinutos?: number | null
+    refrigerioFinMinutos?: number | null
     desactivadoEn?: Date | string | null
     desactivadoPorId?: number | null
     avatarUrl?: string | null
@@ -33727,6 +33831,8 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    refrigerioInicioMinutos?: number | null
+    refrigerioFinMinutos?: number | null
     desactivadoEn?: Date | string | null
     avatarUrl?: string | null
     createdAt?: Date | string
@@ -33753,6 +33859,8 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    refrigerioInicioMinutos?: number | null
+    refrigerioFinMinutos?: number | null
     desactivadoEn?: Date | string | null
     desactivadoPorId?: number | null
     avatarUrl?: string | null
@@ -33859,6 +33967,8 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    refrigerioInicioMinutos?: NullableIntFieldUpdateOperationsInput | number | null
+    refrigerioFinMinutos?: NullableIntFieldUpdateOperationsInput | number | null
     desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -33885,6 +33995,8 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    refrigerioInicioMinutos?: NullableIntFieldUpdateOperationsInput | number | null
+    refrigerioFinMinutos?: NullableIntFieldUpdateOperationsInput | number | null
     desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     desactivadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -33921,6 +34033,8 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    refrigerioInicioMinutos?: NullableIntFieldUpdateOperationsInput | number | null
+    refrigerioFinMinutos?: NullableIntFieldUpdateOperationsInput | number | null
     desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -33947,6 +34061,8 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    refrigerioInicioMinutos?: NullableIntFieldUpdateOperationsInput | number | null
+    refrigerioFinMinutos?: NullableIntFieldUpdateOperationsInput | number | null
     desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     desactivadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -33988,6 +34104,8 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    refrigerioInicioMinutos?: number | null
+    refrigerioFinMinutos?: number | null
     desactivadoEn?: Date | string | null
     avatarUrl?: string | null
     createdAt?: Date | string
@@ -34014,6 +34132,8 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    refrigerioInicioMinutos?: number | null
+    refrigerioFinMinutos?: number | null
     desactivadoEn?: Date | string | null
     desactivadoPorId?: number | null
     avatarUrl?: string | null
@@ -34101,6 +34221,8 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    refrigerioInicioMinutos?: NullableIntFieldUpdateOperationsInput | number | null
+    refrigerioFinMinutos?: NullableIntFieldUpdateOperationsInput | number | null
     desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -34127,6 +34249,8 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    refrigerioInicioMinutos?: NullableIntFieldUpdateOperationsInput | number | null
+    refrigerioFinMinutos?: NullableIntFieldUpdateOperationsInput | number | null
     desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     desactivadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -34236,6 +34360,8 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    refrigerioInicioMinutos?: number | null
+    refrigerioFinMinutos?: number | null
     desactivadoEn?: Date | string | null
     avatarUrl?: string | null
     createdAt?: Date | string
@@ -34262,6 +34388,8 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    refrigerioInicioMinutos?: number | null
+    refrigerioFinMinutos?: number | null
     desactivadoEn?: Date | string | null
     desactivadoPorId?: number | null
     avatarUrl?: string | null
@@ -34292,6 +34420,8 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    refrigerioInicioMinutos?: number | null
+    refrigerioFinMinutos?: number | null
     desactivadoEn?: Date | string | null
     avatarUrl?: string | null
     createdAt?: Date | string
@@ -34318,6 +34448,8 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    refrigerioInicioMinutos?: number | null
+    refrigerioFinMinutos?: number | null
     desactivadoEn?: Date | string | null
     desactivadoPorId?: number | null
     avatarUrl?: string | null
@@ -34426,6 +34558,8 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    refrigerioInicioMinutos?: NullableIntFieldUpdateOperationsInput | number | null
+    refrigerioFinMinutos?: NullableIntFieldUpdateOperationsInput | number | null
     desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -34452,6 +34586,8 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    refrigerioInicioMinutos?: NullableIntFieldUpdateOperationsInput | number | null
+    refrigerioFinMinutos?: NullableIntFieldUpdateOperationsInput | number | null
     desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     desactivadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -34488,6 +34624,8 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    refrigerioInicioMinutos?: NullableIntFieldUpdateOperationsInput | number | null
+    refrigerioFinMinutos?: NullableIntFieldUpdateOperationsInput | number | null
     desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -34514,6 +34652,8 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    refrigerioInicioMinutos?: NullableIntFieldUpdateOperationsInput | number | null
+    refrigerioFinMinutos?: NullableIntFieldUpdateOperationsInput | number | null
     desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     desactivadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -34591,6 +34731,8 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    refrigerioInicioMinutos?: number | null
+    refrigerioFinMinutos?: number | null
     desactivadoEn?: Date | string | null
     avatarUrl?: string | null
     createdAt?: Date | string
@@ -34617,6 +34759,8 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    refrigerioInicioMinutos?: number | null
+    refrigerioFinMinutos?: number | null
     desactivadoEn?: Date | string | null
     desactivadoPorId?: number | null
     avatarUrl?: string | null
@@ -34700,6 +34844,8 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    refrigerioInicioMinutos?: NullableIntFieldUpdateOperationsInput | number | null
+    refrigerioFinMinutos?: NullableIntFieldUpdateOperationsInput | number | null
     desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -34726,6 +34872,8 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    refrigerioInicioMinutos?: NullableIntFieldUpdateOperationsInput | number | null
+    refrigerioFinMinutos?: NullableIntFieldUpdateOperationsInput | number | null
     desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     desactivadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -34751,6 +34899,8 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    refrigerioInicioMinutos?: number | null
+    refrigerioFinMinutos?: number | null
     desactivadoEn?: Date | string | null
     avatarUrl?: string | null
     createdAt?: Date | string
@@ -34777,6 +34927,8 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    refrigerioInicioMinutos?: number | null
+    refrigerioFinMinutos?: number | null
     desactivadoEn?: Date | string | null
     desactivadoPorId?: number | null
     avatarUrl?: string | null
@@ -34807,6 +34959,8 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    refrigerioInicioMinutos?: number | null
+    refrigerioFinMinutos?: number | null
     desactivadoEn?: Date | string | null
     avatarUrl?: string | null
     createdAt?: Date | string
@@ -34833,6 +34987,8 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    refrigerioInicioMinutos?: number | null
+    refrigerioFinMinutos?: number | null
     desactivadoEn?: Date | string | null
     desactivadoPorId?: number | null
     avatarUrl?: string | null
@@ -34874,6 +35030,8 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    refrigerioInicioMinutos?: NullableIntFieldUpdateOperationsInput | number | null
+    refrigerioFinMinutos?: NullableIntFieldUpdateOperationsInput | number | null
     desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -34900,6 +35058,8 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    refrigerioInicioMinutos?: NullableIntFieldUpdateOperationsInput | number | null
+    refrigerioFinMinutos?: NullableIntFieldUpdateOperationsInput | number | null
     desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     desactivadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -34936,6 +35096,8 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    refrigerioInicioMinutos?: NullableIntFieldUpdateOperationsInput | number | null
+    refrigerioFinMinutos?: NullableIntFieldUpdateOperationsInput | number | null
     desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -34962,6 +35124,8 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    refrigerioInicioMinutos?: NullableIntFieldUpdateOperationsInput | number | null
+    refrigerioFinMinutos?: NullableIntFieldUpdateOperationsInput | number | null
     desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     desactivadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -35183,6 +35347,8 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    refrigerioInicioMinutos?: number | null
+    refrigerioFinMinutos?: number | null
     desactivadoEn?: Date | string | null
     avatarUrl?: string | null
     createdAt?: Date | string
@@ -35209,6 +35375,8 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    refrigerioInicioMinutos?: number | null
+    refrigerioFinMinutos?: number | null
     desactivadoEn?: Date | string | null
     desactivadoPorId?: number | null
     avatarUrl?: string | null
@@ -35284,6 +35452,8 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    refrigerioInicioMinutos?: NullableIntFieldUpdateOperationsInput | number | null
+    refrigerioFinMinutos?: NullableIntFieldUpdateOperationsInput | number | null
     desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -35310,6 +35480,8 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    refrigerioInicioMinutos?: NullableIntFieldUpdateOperationsInput | number | null
+    refrigerioFinMinutos?: NullableIntFieldUpdateOperationsInput | number | null
     desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     desactivadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -35335,6 +35507,8 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    refrigerioInicioMinutos?: number | null
+    refrigerioFinMinutos?: number | null
     desactivadoEn?: Date | string | null
     avatarUrl?: string | null
     createdAt?: Date | string
@@ -35361,6 +35535,8 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    refrigerioInicioMinutos?: number | null
+    refrigerioFinMinutos?: number | null
     desactivadoEn?: Date | string | null
     desactivadoPorId?: number | null
     avatarUrl?: string | null
@@ -35402,6 +35578,8 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    refrigerioInicioMinutos?: NullableIntFieldUpdateOperationsInput | number | null
+    refrigerioFinMinutos?: NullableIntFieldUpdateOperationsInput | number | null
     desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -35428,6 +35606,8 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    refrigerioInicioMinutos?: NullableIntFieldUpdateOperationsInput | number | null
+    refrigerioFinMinutos?: NullableIntFieldUpdateOperationsInput | number | null
     desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     desactivadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -35453,6 +35633,8 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    refrigerioInicioMinutos?: number | null
+    refrigerioFinMinutos?: number | null
     desactivadoEn?: Date | string | null
     avatarUrl?: string | null
     createdAt?: Date | string
@@ -35479,6 +35661,8 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    refrigerioInicioMinutos?: number | null
+    refrigerioFinMinutos?: number | null
     desactivadoEn?: Date | string | null
     desactivadoPorId?: number | null
     avatarUrl?: string | null
@@ -35520,6 +35704,8 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    refrigerioInicioMinutos?: NullableIntFieldUpdateOperationsInput | number | null
+    refrigerioFinMinutos?: NullableIntFieldUpdateOperationsInput | number | null
     desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -35546,6 +35732,8 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    refrigerioInicioMinutos?: NullableIntFieldUpdateOperationsInput | number | null
+    refrigerioFinMinutos?: NullableIntFieldUpdateOperationsInput | number | null
     desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     desactivadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -35572,6 +35760,8 @@ export namespace Prisma {
     esAdmin?: boolean
     esAdminKpis?: boolean
     activo?: boolean
+    refrigerioInicioMinutos?: number | null
+    refrigerioFinMinutos?: number | null
     desactivadoEn?: Date | string | null
     avatarUrl?: string | null
     createdAt?: Date | string
@@ -35741,6 +35931,8 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    refrigerioInicioMinutos?: NullableIntFieldUpdateOperationsInput | number | null
+    refrigerioFinMinutos?: NullableIntFieldUpdateOperationsInput | number | null
     desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -35767,6 +35959,8 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    refrigerioInicioMinutos?: NullableIntFieldUpdateOperationsInput | number | null
+    refrigerioFinMinutos?: NullableIntFieldUpdateOperationsInput | number | null
     desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -35793,6 +35987,8 @@ export namespace Prisma {
     esAdmin?: BoolFieldUpdateOperationsInput | boolean
     esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
     activo?: BoolFieldUpdateOperationsInput | boolean
+    refrigerioInicioMinutos?: NullableIntFieldUpdateOperationsInput | number | null
+    refrigerioFinMinutos?: NullableIntFieldUpdateOperationsInput | number | null
     desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string

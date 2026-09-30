@@ -286,34 +286,37 @@ enum CategoriaObservacionPedido {
 }
 
 model Pedido {
-  id                      Int                         @id @default(autoincrement())
-  clienteId               Int
-  cliente                 Cliente                     @relation(fields: [clienteId], references: [id], onDelete: Restrict)
-  numeroProforma          String                      @unique
+  id                              Int                         @id @default(autoincrement())
+  clienteId                       Int
+  cliente                         Cliente                     @relation(fields: [clienteId], references: [id], onDelete: Restrict)
+  numeroProforma                  String                      @unique
   // Llave del enlace público de seguimiento (/p/<token>): la genera la base, 122 bits aleatorios.
   // Es lo único que protege esa página, así que nunca debe ser el id ni algo predecible.
-  tokenSeguimiento        String                      @unique @default(dbgenerated("replace((gen_random_uuid())::text, '-'::text, ''::text)"))
-  recibidoEn              DateTime                    @default(now())
-  inicioPreparacionEn     DateTime?
-  preparadoEn             DateTime?
-  salioEn                 DateTime?
-  entregadoEn             DateTime?
+  tokenSeguimiento                String                      @unique @default(dbgenerated("replace((gen_random_uuid())::text, '-'::text, ''::text)"))
+  recibidoEn                      DateTime                    @default(now())
+  inicioPreparacionEn             DateTime?
+  preparadoEn                     DateTime?
+  salioEn                         DateTime?
+  entregadoEn                     DateTime?
   // Cuando se le aviso al cliente por correo. Sirve para no avisar dos veces la misma etapa
   // (por ejemplo, si alguien corrige la fecha despues).
-  avisoSalioEnviadoEn     DateTime?
-  avisoEntregadoEnviadoEn DateTime?
+  avisoSalioEnviadoEn             DateTime?
+  avisoEntregadoEnviadoEn         DateTime?
   // Cuándo se creó la notificación interna de "pedido vencido" (ver NotificacionesModule /
   // AlertasPedidosService). Evita mandarla dos veces, mismo patrón que los avisos de arriba.
-  alerta48hEnviadaEn      DateTime?
-  categoriaObservacion    CategoriaObservacionPedido?
-  detalleObservacion      String?
-  creadoPorId             Int
-  creadoPor               Usuario                     @relation("PedidosCreados", fields: [creadoPorId], references: [id])
-  ultimoEditadoPorId      Int?
-  ultimoEditadoPor        Usuario?                    @relation("PedidosEditados", fields: [ultimoEditadoPorId], references: [id])
-  createdAt               DateTime                    @default(now())
-  updatedAt               DateTime                    @updatedAt
-  notificaciones          Notificacion[]
+  // Solo aplica mientras salioEn sigue null — en cuanto sale, la alerta pasa a medir desde
+  // salioEn (alertaSalioSinEntregarEnviadaEn), nunca las dos a la vez para el mismo pedido.
+  alerta48hEnviadaEn              DateTime?
+  alertaSalioSinEntregarEnviadaEn DateTime?
+  categoriaObservacion            CategoriaObservacionPedido?
+  detalleObservacion              String?
+  creadoPorId                     Int
+  creadoPor                       Usuario                     @relation("PedidosCreados", fields: [creadoPorId], references: [id])
+  ultimoEditadoPorId              Int?
+  ultimoEditadoPor                Usuario?                    @relation("PedidosEditados", fields: [ultimoEditadoPorId], references: [id])
+  createdAt                       DateTime                    @default(now())
+  updatedAt                       DateTime                    @updatedAt
+  notificaciones                  Notificacion[]
 
   @@index([clienteId])
   @@map("pedidos")
@@ -343,7 +346,9 @@ model Notificacion {
 
 enum TipoNotificacion {
   PEDIDO_VENCIDO
+  PEDIDO_SALIO_SIN_ENTREGAR
   COTIZACION_SIN_AVISO_ALMACEN
+  COTIZACION_RESPUESTA_LENTA
 }
 
 // Seguimiento del proceso de cotización de Joel: mismo patrón que Pedido (fechas por etapa,
@@ -367,6 +372,9 @@ model Cotizacion {
   // Cuándo se mandó el recordatorio de "falta avisar a almacén" (aprobado hace más de 1h sin
   // avisoAlmacenEn). Null = todavía no hizo falta. Evita mandar el mismo recordatorio dos veces.
   recordatorioEnviadoEn DateTime?
+  // Cuándo se avisó que la cotización tarda en enviarse (requerimientoEn viejo sin
+  // cotizacionEnviadaEn) — ver AlertasCotizacionesService. Mismo criterio de "una sola vez".
+  alertaLentaEnviadaEn  DateTime?
   creadoPorId           Int
   creadoPor             Usuario               @relation("CotizacionesCreadas", fields: [creadoPorId], references: [id])
   ultimoEditadoPorId    Int?

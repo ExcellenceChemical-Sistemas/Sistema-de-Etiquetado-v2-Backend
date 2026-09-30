@@ -155,7 +155,9 @@ export type CategoriaObservacionPedido = (typeof CategoriaObservacionPedido)[key
 
 export const TipoNotificacion: {
   PEDIDO_VENCIDO: 'PEDIDO_VENCIDO',
-  COTIZACION_SIN_AVISO_ALMACEN: 'COTIZACION_SIN_AVISO_ALMACEN'
+  PEDIDO_SALIO_SIN_ENTREGAR: 'PEDIDO_SALIO_SIN_ENTREGAR',
+  COTIZACION_SIN_AVISO_ALMACEN: 'COTIZACION_SIN_AVISO_ALMACEN',
+  COTIZACION_RESPUESTA_LENTA: 'COTIZACION_RESPUESTA_LENTA'
 };
 
 export type TipoNotificacion = (typeof TipoNotificacion)[keyof typeof TipoNotificacion]
@@ -12999,6 +13001,7 @@ export namespace Prisma {
     avisoSalioEnviadoEn: Date | null
     avisoEntregadoEnviadoEn: Date | null
     alerta48hEnviadaEn: Date | null
+    alertaSalioSinEntregarEnviadaEn: Date | null
     categoriaObservacion: $Enums.CategoriaObservacionPedido | null
     detalleObservacion: string | null
     creadoPorId: number | null
@@ -13020,6 +13023,7 @@ export namespace Prisma {
     avisoSalioEnviadoEn: Date | null
     avisoEntregadoEnviadoEn: Date | null
     alerta48hEnviadaEn: Date | null
+    alertaSalioSinEntregarEnviadaEn: Date | null
     categoriaObservacion: $Enums.CategoriaObservacionPedido | null
     detalleObservacion: string | null
     creadoPorId: number | null
@@ -13041,6 +13045,7 @@ export namespace Prisma {
     avisoSalioEnviadoEn: number
     avisoEntregadoEnviadoEn: number
     alerta48hEnviadaEn: number
+    alertaSalioSinEntregarEnviadaEn: number
     categoriaObservacion: number
     detalleObservacion: number
     creadoPorId: number
@@ -13078,6 +13083,7 @@ export namespace Prisma {
     avisoSalioEnviadoEn?: true
     avisoEntregadoEnviadoEn?: true
     alerta48hEnviadaEn?: true
+    alertaSalioSinEntregarEnviadaEn?: true
     categoriaObservacion?: true
     detalleObservacion?: true
     creadoPorId?: true
@@ -13099,6 +13105,7 @@ export namespace Prisma {
     avisoSalioEnviadoEn?: true
     avisoEntregadoEnviadoEn?: true
     alerta48hEnviadaEn?: true
+    alertaSalioSinEntregarEnviadaEn?: true
     categoriaObservacion?: true
     detalleObservacion?: true
     creadoPorId?: true
@@ -13120,6 +13127,7 @@ export namespace Prisma {
     avisoSalioEnviadoEn?: true
     avisoEntregadoEnviadoEn?: true
     alerta48hEnviadaEn?: true
+    alertaSalioSinEntregarEnviadaEn?: true
     categoriaObservacion?: true
     detalleObservacion?: true
     creadoPorId?: true
@@ -13228,6 +13236,7 @@ export namespace Prisma {
     avisoSalioEnviadoEn: Date | null
     avisoEntregadoEnviadoEn: Date | null
     alerta48hEnviadaEn: Date | null
+    alertaSalioSinEntregarEnviadaEn: Date | null
     categoriaObservacion: $Enums.CategoriaObservacionPedido | null
     detalleObservacion: string | null
     creadoPorId: number
@@ -13268,6 +13277,7 @@ export namespace Prisma {
     avisoSalioEnviadoEn?: boolean
     avisoEntregadoEnviadoEn?: boolean
     alerta48hEnviadaEn?: boolean
+    alertaSalioSinEntregarEnviadaEn?: boolean
     categoriaObservacion?: boolean
     detalleObservacion?: boolean
     creadoPorId?: boolean
@@ -13294,6 +13304,7 @@ export namespace Prisma {
     avisoSalioEnviadoEn?: boolean
     avisoEntregadoEnviadoEn?: boolean
     alerta48hEnviadaEn?: boolean
+    alertaSalioSinEntregarEnviadaEn?: boolean
     categoriaObservacion?: boolean
     detalleObservacion?: boolean
     creadoPorId?: boolean
@@ -13318,6 +13329,7 @@ export namespace Prisma {
     avisoSalioEnviadoEn?: boolean
     avisoEntregadoEnviadoEn?: boolean
     alerta48hEnviadaEn?: boolean
+    alertaSalioSinEntregarEnviadaEn?: boolean
     categoriaObservacion?: boolean
     detalleObservacion?: boolean
     creadoPorId?: boolean
@@ -13342,6 +13354,7 @@ export namespace Prisma {
     avisoSalioEnviadoEn?: boolean
     avisoEntregadoEnviadoEn?: boolean
     alerta48hEnviadaEn?: boolean
+    alertaSalioSinEntregarEnviadaEn?: boolean
     categoriaObservacion?: boolean
     detalleObservacion?: boolean
     creadoPorId?: boolean
@@ -13350,7 +13363,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type PedidoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "clienteId" | "numeroProforma" | "tokenSeguimiento" | "recibidoEn" | "inicioPreparacionEn" | "preparadoEn" | "salioEn" | "entregadoEn" | "avisoSalioEnviadoEn" | "avisoEntregadoEnviadoEn" | "alerta48hEnviadaEn" | "categoriaObservacion" | "detalleObservacion" | "creadoPorId" | "ultimoEditadoPorId" | "createdAt" | "updatedAt", ExtArgs["result"]["pedido"]>
+  export type PedidoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "clienteId" | "numeroProforma" | "tokenSeguimiento" | "recibidoEn" | "inicioPreparacionEn" | "preparadoEn" | "salioEn" | "entregadoEn" | "avisoSalioEnviadoEn" | "avisoEntregadoEnviadoEn" | "alerta48hEnviadaEn" | "alertaSalioSinEntregarEnviadaEn" | "categoriaObservacion" | "detalleObservacion" | "creadoPorId" | "ultimoEditadoPorId" | "createdAt" | "updatedAt", ExtArgs["result"]["pedido"]>
   export type PedidoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     cliente?: boolean | ClienteDefaultArgs<ExtArgs>
     creadoPor?: boolean | UsuarioDefaultArgs<ExtArgs>
@@ -13390,6 +13403,7 @@ export namespace Prisma {
       avisoSalioEnviadoEn: Date | null
       avisoEntregadoEnviadoEn: Date | null
       alerta48hEnviadaEn: Date | null
+      alertaSalioSinEntregarEnviadaEn: Date | null
       categoriaObservacion: $Enums.CategoriaObservacionPedido | null
       detalleObservacion: string | null
       creadoPorId: number
@@ -13835,6 +13849,7 @@ export namespace Prisma {
     readonly avisoSalioEnviadoEn: FieldRef<"Pedido", 'DateTime'>
     readonly avisoEntregadoEnviadoEn: FieldRef<"Pedido", 'DateTime'>
     readonly alerta48hEnviadaEn: FieldRef<"Pedido", 'DateTime'>
+    readonly alertaSalioSinEntregarEnviadaEn: FieldRef<"Pedido", 'DateTime'>
     readonly categoriaObservacion: FieldRef<"Pedido", 'CategoriaObservacionPedido'>
     readonly detalleObservacion: FieldRef<"Pedido", 'String'>
     readonly creadoPorId: FieldRef<"Pedido", 'Int'>
@@ -15541,6 +15556,7 @@ export namespace Prisma {
     pedidoAprobadoEn: Date | null
     avisoAlmacenEn: Date | null
     recordatorioEnviadoEn: Date | null
+    alertaLentaEnviadaEn: Date | null
     creadoPorId: number | null
     ultimoEditadoPorId: number | null
     createdAt: Date | null
@@ -15557,6 +15573,7 @@ export namespace Prisma {
     pedidoAprobadoEn: Date | null
     avisoAlmacenEn: Date | null
     recordatorioEnviadoEn: Date | null
+    alertaLentaEnviadaEn: Date | null
     creadoPorId: number | null
     ultimoEditadoPorId: number | null
     createdAt: Date | null
@@ -15573,6 +15590,7 @@ export namespace Prisma {
     pedidoAprobadoEn: number
     avisoAlmacenEn: number
     recordatorioEnviadoEn: number
+    alertaLentaEnviadaEn: number
     creadoPorId: number
     ultimoEditadoPorId: number
     createdAt: number
@@ -15605,6 +15623,7 @@ export namespace Prisma {
     pedidoAprobadoEn?: true
     avisoAlmacenEn?: true
     recordatorioEnviadoEn?: true
+    alertaLentaEnviadaEn?: true
     creadoPorId?: true
     ultimoEditadoPorId?: true
     createdAt?: true
@@ -15621,6 +15640,7 @@ export namespace Prisma {
     pedidoAprobadoEn?: true
     avisoAlmacenEn?: true
     recordatorioEnviadoEn?: true
+    alertaLentaEnviadaEn?: true
     creadoPorId?: true
     ultimoEditadoPorId?: true
     createdAt?: true
@@ -15637,6 +15657,7 @@ export namespace Prisma {
     pedidoAprobadoEn?: true
     avisoAlmacenEn?: true
     recordatorioEnviadoEn?: true
+    alertaLentaEnviadaEn?: true
     creadoPorId?: true
     ultimoEditadoPorId?: true
     createdAt?: true
@@ -15740,6 +15761,7 @@ export namespace Prisma {
     pedidoAprobadoEn: Date | null
     avisoAlmacenEn: Date | null
     recordatorioEnviadoEn: Date | null
+    alertaLentaEnviadaEn: Date | null
     creadoPorId: number
     ultimoEditadoPorId: number | null
     createdAt: Date
@@ -15775,6 +15797,7 @@ export namespace Prisma {
     pedidoAprobadoEn?: boolean
     avisoAlmacenEn?: boolean
     recordatorioEnviadoEn?: boolean
+    alertaLentaEnviadaEn?: boolean
     creadoPorId?: boolean
     ultimoEditadoPorId?: boolean
     createdAt?: boolean
@@ -15797,6 +15820,7 @@ export namespace Prisma {
     pedidoAprobadoEn?: boolean
     avisoAlmacenEn?: boolean
     recordatorioEnviadoEn?: boolean
+    alertaLentaEnviadaEn?: boolean
     creadoPorId?: boolean
     ultimoEditadoPorId?: boolean
     createdAt?: boolean
@@ -15816,6 +15840,7 @@ export namespace Prisma {
     pedidoAprobadoEn?: boolean
     avisoAlmacenEn?: boolean
     recordatorioEnviadoEn?: boolean
+    alertaLentaEnviadaEn?: boolean
     creadoPorId?: boolean
     ultimoEditadoPorId?: boolean
     createdAt?: boolean
@@ -15835,13 +15860,14 @@ export namespace Prisma {
     pedidoAprobadoEn?: boolean
     avisoAlmacenEn?: boolean
     recordatorioEnviadoEn?: boolean
+    alertaLentaEnviadaEn?: boolean
     creadoPorId?: boolean
     ultimoEditadoPorId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type CotizacionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "clienteId" | "numeroProforma" | "notas" | "requerimientoEn" | "cotizacionEnviadaEn" | "pedidoAprobadoEn" | "avisoAlmacenEn" | "recordatorioEnviadoEn" | "creadoPorId" | "ultimoEditadoPorId" | "createdAt" | "updatedAt", ExtArgs["result"]["cotizacion"]>
+  export type CotizacionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "clienteId" | "numeroProforma" | "notas" | "requerimientoEn" | "cotizacionEnviadaEn" | "pedidoAprobadoEn" | "avisoAlmacenEn" | "recordatorioEnviadoEn" | "alertaLentaEnviadaEn" | "creadoPorId" | "ultimoEditadoPorId" | "createdAt" | "updatedAt", ExtArgs["result"]["cotizacion"]>
   export type CotizacionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     cliente?: boolean | ClienteDefaultArgs<ExtArgs>
     creadoPor?: boolean | UsuarioDefaultArgs<ExtArgs>
@@ -15880,6 +15906,7 @@ export namespace Prisma {
       pedidoAprobadoEn: Date | null
       avisoAlmacenEn: Date | null
       recordatorioEnviadoEn: Date | null
+      alertaLentaEnviadaEn: Date | null
       creadoPorId: number
       ultimoEditadoPorId: number | null
       createdAt: Date
@@ -16321,6 +16348,7 @@ export namespace Prisma {
     readonly pedidoAprobadoEn: FieldRef<"Cotizacion", 'DateTime'>
     readonly avisoAlmacenEn: FieldRef<"Cotizacion", 'DateTime'>
     readonly recordatorioEnviadoEn: FieldRef<"Cotizacion", 'DateTime'>
+    readonly alertaLentaEnviadaEn: FieldRef<"Cotizacion", 'DateTime'>
     readonly creadoPorId: FieldRef<"Cotizacion", 'Int'>
     readonly ultimoEditadoPorId: FieldRef<"Cotizacion", 'Int'>
     readonly createdAt: FieldRef<"Cotizacion", 'DateTime'>
@@ -24980,6 +25008,7 @@ export namespace Prisma {
     avisoSalioEnviadoEn: 'avisoSalioEnviadoEn',
     avisoEntregadoEnviadoEn: 'avisoEntregadoEnviadoEn',
     alerta48hEnviadaEn: 'alerta48hEnviadaEn',
+    alertaSalioSinEntregarEnviadaEn: 'alertaSalioSinEntregarEnviadaEn',
     categoriaObservacion: 'categoriaObservacion',
     detalleObservacion: 'detalleObservacion',
     creadoPorId: 'creadoPorId',
@@ -25015,6 +25044,7 @@ export namespace Prisma {
     pedidoAprobadoEn: 'pedidoAprobadoEn',
     avisoAlmacenEn: 'avisoAlmacenEn',
     recordatorioEnviadoEn: 'recordatorioEnviadoEn',
+    alertaLentaEnviadaEn: 'alertaLentaEnviadaEn',
     creadoPorId: 'creadoPorId',
     ultimoEditadoPorId: 'ultimoEditadoPorId',
     createdAt: 'createdAt',
@@ -26102,6 +26132,7 @@ export namespace Prisma {
     avisoSalioEnviadoEn?: DateTimeNullableFilter<"Pedido"> | Date | string | null
     avisoEntregadoEnviadoEn?: DateTimeNullableFilter<"Pedido"> | Date | string | null
     alerta48hEnviadaEn?: DateTimeNullableFilter<"Pedido"> | Date | string | null
+    alertaSalioSinEntregarEnviadaEn?: DateTimeNullableFilter<"Pedido"> | Date | string | null
     categoriaObservacion?: EnumCategoriaObservacionPedidoNullableFilter<"Pedido"> | $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: StringNullableFilter<"Pedido"> | string | null
     creadoPorId?: IntFilter<"Pedido"> | number
@@ -26127,6 +26158,7 @@ export namespace Prisma {
     avisoSalioEnviadoEn?: SortOrderInput | SortOrder
     avisoEntregadoEnviadoEn?: SortOrderInput | SortOrder
     alerta48hEnviadaEn?: SortOrderInput | SortOrder
+    alertaSalioSinEntregarEnviadaEn?: SortOrderInput | SortOrder
     categoriaObservacion?: SortOrderInput | SortOrder
     detalleObservacion?: SortOrderInput | SortOrder
     creadoPorId?: SortOrder
@@ -26155,6 +26187,7 @@ export namespace Prisma {
     avisoSalioEnviadoEn?: DateTimeNullableFilter<"Pedido"> | Date | string | null
     avisoEntregadoEnviadoEn?: DateTimeNullableFilter<"Pedido"> | Date | string | null
     alerta48hEnviadaEn?: DateTimeNullableFilter<"Pedido"> | Date | string | null
+    alertaSalioSinEntregarEnviadaEn?: DateTimeNullableFilter<"Pedido"> | Date | string | null
     categoriaObservacion?: EnumCategoriaObservacionPedidoNullableFilter<"Pedido"> | $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: StringNullableFilter<"Pedido"> | string | null
     creadoPorId?: IntFilter<"Pedido"> | number
@@ -26180,6 +26213,7 @@ export namespace Prisma {
     avisoSalioEnviadoEn?: SortOrderInput | SortOrder
     avisoEntregadoEnviadoEn?: SortOrderInput | SortOrder
     alerta48hEnviadaEn?: SortOrderInput | SortOrder
+    alertaSalioSinEntregarEnviadaEn?: SortOrderInput | SortOrder
     categoriaObservacion?: SortOrderInput | SortOrder
     detalleObservacion?: SortOrderInput | SortOrder
     creadoPorId?: SortOrder
@@ -26209,6 +26243,7 @@ export namespace Prisma {
     avisoSalioEnviadoEn?: DateTimeNullableWithAggregatesFilter<"Pedido"> | Date | string | null
     avisoEntregadoEnviadoEn?: DateTimeNullableWithAggregatesFilter<"Pedido"> | Date | string | null
     alerta48hEnviadaEn?: DateTimeNullableWithAggregatesFilter<"Pedido"> | Date | string | null
+    alertaSalioSinEntregarEnviadaEn?: DateTimeNullableWithAggregatesFilter<"Pedido"> | Date | string | null
     categoriaObservacion?: EnumCategoriaObservacionPedidoNullableWithAggregatesFilter<"Pedido"> | $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: StringNullableWithAggregatesFilter<"Pedido"> | string | null
     creadoPorId?: IntWithAggregatesFilter<"Pedido"> | number
@@ -26308,6 +26343,7 @@ export namespace Prisma {
     pedidoAprobadoEn?: DateTimeNullableFilter<"Cotizacion"> | Date | string | null
     avisoAlmacenEn?: DateTimeNullableFilter<"Cotizacion"> | Date | string | null
     recordatorioEnviadoEn?: DateTimeNullableFilter<"Cotizacion"> | Date | string | null
+    alertaLentaEnviadaEn?: DateTimeNullableFilter<"Cotizacion"> | Date | string | null
     creadoPorId?: IntFilter<"Cotizacion"> | number
     ultimoEditadoPorId?: IntNullableFilter<"Cotizacion"> | number | null
     createdAt?: DateTimeFilter<"Cotizacion"> | Date | string
@@ -26329,6 +26365,7 @@ export namespace Prisma {
     pedidoAprobadoEn?: SortOrderInput | SortOrder
     avisoAlmacenEn?: SortOrderInput | SortOrder
     recordatorioEnviadoEn?: SortOrderInput | SortOrder
+    alertaLentaEnviadaEn?: SortOrderInput | SortOrder
     creadoPorId?: SortOrder
     ultimoEditadoPorId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
@@ -26353,6 +26390,7 @@ export namespace Prisma {
     pedidoAprobadoEn?: DateTimeNullableFilter<"Cotizacion"> | Date | string | null
     avisoAlmacenEn?: DateTimeNullableFilter<"Cotizacion"> | Date | string | null
     recordatorioEnviadoEn?: DateTimeNullableFilter<"Cotizacion"> | Date | string | null
+    alertaLentaEnviadaEn?: DateTimeNullableFilter<"Cotizacion"> | Date | string | null
     creadoPorId?: IntFilter<"Cotizacion"> | number
     ultimoEditadoPorId?: IntNullableFilter<"Cotizacion"> | number | null
     createdAt?: DateTimeFilter<"Cotizacion"> | Date | string
@@ -26374,6 +26412,7 @@ export namespace Prisma {
     pedidoAprobadoEn?: SortOrderInput | SortOrder
     avisoAlmacenEn?: SortOrderInput | SortOrder
     recordatorioEnviadoEn?: SortOrderInput | SortOrder
+    alertaLentaEnviadaEn?: SortOrderInput | SortOrder
     creadoPorId?: SortOrder
     ultimoEditadoPorId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
@@ -26398,6 +26437,7 @@ export namespace Prisma {
     pedidoAprobadoEn?: DateTimeNullableWithAggregatesFilter<"Cotizacion"> | Date | string | null
     avisoAlmacenEn?: DateTimeNullableWithAggregatesFilter<"Cotizacion"> | Date | string | null
     recordatorioEnviadoEn?: DateTimeNullableWithAggregatesFilter<"Cotizacion"> | Date | string | null
+    alertaLentaEnviadaEn?: DateTimeNullableWithAggregatesFilter<"Cotizacion"> | Date | string | null
     creadoPorId?: IntWithAggregatesFilter<"Cotizacion"> | number
     ultimoEditadoPorId?: IntNullableWithAggregatesFilter<"Cotizacion"> | number | null
     createdAt?: DateTimeWithAggregatesFilter<"Cotizacion"> | Date | string
@@ -27741,6 +27781,7 @@ export namespace Prisma {
     avisoSalioEnviadoEn?: Date | string | null
     avisoEntregadoEnviadoEn?: Date | string | null
     alerta48hEnviadaEn?: Date | string | null
+    alertaSalioSinEntregarEnviadaEn?: Date | string | null
     categoriaObservacion?: $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: string | null
     createdAt?: Date | string
@@ -27764,6 +27805,7 @@ export namespace Prisma {
     avisoSalioEnviadoEn?: Date | string | null
     avisoEntregadoEnviadoEn?: Date | string | null
     alerta48hEnviadaEn?: Date | string | null
+    alertaSalioSinEntregarEnviadaEn?: Date | string | null
     categoriaObservacion?: $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: string | null
     creadoPorId: number
@@ -27784,6 +27826,7 @@ export namespace Prisma {
     avisoSalioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoEntregadoEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     alerta48hEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    alertaSalioSinEntregarEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     categoriaObservacion?: NullableEnumCategoriaObservacionPedidoFieldUpdateOperationsInput | $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -27807,6 +27850,7 @@ export namespace Prisma {
     avisoSalioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoEntregadoEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     alerta48hEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    alertaSalioSinEntregarEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     categoriaObservacion?: NullableEnumCategoriaObservacionPedidoFieldUpdateOperationsInput | $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: NullableStringFieldUpdateOperationsInput | string | null
     creadoPorId?: IntFieldUpdateOperationsInput | number
@@ -27829,6 +27873,7 @@ export namespace Prisma {
     avisoSalioEnviadoEn?: Date | string | null
     avisoEntregadoEnviadoEn?: Date | string | null
     alerta48hEnviadaEn?: Date | string | null
+    alertaSalioSinEntregarEnviadaEn?: Date | string | null
     categoriaObservacion?: $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: string | null
     creadoPorId: number
@@ -27848,6 +27893,7 @@ export namespace Prisma {
     avisoSalioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoEntregadoEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     alerta48hEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    alertaSalioSinEntregarEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     categoriaObservacion?: NullableEnumCategoriaObservacionPedidoFieldUpdateOperationsInput | $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -27867,6 +27913,7 @@ export namespace Prisma {
     avisoSalioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoEntregadoEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     alerta48hEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    alertaSalioSinEntregarEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     categoriaObservacion?: NullableEnumCategoriaObservacionPedidoFieldUpdateOperationsInput | $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: NullableStringFieldUpdateOperationsInput | string | null
     creadoPorId?: IntFieldUpdateOperationsInput | number
@@ -27954,6 +28001,7 @@ export namespace Prisma {
     pedidoAprobadoEn?: Date | string | null
     avisoAlmacenEn?: Date | string | null
     recordatorioEnviadoEn?: Date | string | null
+    alertaLentaEnviadaEn?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     cliente: ClienteCreateNestedOneWithoutCotizacionesInput
@@ -27973,6 +28021,7 @@ export namespace Prisma {
     pedidoAprobadoEn?: Date | string | null
     avisoAlmacenEn?: Date | string | null
     recordatorioEnviadoEn?: Date | string | null
+    alertaLentaEnviadaEn?: Date | string | null
     creadoPorId: number
     ultimoEditadoPorId?: number | null
     createdAt?: Date | string
@@ -27989,6 +28038,7 @@ export namespace Prisma {
     pedidoAprobadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoAlmacenEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     recordatorioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    alertaLentaEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     cliente?: ClienteUpdateOneRequiredWithoutCotizacionesNestedInput
@@ -28008,6 +28058,7 @@ export namespace Prisma {
     pedidoAprobadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoAlmacenEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     recordatorioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    alertaLentaEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     creadoPorId?: IntFieldUpdateOperationsInput | number
     ultimoEditadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -28026,6 +28077,7 @@ export namespace Prisma {
     pedidoAprobadoEn?: Date | string | null
     avisoAlmacenEn?: Date | string | null
     recordatorioEnviadoEn?: Date | string | null
+    alertaLentaEnviadaEn?: Date | string | null
     creadoPorId: number
     ultimoEditadoPorId?: number | null
     createdAt?: Date | string
@@ -28040,6 +28092,7 @@ export namespace Prisma {
     pedidoAprobadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoAlmacenEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     recordatorioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    alertaLentaEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -28054,6 +28107,7 @@ export namespace Prisma {
     pedidoAprobadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoAlmacenEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     recordatorioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    alertaLentaEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     creadoPorId?: IntFieldUpdateOperationsInput | number
     ultimoEditadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -29440,6 +29494,7 @@ export namespace Prisma {
     avisoSalioEnviadoEn?: SortOrder
     avisoEntregadoEnviadoEn?: SortOrder
     alerta48hEnviadaEn?: SortOrder
+    alertaSalioSinEntregarEnviadaEn?: SortOrder
     categoriaObservacion?: SortOrder
     detalleObservacion?: SortOrder
     creadoPorId?: SortOrder
@@ -29468,6 +29523,7 @@ export namespace Prisma {
     avisoSalioEnviadoEn?: SortOrder
     avisoEntregadoEnviadoEn?: SortOrder
     alerta48hEnviadaEn?: SortOrder
+    alertaSalioSinEntregarEnviadaEn?: SortOrder
     categoriaObservacion?: SortOrder
     detalleObservacion?: SortOrder
     creadoPorId?: SortOrder
@@ -29489,6 +29545,7 @@ export namespace Prisma {
     avisoSalioEnviadoEn?: SortOrder
     avisoEntregadoEnviadoEn?: SortOrder
     alerta48hEnviadaEn?: SortOrder
+    alertaSalioSinEntregarEnviadaEn?: SortOrder
     categoriaObservacion?: SortOrder
     detalleObservacion?: SortOrder
     creadoPorId?: SortOrder
@@ -29598,6 +29655,7 @@ export namespace Prisma {
     pedidoAprobadoEn?: SortOrder
     avisoAlmacenEn?: SortOrder
     recordatorioEnviadoEn?: SortOrder
+    alertaLentaEnviadaEn?: SortOrder
     creadoPorId?: SortOrder
     ultimoEditadoPorId?: SortOrder
     createdAt?: SortOrder
@@ -29621,6 +29679,7 @@ export namespace Prisma {
     pedidoAprobadoEn?: SortOrder
     avisoAlmacenEn?: SortOrder
     recordatorioEnviadoEn?: SortOrder
+    alertaLentaEnviadaEn?: SortOrder
     creadoPorId?: SortOrder
     ultimoEditadoPorId?: SortOrder
     createdAt?: SortOrder
@@ -29637,6 +29696,7 @@ export namespace Prisma {
     pedidoAprobadoEn?: SortOrder
     avisoAlmacenEn?: SortOrder
     recordatorioEnviadoEn?: SortOrder
+    alertaLentaEnviadaEn?: SortOrder
     creadoPorId?: SortOrder
     ultimoEditadoPorId?: SortOrder
     createdAt?: SortOrder
@@ -32266,6 +32326,7 @@ export namespace Prisma {
     avisoSalioEnviadoEn?: Date | string | null
     avisoEntregadoEnviadoEn?: Date | string | null
     alerta48hEnviadaEn?: Date | string | null
+    alertaSalioSinEntregarEnviadaEn?: Date | string | null
     categoriaObservacion?: $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: string | null
     createdAt?: Date | string
@@ -32288,6 +32349,7 @@ export namespace Prisma {
     avisoSalioEnviadoEn?: Date | string | null
     avisoEntregadoEnviadoEn?: Date | string | null
     alerta48hEnviadaEn?: Date | string | null
+    alertaSalioSinEntregarEnviadaEn?: Date | string | null
     categoriaObservacion?: $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: string | null
     ultimoEditadoPorId?: number | null
@@ -32317,6 +32379,7 @@ export namespace Prisma {
     avisoSalioEnviadoEn?: Date | string | null
     avisoEntregadoEnviadoEn?: Date | string | null
     alerta48hEnviadaEn?: Date | string | null
+    alertaSalioSinEntregarEnviadaEn?: Date | string | null
     categoriaObservacion?: $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: string | null
     createdAt?: Date | string
@@ -32339,6 +32402,7 @@ export namespace Prisma {
     avisoSalioEnviadoEn?: Date | string | null
     avisoEntregadoEnviadoEn?: Date | string | null
     alerta48hEnviadaEn?: Date | string | null
+    alertaSalioSinEntregarEnviadaEn?: Date | string | null
     categoriaObservacion?: $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: string | null
     creadoPorId: number
@@ -32394,6 +32458,7 @@ export namespace Prisma {
     pedidoAprobadoEn?: Date | string | null
     avisoAlmacenEn?: Date | string | null
     recordatorioEnviadoEn?: Date | string | null
+    alertaLentaEnviadaEn?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     cliente: ClienteCreateNestedOneWithoutCotizacionesInput
@@ -32412,6 +32477,7 @@ export namespace Prisma {
     pedidoAprobadoEn?: Date | string | null
     avisoAlmacenEn?: Date | string | null
     recordatorioEnviadoEn?: Date | string | null
+    alertaLentaEnviadaEn?: Date | string | null
     ultimoEditadoPorId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -32437,6 +32503,7 @@ export namespace Prisma {
     pedidoAprobadoEn?: Date | string | null
     avisoAlmacenEn?: Date | string | null
     recordatorioEnviadoEn?: Date | string | null
+    alertaLentaEnviadaEn?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     cliente: ClienteCreateNestedOneWithoutCotizacionesInput
@@ -32455,6 +32522,7 @@ export namespace Prisma {
     pedidoAprobadoEn?: Date | string | null
     avisoAlmacenEn?: Date | string | null
     recordatorioEnviadoEn?: Date | string | null
+    alertaLentaEnviadaEn?: Date | string | null
     creadoPorId: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -32848,6 +32916,7 @@ export namespace Prisma {
     avisoSalioEnviadoEn?: DateTimeNullableFilter<"Pedido"> | Date | string | null
     avisoEntregadoEnviadoEn?: DateTimeNullableFilter<"Pedido"> | Date | string | null
     alerta48hEnviadaEn?: DateTimeNullableFilter<"Pedido"> | Date | string | null
+    alertaSalioSinEntregarEnviadaEn?: DateTimeNullableFilter<"Pedido"> | Date | string | null
     categoriaObservacion?: EnumCategoriaObservacionPedidoNullableFilter<"Pedido"> | $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: StringNullableFilter<"Pedido"> | string | null
     creadoPorId?: IntFilter<"Pedido"> | number
@@ -32931,6 +33000,7 @@ export namespace Prisma {
     pedidoAprobadoEn?: DateTimeNullableFilter<"Cotizacion"> | Date | string | null
     avisoAlmacenEn?: DateTimeNullableFilter<"Cotizacion"> | Date | string | null
     recordatorioEnviadoEn?: DateTimeNullableFilter<"Cotizacion"> | Date | string | null
+    alertaLentaEnviadaEn?: DateTimeNullableFilter<"Cotizacion"> | Date | string | null
     creadoPorId?: IntFilter<"Cotizacion"> | number
     ultimoEditadoPorId?: IntNullableFilter<"Cotizacion"> | number | null
     createdAt?: DateTimeFilter<"Cotizacion"> | Date | string
@@ -33799,6 +33869,7 @@ export namespace Prisma {
     avisoSalioEnviadoEn?: Date | string | null
     avisoEntregadoEnviadoEn?: Date | string | null
     alerta48hEnviadaEn?: Date | string | null
+    alertaSalioSinEntregarEnviadaEn?: Date | string | null
     categoriaObservacion?: $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: string | null
     createdAt?: Date | string
@@ -33820,6 +33891,7 @@ export namespace Prisma {
     avisoSalioEnviadoEn?: Date | string | null
     avisoEntregadoEnviadoEn?: Date | string | null
     alerta48hEnviadaEn?: Date | string | null
+    alertaSalioSinEntregarEnviadaEn?: Date | string | null
     categoriaObservacion?: $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: string | null
     creadoPorId: number
@@ -33847,6 +33919,7 @@ export namespace Prisma {
     pedidoAprobadoEn?: Date | string | null
     avisoAlmacenEn?: Date | string | null
     recordatorioEnviadoEn?: Date | string | null
+    alertaLentaEnviadaEn?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     creadoPor: UsuarioCreateNestedOneWithoutCotizacionesCreadasInput
@@ -33864,6 +33937,7 @@ export namespace Prisma {
     pedidoAprobadoEn?: Date | string | null
     avisoAlmacenEn?: Date | string | null
     recordatorioEnviadoEn?: Date | string | null
+    alertaLentaEnviadaEn?: Date | string | null
     creadoPorId: number
     ultimoEditadoPorId?: number | null
     createdAt?: Date | string
@@ -34352,6 +34426,7 @@ export namespace Prisma {
     avisoSalioEnviadoEn?: Date | string | null
     avisoEntregadoEnviadoEn?: Date | string | null
     alerta48hEnviadaEn?: Date | string | null
+    alertaSalioSinEntregarEnviadaEn?: Date | string | null
     categoriaObservacion?: $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: string | null
     createdAt?: Date | string
@@ -34374,6 +34449,7 @@ export namespace Prisma {
     avisoSalioEnviadoEn?: Date | string | null
     avisoEntregadoEnviadoEn?: Date | string | null
     alerta48hEnviadaEn?: Date | string | null
+    alertaSalioSinEntregarEnviadaEn?: Date | string | null
     categoriaObservacion?: $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: string | null
     creadoPorId: number
@@ -34395,6 +34471,7 @@ export namespace Prisma {
     pedidoAprobadoEn?: Date | string | null
     avisoAlmacenEn?: Date | string | null
     recordatorioEnviadoEn?: Date | string | null
+    alertaLentaEnviadaEn?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     cliente: ClienteCreateNestedOneWithoutCotizacionesInput
@@ -34413,6 +34490,7 @@ export namespace Prisma {
     pedidoAprobadoEn?: Date | string | null
     avisoAlmacenEn?: Date | string | null
     recordatorioEnviadoEn?: Date | string | null
+    alertaLentaEnviadaEn?: Date | string | null
     creadoPorId: number
     ultimoEditadoPorId?: number | null
     createdAt?: Date | string
@@ -34513,6 +34591,7 @@ export namespace Prisma {
     avisoSalioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoEntregadoEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     alerta48hEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    alertaSalioSinEntregarEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     categoriaObservacion?: NullableEnumCategoriaObservacionPedidoFieldUpdateOperationsInput | $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -34535,6 +34614,7 @@ export namespace Prisma {
     avisoSalioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoEntregadoEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     alerta48hEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    alertaSalioSinEntregarEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     categoriaObservacion?: NullableEnumCategoriaObservacionPedidoFieldUpdateOperationsInput | $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: NullableStringFieldUpdateOperationsInput | string | null
     creadoPorId?: IntFieldUpdateOperationsInput | number
@@ -34562,6 +34642,7 @@ export namespace Prisma {
     pedidoAprobadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoAlmacenEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     recordatorioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    alertaLentaEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     cliente?: ClienteUpdateOneRequiredWithoutCotizacionesNestedInput
@@ -34580,6 +34661,7 @@ export namespace Prisma {
     pedidoAprobadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoAlmacenEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     recordatorioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    alertaLentaEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     creadoPorId?: IntFieldUpdateOperationsInput | number
     ultimoEditadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -35007,6 +35089,7 @@ export namespace Prisma {
     pedidoAprobadoEn?: Date | string | null
     avisoAlmacenEn?: Date | string | null
     recordatorioEnviadoEn?: Date | string | null
+    alertaLentaEnviadaEn?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     cliente: ClienteCreateNestedOneWithoutCotizacionesInput
@@ -35025,6 +35108,7 @@ export namespace Prisma {
     pedidoAprobadoEn?: Date | string | null
     avisoAlmacenEn?: Date | string | null
     recordatorioEnviadoEn?: Date | string | null
+    alertaLentaEnviadaEn?: Date | string | null
     creadoPorId: number
     ultimoEditadoPorId?: number | null
     createdAt?: Date | string
@@ -35116,6 +35200,7 @@ export namespace Prisma {
     pedidoAprobadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoAlmacenEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     recordatorioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    alertaLentaEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     cliente?: ClienteUpdateOneRequiredWithoutCotizacionesNestedInput
@@ -35134,6 +35219,7 @@ export namespace Prisma {
     pedidoAprobadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoAlmacenEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     recordatorioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    alertaLentaEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     creadoPorId?: IntFieldUpdateOperationsInput | number
     ultimoEditadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -36145,6 +36231,7 @@ export namespace Prisma {
     avisoSalioEnviadoEn?: Date | string | null
     avisoEntregadoEnviadoEn?: Date | string | null
     alerta48hEnviadaEn?: Date | string | null
+    alertaSalioSinEntregarEnviadaEn?: Date | string | null
     categoriaObservacion?: $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: string | null
     ultimoEditadoPorId?: number | null
@@ -36165,6 +36252,7 @@ export namespace Prisma {
     avisoSalioEnviadoEn?: Date | string | null
     avisoEntregadoEnviadoEn?: Date | string | null
     alerta48hEnviadaEn?: Date | string | null
+    alertaSalioSinEntregarEnviadaEn?: Date | string | null
     categoriaObservacion?: $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: string | null
     creadoPorId: number
@@ -36192,6 +36280,7 @@ export namespace Prisma {
     pedidoAprobadoEn?: Date | string | null
     avisoAlmacenEn?: Date | string | null
     recordatorioEnviadoEn?: Date | string | null
+    alertaLentaEnviadaEn?: Date | string | null
     ultimoEditadoPorId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -36207,6 +36296,7 @@ export namespace Prisma {
     pedidoAprobadoEn?: Date | string | null
     avisoAlmacenEn?: Date | string | null
     recordatorioEnviadoEn?: Date | string | null
+    alertaLentaEnviadaEn?: Date | string | null
     creadoPorId: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -36469,6 +36559,7 @@ export namespace Prisma {
     avisoSalioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoEntregadoEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     alerta48hEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    alertaSalioSinEntregarEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     categoriaObservacion?: NullableEnumCategoriaObservacionPedidoFieldUpdateOperationsInput | $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -36491,6 +36582,7 @@ export namespace Prisma {
     avisoSalioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoEntregadoEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     alerta48hEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    alertaSalioSinEntregarEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     categoriaObservacion?: NullableEnumCategoriaObservacionPedidoFieldUpdateOperationsInput | $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: NullableStringFieldUpdateOperationsInput | string | null
     ultimoEditadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -36512,6 +36604,7 @@ export namespace Prisma {
     avisoSalioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoEntregadoEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     alerta48hEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    alertaSalioSinEntregarEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     categoriaObservacion?: NullableEnumCategoriaObservacionPedidoFieldUpdateOperationsInput | $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: NullableStringFieldUpdateOperationsInput | string | null
     ultimoEditadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -36530,6 +36623,7 @@ export namespace Prisma {
     avisoSalioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoEntregadoEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     alerta48hEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    alertaSalioSinEntregarEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     categoriaObservacion?: NullableEnumCategoriaObservacionPedidoFieldUpdateOperationsInput | $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -36552,6 +36646,7 @@ export namespace Prisma {
     avisoSalioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoEntregadoEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     alerta48hEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    alertaSalioSinEntregarEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     categoriaObservacion?: NullableEnumCategoriaObservacionPedidoFieldUpdateOperationsInput | $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: NullableStringFieldUpdateOperationsInput | string | null
     creadoPorId?: IntFieldUpdateOperationsInput | number
@@ -36573,6 +36668,7 @@ export namespace Prisma {
     avisoSalioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoEntregadoEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     alerta48hEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    alertaSalioSinEntregarEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     categoriaObservacion?: NullableEnumCategoriaObservacionPedidoFieldUpdateOperationsInput | $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: NullableStringFieldUpdateOperationsInput | string | null
     creadoPorId?: IntFieldUpdateOperationsInput | number
@@ -36617,6 +36713,7 @@ export namespace Prisma {
     pedidoAprobadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoAlmacenEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     recordatorioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    alertaLentaEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     cliente?: ClienteUpdateOneRequiredWithoutCotizacionesNestedInput
@@ -36635,6 +36732,7 @@ export namespace Prisma {
     pedidoAprobadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoAlmacenEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     recordatorioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    alertaLentaEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     ultimoEditadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -36652,6 +36750,7 @@ export namespace Prisma {
     pedidoAprobadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoAlmacenEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     recordatorioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    alertaLentaEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     ultimoEditadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -36665,6 +36764,7 @@ export namespace Prisma {
     pedidoAprobadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoAlmacenEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     recordatorioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    alertaLentaEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     cliente?: ClienteUpdateOneRequiredWithoutCotizacionesNestedInput
@@ -36683,6 +36783,7 @@ export namespace Prisma {
     pedidoAprobadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoAlmacenEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     recordatorioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    alertaLentaEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     creadoPorId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -36700,6 +36801,7 @@ export namespace Prisma {
     pedidoAprobadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoAlmacenEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     recordatorioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    alertaLentaEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     creadoPorId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -37078,6 +37180,7 @@ export namespace Prisma {
     avisoSalioEnviadoEn?: Date | string | null
     avisoEntregadoEnviadoEn?: Date | string | null
     alerta48hEnviadaEn?: Date | string | null
+    alertaSalioSinEntregarEnviadaEn?: Date | string | null
     categoriaObservacion?: $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: string | null
     creadoPorId: number
@@ -37095,6 +37198,7 @@ export namespace Prisma {
     pedidoAprobadoEn?: Date | string | null
     avisoAlmacenEn?: Date | string | null
     recordatorioEnviadoEn?: Date | string | null
+    alertaLentaEnviadaEn?: Date | string | null
     creadoPorId: number
     ultimoEditadoPorId?: number | null
     createdAt?: Date | string
@@ -37112,6 +37216,7 @@ export namespace Prisma {
     avisoSalioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoEntregadoEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     alerta48hEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    alertaSalioSinEntregarEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     categoriaObservacion?: NullableEnumCategoriaObservacionPedidoFieldUpdateOperationsInput | $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -37133,6 +37238,7 @@ export namespace Prisma {
     avisoSalioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoEntregadoEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     alerta48hEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    alertaSalioSinEntregarEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     categoriaObservacion?: NullableEnumCategoriaObservacionPedidoFieldUpdateOperationsInput | $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: NullableStringFieldUpdateOperationsInput | string | null
     creadoPorId?: IntFieldUpdateOperationsInput | number
@@ -37154,6 +37260,7 @@ export namespace Prisma {
     avisoSalioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoEntregadoEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     alerta48hEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    alertaSalioSinEntregarEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     categoriaObservacion?: NullableEnumCategoriaObservacionPedidoFieldUpdateOperationsInput | $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: NullableStringFieldUpdateOperationsInput | string | null
     creadoPorId?: IntFieldUpdateOperationsInput | number
@@ -37170,6 +37277,7 @@ export namespace Prisma {
     pedidoAprobadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoAlmacenEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     recordatorioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    alertaLentaEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     creadoPor?: UsuarioUpdateOneRequiredWithoutCotizacionesCreadasNestedInput
@@ -37187,6 +37295,7 @@ export namespace Prisma {
     pedidoAprobadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoAlmacenEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     recordatorioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    alertaLentaEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     creadoPorId?: IntFieldUpdateOperationsInput | number
     ultimoEditadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -37204,6 +37313,7 @@ export namespace Prisma {
     pedidoAprobadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoAlmacenEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     recordatorioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    alertaLentaEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     creadoPorId?: IntFieldUpdateOperationsInput | number
     ultimoEditadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string

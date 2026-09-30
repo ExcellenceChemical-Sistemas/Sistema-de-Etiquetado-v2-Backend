@@ -243,6 +243,7 @@ exports.Prisma.PedidoScalarFieldEnum = {
   avisoSalioEnviadoEn: 'avisoSalioEnviadoEn',
   avisoEntregadoEnviadoEn: 'avisoEntregadoEnviadoEn',
   alerta48hEnviadaEn: 'alerta48hEnviadaEn',
+  alertaSalioSinEntregarEnviadaEn: 'alertaSalioSinEntregarEnviadaEn',
   categoriaObservacion: 'categoriaObservacion',
   detalleObservacion: 'detalleObservacion',
   creadoPorId: 'creadoPorId',
@@ -272,6 +273,7 @@ exports.Prisma.CotizacionScalarFieldEnum = {
   pedidoAprobadoEn: 'pedidoAprobadoEn',
   avisoAlmacenEn: 'avisoAlmacenEn',
   recordatorioEnviadoEn: 'recordatorioEnviadoEn',
+  alertaLentaEnviadaEn: 'alertaLentaEnviadaEn',
   creadoPorId: 'creadoPorId',
   ultimoEditadoPorId: 'ultimoEditadoPorId',
   createdAt: 'createdAt',
@@ -402,7 +404,9 @@ exports.CategoriaObservacionPedido = exports.$Enums.CategoriaObservacionPedido =
 
 exports.TipoNotificacion = exports.$Enums.TipoNotificacion = {
   PEDIDO_VENCIDO: 'PEDIDO_VENCIDO',
-  COTIZACION_SIN_AVISO_ALMACEN: 'COTIZACION_SIN_AVISO_ALMACEN'
+  PEDIDO_SALIO_SIN_ENTREGAR: 'PEDIDO_SALIO_SIN_ENTREGAR',
+  COTIZACION_SIN_AVISO_ALMACEN: 'COTIZACION_SIN_AVISO_ALMACEN',
+  COTIZACION_RESPUESTA_LENTA: 'COTIZACION_RESPUESTA_LENTA'
 };
 
 exports.ModuloDocumentos = exports.$Enums.ModuloDocumentos = {

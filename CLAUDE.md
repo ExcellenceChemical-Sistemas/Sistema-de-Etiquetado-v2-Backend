@@ -190,13 +190,25 @@ por un Admin vía `PATCH /usuarios/:id/refrigerio`) se descuenta del conteo: `ho
 toma la intersección de los refrigerios de quienes pueden marcar el pedido como entregado
 (`PEDIDOS.puedeEditar` + admins) — si están escalonados, no se descuenta nada.
 
+`AlertasPedidosService` corre en realidad DOS alertas, nunca las dos a la vez para el mismo
+pedido: `PEDIDO_VENCIDO` (≥48h hábiles desde `recibidoEn`, solo mientras `salioEn` sigue null) y
+`PEDIDO_SALIO_SIN_ENTREGAR` (≥24h hábiles desde `salioEn`, una vez que ya salió — umbral más corto
+por ser la etapa final). Cada una con su propio campo de dedupe (`alerta48hEnviadaEn` /
+`alertaSalioSinEntregarEnviadaEn`), así que un pedido puede recibir primero una y después la otra
+según cómo avance, pero nunca ambas al mismo tiempo.
+
 **El recordatorio de "cotización sin avisar a almacén" también es notificación interna, ya no
 correo.** Antes lo disparaba un cron de n8n que llamaba `POST /cotizaciones/recordatorios/despachar`
 (ruta eliminada) y mandaba un correo — se sacó porque el correo se revisaba poco.
-`AlertasCotizacionesService` (`cotizaciones/alertas-cotizaciones.service.ts`, cron cada 15 min)
-llama directo a `CotizacionesService.findPendientesDeRecordatorio()` (cotizaciones aprobadas hace
-más de 1h sin `avisoAlmacenEn`, SLA de reloj real, no horas hábiles) y crea una `Notificacion` para
-cada usuario con `COTIZACIONES.puedeEditar` o `esAdmin`.
+`AlertasCotizacionesService` (`cotizaciones/alertas-cotizaciones.service.ts`) corre dos cosas:
+- Cada 15 min, llama directo a `CotizacionesService.findPendientesDeRecordatorio()` (cotizaciones
+  aprobadas hace más de 1h sin `avisoAlmacenEn`, SLA de reloj real, no horas hábiles — sin cambios
+  respecto a la política previa) y crea `COTIZACION_SIN_AVISO_ALMACEN`.
+- Cada 30 min, revisa cotizaciones sin `cotizacionEnviadaEn` con ≥24h **hábiles** desde
+  `requerimientoEn` (`alertaLentaEnviadaEn` como dedupe) y crea `COTIZACION_RESPUESTA_LENTA`.
+
+Ambas notifican a cada usuario con `COTIZACIONES.puedeEditar` o `esAdmin`; el refrigerio que se
+descuenta en la segunda es el de ese mismo grupo (Joel/Alice), no el de Pedidos.
 
 **`Cotizacion` (módulo `cotizaciones`) — seguimiento del proceso de Joel, con auditoría contra
 manipulación de fechas.** Mismo patrón que `Pedido` (sin columna `estado`, derivado en

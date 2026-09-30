@@ -304,7 +304,10 @@ model Pedido {
   avisoEntregadoEnviadoEn DateTime?
   // Cuándo se creó la notificación interna de "pedido vencido" (ver NotificacionesModule /
   // AlertasPedidosService). Evita mandarla dos veces, mismo patrón que los avisos de arriba.
+  // Solo aplica mientras salioEn sigue null — en cuanto sale, la alerta pasa a medir desde
+  // salioEn (alertaSalioSinEntregarEnviadaEn), nunca las dos a la vez para el mismo pedido.
   alerta48hEnviadaEn      DateTime?
+  alertaSalioSinEntregarEnviadaEn DateTime?
   categoriaObservacion    CategoriaObservacionPedido?
   detalleObservacion      String?
   creadoPorId             Int
@@ -343,7 +346,9 @@ model Notificacion {
 
 enum TipoNotificacion {
   PEDIDO_VENCIDO
+  PEDIDO_SALIO_SIN_ENTREGAR
   COTIZACION_SIN_AVISO_ALMACEN
+  COTIZACION_RESPUESTA_LENTA
 }
 
 // Seguimiento del proceso de cotización de Joel: mismo patrón que Pedido (fechas por etapa,
@@ -367,6 +372,9 @@ model Cotizacion {
   // Cuándo se mandó el recordatorio de "falta avisar a almacén" (aprobado hace más de 1h sin
   // avisoAlmacenEn). Null = todavía no hizo falta. Evita mandar el mismo recordatorio dos veces.
   recordatorioEnviadoEn DateTime?
+  // Cuándo se avisó que la cotización tarda en enviarse (requerimientoEn viejo sin
+  // cotizacionEnviadaEn) — ver AlertasCotizacionesService. Mismo criterio de "una sola vez".
+  alertaLentaEnviadaEn  DateTime?
   creadoPorId         Int
   creadoPor           Usuario   @relation("CotizacionesCreadas", fields: [creadoPorId], references: [id])
   ultimoEditadoPorId  Int?

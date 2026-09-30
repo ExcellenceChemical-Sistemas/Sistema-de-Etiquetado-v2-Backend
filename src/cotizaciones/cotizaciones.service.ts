@@ -11,7 +11,7 @@ export type EstadoCotizacion = 'RECIBIDO' | 'COTIZADO' | 'APROBADO' | 'AVISADO_A
 export type TipoAlertaCotizacion = 'FERIADO_O_FIN_DE_SEMANA' | 'AUSENCIA_REGISTRADA' | 'CARGA_TARDIA';
 
 export interface AlertaCotizacion {
-  campo: 'cotizacionEnviadaEn' | 'pedidoAprobadoEn' | 'avisoAlmacenEn';
+  campo: 'requerimientoEn' | 'cotizacionEnviadaEn' | 'pedidoAprobadoEn' | 'avisoAlmacenEn';
   tipo: TipoAlertaCotizacion;
   motivo?: string;
 }
@@ -26,9 +26,10 @@ export interface HistorialCotizacionItem {
   editadoEn: Date;
 }
 
-// numeroProforma y requerimientoEn se comparan tal cual llega el PATCH (ver calcularCambiosSimples).
-// Las 3 etapas de abajo tienen su propia política en update(): la primera vez que se marcan usan
-// la hora real de servidor (nadie elige la fecha), y solo un Admin puede corregirlas después.
+// numeroProforma se compara tal cual llega el PATCH (ver calcularCambiosSimples). Las 4 fechas de
+// abajo (incluida requerimientoEn desde ahora) tienen su propia política en create()/update(): se
+// fijan con la hora real de servidor al crear/marcar (nadie elige la fecha), y solo un Admin puede
+// corregirlas después.
 export type CampoRastreado =
   | 'numeroProforma'
   | 'requerimientoEn'
@@ -36,14 +37,13 @@ export type CampoRastreado =
   | 'pedidoAprobadoEn'
   | 'avisoAlmacenEn';
 
-// Las 3 etapas que Joel carga sobre su propio trabajo (a diferencia de requerimientoEn, que es
-// la hora del SMS del cliente y puede caer en cualquier momento real). Si una de estas cae en un
-// día que la empresa no trabaja, o dentro de una ausencia registrada de quien la cargó/editó, es
-// evidencia de que el dato fue puesto para "cuadrar" el indicador en vez de reflejar lo real —
-// ver la conversación que originó esto: Joel cargaba datos de días en que estaba de vacaciones.
-// Desde que la primera marca usa hora real de servidor (ver update()), estas 3 solo pueden diferir
-// de la realidad si un Admin las corrigió explícitamente después.
-const CAMPOS_A_VERIFICAR = ['cotizacionEnviadaEn', 'pedidoAprobadoEn', 'avisoAlmacenEn'] as const;
+// Las 4 fechas que reflejan el trabajo de Joel sobre la cotización. requerimientoEn se sumó acá
+// (antes era de carga libre, "la hora del SMS del cliente") porque el mismo hueco que motivó la
+// política de las otras 3 aplica igual: si Joel puede elegir esa fecha, puede acercarla a la de
+// envío para inflar su indicador de tiempo de respuesta — igual de fácil que en el Excel. Ahora
+// requerimientoEn se fija al momento real en que Joel la carga en el sistema (create()), y solo se
+// puede corregir después con motivo y solo por un Admin, igual que las otras 3 — ver update().
+const CAMPOS_A_VERIFICAR = ['requerimientoEn', 'cotizacionEnviadaEn', 'pedidoAprobadoEn', 'avisoAlmacenEn'] as const;
 
 // Si el valor de una etapa se cargó o corrigió más de este umbral después de la fecha que dice
 // (comparado contra la hora real de servidor en que se guardó el cambio, no editable por nadie),
@@ -60,6 +60,7 @@ function diaDentroDeRango(dia: Date, desde: Date, hasta: Date): boolean {
 
 export function calcularAlertasCotizacion(
   cotizacion: {
+    requerimientoEn: Date;
     cotizacionEnviadaEn: Date | null;
     pedidoAprobadoEn: Date | null;
     avisoAlmacenEn: Date | null;
@@ -142,6 +143,7 @@ export class CotizacionesService {
       id: number;
       creadoPorId: number;
       ultimoEditadoPorId: number | null;
+      requerimientoEn: Date;
       cotizacionEnviadaEn: Date | null;
       pedidoAprobadoEn: Date | null;
       avisoAlmacenEn: Date | null;
@@ -173,11 +175,11 @@ export class CotizacionesService {
     });
   }
 
-  // numeroProforma y requerimientoEn: sin política especial, se comparan tal cual llega el PATCH
-  // (evita un historial con entradas idénticas si el frontend reenvía el mismo valor). Las 3
-  // etapas de Joel tienen su propia lógica en update(), ver ahí.
+  // numeroProforma: sin política especial, se compara tal cual llega el PATCH (evita un historial
+  // con entradas idénticas si el frontend reenvía el mismo valor). Las 4 fechas de Joel (incluida
+  // requerimientoEn) tienen su propia lógica en update(), ver ahí.
   private calcularCambiosSimples(
-    actual: { numeroProforma: string | null; requerimientoEn: Date },
+    actual: { numeroProforma: string | null },
     dto: UpdateCotizacionDto,
   ): { campo: CampoRastreado; valorAnterior: string | null; valorNuevo: string | null; motivo: null }[] {
     const cambios: { campo: CampoRastreado; valorAnterior: string | null; valorNuevo: string | null; motivo: null }[] = [];
@@ -189,23 +191,16 @@ export class CotizacionesService {
       }
     }
 
-    if (dto.requerimientoEn) {
-      const anteriorTexto = actual.requerimientoEn.toISOString();
-      const nuevoTexto = new Date(dto.requerimientoEn).toISOString();
-      if (anteriorTexto !== nuevoTexto) {
-        cambios.push({ campo: 'requerimientoEn', valorAnterior: anteriorTexto, valorNuevo: nuevoTexto, motivo: null });
-      }
-    }
-
     return cambios;
   }
 
   async create(dto: CreateCotizacionDto, creadoPorId: number) {
+    // requerimientoEn no se recibe del cliente: siempre la hora real del servidor al crear (ver
+    // comentario de CAMPOS_A_VERIFICAR). Corregirla después es cosa exclusiva de un Admin.
     const cotizacion = await this.prisma.cotizacion.create({
       data: {
         clienteId: dto.clienteId,
         notas: dto.notas?.trim() || undefined,
-        requerimientoEn: dto.requerimientoEn ? new Date(dto.requerimientoEn) : undefined,
         creadoPorId,
         ultimoEditadoPorId: creadoPorId,
       },
@@ -256,12 +251,14 @@ export class CotizacionesService {
       throw new BadRequestException('Para marcar la cotización como enviada hace falta el número de proforma de KEYFACIL');
     }
 
-    // Las 3 etapas de Joel: la PRIMERA vez que se marcan usan la hora real del servidor, sin
+    // Las 4 fechas de Joel: la PRIMERA vez que se marcan usan la hora real del servidor, sin
     // importar qué fecha mande el cliente — así el indicador mide lo que pasó de verdad, no lo
     // que alguien prefiera que haya pasado. Corregir una que ya estaba marcada es cosa del Admin
     // general únicamente, y exige un motivo (queda en el historial junto al valor anterior).
+    // requerimientoEn siempre tiene un valor previo (se fija en create()), así que para ella este
+    // bucle SIEMPRE toma la rama de "corrección" — nunca la de "primera marca".
     const ahora = new Date();
-    const resueltos: Partial<Record<'cotizacionEnviadaEn' | 'pedidoAprobadoEn' | 'avisoAlmacenEn', Date>> = {};
+    const resueltos: Partial<Record<'requerimientoEn' | 'cotizacionEnviadaEn' | 'pedidoAprobadoEn' | 'avisoAlmacenEn', Date>> = {};
     const cambiosEtapa: { campo: CampoRastreado; valorAnterior: string | null; valorNuevo: string; motivo: string | null }[] = [];
 
     for (const campo of CAMPOS_A_VERIFICAR) {
@@ -295,10 +292,7 @@ export class CotizacionesService {
       }
     }
 
-    const cambiosSimples = this.calcularCambiosSimples(
-      { numeroProforma: actual.numeroProforma, requerimientoEn: actual.requerimientoEn },
-      dto,
-    );
+    const cambiosSimples = this.calcularCambiosSimples({ numeroProforma: actual.numeroProforma }, dto);
 
     try {
       const cotizacion = await this.prisma.$transaction(async (tx) => {
@@ -308,7 +302,7 @@ export class CotizacionesService {
             ...(dto.clienteId !== undefined && { clienteId: dto.clienteId }),
             ...(dto.numeroProforma !== undefined && { numeroProforma: dto.numeroProforma.trim() || null }),
             ...(dto.notas !== undefined && { notas: dto.notas.trim() || null }),
-            ...(dto.requerimientoEn && { requerimientoEn: new Date(dto.requerimientoEn) }),
+            ...(resueltos.requerimientoEn && { requerimientoEn: resueltos.requerimientoEn }),
             ...(resueltos.cotizacionEnviadaEn && { cotizacionEnviadaEn: resueltos.cotizacionEnviadaEn }),
             ...(resueltos.pedidoAprobadoEn && { pedidoAprobadoEn: resueltos.pedidoAprobadoEn }),
             ...(resueltos.avisoAlmacenEn && { avisoAlmacenEn: resueltos.avisoAlmacenEn }),

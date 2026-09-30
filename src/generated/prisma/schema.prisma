@@ -65,6 +65,10 @@ enum Recurso {
   USUARIOS
   ETIQUETAS
   PEDIDOS
+  // Antes Cotizaciones compartía PEDIDOS (mismo flujo de Joel). Se separó porque los
+  // encargados son personas distintas: Charlie solo Pedidos, Joel solo Cotizaciones,
+  // Alice ve ambos — hacía falta poder otorgar uno sin el otro.
+  COTIZACIONES
 }
 
 // ──────────────────────────────────────────

@@ -110,7 +110,8 @@ export namespace $Enums {
   PLANTILLAS: 'PLANTILLAS',
   USUARIOS: 'USUARIOS',
   ETIQUETAS: 'ETIQUETAS',
-  PEDIDOS: 'PEDIDOS'
+  PEDIDOS: 'PEDIDOS',
+  COTIZACIONES: 'COTIZACIONES'
 };
 
 export type Recurso = (typeof Recurso)[keyof typeof Recurso]

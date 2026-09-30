@@ -37,9 +37,36 @@ const INCLUDE_PEDIDO = {
   ultimoEditadoPor: { select: { id: true, nombre: true } },
 } satisfies Prisma.PedidoInclude;
 
+export interface CotizacionRelacionada {
+  id: number;
+  numeroProforma: string | null;
+  requerimientoEn: Date;
+}
+
 @Injectable()
 export class PedidosService {
   constructor(private prisma: PrismaService) {}
+
+  // Misma llave natural que del lado de Cotizacion (numeroProforma de KEYFACIL, sin relación
+  // formal en el schema — ver CLAUDE.md), para mostrar en el indicador de Pedidos cuánto tardó
+  // realmente el cliente desde que pidió la cotización, no solo desde que almacén recibió el
+  // pedido. Bulk (no una consulta por fila) para poder usarse en findAll.
+  private async adjuntarCotizacionesRelacionadas<T extends { numeroProforma: string }>(
+    pedidos: T[],
+  ): Promise<(T & { cotizacionRelacionada: CotizacionRelacionada | null })[]> {
+    const proformas = [...new Set(pedidos.map((p) => p.numeroProforma))];
+    const cotizaciones = proformas.length
+      ? await this.prisma.cotizacion.findMany({
+          where: { numeroProforma: { in: proformas } },
+          select: { id: true, numeroProforma: true, requerimientoEn: true },
+        })
+      : [];
+    const cotizacionPorProforma = new Map(cotizaciones.map((c) => [c.numeroProforma, c]));
+    return pedidos.map((p) => ({
+      ...p,
+      cotizacionRelacionada: cotizacionPorProforma.get(p.numeroProforma) ?? null,
+    }));
+  }
 
   async create(dto: CreatePedidoDto, creadoPorId: number) {
     try {
@@ -70,7 +97,8 @@ export class PedidosService {
       include: INCLUDE_PEDIDO,
       orderBy: { recibidoEn: 'desc' },
     });
-    return pedidos.map((p) => ({ ...p, estado: derivarEstado(p) }));
+    const conCotizacion = await this.adjuntarCotizacionesRelacionadas(pedidos);
+    return conCotizacion.map((p) => ({ ...p, estado: derivarEstado(p) }));
   }
 
   async findOne(id: number) {
@@ -81,7 +109,8 @@ export class PedidosService {
     if (!pedido) {
       throw new NotFoundException(`Pedido con id ${id} no encontrado`);
     }
-    return { ...pedido, estado: derivarEstado(pedido) };
+    const [conCotizacion] = await this.adjuntarCotizacionesRelacionadas([pedido]);
+    return { ...conCotizacion, estado: derivarEstado(pedido) };
   }
 
   async update(id: number, dto: UpdatePedidoDto, editadoPorId: number) {

@@ -28,6 +28,9 @@ function crearServicio(pedidos: any[], opts: { errorCreate?: Error } = {}) {
         return Promise.resolve({ ...PEDIDO_VACIO, ...data });
       }),
     },
+    cotizacion: {
+      findMany: jest.fn(() => Promise.resolve([])),
+    },
   };
   return { servicio: new PedidosService(prisma), prisma };
 }

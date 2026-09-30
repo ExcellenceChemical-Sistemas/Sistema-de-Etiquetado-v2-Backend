@@ -26,6 +26,17 @@ export interface HistorialCotizacionItem {
   editadoEn: Date;
 }
 
+export interface PedidoRelacionado {
+  id: number;
+  numeroProforma: string;
+  recibidoEn: Date;
+  inicioPreparacionEn: Date | null;
+  preparadoEn: Date | null;
+  salioEn: Date | null;
+  entregadoEn: Date | null;
+  tokenSeguimiento: string;
+}
+
 // numeroProforma se compara tal cual llega el PATCH (ver calcularCambiosSimples). Las 4 fechas de
 // abajo (incluida requerimientoEn desde ahora) tienen su propia política en create()/update(): se
 // fijan con la hora real de servidor al crear/marcar (nadie elige la fecha), y solo un Admin puede
@@ -219,6 +230,37 @@ export class CotizacionesService {
     return { ...conAlertas, estado: derivarEstadoCotizacion(cotizacion) };
   }
 
+  // Cotizacion y Pedido son tablas independientes (viven en módulos y, hoy, con encargados
+  // distintos — ver CLAUDE.md), pero ambas guardan el mismo numeroProforma de KEYFACIL: es la
+  // llave natural para mostrar la trazabilidad de punta a punta, del requerimiento del cliente a
+  // la entrega real, sin agregar una relación formal en el schema. Una sola consulta bulk (no una
+  // por fila) para poder usarse también en findAll, que alimenta el indicador de trazabilidad.
+  private async adjuntarPedidosRelacionados<T extends { numeroProforma: string | null }>(
+    cotizaciones: T[],
+  ): Promise<(T & { pedidoRelacionado: PedidoRelacionado | null })[]> {
+    const proformas = [...new Set(cotizaciones.map((c) => c.numeroProforma).filter((p): p is string => !!p))];
+    const pedidos = proformas.length
+      ? await this.prisma.pedido.findMany({
+          where: { numeroProforma: { in: proformas } },
+          select: {
+            id: true,
+            numeroProforma: true,
+            recibidoEn: true,
+            inicioPreparacionEn: true,
+            preparadoEn: true,
+            salioEn: true,
+            entregadoEn: true,
+            tokenSeguimiento: true,
+          },
+        })
+      : [];
+    const pedidoPorProforma = new Map(pedidos.map((p) => [p.numeroProforma, p]));
+    return cotizaciones.map((c) => ({
+      ...c,
+      pedidoRelacionado: (c.numeroProforma && pedidoPorProforma.get(c.numeroProforma)) || null,
+    }));
+  }
+
   async findAll(estado?: EstadoCotizacion) {
     const cotizaciones = await this.prisma.cotizacion.findMany({
       where: estado ? WHERE_POR_ESTADO[estado] : undefined,
@@ -226,7 +268,8 @@ export class CotizacionesService {
       orderBy: { requerimientoEn: 'desc' },
     });
     const conAlertas = await this.conAlertas(cotizaciones);
-    return conAlertas.map((c) => ({ ...c, estado: derivarEstadoCotizacion(c) }));
+    const conPedido = await this.adjuntarPedidosRelacionados(conAlertas);
+    return conPedido.map((c) => ({ ...c, estado: derivarEstadoCotizacion(c) }));
   }
 
   async findOne(id: number) {
@@ -238,26 +281,8 @@ export class CotizacionesService {
       throw new NotFoundException(`Cotización con id ${id} no encontrada`);
     }
     const [conAlertas] = await this.conAlertas([cotizacion]);
-    // Cotizacion y Pedido son tablas independientes (viven en módulos y, hoy, con encargados
-    // distintos — ver CLAUDE.md), pero ambas guardan el mismo numeroProforma de KEYFACIL: es la
-    // llave natural para mostrar la trazabilidad de punta a punta, del requerimiento del cliente
-    // a la entrega real, sin agregar una relación formal en el schema. Solo en el detalle (no en
-    // findAll) para no pagar una consulta extra por fila en el listado.
-    const pedidoRelacionado = cotizacion.numeroProforma
-      ? await this.prisma.pedido.findUnique({
-          where: { numeroProforma: cotizacion.numeroProforma },
-          select: {
-            id: true,
-            recibidoEn: true,
-            inicioPreparacionEn: true,
-            preparadoEn: true,
-            salioEn: true,
-            entregadoEn: true,
-            tokenSeguimiento: true,
-          },
-        })
-      : null;
-    return { ...conAlertas, estado: derivarEstadoCotizacion(cotizacion), pedidoRelacionado };
+    const [conPedido] = await this.adjuntarPedidosRelacionados([conAlertas]);
+    return { ...conPedido, estado: derivarEstadoCotizacion(cotizacion) };
   }
 
   async update(id: number, dto: UpdateCotizacionDto, editadoPorId: number, esAdmin: boolean) {

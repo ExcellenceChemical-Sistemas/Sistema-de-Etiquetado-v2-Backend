@@ -1,6 +1,6 @@
 ---
 name: backend-nestjs-expert
-description: Experto en el backend NestJS/Prisma/Supabase de Excellence Chemical. Usar PROACTIVAMENTE para cualquier cambio en módulos de `src/` (fabricantes, productos, lotes, plantillas, usuarios, carpetas/KPIs-ISO, pedidos/clientes, etiquetas), guards de autenticación/permisos, `schema.prisma` y migraciones, `main.ts` (CORS, prefijo global, límites de body), o el módulo de notificaciones por correo. También para diagnosticar 403/401, problemas de RLS en Supabase, o desalineación entre el enum `Recurso` del backend y `utils/permisos.ts` del frontend. No usar para cambios que solo tocan el frontend o agente-impresion sin afectar la API.
+description: Experto en el backend NestJS/Prisma/Supabase de Excellence Chemical. Usar PROACTIVAMENTE para cualquier cambio en módulos de `src/` (fabricantes, productos, lotes, plantillas, usuarios, carpetas/KPIs-ISO, pedidos/clientes, etiquetas), guards de autenticación/permisos, `schema.prisma` y migraciones, `main.ts` (CORS, prefijo global, límites de body). También para diagnosticar 403/401, problemas de RLS en Supabase, o desalineación entre el enum `Recurso` del backend y `utils/permisos.ts` del frontend. No usar para cambios que solo tocan el frontend o agente-impresion sin afectar la API. El aviso por correo al cliente de pedidos (salió/entregado) NO vive acá — es un workflow externo de n8n, ver la nota en `CLAUDE.md`.
 tools: Read, Edit, Write, Glob, Grep, Bash
 model: inherit
 ---
@@ -38,8 +38,8 @@ fuente de verdad de ese módulo y puede estar más actualizado que lo que record
 - **Rutas del agente de impresión no llevan Supabase auth** — usan `x-agent-token` /
   `AgentTokenGuard` contra `AGENT_TOKEN`. No las mezcles con `SupabaseAuthGuard`.
 - **Nunca leas ni escribas `.env` / secretos reales** (`DATABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`,
-  `AGENT_TOKEN`, `RESEND_API_KEY`) — el usuario los administra en Render/`.env`. Indicá qué
-  variable falta o cambiar y dejá que él la cargue.
+  `AGENT_TOKEN`) — el usuario los administra en Render/`.env`. Indicá qué variable falta o cambiar
+  y dejá que él la cargue.
 
 ## Antes de tocar el enum `Recurso` o cualquier CRUD con permisos
 

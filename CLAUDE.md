@@ -48,10 +48,8 @@ pg driver adapter), `DIRECT_URL` (used by `prisma.config.ts` for migrations — 
 **not** read `DATABASE_URL` here), `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `AGENT_TOKEN`
 (shared secret for the print agent). Optional: `PORT` (3000), `FRONTEND_URL` (added to CORS),
 `EPSON_PRINTER_NAME`, `EPSON_PAPER_SIZE`.
-Avisos por correo al cliente (opcionales; sin ellos el envío queda apagado y el sistema funciona igual):
-`RESEND_API_KEY`, `MAIL_REMITENTE` (p. ej. `Excellence Chemical <pedidos@dominio>`, el dominio debe estar
-verificado en Resend), `MAIL_RESPONDER_A`. `SEGUIMIENTO_DIAS_TRAS_ENTREGA` (90) es cuánto sigue abriendo el
-enlace público `/p/<token>` de un pedido entregado.
+`SEGUIMIENTO_DIAS_TRAS_ENTREGA` (90) es cuánto sigue abriendo el enlace público `/p/<token>` de
+un pedido entregado.
 
 ## KPIs / ISO
 
@@ -161,14 +159,20 @@ person who touched a pedido (not a full audit trail — see `contexto` discussio
 needed). Clients were bulk-imported once from a real Excel client list; there's no seed script
 for it (was a throwaway one-off, not committed).
 
-**Seguimiento y avisos del pedido.** Cada `Pedido` tiene `tokenSeguimiento` (lo genera la base, 122 bits): es la
+**Seguimiento del pedido.** Cada `Pedido` tiene `tokenSeguimiento` (lo genera la base, 122 bits): es la
 única llave de la página pública `/p/<token>` (`GET /api/publico/pedidos/:token`, sin sesión, lista cerrada de campos,
-404 igual para inexistente y caducado). Al marcar "salió" o "entregado", `PedidosService.update` llama a
-`NotificacionesService.avisarPedido` (`src/notificaciones/`), que manda un correo por la API HTTP de Resend (no SMTP:
-Render Free lo bloquea) si el cliente tiene `email`. Reglas: solo al MARCAR la etapa (corregir la fecha no reenvía),
-una vez por etapa (`avisoSalioEnviadoEn` / `avisoEntregadoEnviadoEn`, reservadas con `updateMany` antes de enviar),
-nunca en pedidos CANCELADO, y un fallo de correo jamás rompe el cambio de etapa. El número de proforma se trata
-como texto no confiable en el correo (se limpia y se escapa).
+404 igual para inexistente y caducado).
+
+**El aviso por correo al cliente NO vive en este backend.** `Pedido.avisoSalioEnviadoEn` /
+`avisoEntregadoEnviadoEn` existen en el schema pero ningún service de este repo los lee ni escribe —
+no hay `NotificacionesService` ni integración con Resend; ambos se mencionaban antes en este
+archivo como si estuvieran implementados y nunca se llegaron a codear (Resend exige un dominio
+verificado que no se tiene). El aviso real corre por fuera, como un workflow de **n8n** que hace
+polling sobre `GET /pedidos` y manda el correo por SMTP (`sistemas@excellencechemical.com`) —
+ver ese workflow para la lógica de qué se considera "pendiente de aviso" y cómo se marca. Si en
+algún momento se decide mover esa lógica a este backend, hay que decidir primero si sigue
+viviendo solo en n8n o si se reescribe acá para no terminar con dos sistemas mandando el mismo
+correo sin coordinarse.
 
 **`Cotizacion` (módulo `cotizaciones`) — seguimiento del proceso de Joel, con auditoría contra
 manipulación de fechas.** Mismo patrón que `Pedido` (sin columna `estado`, derivado en

@@ -16,40 +16,41 @@ import { SupabaseAuthGuard } from '../common/guards/supabase-auth.guard';
 import { PermisosGuard } from '../common/guards/permisos.guard';
 import { RequierePermiso } from '../common/decorators/requiere-permiso.decorator';
 
-// Los clientes tienen su propia vista de gestión (alta, edición, baja) además
-// de alimentar el autocomplete de Pedidos, pero se gatillan con el mismo
-// recurso PEDIDOS en vez de crear un Recurso aparte.
+// Los clientes tienen su propia vista de gestión (alta, edición, baja) además de alimentar el
+// autocomplete de Pedidos y de Cotizaciones. Tiene su propio recurso CLIENTES, separado de
+// ambos: son encargados distintos, y Pedidos/Cotizaciones dependen de él (no al revés) — ver
+// DEPENDENCIAS en Permisosgrid.vue del frontend.
 @Controller('clientes')
 @UseGuards(SupabaseAuthGuard, PermisosGuard)
 export class ClientesController {
   constructor(private readonly clientesService: ClientesService) {}
 
   @Post()
-  @RequierePermiso('PEDIDOS', 'puedeCrear')
+  @RequierePermiso('CLIENTES', 'puedeCrear')
   create(@Body() dto: CreateClienteDto) {
     return this.clientesService.create(dto);
   }
 
   @Get()
-  @RequierePermiso('PEDIDOS', 'puedeVer')
+  @RequierePermiso('CLIENTES', 'puedeVer')
   findAll() {
     return this.clientesService.findAll();
   }
 
   @Get(':id')
-  @RequierePermiso('PEDIDOS', 'puedeVer')
+  @RequierePermiso('CLIENTES', 'puedeVer')
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.clientesService.findOne(id);
   }
 
   @Patch(':id')
-  @RequierePermiso('PEDIDOS', 'puedeEditar')
+  @RequierePermiso('CLIENTES', 'puedeEditar')
   update(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateClienteDto) {
     return this.clientesService.update(id, dto);
   }
 
   @Delete(':id')
-  @RequierePermiso('PEDIDOS', 'puedeEliminar')
+  @RequierePermiso('CLIENTES', 'puedeEliminar')
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.clientesService.remove(id);
   }

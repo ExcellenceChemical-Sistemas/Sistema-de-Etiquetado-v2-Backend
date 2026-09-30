@@ -69,6 +69,10 @@ enum Recurso {
   // encargados son personas distintas: Charlie solo Pedidos, Joel solo Cotizaciones,
   // Alice ve ambos — hacía falta poder otorgar uno sin el otro.
   COTIZACIONES
+  // Clientes también compartía PEDIDOS ("solo alimenta el autocomplete"), pero es un
+  // recurso propio con encargados distintos a Pedidos y a Cotizaciones — mismo motivo
+  // que la separación de arriba.
+  CLIENTES
 }
 
 // ──────────────────────────────────────────

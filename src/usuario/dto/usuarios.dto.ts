@@ -4,7 +4,7 @@ export const permisoSchema = z.object({
   // COA no es un recurso propio: subir/reemplazar/eliminar el COA de un lote
   // se controla con LOTES.puedeEditar (ver lotes.controller.ts). Se deja fuera
   // del enum para no ofrecer un permiso que ningún guard consulta.
-  recurso: z.enum(['LOTES', 'PRODUCTOS', 'FABRICANTES', 'PLANTILLAS', 'USUARIOS', 'ETIQUETAS', 'PEDIDOS', 'COTIZACIONES']),
+  recurso: z.enum(['LOTES', 'PRODUCTOS', 'FABRICANTES', 'PLANTILLAS', 'USUARIOS', 'ETIQUETAS', 'PEDIDOS', 'COTIZACIONES', 'CLIENTES']),
   puedeVer: z.boolean().default(false),
   puedeCrear: z.boolean().default(false),
   puedeEditar: z.boolean().default(false),

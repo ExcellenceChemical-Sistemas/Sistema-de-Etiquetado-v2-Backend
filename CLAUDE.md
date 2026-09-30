@@ -170,6 +170,36 @@ una vez por etapa (`avisoSalioEnviadoEn` / `avisoEntregadoEnviadoEn`, reservadas
 nunca en pedidos CANCELADO, y un fallo de correo jamás rompe el cambio de etapa. El número de proforma se trata
 como texto no confiable en el correo (se limpia y se escapa).
 
+**`Cotizacion` (módulo `cotizaciones`) — seguimiento del proceso de Joel, con auditoría contra
+manipulación de fechas.** Mismo patrón que `Pedido` (sin columna `estado`, derivado en
+`cotizaciones.service.ts` de qué de `cotizacionEnviadaEn`/`pedidoAprobadoEn`/`avisoAlmacenEn` está
+seteado), pero a diferencia de `Pedido` estas fechas (más `requerimientoEn`) **no son libremente
+editables**: surgió porque un vendedor cargaba datos retroactivos (incluso de días de vacaciones)
+para mejorar su propio indicador de tiempo de respuesta, algo que el Excel anterior no podía
+detectar. La política, igual para las 4 fechas:
+- **Al marcar por primera vez**, el valor que mande el cliente HTTP se ignora — `create()`/`update()`
+  siempre usan `new Date()` del servidor. Nadie elige la fecha real de cada etapa.
+- **Corregir una fecha ya marcada** es exclusivo de `esAdmin` (chequeado en el service, no solo
+  oculto en el frontend) y exige `motivoCorreccion` no vacío (`BadRequestException` si falta,
+  `ForbiddenException` si no es admin).
+- Cada cambio (incluida la marca inicial) escribe una fila en `CotizacionHistorial` (`campo`,
+  `valorAnterior`, `valorNuevo`, `motivo`, `editadoPorId`, `editadoEn` con `@default(now())`,
+  inmutable) dentro de la misma `$transaction` que el `update` — es la evidencia real de cuándo
+  se tocó cada dato, algo que una celda de Excel no guarda.
+- `calcularAlertasCotizacion()` (exportada del service, cubierta por tests) marca cada fecha con
+  `FERIADO_O_FIN_DE_SEMANA` (cae en día no laboral, `common/fecha/feriados-peru.ts`, feriados de
+  Perú + fin de semana), `AUSENCIA_REGISTRADA` (cae dentro de una ausencia del creador o último
+  editor, ver `AusenciasModule` abajo) o `CARGA_TARDIA` (el historial registra el cambio más de
+  `UMBRAL_CARGA_TARDIA_HORAS` — 24h — después de la fecha que dice). Las alertas **no ocultan ni
+  excluyen** la cotización de nada: se muestran junto al dato para que un supervisor decida, misma
+  filosofía que "no confiar ciegamente" del módulo KPIs/ISO.
+- `AusenciasModule` (`GET`/`POST`/`DELETE /ausencias`, `EsAdminGuard`) es un registro simple de
+  vacaciones/licencias por usuario (`usuarioId`, `desde`, `hasta` como `@db.Date`, `motivo?`) que
+  solo sirve de fuente de verdad para el chequeo de arriba — no es un módulo de RR.HH.
+- `numeroProforma` es `@unique`; marcar "cotización enviada" sin proforma (ni en el PATCH ni ya
+  guardada) da `BadRequestException`, y un duplicado da `ConflictException` (P2002 mapeado) con
+  mensaje legible.
+
 ## Global setup (`src/main.ts`)
 
 Global prefix `api`; `ValidationPipe({ whitelist: true, transform: true })` global (DTOs use

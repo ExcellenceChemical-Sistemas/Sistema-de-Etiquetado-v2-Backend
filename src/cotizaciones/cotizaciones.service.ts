@@ -238,7 +238,26 @@ export class CotizacionesService {
       throw new NotFoundException(`Cotización con id ${id} no encontrada`);
     }
     const [conAlertas] = await this.conAlertas([cotizacion]);
-    return { ...conAlertas, estado: derivarEstadoCotizacion(cotizacion) };
+    // Cotizacion y Pedido son tablas independientes (viven en módulos y, hoy, con encargados
+    // distintos — ver CLAUDE.md), pero ambas guardan el mismo numeroProforma de KEYFACIL: es la
+    // llave natural para mostrar la trazabilidad de punta a punta, del requerimiento del cliente
+    // a la entrega real, sin agregar una relación formal en el schema. Solo en el detalle (no en
+    // findAll) para no pagar una consulta extra por fila en el listado.
+    const pedidoRelacionado = cotizacion.numeroProforma
+      ? await this.prisma.pedido.findUnique({
+          where: { numeroProforma: cotizacion.numeroProforma },
+          select: {
+            id: true,
+            recibidoEn: true,
+            inicioPreparacionEn: true,
+            preparadoEn: true,
+            salioEn: true,
+            entregadoEn: true,
+            tokenSeguimiento: true,
+          },
+        })
+      : null;
+    return { ...conAlertas, estado: derivarEstadoCotizacion(cotizacion), pedidoRelacionado };
   }
 
   async update(id: number, dto: UpdateCotizacionDto, editadoPorId: number, esAdmin: boolean) {

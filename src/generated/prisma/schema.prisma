@@ -16,31 +16,32 @@ datasource db {
 // es el id (UUID) que devuelve Supabase Auth al crear la cuenta.
 // ──────────────────────────────────────────
 model Usuario {
-  id                   Int                @id @default(autoincrement())
-  supabaseUserId       String             @unique
-  nombre               String
-  esAdmin              Boolean            @default(false)
-  esAdminKpis          Boolean            @default(false) // gestiona accesos de KPIs/ISO de otros; no implica acceso propio automático
-  activo               Boolean            @default(true) // false = sin acceso al sistema pero conserva historial (ver PATCH /usuarios/:id/activo)
+  id                           Int                   @id @default(autoincrement())
+  supabaseUserId               String                @unique
+  nombre                       String
+  esAdmin                      Boolean               @default(false)
+  esAdminKpis                  Boolean               @default(false) // gestiona accesos de KPIs/ISO de otros; no implica acceso propio automático
+  activo                       Boolean               @default(true) // false = sin acceso al sistema pero conserva historial (ver PATCH /usuarios/:id/activo)
   // Quién y cuándo desactivó la cuenta (null si está activa). Si ese admin se
   // elimina después, desactivadoPorId queda en null pero desactivadoEn se conserva.
-  desactivadoEn        DateTime?
-  desactivadoPorId     Int?
-  desactivadoPor       Usuario?           @relation("UsuarioDesactivadoPor", fields: [desactivadoPorId], references: [id], onDelete: SetNull)
-  desactivados         Usuario[]          @relation("UsuarioDesactivadoPor")
-  avatarUrl            String?
-  permisos             Permiso[]
-  createdAt            DateTime           @default(now())
-  trabajosImpresion    TrabajoImpresion[]
-  archivosSubidos      Archivo[]
-  accesosIndicador     AccesoIndicador[]
-  accesoIso            AccesoISO?
-  pedidosCreados       Pedido[]           @relation("PedidosCreados")
-  pedidosEditados      Pedido[]           @relation("PedidosEditados")
-  cotizacionesCreadas  Cotizacion[]       @relation("CotizacionesCreadas")
-  cotizacionesEditadas Cotizacion[]       @relation("CotizacionesEditadas")
-  ausencias            Ausencia[]         @relation("AusenciasDelUsuario")
-  ausenciasRegistradas Ausencia[]         @relation("AusenciasRegistradas")
+  desactivadoEn                DateTime?
+  desactivadoPorId             Int?
+  desactivadoPor               Usuario?              @relation("UsuarioDesactivadoPor", fields: [desactivadoPorId], references: [id], onDelete: SetNull)
+  desactivados                 Usuario[]             @relation("UsuarioDesactivadoPor")
+  avatarUrl                    String?
+  permisos                     Permiso[]
+  createdAt                    DateTime              @default(now())
+  trabajosImpresion            TrabajoImpresion[]
+  archivosSubidos              Archivo[]
+  accesosIndicador             AccesoIndicador[]
+  accesoIso                    AccesoISO?
+  pedidosCreados               Pedido[]              @relation("PedidosCreados")
+  pedidosEditados              Pedido[]              @relation("PedidosEditados")
+  cotizacionesCreadas          Cotizacion[]          @relation("CotizacionesCreadas")
+  cotizacionesEditadas         Cotizacion[]          @relation("CotizacionesEditadas")
+  cotizacionesHistorialEditado CotizacionHistorial[]
+  ausencias                    Ausencia[]            @relation("AusenciasDelUsuario")
+  ausenciasRegistradas         Ausencia[]            @relation("AusenciasRegistradas")
 }
 
 model Permiso {
@@ -305,15 +306,15 @@ model Pedido {
 // registran los 4 momentos que hoy Katherine carga a mano en Excel (DS del indicador comercial):
 // llega el pedido del cliente -> Joel cotiza -> el cliente aprueba -> Joel avisa a almacén.
 model Cotizacion {
-  id                    Int       @id @default(autoincrement())
+  id                    Int                   @id @default(autoincrement())
   clienteId             Int
-  cliente               Cliente   @relation(fields: [clienteId], references: [id], onDelete: Restrict)
+  cliente               Cliente               @relation(fields: [clienteId], references: [id], onDelete: Restrict)
   // Número de proforma de KEYFACIL (siempre "PF01-..."). Nulo hasta que Joel cotiza: no existe
   // todavía cuando recién llega el pedido del cliente. Postgres permite varios NULL en una
   // columna @unique, así que no choca entre sí mientras no se haya cotizado.
-  numeroProforma        String?   @unique
+  numeroProforma        String?               @unique
   notas                 String?
-  requerimientoEn       DateTime  @default(now())
+  requerimientoEn       DateTime              @default(now())
   cotizacionEnviadaEn   DateTime?
   pedidoAprobadoEn      DateTime?
   avisoAlmacenEn        DateTime?
@@ -321,14 +322,41 @@ model Cotizacion {
   // avisoAlmacenEn). Null = todavía no hizo falta. Evita mandar el mismo recordatorio dos veces.
   recordatorioEnviadoEn DateTime?
   creadoPorId           Int
-  creadoPor             Usuario   @relation("CotizacionesCreadas", fields: [creadoPorId], references: [id])
+  creadoPor             Usuario               @relation("CotizacionesCreadas", fields: [creadoPorId], references: [id])
   ultimoEditadoPorId    Int?
-  ultimoEditadoPor      Usuario?  @relation("CotizacionesEditadas", fields: [ultimoEditadoPorId], references: [id])
-  createdAt             DateTime  @default(now())
-  updatedAt             DateTime  @updatedAt
+  ultimoEditadoPor      Usuario?              @relation("CotizacionesEditadas", fields: [ultimoEditadoPorId], references: [id])
+  createdAt             DateTime              @default(now())
+  updatedAt             DateTime              @updatedAt
+  historial             CotizacionHistorial[]
 
   @@index([clienteId])
   @@map("cotizaciones")
+}
+
+// Historial inmutable de cada cambio a una fecha de etapa o a la proforma. Existe porque el
+// PATCH de Cotizacion permite corregir cualquier campo cuantas veces haga falta (a propósito,
+// para que se pueda cargar tarde) y sin esto no quedaba registro de qué decía antes ni de CUÁNDO
+// se hizo el cambio de verdad (editadoEn es hora de servidor, no la editan ni Joel ni nadie). Es
+// la diferencia real contra el Excel: ahí una celda se pisa sin dejar rastro, acá cada pisada
+// queda escrita para siempre. Ver calcularAlertasCotizacion (alerta CARGA_TARDIA) en
+// cotizaciones.service.ts, que compara editadoEn contra el valor que se cargó.
+model CotizacionHistorial {
+  id            Int        @id @default(autoincrement())
+  cotizacionId  Int
+  cotizacion    Cotizacion @relation(fields: [cotizacionId], references: [id], onDelete: Cascade)
+  campo         String
+  valorAnterior String?
+  valorNuevo    String?
+  // Motivo obligatorio cuando un Admin corrige una etapa que Joel ya había marcado (ver
+  // ForbiddenException en cotizaciones.service.ts). Null para el marcado normal (hora real de
+  // servidor, no hace falta justificar) y para ediciones de requerimientoEn/numeroProforma.
+  motivo        String?
+  editadoPorId  Int
+  editadoPor    Usuario    @relation(fields: [editadoPorId], references: [id])
+  editadoEn     DateTime   @default(now())
+
+  @@index([cotizacionId])
+  @@map("cotizaciones_historial")
 }
 
 // Registro de vacaciones/licencias, cargado a mano por un admin cuando alguien

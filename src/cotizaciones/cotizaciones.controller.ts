@@ -50,7 +50,7 @@ export class CotizacionesController {
   @RequierePermiso('PEDIDOS', 'puedeEditar')
   update(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateCotizacionDto, @Req() req: Request) {
     const usuario = (req as any).usuario;
-    return this.cotizacionesService.update(id, dto, usuario.id);
+    return this.cotizacionesService.update(id, dto, usuario.id, !!usuario.esAdmin);
   }
 
   @Delete(':id')

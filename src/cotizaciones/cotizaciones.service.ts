@@ -1,4 +1,4 @@
-import { BadRequestException, ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, ConflictException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { Prisma } from '../generated/prisma';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateCotizacionDto } from './dto/create-cotizacion.dto';
@@ -8,7 +8,7 @@ import { esDiaNoLaboral } from '../common/fecha/feriados-peru';
 
 export type EstadoCotizacion = 'RECIBIDO' | 'COTIZADO' | 'APROBADO' | 'AVISADO_ALMACEN';
 
-export type TipoAlertaCotizacion = 'FERIADO_O_FIN_DE_SEMANA' | 'AUSENCIA_REGISTRADA';
+export type TipoAlertaCotizacion = 'FERIADO_O_FIN_DE_SEMANA' | 'AUSENCIA_REGISTRADA' | 'CARGA_TARDIA';
 
 export interface AlertaCotizacion {
   campo: 'cotizacionEnviadaEn' | 'pedidoAprobadoEn' | 'avisoAlmacenEn';
@@ -16,12 +16,40 @@ export interface AlertaCotizacion {
   motivo?: string;
 }
 
+export interface HistorialCotizacionItem {
+  id: number;
+  campo: string;
+  valorAnterior: string | null;
+  valorNuevo: string | null;
+  motivo: string | null;
+  editadoPor: { id: number; nombre: string };
+  editadoEn: Date;
+}
+
+// numeroProforma y requerimientoEn se comparan tal cual llega el PATCH (ver calcularCambiosSimples).
+// Las 3 etapas de abajo tienen su propia política en update(): la primera vez que se marcan usan
+// la hora real de servidor (nadie elige la fecha), y solo un Admin puede corregirlas después.
+export type CampoRastreado =
+  | 'numeroProforma'
+  | 'requerimientoEn'
+  | 'cotizacionEnviadaEn'
+  | 'pedidoAprobadoEn'
+  | 'avisoAlmacenEn';
+
 // Las 3 etapas que Joel carga sobre su propio trabajo (a diferencia de requerimientoEn, que es
 // la hora del SMS del cliente y puede caer en cualquier momento real). Si una de estas cae en un
 // día que la empresa no trabaja, o dentro de una ausencia registrada de quien la cargó/editó, es
 // evidencia de que el dato fue puesto para "cuadrar" el indicador en vez de reflejar lo real —
 // ver la conversación que originó esto: Joel cargaba datos de días en que estaba de vacaciones.
+// Desde que la primera marca usa hora real de servidor (ver update()), estas 3 solo pueden diferir
+// de la realidad si un Admin las corrigió explícitamente después.
 const CAMPOS_A_VERIFICAR = ['cotizacionEnviadaEn', 'pedidoAprobadoEn', 'avisoAlmacenEn'] as const;
+
+// Si el valor de una etapa se cargó o corrigió más de este umbral después de la fecha que dice
+// (comparado contra la hora real de servidor en que se guardó el cambio, no editable por nadie),
+// es señal de que se completó "de memoria" mucho después en vez de en el momento — el mismo tipo
+// de manipulación que el Excel no puede detectar porque no guarda cuándo se tocó cada celda.
+const UMBRAL_CARGA_TARDIA_HORAS = 24;
 
 function diaDentroDeRango(dia: Date, desde: Date, hasta: Date): boolean {
   const d = new Date(dia.getFullYear(), dia.getMonth(), dia.getDate()).getTime();
@@ -39,6 +67,7 @@ export function calcularAlertasCotizacion(
     ultimoEditadoPorId: number | null;
   },
   ausenciasPorUsuario: Map<number, { desde: Date; hasta: Date; motivo: string | null }[]>,
+  historial: { campo: string; valorNuevo: string | null; editadoEn: Date }[],
 ): AlertaCotizacion[] {
   const responsables = [cotizacion.creadoPorId, cotizacion.ultimoEditadoPorId].filter(
     (id): id is number => id != null,
@@ -52,12 +81,24 @@ export function calcularAlertasCotizacion(
 
     if (esDiaNoLaboral(fecha)) {
       alertas.push({ campo, tipo: 'FERIADO_O_FIN_DE_SEMANA' });
-      continue;
+    } else {
+      const ausenciaQueAplica = ausencias.find((a) => diaDentroDeRango(fecha, a.desde, a.hasta));
+      if (ausenciaQueAplica) {
+        alertas.push({ campo, tipo: 'AUSENCIA_REGISTRADA', motivo: ausenciaQueAplica.motivo ?? undefined });
+      }
     }
 
-    const ausenciaQueAplica = ausencias.find((a) => diaDentroDeRango(fecha, a.desde, a.hasta));
-    if (ausenciaQueAplica) {
-      alertas.push({ campo, tipo: 'AUSENCIA_REGISTRADA', motivo: ausenciaQueAplica.motivo ?? undefined });
+    // historial ya viene ordenado por editadoEn desc: el primero que coincide es el cambio vigente.
+    const ultimoCambio = historial.find((h) => h.campo === campo && h.valorNuevo);
+    if (ultimoCambio) {
+      const brechaHoras = Math.abs(ultimoCambio.editadoEn.getTime() - fecha.getTime()) / 3_600_000;
+      if (brechaHoras > UMBRAL_CARGA_TARDIA_HORAS) {
+        alertas.push({
+          campo,
+          tipo: 'CARGA_TARDIA',
+          motivo: `se cargó/corrigió en el sistema ${Math.round(brechaHoras)}h después de la fecha que dice`,
+        });
+      }
     }
   }
   return alertas;
@@ -98,18 +139,65 @@ export class CotizacionesService {
 
   private async conAlertas<
     T extends {
+      id: number;
       creadoPorId: number;
       ultimoEditadoPorId: number | null;
       cotizacionEnviadaEn: Date | null;
       pedidoAprobadoEn: Date | null;
       avisoAlmacenEn: Date | null;
     },
-  >(cotizaciones: T[]): Promise<(T & { alertas: AlertaCotizacion[] })[]> {
+  >(cotizaciones: T[]): Promise<(T & { alertas: AlertaCotizacion[]; historial: HistorialCotizacionItem[] })[]> {
     const usuarioIds = cotizaciones.flatMap((c) => [c.creadoPorId, c.ultimoEditadoPorId]);
     const ausenciasPorUsuario = await this.ausenciasService.obtenerPorUsuarios(
       usuarioIds.filter((id): id is number => id != null),
     );
-    return cotizaciones.map((c) => ({ ...c, alertas: calcularAlertasCotizacion(c, ausenciasPorUsuario) }));
+
+    const ids = cotizaciones.map((c) => c.id);
+    const historialRows = ids.length
+      ? await this.prisma.cotizacionHistorial.findMany({
+          where: { cotizacionId: { in: ids } },
+          include: { editadoPor: { select: { id: true, nombre: true } } },
+          orderBy: { editadoEn: 'desc' },
+        })
+      : [];
+    const historialPorCotizacion = new Map<number, HistorialCotizacionItem[]>();
+    for (const h of historialRows) {
+      const lista = historialPorCotizacion.get(h.cotizacionId) ?? [];
+      lista.push(h);
+      historialPorCotizacion.set(h.cotizacionId, lista);
+    }
+
+    return cotizaciones.map((c) => {
+      const historial = historialPorCotizacion.get(c.id) ?? [];
+      return { ...c, alertas: calcularAlertasCotizacion(c, ausenciasPorUsuario, historial), historial };
+    });
+  }
+
+  // numeroProforma y requerimientoEn: sin política especial, se comparan tal cual llega el PATCH
+  // (evita un historial con entradas idénticas si el frontend reenvía el mismo valor). Las 3
+  // etapas de Joel tienen su propia lógica en update(), ver ahí.
+  private calcularCambiosSimples(
+    actual: { numeroProforma: string | null; requerimientoEn: Date },
+    dto: UpdateCotizacionDto,
+  ): { campo: CampoRastreado; valorAnterior: string | null; valorNuevo: string | null; motivo: null }[] {
+    const cambios: { campo: CampoRastreado; valorAnterior: string | null; valorNuevo: string | null; motivo: null }[] = [];
+
+    if (dto.numeroProforma !== undefined) {
+      const nuevoValor = dto.numeroProforma.trim() || null;
+      if (nuevoValor !== actual.numeroProforma) {
+        cambios.push({ campo: 'numeroProforma', valorAnterior: actual.numeroProforma, valorNuevo: nuevoValor, motivo: null });
+      }
+    }
+
+    if (dto.requerimientoEn) {
+      const anteriorTexto = actual.requerimientoEn.toISOString();
+      const nuevoTexto = new Date(dto.requerimientoEn).toISOString();
+      if (anteriorTexto !== nuevoTexto) {
+        cambios.push({ campo: 'requerimientoEn', valorAnterior: anteriorTexto, valorNuevo: nuevoTexto, motivo: null });
+      }
+    }
+
+    return cambios;
   }
 
   async create(dto: CreateCotizacionDto, creadoPorId: number) {
@@ -122,6 +210,15 @@ export class CotizacionesService {
         ultimoEditadoPorId: creadoPorId,
       },
       include: INCLUDE_COTIZACION,
+    });
+    await this.prisma.cotizacionHistorial.create({
+      data: {
+        cotizacionId: cotizacion.id,
+        campo: 'requerimientoEn',
+        valorAnterior: null,
+        valorNuevo: cotizacion.requerimientoEn.toISOString(),
+        editadoPorId: creadoPorId,
+      },
     });
     const [conAlertas] = await this.conAlertas([cotizacion]);
     return { ...conAlertas, estado: derivarEstadoCotizacion(cotizacion) };
@@ -149,7 +246,7 @@ export class CotizacionesService {
     return { ...conAlertas, estado: derivarEstadoCotizacion(cotizacion) };
   }
 
-  async update(id: number, dto: UpdateCotizacionDto, editadoPorId: number) {
+  async update(id: number, dto: UpdateCotizacionDto, editadoPorId: number, esAdmin: boolean) {
     const actual = await this.findOne(id);
 
     // No se puede marcar "cotización enviada" sin saber la proforma de KEYFACIL — o ya está
@@ -159,20 +256,79 @@ export class CotizacionesService {
       throw new BadRequestException('Para marcar la cotización como enviada hace falta el número de proforma de KEYFACIL');
     }
 
+    // Las 3 etapas de Joel: la PRIMERA vez que se marcan usan la hora real del servidor, sin
+    // importar qué fecha mande el cliente — así el indicador mide lo que pasó de verdad, no lo
+    // que alguien prefiera que haya pasado. Corregir una que ya estaba marcada es cosa del Admin
+    // general únicamente, y exige un motivo (queda en el historial junto al valor anterior).
+    const ahora = new Date();
+    const resueltos: Partial<Record<'cotizacionEnviadaEn' | 'pedidoAprobadoEn' | 'avisoAlmacenEn', Date>> = {};
+    const cambiosEtapa: { campo: CampoRastreado; valorAnterior: string | null; valorNuevo: string; motivo: string | null }[] = [];
+
+    for (const campo of CAMPOS_A_VERIFICAR) {
+      const crudo = dto[campo];
+      if (!crudo) continue;
+      const valorActual = actual[campo];
+      let valorFinal: Date;
+      let motivo: string | null = null;
+
+      if (!valorActual) {
+        valorFinal = ahora;
+      } else {
+        if (!esAdmin) {
+          throw new ForbiddenException(
+            `Solo un administrador puede corregir "${campo}" — ya fue marcada y no se puede editar libremente`,
+          );
+        }
+        const motivoTrim = dto.motivoCorreccion?.trim();
+        if (!motivoTrim) {
+          throw new BadRequestException('Para corregir una fecha ya marcada hace falta indicar el motivo');
+        }
+        valorFinal = new Date(crudo);
+        motivo = motivoTrim;
+      }
+
+      resueltos[campo] = valorFinal;
+      const nuevoTexto = valorFinal.toISOString();
+      const anteriorTexto = valorActual ? valorActual.toISOString() : null;
+      if (anteriorTexto !== nuevoTexto) {
+        cambiosEtapa.push({ campo, valorAnterior: anteriorTexto, valorNuevo: nuevoTexto, motivo });
+      }
+    }
+
+    const cambiosSimples = this.calcularCambiosSimples(
+      { numeroProforma: actual.numeroProforma, requerimientoEn: actual.requerimientoEn },
+      dto,
+    );
+
     try {
-      const cotizacion = await this.prisma.cotizacion.update({
-        where: { id },
-        data: {
-          ...(dto.clienteId !== undefined && { clienteId: dto.clienteId }),
-          ...(dto.numeroProforma !== undefined && { numeroProforma: dto.numeroProforma.trim() || null }),
-          ...(dto.notas !== undefined && { notas: dto.notas.trim() || null }),
-          ...(dto.requerimientoEn && { requerimientoEn: new Date(dto.requerimientoEn) }),
-          ...(dto.cotizacionEnviadaEn && { cotizacionEnviadaEn: new Date(dto.cotizacionEnviadaEn) }),
-          ...(dto.pedidoAprobadoEn && { pedidoAprobadoEn: new Date(dto.pedidoAprobadoEn) }),
-          ...(dto.avisoAlmacenEn && { avisoAlmacenEn: new Date(dto.avisoAlmacenEn) }),
-          ultimoEditadoPorId: editadoPorId,
-        },
-        include: INCLUDE_COTIZACION,
+      const cotizacion = await this.prisma.$transaction(async (tx) => {
+        const actualizada = await tx.cotizacion.update({
+          where: { id },
+          data: {
+            ...(dto.clienteId !== undefined && { clienteId: dto.clienteId }),
+            ...(dto.numeroProforma !== undefined && { numeroProforma: dto.numeroProforma.trim() || null }),
+            ...(dto.notas !== undefined && { notas: dto.notas.trim() || null }),
+            ...(dto.requerimientoEn && { requerimientoEn: new Date(dto.requerimientoEn) }),
+            ...(resueltos.cotizacionEnviadaEn && { cotizacionEnviadaEn: resueltos.cotizacionEnviadaEn }),
+            ...(resueltos.pedidoAprobadoEn && { pedidoAprobadoEn: resueltos.pedidoAprobadoEn }),
+            ...(resueltos.avisoAlmacenEn && { avisoAlmacenEn: resueltos.avisoAlmacenEn }),
+            ultimoEditadoPorId: editadoPorId,
+          },
+          include: INCLUDE_COTIZACION,
+        });
+        for (const c of [...cambiosSimples, ...cambiosEtapa]) {
+          await tx.cotizacionHistorial.create({
+            data: {
+              cotizacionId: id,
+              campo: c.campo,
+              valorAnterior: c.valorAnterior,
+              valorNuevo: c.valorNuevo,
+              motivo: c.motivo,
+              editadoPorId,
+            },
+          });
+        }
+        return actualizada;
       });
       const [conAlertas] = await this.conAlertas([cotizacion]);
       return { ...conAlertas, estado: derivarEstadoCotizacion(cotizacion) };

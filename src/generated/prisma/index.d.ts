@@ -64,6 +64,11 @@ export type Pedido = $Result.DefaultSelection<Prisma.$PedidoPayload>
  */
 export type Cotizacion = $Result.DefaultSelection<Prisma.$CotizacionPayload>
 /**
+ * Model CotizacionHistorial
+ * 
+ */
+export type CotizacionHistorial = $Result.DefaultSelection<Prisma.$CotizacionHistorialPayload>
+/**
  * Model Ausencia
  * 
  */
@@ -438,6 +443,16 @@ export class PrismaClient<
     * ```
     */
   get cotizacion(): Prisma.CotizacionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.cotizacionHistorial`: Exposes CRUD operations for the **CotizacionHistorial** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more CotizacionHistorials
+    * const cotizacionHistorials = await prisma.cotizacionHistorial.findMany()
+    * ```
+    */
+  get cotizacionHistorial(): Prisma.CotizacionHistorialDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.ausencia`: Exposes CRUD operations for the **Ausencia** model.
@@ -955,6 +970,7 @@ export namespace Prisma {
     Cliente: 'Cliente',
     Pedido: 'Pedido',
     Cotizacion: 'Cotizacion',
+    CotizacionHistorial: 'CotizacionHistorial',
     Ausencia: 'Ausencia',
     Carpeta: 'Carpeta',
     Archivo: 'Archivo',
@@ -976,7 +992,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "usuario" | "permiso" | "fabricante" | "producto" | "plantilla" | "lote" | "trabajoImpresion" | "cliente" | "pedido" | "cotizacion" | "ausencia" | "carpeta" | "archivo" | "accesoIndicador" | "accesoISO" | "registroAuditoria"
+      modelProps: "usuario" | "permiso" | "fabricante" | "producto" | "plantilla" | "lote" | "trabajoImpresion" | "cliente" | "pedido" | "cotizacion" | "cotizacionHistorial" | "ausencia" | "carpeta" | "archivo" | "accesoIndicador" | "accesoISO" | "registroAuditoria"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1720,6 +1736,80 @@ export namespace Prisma {
           }
         }
       }
+      CotizacionHistorial: {
+        payload: Prisma.$CotizacionHistorialPayload<ExtArgs>
+        fields: Prisma.CotizacionHistorialFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CotizacionHistorialFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CotizacionHistorialPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CotizacionHistorialFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CotizacionHistorialPayload>
+          }
+          findFirst: {
+            args: Prisma.CotizacionHistorialFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CotizacionHistorialPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CotizacionHistorialFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CotizacionHistorialPayload>
+          }
+          findMany: {
+            args: Prisma.CotizacionHistorialFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CotizacionHistorialPayload>[]
+          }
+          create: {
+            args: Prisma.CotizacionHistorialCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CotizacionHistorialPayload>
+          }
+          createMany: {
+            args: Prisma.CotizacionHistorialCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CotizacionHistorialCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CotizacionHistorialPayload>[]
+          }
+          delete: {
+            args: Prisma.CotizacionHistorialDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CotizacionHistorialPayload>
+          }
+          update: {
+            args: Prisma.CotizacionHistorialUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CotizacionHistorialPayload>
+          }
+          deleteMany: {
+            args: Prisma.CotizacionHistorialDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CotizacionHistorialUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.CotizacionHistorialUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CotizacionHistorialPayload>[]
+          }
+          upsert: {
+            args: Prisma.CotizacionHistorialUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CotizacionHistorialPayload>
+          }
+          aggregate: {
+            args: Prisma.CotizacionHistorialAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCotizacionHistorial>
+          }
+          groupBy: {
+            args: Prisma.CotizacionHistorialGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CotizacionHistorialGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CotizacionHistorialCountArgs<ExtArgs>
+            result: $Utils.Optional<CotizacionHistorialCountAggregateOutputType> | number
+          }
+        }
+      }
       Ausencia: {
         payload: Prisma.$AusenciaPayload<ExtArgs>
         fields: Prisma.AusenciaFieldRefs
@@ -2297,6 +2387,7 @@ export namespace Prisma {
     cliente?: ClienteOmit
     pedido?: PedidoOmit
     cotizacion?: CotizacionOmit
+    cotizacionHistorial?: CotizacionHistorialOmit
     ausencia?: AusenciaOmit
     carpeta?: CarpetaOmit
     archivo?: ArchivoOmit
@@ -2392,6 +2483,7 @@ export namespace Prisma {
     pedidosEditados: number
     cotizacionesCreadas: number
     cotizacionesEditadas: number
+    cotizacionesHistorialEditado: number
     ausencias: number
     ausenciasRegistradas: number
   }
@@ -2406,6 +2498,7 @@ export namespace Prisma {
     pedidosEditados?: boolean | UsuarioCountOutputTypeCountPedidosEditadosArgs
     cotizacionesCreadas?: boolean | UsuarioCountOutputTypeCountCotizacionesCreadasArgs
     cotizacionesEditadas?: boolean | UsuarioCountOutputTypeCountCotizacionesEditadasArgs
+    cotizacionesHistorialEditado?: boolean | UsuarioCountOutputTypeCountCotizacionesHistorialEditadoArgs
     ausencias?: boolean | UsuarioCountOutputTypeCountAusenciasArgs
     ausenciasRegistradas?: boolean | UsuarioCountOutputTypeCountAusenciasRegistradasArgs
   }
@@ -2482,6 +2575,13 @@ export namespace Prisma {
    */
   export type UsuarioCountOutputTypeCountCotizacionesEditadasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: CotizacionWhereInput
+  }
+
+  /**
+   * UsuarioCountOutputType without action
+   */
+  export type UsuarioCountOutputTypeCountCotizacionesHistorialEditadoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CotizacionHistorialWhereInput
   }
 
   /**
@@ -2660,6 +2760,37 @@ export namespace Prisma {
    */
   export type ClienteCountOutputTypeCountCotizacionesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: CotizacionWhereInput
+  }
+
+
+  /**
+   * Count Type CotizacionCountOutputType
+   */
+
+  export type CotizacionCountOutputType = {
+    historial: number
+  }
+
+  export type CotizacionCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    historial?: boolean | CotizacionCountOutputTypeCountHistorialArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * CotizacionCountOutputType without action
+   */
+  export type CotizacionCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CotizacionCountOutputType
+     */
+    select?: CotizacionCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * CotizacionCountOutputType without action
+   */
+  export type CotizacionCountOutputTypeCountHistorialArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CotizacionHistorialWhereInput
   }
 
 
@@ -2960,6 +3091,7 @@ export namespace Prisma {
     pedidosEditados?: boolean | Usuario$pedidosEditadosArgs<ExtArgs>
     cotizacionesCreadas?: boolean | Usuario$cotizacionesCreadasArgs<ExtArgs>
     cotizacionesEditadas?: boolean | Usuario$cotizacionesEditadasArgs<ExtArgs>
+    cotizacionesHistorialEditado?: boolean | Usuario$cotizacionesHistorialEditadoArgs<ExtArgs>
     ausencias?: boolean | Usuario$ausenciasArgs<ExtArgs>
     ausenciasRegistradas?: boolean | Usuario$ausenciasRegistradasArgs<ExtArgs>
     _count?: boolean | UsuarioCountOutputTypeDefaultArgs<ExtArgs>
@@ -3019,6 +3151,7 @@ export namespace Prisma {
     pedidosEditados?: boolean | Usuario$pedidosEditadosArgs<ExtArgs>
     cotizacionesCreadas?: boolean | Usuario$cotizacionesCreadasArgs<ExtArgs>
     cotizacionesEditadas?: boolean | Usuario$cotizacionesEditadasArgs<ExtArgs>
+    cotizacionesHistorialEditado?: boolean | Usuario$cotizacionesHistorialEditadoArgs<ExtArgs>
     ausencias?: boolean | Usuario$ausenciasArgs<ExtArgs>
     ausenciasRegistradas?: boolean | Usuario$ausenciasRegistradasArgs<ExtArgs>
     _count?: boolean | UsuarioCountOutputTypeDefaultArgs<ExtArgs>
@@ -3044,6 +3177,7 @@ export namespace Prisma {
       pedidosEditados: Prisma.$PedidoPayload<ExtArgs>[]
       cotizacionesCreadas: Prisma.$CotizacionPayload<ExtArgs>[]
       cotizacionesEditadas: Prisma.$CotizacionPayload<ExtArgs>[]
+      cotizacionesHistorialEditado: Prisma.$CotizacionHistorialPayload<ExtArgs>[]
       ausencias: Prisma.$AusenciaPayload<ExtArgs>[]
       ausenciasRegistradas: Prisma.$AusenciaPayload<ExtArgs>[]
     }
@@ -3463,6 +3597,7 @@ export namespace Prisma {
     pedidosEditados<T extends Usuario$pedidosEditadosArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$pedidosEditadosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PedidoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     cotizacionesCreadas<T extends Usuario$cotizacionesCreadasArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$cotizacionesCreadasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CotizacionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     cotizacionesEditadas<T extends Usuario$cotizacionesEditadasArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$cotizacionesEditadasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CotizacionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    cotizacionesHistorialEditado<T extends Usuario$cotizacionesHistorialEditadoArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$cotizacionesHistorialEditadoArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CotizacionHistorialPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     ausencias<T extends Usuario$ausenciasArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$ausenciasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AusenciaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     ausenciasRegistradas<T extends Usuario$ausenciasRegistradasArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$ausenciasRegistradasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AusenciaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
@@ -4156,6 +4291,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: CotizacionScalarFieldEnum | CotizacionScalarFieldEnum[]
+  }
+
+  /**
+   * Usuario.cotizacionesHistorialEditado
+   */
+  export type Usuario$cotizacionesHistorialEditadoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CotizacionHistorial
+     */
+    select?: CotizacionHistorialSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CotizacionHistorial
+     */
+    omit?: CotizacionHistorialOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CotizacionHistorialInclude<ExtArgs> | null
+    where?: CotizacionHistorialWhereInput
+    orderBy?: CotizacionHistorialOrderByWithRelationInput | CotizacionHistorialOrderByWithRelationInput[]
+    cursor?: CotizacionHistorialWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CotizacionHistorialScalarFieldEnum | CotizacionHistorialScalarFieldEnum[]
   }
 
   /**
@@ -14162,6 +14321,8 @@ export namespace Prisma {
     cliente?: boolean | ClienteDefaultArgs<ExtArgs>
     creadoPor?: boolean | UsuarioDefaultArgs<ExtArgs>
     ultimoEditadoPor?: boolean | Cotizacion$ultimoEditadoPorArgs<ExtArgs>
+    historial?: boolean | Cotizacion$historialArgs<ExtArgs>
+    _count?: boolean | CotizacionCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["cotizacion"]>
 
   export type CotizacionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -14223,6 +14384,8 @@ export namespace Prisma {
     cliente?: boolean | ClienteDefaultArgs<ExtArgs>
     creadoPor?: boolean | UsuarioDefaultArgs<ExtArgs>
     ultimoEditadoPor?: boolean | Cotizacion$ultimoEditadoPorArgs<ExtArgs>
+    historial?: boolean | Cotizacion$historialArgs<ExtArgs>
+    _count?: boolean | CotizacionCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type CotizacionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     cliente?: boolean | ClienteDefaultArgs<ExtArgs>
@@ -14241,6 +14404,7 @@ export namespace Prisma {
       cliente: Prisma.$ClientePayload<ExtArgs>
       creadoPor: Prisma.$UsuarioPayload<ExtArgs>
       ultimoEditadoPor: Prisma.$UsuarioPayload<ExtArgs> | null
+      historial: Prisma.$CotizacionHistorialPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -14653,6 +14817,7 @@ export namespace Prisma {
     cliente<T extends ClienteDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ClienteDefaultArgs<ExtArgs>>): Prisma__ClienteClient<$Result.GetResult<Prisma.$ClientePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     creadoPor<T extends UsuarioDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UsuarioDefaultArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     ultimoEditadoPor<T extends Cotizacion$ultimoEditadoPorArgs<ExtArgs> = {}>(args?: Subset<T, Cotizacion$ultimoEditadoPorArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    historial<T extends Cotizacion$historialArgs<ExtArgs> = {}>(args?: Subset<T, Cotizacion$historialArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CotizacionHistorialPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -15115,6 +15280,30 @@ export namespace Prisma {
   }
 
   /**
+   * Cotizacion.historial
+   */
+  export type Cotizacion$historialArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CotizacionHistorial
+     */
+    select?: CotizacionHistorialSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CotizacionHistorial
+     */
+    omit?: CotizacionHistorialOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CotizacionHistorialInclude<ExtArgs> | null
+    where?: CotizacionHistorialWhereInput
+    orderBy?: CotizacionHistorialOrderByWithRelationInput | CotizacionHistorialOrderByWithRelationInput[]
+    cursor?: CotizacionHistorialWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CotizacionHistorialScalarFieldEnum | CotizacionHistorialScalarFieldEnum[]
+  }
+
+  /**
    * Cotizacion without action
    */
   export type CotizacionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -15130,6 +15319,1158 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: CotizacionInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model CotizacionHistorial
+   */
+
+  export type AggregateCotizacionHistorial = {
+    _count: CotizacionHistorialCountAggregateOutputType | null
+    _avg: CotizacionHistorialAvgAggregateOutputType | null
+    _sum: CotizacionHistorialSumAggregateOutputType | null
+    _min: CotizacionHistorialMinAggregateOutputType | null
+    _max: CotizacionHistorialMaxAggregateOutputType | null
+  }
+
+  export type CotizacionHistorialAvgAggregateOutputType = {
+    id: number | null
+    cotizacionId: number | null
+    editadoPorId: number | null
+  }
+
+  export type CotizacionHistorialSumAggregateOutputType = {
+    id: number | null
+    cotizacionId: number | null
+    editadoPorId: number | null
+  }
+
+  export type CotizacionHistorialMinAggregateOutputType = {
+    id: number | null
+    cotizacionId: number | null
+    campo: string | null
+    valorAnterior: string | null
+    valorNuevo: string | null
+    motivo: string | null
+    editadoPorId: number | null
+    editadoEn: Date | null
+  }
+
+  export type CotizacionHistorialMaxAggregateOutputType = {
+    id: number | null
+    cotizacionId: number | null
+    campo: string | null
+    valorAnterior: string | null
+    valorNuevo: string | null
+    motivo: string | null
+    editadoPorId: number | null
+    editadoEn: Date | null
+  }
+
+  export type CotizacionHistorialCountAggregateOutputType = {
+    id: number
+    cotizacionId: number
+    campo: number
+    valorAnterior: number
+    valorNuevo: number
+    motivo: number
+    editadoPorId: number
+    editadoEn: number
+    _all: number
+  }
+
+
+  export type CotizacionHistorialAvgAggregateInputType = {
+    id?: true
+    cotizacionId?: true
+    editadoPorId?: true
+  }
+
+  export type CotizacionHistorialSumAggregateInputType = {
+    id?: true
+    cotizacionId?: true
+    editadoPorId?: true
+  }
+
+  export type CotizacionHistorialMinAggregateInputType = {
+    id?: true
+    cotizacionId?: true
+    campo?: true
+    valorAnterior?: true
+    valorNuevo?: true
+    motivo?: true
+    editadoPorId?: true
+    editadoEn?: true
+  }
+
+  export type CotizacionHistorialMaxAggregateInputType = {
+    id?: true
+    cotizacionId?: true
+    campo?: true
+    valorAnterior?: true
+    valorNuevo?: true
+    motivo?: true
+    editadoPorId?: true
+    editadoEn?: true
+  }
+
+  export type CotizacionHistorialCountAggregateInputType = {
+    id?: true
+    cotizacionId?: true
+    campo?: true
+    valorAnterior?: true
+    valorNuevo?: true
+    motivo?: true
+    editadoPorId?: true
+    editadoEn?: true
+    _all?: true
+  }
+
+  export type CotizacionHistorialAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CotizacionHistorial to aggregate.
+     */
+    where?: CotizacionHistorialWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CotizacionHistorials to fetch.
+     */
+    orderBy?: CotizacionHistorialOrderByWithRelationInput | CotizacionHistorialOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CotizacionHistorialWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CotizacionHistorials from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CotizacionHistorials.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned CotizacionHistorials
+    **/
+    _count?: true | CotizacionHistorialCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: CotizacionHistorialAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: CotizacionHistorialSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CotizacionHistorialMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CotizacionHistorialMaxAggregateInputType
+  }
+
+  export type GetCotizacionHistorialAggregateType<T extends CotizacionHistorialAggregateArgs> = {
+        [P in keyof T & keyof AggregateCotizacionHistorial]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCotizacionHistorial[P]>
+      : GetScalarType<T[P], AggregateCotizacionHistorial[P]>
+  }
+
+
+
+
+  export type CotizacionHistorialGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CotizacionHistorialWhereInput
+    orderBy?: CotizacionHistorialOrderByWithAggregationInput | CotizacionHistorialOrderByWithAggregationInput[]
+    by: CotizacionHistorialScalarFieldEnum[] | CotizacionHistorialScalarFieldEnum
+    having?: CotizacionHistorialScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CotizacionHistorialCountAggregateInputType | true
+    _avg?: CotizacionHistorialAvgAggregateInputType
+    _sum?: CotizacionHistorialSumAggregateInputType
+    _min?: CotizacionHistorialMinAggregateInputType
+    _max?: CotizacionHistorialMaxAggregateInputType
+  }
+
+  export type CotizacionHistorialGroupByOutputType = {
+    id: number
+    cotizacionId: number
+    campo: string
+    valorAnterior: string | null
+    valorNuevo: string | null
+    motivo: string | null
+    editadoPorId: number
+    editadoEn: Date
+    _count: CotizacionHistorialCountAggregateOutputType | null
+    _avg: CotizacionHistorialAvgAggregateOutputType | null
+    _sum: CotizacionHistorialSumAggregateOutputType | null
+    _min: CotizacionHistorialMinAggregateOutputType | null
+    _max: CotizacionHistorialMaxAggregateOutputType | null
+  }
+
+  type GetCotizacionHistorialGroupByPayload<T extends CotizacionHistorialGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CotizacionHistorialGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CotizacionHistorialGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CotizacionHistorialGroupByOutputType[P]>
+            : GetScalarType<T[P], CotizacionHistorialGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CotizacionHistorialSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    cotizacionId?: boolean
+    campo?: boolean
+    valorAnterior?: boolean
+    valorNuevo?: boolean
+    motivo?: boolean
+    editadoPorId?: boolean
+    editadoEn?: boolean
+    cotizacion?: boolean | CotizacionDefaultArgs<ExtArgs>
+    editadoPor?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["cotizacionHistorial"]>
+
+  export type CotizacionHistorialSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    cotizacionId?: boolean
+    campo?: boolean
+    valorAnterior?: boolean
+    valorNuevo?: boolean
+    motivo?: boolean
+    editadoPorId?: boolean
+    editadoEn?: boolean
+    cotizacion?: boolean | CotizacionDefaultArgs<ExtArgs>
+    editadoPor?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["cotizacionHistorial"]>
+
+  export type CotizacionHistorialSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    cotizacionId?: boolean
+    campo?: boolean
+    valorAnterior?: boolean
+    valorNuevo?: boolean
+    motivo?: boolean
+    editadoPorId?: boolean
+    editadoEn?: boolean
+    cotizacion?: boolean | CotizacionDefaultArgs<ExtArgs>
+    editadoPor?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["cotizacionHistorial"]>
+
+  export type CotizacionHistorialSelectScalar = {
+    id?: boolean
+    cotizacionId?: boolean
+    campo?: boolean
+    valorAnterior?: boolean
+    valorNuevo?: boolean
+    motivo?: boolean
+    editadoPorId?: boolean
+    editadoEn?: boolean
+  }
+
+  export type CotizacionHistorialOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "cotizacionId" | "campo" | "valorAnterior" | "valorNuevo" | "motivo" | "editadoPorId" | "editadoEn", ExtArgs["result"]["cotizacionHistorial"]>
+  export type CotizacionHistorialInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    cotizacion?: boolean | CotizacionDefaultArgs<ExtArgs>
+    editadoPor?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }
+  export type CotizacionHistorialIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    cotizacion?: boolean | CotizacionDefaultArgs<ExtArgs>
+    editadoPor?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }
+  export type CotizacionHistorialIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    cotizacion?: boolean | CotizacionDefaultArgs<ExtArgs>
+    editadoPor?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }
+
+  export type $CotizacionHistorialPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "CotizacionHistorial"
+    objects: {
+      cotizacion: Prisma.$CotizacionPayload<ExtArgs>
+      editadoPor: Prisma.$UsuarioPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      cotizacionId: number
+      campo: string
+      valorAnterior: string | null
+      valorNuevo: string | null
+      motivo: string | null
+      editadoPorId: number
+      editadoEn: Date
+    }, ExtArgs["result"]["cotizacionHistorial"]>
+    composites: {}
+  }
+
+  type CotizacionHistorialGetPayload<S extends boolean | null | undefined | CotizacionHistorialDefaultArgs> = $Result.GetResult<Prisma.$CotizacionHistorialPayload, S>
+
+  type CotizacionHistorialCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CotizacionHistorialFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CotizacionHistorialCountAggregateInputType | true
+    }
+
+  export interface CotizacionHistorialDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CotizacionHistorial'], meta: { name: 'CotizacionHistorial' } }
+    /**
+     * Find zero or one CotizacionHistorial that matches the filter.
+     * @param {CotizacionHistorialFindUniqueArgs} args - Arguments to find a CotizacionHistorial
+     * @example
+     * // Get one CotizacionHistorial
+     * const cotizacionHistorial = await prisma.cotizacionHistorial.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CotizacionHistorialFindUniqueArgs>(args: SelectSubset<T, CotizacionHistorialFindUniqueArgs<ExtArgs>>): Prisma__CotizacionHistorialClient<$Result.GetResult<Prisma.$CotizacionHistorialPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one CotizacionHistorial that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CotizacionHistorialFindUniqueOrThrowArgs} args - Arguments to find a CotizacionHistorial
+     * @example
+     * // Get one CotizacionHistorial
+     * const cotizacionHistorial = await prisma.cotizacionHistorial.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CotizacionHistorialFindUniqueOrThrowArgs>(args: SelectSubset<T, CotizacionHistorialFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CotizacionHistorialClient<$Result.GetResult<Prisma.$CotizacionHistorialPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CotizacionHistorial that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CotizacionHistorialFindFirstArgs} args - Arguments to find a CotizacionHistorial
+     * @example
+     * // Get one CotizacionHistorial
+     * const cotizacionHistorial = await prisma.cotizacionHistorial.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CotizacionHistorialFindFirstArgs>(args?: SelectSubset<T, CotizacionHistorialFindFirstArgs<ExtArgs>>): Prisma__CotizacionHistorialClient<$Result.GetResult<Prisma.$CotizacionHistorialPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CotizacionHistorial that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CotizacionHistorialFindFirstOrThrowArgs} args - Arguments to find a CotizacionHistorial
+     * @example
+     * // Get one CotizacionHistorial
+     * const cotizacionHistorial = await prisma.cotizacionHistorial.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CotizacionHistorialFindFirstOrThrowArgs>(args?: SelectSubset<T, CotizacionHistorialFindFirstOrThrowArgs<ExtArgs>>): Prisma__CotizacionHistorialClient<$Result.GetResult<Prisma.$CotizacionHistorialPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more CotizacionHistorials that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CotizacionHistorialFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all CotizacionHistorials
+     * const cotizacionHistorials = await prisma.cotizacionHistorial.findMany()
+     * 
+     * // Get first 10 CotizacionHistorials
+     * const cotizacionHistorials = await prisma.cotizacionHistorial.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const cotizacionHistorialWithIdOnly = await prisma.cotizacionHistorial.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CotizacionHistorialFindManyArgs>(args?: SelectSubset<T, CotizacionHistorialFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CotizacionHistorialPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a CotizacionHistorial.
+     * @param {CotizacionHistorialCreateArgs} args - Arguments to create a CotizacionHistorial.
+     * @example
+     * // Create one CotizacionHistorial
+     * const CotizacionHistorial = await prisma.cotizacionHistorial.create({
+     *   data: {
+     *     // ... data to create a CotizacionHistorial
+     *   }
+     * })
+     * 
+     */
+    create<T extends CotizacionHistorialCreateArgs>(args: SelectSubset<T, CotizacionHistorialCreateArgs<ExtArgs>>): Prisma__CotizacionHistorialClient<$Result.GetResult<Prisma.$CotizacionHistorialPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many CotizacionHistorials.
+     * @param {CotizacionHistorialCreateManyArgs} args - Arguments to create many CotizacionHistorials.
+     * @example
+     * // Create many CotizacionHistorials
+     * const cotizacionHistorial = await prisma.cotizacionHistorial.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CotizacionHistorialCreateManyArgs>(args?: SelectSubset<T, CotizacionHistorialCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many CotizacionHistorials and returns the data saved in the database.
+     * @param {CotizacionHistorialCreateManyAndReturnArgs} args - Arguments to create many CotizacionHistorials.
+     * @example
+     * // Create many CotizacionHistorials
+     * const cotizacionHistorial = await prisma.cotizacionHistorial.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many CotizacionHistorials and only return the `id`
+     * const cotizacionHistorialWithIdOnly = await prisma.cotizacionHistorial.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CotizacionHistorialCreateManyAndReturnArgs>(args?: SelectSubset<T, CotizacionHistorialCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CotizacionHistorialPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a CotizacionHistorial.
+     * @param {CotizacionHistorialDeleteArgs} args - Arguments to delete one CotizacionHistorial.
+     * @example
+     * // Delete one CotizacionHistorial
+     * const CotizacionHistorial = await prisma.cotizacionHistorial.delete({
+     *   where: {
+     *     // ... filter to delete one CotizacionHistorial
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CotizacionHistorialDeleteArgs>(args: SelectSubset<T, CotizacionHistorialDeleteArgs<ExtArgs>>): Prisma__CotizacionHistorialClient<$Result.GetResult<Prisma.$CotizacionHistorialPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one CotizacionHistorial.
+     * @param {CotizacionHistorialUpdateArgs} args - Arguments to update one CotizacionHistorial.
+     * @example
+     * // Update one CotizacionHistorial
+     * const cotizacionHistorial = await prisma.cotizacionHistorial.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CotizacionHistorialUpdateArgs>(args: SelectSubset<T, CotizacionHistorialUpdateArgs<ExtArgs>>): Prisma__CotizacionHistorialClient<$Result.GetResult<Prisma.$CotizacionHistorialPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more CotizacionHistorials.
+     * @param {CotizacionHistorialDeleteManyArgs} args - Arguments to filter CotizacionHistorials to delete.
+     * @example
+     * // Delete a few CotizacionHistorials
+     * const { count } = await prisma.cotizacionHistorial.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CotizacionHistorialDeleteManyArgs>(args?: SelectSubset<T, CotizacionHistorialDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CotizacionHistorials.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CotizacionHistorialUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many CotizacionHistorials
+     * const cotizacionHistorial = await prisma.cotizacionHistorial.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CotizacionHistorialUpdateManyArgs>(args: SelectSubset<T, CotizacionHistorialUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CotizacionHistorials and returns the data updated in the database.
+     * @param {CotizacionHistorialUpdateManyAndReturnArgs} args - Arguments to update many CotizacionHistorials.
+     * @example
+     * // Update many CotizacionHistorials
+     * const cotizacionHistorial = await prisma.cotizacionHistorial.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more CotizacionHistorials and only return the `id`
+     * const cotizacionHistorialWithIdOnly = await prisma.cotizacionHistorial.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends CotizacionHistorialUpdateManyAndReturnArgs>(args: SelectSubset<T, CotizacionHistorialUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CotizacionHistorialPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one CotizacionHistorial.
+     * @param {CotizacionHistorialUpsertArgs} args - Arguments to update or create a CotizacionHistorial.
+     * @example
+     * // Update or create a CotizacionHistorial
+     * const cotizacionHistorial = await prisma.cotizacionHistorial.upsert({
+     *   create: {
+     *     // ... data to create a CotizacionHistorial
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the CotizacionHistorial we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CotizacionHistorialUpsertArgs>(args: SelectSubset<T, CotizacionHistorialUpsertArgs<ExtArgs>>): Prisma__CotizacionHistorialClient<$Result.GetResult<Prisma.$CotizacionHistorialPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of CotizacionHistorials.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CotizacionHistorialCountArgs} args - Arguments to filter CotizacionHistorials to count.
+     * @example
+     * // Count the number of CotizacionHistorials
+     * const count = await prisma.cotizacionHistorial.count({
+     *   where: {
+     *     // ... the filter for the CotizacionHistorials we want to count
+     *   }
+     * })
+    **/
+    count<T extends CotizacionHistorialCountArgs>(
+      args?: Subset<T, CotizacionHistorialCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CotizacionHistorialCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a CotizacionHistorial.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CotizacionHistorialAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CotizacionHistorialAggregateArgs>(args: Subset<T, CotizacionHistorialAggregateArgs>): Prisma.PrismaPromise<GetCotizacionHistorialAggregateType<T>>
+
+    /**
+     * Group by CotizacionHistorial.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CotizacionHistorialGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CotizacionHistorialGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CotizacionHistorialGroupByArgs['orderBy'] }
+        : { orderBy?: CotizacionHistorialGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CotizacionHistorialGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCotizacionHistorialGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the CotizacionHistorial model
+   */
+  readonly fields: CotizacionHistorialFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for CotizacionHistorial.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CotizacionHistorialClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    cotizacion<T extends CotizacionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CotizacionDefaultArgs<ExtArgs>>): Prisma__CotizacionClient<$Result.GetResult<Prisma.$CotizacionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    editadoPor<T extends UsuarioDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UsuarioDefaultArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the CotizacionHistorial model
+   */
+  interface CotizacionHistorialFieldRefs {
+    readonly id: FieldRef<"CotizacionHistorial", 'Int'>
+    readonly cotizacionId: FieldRef<"CotizacionHistorial", 'Int'>
+    readonly campo: FieldRef<"CotizacionHistorial", 'String'>
+    readonly valorAnterior: FieldRef<"CotizacionHistorial", 'String'>
+    readonly valorNuevo: FieldRef<"CotizacionHistorial", 'String'>
+    readonly motivo: FieldRef<"CotizacionHistorial", 'String'>
+    readonly editadoPorId: FieldRef<"CotizacionHistorial", 'Int'>
+    readonly editadoEn: FieldRef<"CotizacionHistorial", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * CotizacionHistorial findUnique
+   */
+  export type CotizacionHistorialFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CotizacionHistorial
+     */
+    select?: CotizacionHistorialSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CotizacionHistorial
+     */
+    omit?: CotizacionHistorialOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CotizacionHistorialInclude<ExtArgs> | null
+    /**
+     * Filter, which CotizacionHistorial to fetch.
+     */
+    where: CotizacionHistorialWhereUniqueInput
+  }
+
+  /**
+   * CotizacionHistorial findUniqueOrThrow
+   */
+  export type CotizacionHistorialFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CotizacionHistorial
+     */
+    select?: CotizacionHistorialSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CotizacionHistorial
+     */
+    omit?: CotizacionHistorialOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CotizacionHistorialInclude<ExtArgs> | null
+    /**
+     * Filter, which CotizacionHistorial to fetch.
+     */
+    where: CotizacionHistorialWhereUniqueInput
+  }
+
+  /**
+   * CotizacionHistorial findFirst
+   */
+  export type CotizacionHistorialFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CotizacionHistorial
+     */
+    select?: CotizacionHistorialSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CotizacionHistorial
+     */
+    omit?: CotizacionHistorialOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CotizacionHistorialInclude<ExtArgs> | null
+    /**
+     * Filter, which CotizacionHistorial to fetch.
+     */
+    where?: CotizacionHistorialWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CotizacionHistorials to fetch.
+     */
+    orderBy?: CotizacionHistorialOrderByWithRelationInput | CotizacionHistorialOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CotizacionHistorials.
+     */
+    cursor?: CotizacionHistorialWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CotizacionHistorials from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CotizacionHistorials.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CotizacionHistorials.
+     */
+    distinct?: CotizacionHistorialScalarFieldEnum | CotizacionHistorialScalarFieldEnum[]
+  }
+
+  /**
+   * CotizacionHistorial findFirstOrThrow
+   */
+  export type CotizacionHistorialFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CotizacionHistorial
+     */
+    select?: CotizacionHistorialSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CotizacionHistorial
+     */
+    omit?: CotizacionHistorialOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CotizacionHistorialInclude<ExtArgs> | null
+    /**
+     * Filter, which CotizacionHistorial to fetch.
+     */
+    where?: CotizacionHistorialWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CotizacionHistorials to fetch.
+     */
+    orderBy?: CotizacionHistorialOrderByWithRelationInput | CotizacionHistorialOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CotizacionHistorials.
+     */
+    cursor?: CotizacionHistorialWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CotizacionHistorials from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CotizacionHistorials.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CotizacionHistorials.
+     */
+    distinct?: CotizacionHistorialScalarFieldEnum | CotizacionHistorialScalarFieldEnum[]
+  }
+
+  /**
+   * CotizacionHistorial findMany
+   */
+  export type CotizacionHistorialFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CotizacionHistorial
+     */
+    select?: CotizacionHistorialSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CotizacionHistorial
+     */
+    omit?: CotizacionHistorialOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CotizacionHistorialInclude<ExtArgs> | null
+    /**
+     * Filter, which CotizacionHistorials to fetch.
+     */
+    where?: CotizacionHistorialWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CotizacionHistorials to fetch.
+     */
+    orderBy?: CotizacionHistorialOrderByWithRelationInput | CotizacionHistorialOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing CotizacionHistorials.
+     */
+    cursor?: CotizacionHistorialWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CotizacionHistorials from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CotizacionHistorials.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CotizacionHistorials.
+     */
+    distinct?: CotizacionHistorialScalarFieldEnum | CotizacionHistorialScalarFieldEnum[]
+  }
+
+  /**
+   * CotizacionHistorial create
+   */
+  export type CotizacionHistorialCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CotizacionHistorial
+     */
+    select?: CotizacionHistorialSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CotizacionHistorial
+     */
+    omit?: CotizacionHistorialOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CotizacionHistorialInclude<ExtArgs> | null
+    /**
+     * The data needed to create a CotizacionHistorial.
+     */
+    data: XOR<CotizacionHistorialCreateInput, CotizacionHistorialUncheckedCreateInput>
+  }
+
+  /**
+   * CotizacionHistorial createMany
+   */
+  export type CotizacionHistorialCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many CotizacionHistorials.
+     */
+    data: CotizacionHistorialCreateManyInput | CotizacionHistorialCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CotizacionHistorial createManyAndReturn
+   */
+  export type CotizacionHistorialCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CotizacionHistorial
+     */
+    select?: CotizacionHistorialSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CotizacionHistorial
+     */
+    omit?: CotizacionHistorialOmit<ExtArgs> | null
+    /**
+     * The data used to create many CotizacionHistorials.
+     */
+    data: CotizacionHistorialCreateManyInput | CotizacionHistorialCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CotizacionHistorialIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CotizacionHistorial update
+   */
+  export type CotizacionHistorialUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CotizacionHistorial
+     */
+    select?: CotizacionHistorialSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CotizacionHistorial
+     */
+    omit?: CotizacionHistorialOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CotizacionHistorialInclude<ExtArgs> | null
+    /**
+     * The data needed to update a CotizacionHistorial.
+     */
+    data: XOR<CotizacionHistorialUpdateInput, CotizacionHistorialUncheckedUpdateInput>
+    /**
+     * Choose, which CotizacionHistorial to update.
+     */
+    where: CotizacionHistorialWhereUniqueInput
+  }
+
+  /**
+   * CotizacionHistorial updateMany
+   */
+  export type CotizacionHistorialUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update CotizacionHistorials.
+     */
+    data: XOR<CotizacionHistorialUpdateManyMutationInput, CotizacionHistorialUncheckedUpdateManyInput>
+    /**
+     * Filter which CotizacionHistorials to update
+     */
+    where?: CotizacionHistorialWhereInput
+    /**
+     * Limit how many CotizacionHistorials to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * CotizacionHistorial updateManyAndReturn
+   */
+  export type CotizacionHistorialUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CotizacionHistorial
+     */
+    select?: CotizacionHistorialSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CotizacionHistorial
+     */
+    omit?: CotizacionHistorialOmit<ExtArgs> | null
+    /**
+     * The data used to update CotizacionHistorials.
+     */
+    data: XOR<CotizacionHistorialUpdateManyMutationInput, CotizacionHistorialUncheckedUpdateManyInput>
+    /**
+     * Filter which CotizacionHistorials to update
+     */
+    where?: CotizacionHistorialWhereInput
+    /**
+     * Limit how many CotizacionHistorials to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CotizacionHistorialIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CotizacionHistorial upsert
+   */
+  export type CotizacionHistorialUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CotizacionHistorial
+     */
+    select?: CotizacionHistorialSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CotizacionHistorial
+     */
+    omit?: CotizacionHistorialOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CotizacionHistorialInclude<ExtArgs> | null
+    /**
+     * The filter to search for the CotizacionHistorial to update in case it exists.
+     */
+    where: CotizacionHistorialWhereUniqueInput
+    /**
+     * In case the CotizacionHistorial found by the `where` argument doesn't exist, create a new CotizacionHistorial with this data.
+     */
+    create: XOR<CotizacionHistorialCreateInput, CotizacionHistorialUncheckedCreateInput>
+    /**
+     * In case the CotizacionHistorial was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CotizacionHistorialUpdateInput, CotizacionHistorialUncheckedUpdateInput>
+  }
+
+  /**
+   * CotizacionHistorial delete
+   */
+  export type CotizacionHistorialDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CotizacionHistorial
+     */
+    select?: CotizacionHistorialSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CotizacionHistorial
+     */
+    omit?: CotizacionHistorialOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CotizacionHistorialInclude<ExtArgs> | null
+    /**
+     * Filter which CotizacionHistorial to delete.
+     */
+    where: CotizacionHistorialWhereUniqueInput
+  }
+
+  /**
+   * CotizacionHistorial deleteMany
+   */
+  export type CotizacionHistorialDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CotizacionHistorials to delete
+     */
+    where?: CotizacionHistorialWhereInput
+    /**
+     * Limit how many CotizacionHistorials to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * CotizacionHistorial without action
+   */
+  export type CotizacionHistorialDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CotizacionHistorial
+     */
+    select?: CotizacionHistorialSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CotizacionHistorial
+     */
+    omit?: CotizacionHistorialOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CotizacionHistorialInclude<ExtArgs> | null
   }
 
 
@@ -22177,6 +23518,20 @@ export namespace Prisma {
   export type CotizacionScalarFieldEnum = (typeof CotizacionScalarFieldEnum)[keyof typeof CotizacionScalarFieldEnum]
 
 
+  export const CotizacionHistorialScalarFieldEnum: {
+    id: 'id',
+    cotizacionId: 'cotizacionId',
+    campo: 'campo',
+    valorAnterior: 'valorAnterior',
+    valorNuevo: 'valorNuevo',
+    motivo: 'motivo',
+    editadoPorId: 'editadoPorId',
+    editadoEn: 'editadoEn'
+  };
+
+  export type CotizacionHistorialScalarFieldEnum = (typeof CotizacionHistorialScalarFieldEnum)[keyof typeof CotizacionHistorialScalarFieldEnum]
+
+
   export const AusenciaScalarFieldEnum: {
     id: 'id',
     usuarioId: 'usuarioId',
@@ -22491,6 +23846,7 @@ export namespace Prisma {
     pedidosEditados?: PedidoListRelationFilter
     cotizacionesCreadas?: CotizacionListRelationFilter
     cotizacionesEditadas?: CotizacionListRelationFilter
+    cotizacionesHistorialEditado?: CotizacionHistorialListRelationFilter
     ausencias?: AusenciaListRelationFilter
     ausenciasRegistradas?: AusenciaListRelationFilter
   }
@@ -22517,6 +23873,7 @@ export namespace Prisma {
     pedidosEditados?: PedidoOrderByRelationAggregateInput
     cotizacionesCreadas?: CotizacionOrderByRelationAggregateInput
     cotizacionesEditadas?: CotizacionOrderByRelationAggregateInput
+    cotizacionesHistorialEditado?: CotizacionHistorialOrderByRelationAggregateInput
     ausencias?: AusenciaOrderByRelationAggregateInput
     ausenciasRegistradas?: AusenciaOrderByRelationAggregateInput
   }
@@ -22546,6 +23903,7 @@ export namespace Prisma {
     pedidosEditados?: PedidoListRelationFilter
     cotizacionesCreadas?: CotizacionListRelationFilter
     cotizacionesEditadas?: CotizacionListRelationFilter
+    cotizacionesHistorialEditado?: CotizacionHistorialListRelationFilter
     ausencias?: AusenciaListRelationFilter
     ausenciasRegistradas?: AusenciaListRelationFilter
   }, "id" | "supabaseUserId">
@@ -23338,6 +24696,7 @@ export namespace Prisma {
     cliente?: XOR<ClienteScalarRelationFilter, ClienteWhereInput>
     creadoPor?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
     ultimoEditadoPor?: XOR<UsuarioNullableScalarRelationFilter, UsuarioWhereInput> | null
+    historial?: CotizacionHistorialListRelationFilter
   }
 
   export type CotizacionOrderByWithRelationInput = {
@@ -23357,6 +24716,7 @@ export namespace Prisma {
     cliente?: ClienteOrderByWithRelationInput
     creadoPor?: UsuarioOrderByWithRelationInput
     ultimoEditadoPor?: UsuarioOrderByWithRelationInput
+    historial?: CotizacionHistorialOrderByRelationAggregateInput
   }
 
   export type CotizacionWhereUniqueInput = Prisma.AtLeast<{
@@ -23379,6 +24739,7 @@ export namespace Prisma {
     cliente?: XOR<ClienteScalarRelationFilter, ClienteWhereInput>
     creadoPor?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
     ultimoEditadoPor?: XOR<UsuarioNullableScalarRelationFilter, UsuarioWhereInput> | null
+    historial?: CotizacionHistorialListRelationFilter
   }, "id" | "numeroProforma">
 
   export type CotizacionOrderByWithAggregationInput = {
@@ -23419,6 +24780,81 @@ export namespace Prisma {
     ultimoEditadoPorId?: IntNullableWithAggregatesFilter<"Cotizacion"> | number | null
     createdAt?: DateTimeWithAggregatesFilter<"Cotizacion"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Cotizacion"> | Date | string
+  }
+
+  export type CotizacionHistorialWhereInput = {
+    AND?: CotizacionHistorialWhereInput | CotizacionHistorialWhereInput[]
+    OR?: CotizacionHistorialWhereInput[]
+    NOT?: CotizacionHistorialWhereInput | CotizacionHistorialWhereInput[]
+    id?: IntFilter<"CotizacionHistorial"> | number
+    cotizacionId?: IntFilter<"CotizacionHistorial"> | number
+    campo?: StringFilter<"CotizacionHistorial"> | string
+    valorAnterior?: StringNullableFilter<"CotizacionHistorial"> | string | null
+    valorNuevo?: StringNullableFilter<"CotizacionHistorial"> | string | null
+    motivo?: StringNullableFilter<"CotizacionHistorial"> | string | null
+    editadoPorId?: IntFilter<"CotizacionHistorial"> | number
+    editadoEn?: DateTimeFilter<"CotizacionHistorial"> | Date | string
+    cotizacion?: XOR<CotizacionScalarRelationFilter, CotizacionWhereInput>
+    editadoPor?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
+  }
+
+  export type CotizacionHistorialOrderByWithRelationInput = {
+    id?: SortOrder
+    cotizacionId?: SortOrder
+    campo?: SortOrder
+    valorAnterior?: SortOrderInput | SortOrder
+    valorNuevo?: SortOrderInput | SortOrder
+    motivo?: SortOrderInput | SortOrder
+    editadoPorId?: SortOrder
+    editadoEn?: SortOrder
+    cotizacion?: CotizacionOrderByWithRelationInput
+    editadoPor?: UsuarioOrderByWithRelationInput
+  }
+
+  export type CotizacionHistorialWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: CotizacionHistorialWhereInput | CotizacionHistorialWhereInput[]
+    OR?: CotizacionHistorialWhereInput[]
+    NOT?: CotizacionHistorialWhereInput | CotizacionHistorialWhereInput[]
+    cotizacionId?: IntFilter<"CotizacionHistorial"> | number
+    campo?: StringFilter<"CotizacionHistorial"> | string
+    valorAnterior?: StringNullableFilter<"CotizacionHistorial"> | string | null
+    valorNuevo?: StringNullableFilter<"CotizacionHistorial"> | string | null
+    motivo?: StringNullableFilter<"CotizacionHistorial"> | string | null
+    editadoPorId?: IntFilter<"CotizacionHistorial"> | number
+    editadoEn?: DateTimeFilter<"CotizacionHistorial"> | Date | string
+    cotizacion?: XOR<CotizacionScalarRelationFilter, CotizacionWhereInput>
+    editadoPor?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
+  }, "id">
+
+  export type CotizacionHistorialOrderByWithAggregationInput = {
+    id?: SortOrder
+    cotizacionId?: SortOrder
+    campo?: SortOrder
+    valorAnterior?: SortOrderInput | SortOrder
+    valorNuevo?: SortOrderInput | SortOrder
+    motivo?: SortOrderInput | SortOrder
+    editadoPorId?: SortOrder
+    editadoEn?: SortOrder
+    _count?: CotizacionHistorialCountOrderByAggregateInput
+    _avg?: CotizacionHistorialAvgOrderByAggregateInput
+    _max?: CotizacionHistorialMaxOrderByAggregateInput
+    _min?: CotizacionHistorialMinOrderByAggregateInput
+    _sum?: CotizacionHistorialSumOrderByAggregateInput
+  }
+
+  export type CotizacionHistorialScalarWhereWithAggregatesInput = {
+    AND?: CotizacionHistorialScalarWhereWithAggregatesInput | CotizacionHistorialScalarWhereWithAggregatesInput[]
+    OR?: CotizacionHistorialScalarWhereWithAggregatesInput[]
+    NOT?: CotizacionHistorialScalarWhereWithAggregatesInput | CotizacionHistorialScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"CotizacionHistorial"> | number
+    cotizacionId?: IntWithAggregatesFilter<"CotizacionHistorial"> | number
+    campo?: StringWithAggregatesFilter<"CotizacionHistorial"> | string
+    valorAnterior?: StringNullableWithAggregatesFilter<"CotizacionHistorial"> | string | null
+    valorNuevo?: StringNullableWithAggregatesFilter<"CotizacionHistorial"> | string | null
+    motivo?: StringNullableWithAggregatesFilter<"CotizacionHistorial"> | string | null
+    editadoPorId?: IntWithAggregatesFilter<"CotizacionHistorial"> | number
+    editadoEn?: DateTimeWithAggregatesFilter<"CotizacionHistorial"> | Date | string
   }
 
   export type AusenciaWhereInput = {
@@ -23873,6 +25309,7 @@ export namespace Prisma {
     pedidosEditados?: PedidoCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesCreadas?: CotizacionCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesHistorialEditado?: CotizacionHistorialCreateNestedManyWithoutEditadoPorInput
     ausencias?: AusenciaCreateNestedManyWithoutUsuarioInput
     ausenciasRegistradas?: AusenciaCreateNestedManyWithoutRegistradoPorInput
   }
@@ -23898,6 +25335,7 @@ export namespace Prisma {
     pedidosEditados?: PedidoUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesCreadas?: CotizacionUncheckedCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesHistorialEditado?: CotizacionHistorialUncheckedCreateNestedManyWithoutEditadoPorInput
     ausencias?: AusenciaUncheckedCreateNestedManyWithoutUsuarioInput
     ausenciasRegistradas?: AusenciaUncheckedCreateNestedManyWithoutRegistradoPorInput
   }
@@ -23922,6 +25360,7 @@ export namespace Prisma {
     pedidosEditados?: PedidoUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesCreadas?: CotizacionUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesHistorialEditado?: CotizacionHistorialUpdateManyWithoutEditadoPorNestedInput
     ausencias?: AusenciaUpdateManyWithoutUsuarioNestedInput
     ausenciasRegistradas?: AusenciaUpdateManyWithoutRegistradoPorNestedInput
   }
@@ -23947,6 +25386,7 @@ export namespace Prisma {
     pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesCreadas?: CotizacionUncheckedUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesHistorialEditado?: CotizacionHistorialUncheckedUpdateManyWithoutEditadoPorNestedInput
     ausencias?: AusenciaUncheckedUpdateManyWithoutUsuarioNestedInput
     ausenciasRegistradas?: AusenciaUncheckedUpdateManyWithoutRegistradoPorNestedInput
   }
@@ -24797,6 +26237,7 @@ export namespace Prisma {
     cliente: ClienteCreateNestedOneWithoutCotizacionesInput
     creadoPor: UsuarioCreateNestedOneWithoutCotizacionesCreadasInput
     ultimoEditadoPor?: UsuarioCreateNestedOneWithoutCotizacionesEditadasInput
+    historial?: CotizacionHistorialCreateNestedManyWithoutCotizacionInput
   }
 
   export type CotizacionUncheckedCreateInput = {
@@ -24813,6 +26254,7 @@ export namespace Prisma {
     ultimoEditadoPorId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    historial?: CotizacionHistorialUncheckedCreateNestedManyWithoutCotizacionInput
   }
 
   export type CotizacionUpdateInput = {
@@ -24828,6 +26270,7 @@ export namespace Prisma {
     cliente?: ClienteUpdateOneRequiredWithoutCotizacionesNestedInput
     creadoPor?: UsuarioUpdateOneRequiredWithoutCotizacionesCreadasNestedInput
     ultimoEditadoPor?: UsuarioUpdateOneWithoutCotizacionesEditadasNestedInput
+    historial?: CotizacionHistorialUpdateManyWithoutCotizacionNestedInput
   }
 
   export type CotizacionUncheckedUpdateInput = {
@@ -24844,6 +26287,7 @@ export namespace Prisma {
     ultimoEditadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    historial?: CotizacionHistorialUncheckedUpdateManyWithoutCotizacionNestedInput
   }
 
   export type CotizacionCreateManyInput = {
@@ -24888,6 +26332,78 @@ export namespace Prisma {
     ultimoEditadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CotizacionHistorialCreateInput = {
+    campo: string
+    valorAnterior?: string | null
+    valorNuevo?: string | null
+    motivo?: string | null
+    editadoEn?: Date | string
+    cotizacion: CotizacionCreateNestedOneWithoutHistorialInput
+    editadoPor: UsuarioCreateNestedOneWithoutCotizacionesHistorialEditadoInput
+  }
+
+  export type CotizacionHistorialUncheckedCreateInput = {
+    id?: number
+    cotizacionId: number
+    campo: string
+    valorAnterior?: string | null
+    valorNuevo?: string | null
+    motivo?: string | null
+    editadoPorId: number
+    editadoEn?: Date | string
+  }
+
+  export type CotizacionHistorialUpdateInput = {
+    campo?: StringFieldUpdateOperationsInput | string
+    valorAnterior?: NullableStringFieldUpdateOperationsInput | string | null
+    valorNuevo?: NullableStringFieldUpdateOperationsInput | string | null
+    motivo?: NullableStringFieldUpdateOperationsInput | string | null
+    editadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    cotizacion?: CotizacionUpdateOneRequiredWithoutHistorialNestedInput
+    editadoPor?: UsuarioUpdateOneRequiredWithoutCotizacionesHistorialEditadoNestedInput
+  }
+
+  export type CotizacionHistorialUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    cotizacionId?: IntFieldUpdateOperationsInput | number
+    campo?: StringFieldUpdateOperationsInput | string
+    valorAnterior?: NullableStringFieldUpdateOperationsInput | string | null
+    valorNuevo?: NullableStringFieldUpdateOperationsInput | string | null
+    motivo?: NullableStringFieldUpdateOperationsInput | string | null
+    editadoPorId?: IntFieldUpdateOperationsInput | number
+    editadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CotizacionHistorialCreateManyInput = {
+    id?: number
+    cotizacionId: number
+    campo: string
+    valorAnterior?: string | null
+    valorNuevo?: string | null
+    motivo?: string | null
+    editadoPorId: number
+    editadoEn?: Date | string
+  }
+
+  export type CotizacionHistorialUpdateManyMutationInput = {
+    campo?: StringFieldUpdateOperationsInput | string
+    valorAnterior?: NullableStringFieldUpdateOperationsInput | string | null
+    valorNuevo?: NullableStringFieldUpdateOperationsInput | string | null
+    motivo?: NullableStringFieldUpdateOperationsInput | string | null
+    editadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CotizacionHistorialUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    cotizacionId?: IntFieldUpdateOperationsInput | number
+    campo?: StringFieldUpdateOperationsInput | string
+    valorAnterior?: NullableStringFieldUpdateOperationsInput | string | null
+    valorNuevo?: NullableStringFieldUpdateOperationsInput | string | null
+    motivo?: NullableStringFieldUpdateOperationsInput | string | null
+    editadoPorId?: IntFieldUpdateOperationsInput | number
+    editadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type AusenciaCreateInput = {
@@ -25452,6 +26968,12 @@ export namespace Prisma {
     none?: CotizacionWhereInput
   }
 
+  export type CotizacionHistorialListRelationFilter = {
+    every?: CotizacionHistorialWhereInput
+    some?: CotizacionHistorialWhereInput
+    none?: CotizacionHistorialWhereInput
+  }
+
   export type AusenciaListRelationFilter = {
     every?: AusenciaWhereInput
     some?: AusenciaWhereInput
@@ -25488,6 +27010,10 @@ export namespace Prisma {
   }
 
   export type CotizacionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type CotizacionHistorialOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -26301,6 +27827,56 @@ export namespace Prisma {
     ultimoEditadoPorId?: SortOrder
   }
 
+  export type CotizacionScalarRelationFilter = {
+    is?: CotizacionWhereInput
+    isNot?: CotizacionWhereInput
+  }
+
+  export type CotizacionHistorialCountOrderByAggregateInput = {
+    id?: SortOrder
+    cotizacionId?: SortOrder
+    campo?: SortOrder
+    valorAnterior?: SortOrder
+    valorNuevo?: SortOrder
+    motivo?: SortOrder
+    editadoPorId?: SortOrder
+    editadoEn?: SortOrder
+  }
+
+  export type CotizacionHistorialAvgOrderByAggregateInput = {
+    id?: SortOrder
+    cotizacionId?: SortOrder
+    editadoPorId?: SortOrder
+  }
+
+  export type CotizacionHistorialMaxOrderByAggregateInput = {
+    id?: SortOrder
+    cotizacionId?: SortOrder
+    campo?: SortOrder
+    valorAnterior?: SortOrder
+    valorNuevo?: SortOrder
+    motivo?: SortOrder
+    editadoPorId?: SortOrder
+    editadoEn?: SortOrder
+  }
+
+  export type CotizacionHistorialMinOrderByAggregateInput = {
+    id?: SortOrder
+    cotizacionId?: SortOrder
+    campo?: SortOrder
+    valorAnterior?: SortOrder
+    valorNuevo?: SortOrder
+    motivo?: SortOrder
+    editadoPorId?: SortOrder
+    editadoEn?: SortOrder
+  }
+
+  export type CotizacionHistorialSumOrderByAggregateInput = {
+    id?: SortOrder
+    cotizacionId?: SortOrder
+    editadoPorId?: SortOrder
+  }
+
   export type AusenciaCountOrderByAggregateInput = {
     id?: SortOrder
     usuarioId?: SortOrder
@@ -26744,6 +28320,13 @@ export namespace Prisma {
     connect?: CotizacionWhereUniqueInput | CotizacionWhereUniqueInput[]
   }
 
+  export type CotizacionHistorialCreateNestedManyWithoutEditadoPorInput = {
+    create?: XOR<CotizacionHistorialCreateWithoutEditadoPorInput, CotizacionHistorialUncheckedCreateWithoutEditadoPorInput> | CotizacionHistorialCreateWithoutEditadoPorInput[] | CotizacionHistorialUncheckedCreateWithoutEditadoPorInput[]
+    connectOrCreate?: CotizacionHistorialCreateOrConnectWithoutEditadoPorInput | CotizacionHistorialCreateOrConnectWithoutEditadoPorInput[]
+    createMany?: CotizacionHistorialCreateManyEditadoPorInputEnvelope
+    connect?: CotizacionHistorialWhereUniqueInput | CotizacionHistorialWhereUniqueInput[]
+  }
+
   export type AusenciaCreateNestedManyWithoutUsuarioInput = {
     create?: XOR<AusenciaCreateWithoutUsuarioInput, AusenciaUncheckedCreateWithoutUsuarioInput> | AusenciaCreateWithoutUsuarioInput[] | AusenciaUncheckedCreateWithoutUsuarioInput[]
     connectOrCreate?: AusenciaCreateOrConnectWithoutUsuarioInput | AusenciaCreateOrConnectWithoutUsuarioInput[]
@@ -26825,6 +28408,13 @@ export namespace Prisma {
     connectOrCreate?: CotizacionCreateOrConnectWithoutUltimoEditadoPorInput | CotizacionCreateOrConnectWithoutUltimoEditadoPorInput[]
     createMany?: CotizacionCreateManyUltimoEditadoPorInputEnvelope
     connect?: CotizacionWhereUniqueInput | CotizacionWhereUniqueInput[]
+  }
+
+  export type CotizacionHistorialUncheckedCreateNestedManyWithoutEditadoPorInput = {
+    create?: XOR<CotizacionHistorialCreateWithoutEditadoPorInput, CotizacionHistorialUncheckedCreateWithoutEditadoPorInput> | CotizacionHistorialCreateWithoutEditadoPorInput[] | CotizacionHistorialUncheckedCreateWithoutEditadoPorInput[]
+    connectOrCreate?: CotizacionHistorialCreateOrConnectWithoutEditadoPorInput | CotizacionHistorialCreateOrConnectWithoutEditadoPorInput[]
+    createMany?: CotizacionHistorialCreateManyEditadoPorInputEnvelope
+    connect?: CotizacionHistorialWhereUniqueInput | CotizacionHistorialWhereUniqueInput[]
   }
 
   export type AusenciaUncheckedCreateNestedManyWithoutUsuarioInput = {
@@ -27007,6 +28597,20 @@ export namespace Prisma {
     deleteMany?: CotizacionScalarWhereInput | CotizacionScalarWhereInput[]
   }
 
+  export type CotizacionHistorialUpdateManyWithoutEditadoPorNestedInput = {
+    create?: XOR<CotizacionHistorialCreateWithoutEditadoPorInput, CotizacionHistorialUncheckedCreateWithoutEditadoPorInput> | CotizacionHistorialCreateWithoutEditadoPorInput[] | CotizacionHistorialUncheckedCreateWithoutEditadoPorInput[]
+    connectOrCreate?: CotizacionHistorialCreateOrConnectWithoutEditadoPorInput | CotizacionHistorialCreateOrConnectWithoutEditadoPorInput[]
+    upsert?: CotizacionHistorialUpsertWithWhereUniqueWithoutEditadoPorInput | CotizacionHistorialUpsertWithWhereUniqueWithoutEditadoPorInput[]
+    createMany?: CotizacionHistorialCreateManyEditadoPorInputEnvelope
+    set?: CotizacionHistorialWhereUniqueInput | CotizacionHistorialWhereUniqueInput[]
+    disconnect?: CotizacionHistorialWhereUniqueInput | CotizacionHistorialWhereUniqueInput[]
+    delete?: CotizacionHistorialWhereUniqueInput | CotizacionHistorialWhereUniqueInput[]
+    connect?: CotizacionHistorialWhereUniqueInput | CotizacionHistorialWhereUniqueInput[]
+    update?: CotizacionHistorialUpdateWithWhereUniqueWithoutEditadoPorInput | CotizacionHistorialUpdateWithWhereUniqueWithoutEditadoPorInput[]
+    updateMany?: CotizacionHistorialUpdateManyWithWhereWithoutEditadoPorInput | CotizacionHistorialUpdateManyWithWhereWithoutEditadoPorInput[]
+    deleteMany?: CotizacionHistorialScalarWhereInput | CotizacionHistorialScalarWhereInput[]
+  }
+
   export type AusenciaUpdateManyWithoutUsuarioNestedInput = {
     create?: XOR<AusenciaCreateWithoutUsuarioInput, AusenciaUncheckedCreateWithoutUsuarioInput> | AusenciaCreateWithoutUsuarioInput[] | AusenciaUncheckedCreateWithoutUsuarioInput[]
     connectOrCreate?: AusenciaCreateOrConnectWithoutUsuarioInput | AusenciaCreateOrConnectWithoutUsuarioInput[]
@@ -27185,6 +28789,20 @@ export namespace Prisma {
     update?: CotizacionUpdateWithWhereUniqueWithoutUltimoEditadoPorInput | CotizacionUpdateWithWhereUniqueWithoutUltimoEditadoPorInput[]
     updateMany?: CotizacionUpdateManyWithWhereWithoutUltimoEditadoPorInput | CotizacionUpdateManyWithWhereWithoutUltimoEditadoPorInput[]
     deleteMany?: CotizacionScalarWhereInput | CotizacionScalarWhereInput[]
+  }
+
+  export type CotizacionHistorialUncheckedUpdateManyWithoutEditadoPorNestedInput = {
+    create?: XOR<CotizacionHistorialCreateWithoutEditadoPorInput, CotizacionHistorialUncheckedCreateWithoutEditadoPorInput> | CotizacionHistorialCreateWithoutEditadoPorInput[] | CotizacionHistorialUncheckedCreateWithoutEditadoPorInput[]
+    connectOrCreate?: CotizacionHistorialCreateOrConnectWithoutEditadoPorInput | CotizacionHistorialCreateOrConnectWithoutEditadoPorInput[]
+    upsert?: CotizacionHistorialUpsertWithWhereUniqueWithoutEditadoPorInput | CotizacionHistorialUpsertWithWhereUniqueWithoutEditadoPorInput[]
+    createMany?: CotizacionHistorialCreateManyEditadoPorInputEnvelope
+    set?: CotizacionHistorialWhereUniqueInput | CotizacionHistorialWhereUniqueInput[]
+    disconnect?: CotizacionHistorialWhereUniqueInput | CotizacionHistorialWhereUniqueInput[]
+    delete?: CotizacionHistorialWhereUniqueInput | CotizacionHistorialWhereUniqueInput[]
+    connect?: CotizacionHistorialWhereUniqueInput | CotizacionHistorialWhereUniqueInput[]
+    update?: CotizacionHistorialUpdateWithWhereUniqueWithoutEditadoPorInput | CotizacionHistorialUpdateWithWhereUniqueWithoutEditadoPorInput[]
+    updateMany?: CotizacionHistorialUpdateManyWithWhereWithoutEditadoPorInput | CotizacionHistorialUpdateManyWithWhereWithoutEditadoPorInput[]
+    deleteMany?: CotizacionHistorialScalarWhereInput | CotizacionHistorialScalarWhereInput[]
   }
 
   export type AusenciaUncheckedUpdateManyWithoutUsuarioNestedInput = {
@@ -27664,6 +29282,20 @@ export namespace Prisma {
     connect?: UsuarioWhereUniqueInput
   }
 
+  export type CotizacionHistorialCreateNestedManyWithoutCotizacionInput = {
+    create?: XOR<CotizacionHistorialCreateWithoutCotizacionInput, CotizacionHistorialUncheckedCreateWithoutCotizacionInput> | CotizacionHistorialCreateWithoutCotizacionInput[] | CotizacionHistorialUncheckedCreateWithoutCotizacionInput[]
+    connectOrCreate?: CotizacionHistorialCreateOrConnectWithoutCotizacionInput | CotizacionHistorialCreateOrConnectWithoutCotizacionInput[]
+    createMany?: CotizacionHistorialCreateManyCotizacionInputEnvelope
+    connect?: CotizacionHistorialWhereUniqueInput | CotizacionHistorialWhereUniqueInput[]
+  }
+
+  export type CotizacionHistorialUncheckedCreateNestedManyWithoutCotizacionInput = {
+    create?: XOR<CotizacionHistorialCreateWithoutCotizacionInput, CotizacionHistorialUncheckedCreateWithoutCotizacionInput> | CotizacionHistorialCreateWithoutCotizacionInput[] | CotizacionHistorialUncheckedCreateWithoutCotizacionInput[]
+    connectOrCreate?: CotizacionHistorialCreateOrConnectWithoutCotizacionInput | CotizacionHistorialCreateOrConnectWithoutCotizacionInput[]
+    createMany?: CotizacionHistorialCreateManyCotizacionInputEnvelope
+    connect?: CotizacionHistorialWhereUniqueInput | CotizacionHistorialWhereUniqueInput[]
+  }
+
   export type ClienteUpdateOneRequiredWithoutCotizacionesNestedInput = {
     create?: XOR<ClienteCreateWithoutCotizacionesInput, ClienteUncheckedCreateWithoutCotizacionesInput>
     connectOrCreate?: ClienteCreateOrConnectWithoutCotizacionesInput
@@ -27688,6 +29320,62 @@ export namespace Prisma {
     delete?: UsuarioWhereInput | boolean
     connect?: UsuarioWhereUniqueInput
     update?: XOR<XOR<UsuarioUpdateToOneWithWhereWithoutCotizacionesEditadasInput, UsuarioUpdateWithoutCotizacionesEditadasInput>, UsuarioUncheckedUpdateWithoutCotizacionesEditadasInput>
+  }
+
+  export type CotizacionHistorialUpdateManyWithoutCotizacionNestedInput = {
+    create?: XOR<CotizacionHistorialCreateWithoutCotizacionInput, CotizacionHistorialUncheckedCreateWithoutCotizacionInput> | CotizacionHistorialCreateWithoutCotizacionInput[] | CotizacionHistorialUncheckedCreateWithoutCotizacionInput[]
+    connectOrCreate?: CotizacionHistorialCreateOrConnectWithoutCotizacionInput | CotizacionHistorialCreateOrConnectWithoutCotizacionInput[]
+    upsert?: CotizacionHistorialUpsertWithWhereUniqueWithoutCotizacionInput | CotizacionHistorialUpsertWithWhereUniqueWithoutCotizacionInput[]
+    createMany?: CotizacionHistorialCreateManyCotizacionInputEnvelope
+    set?: CotizacionHistorialWhereUniqueInput | CotizacionHistorialWhereUniqueInput[]
+    disconnect?: CotizacionHistorialWhereUniqueInput | CotizacionHistorialWhereUniqueInput[]
+    delete?: CotizacionHistorialWhereUniqueInput | CotizacionHistorialWhereUniqueInput[]
+    connect?: CotizacionHistorialWhereUniqueInput | CotizacionHistorialWhereUniqueInput[]
+    update?: CotizacionHistorialUpdateWithWhereUniqueWithoutCotizacionInput | CotizacionHistorialUpdateWithWhereUniqueWithoutCotizacionInput[]
+    updateMany?: CotizacionHistorialUpdateManyWithWhereWithoutCotizacionInput | CotizacionHistorialUpdateManyWithWhereWithoutCotizacionInput[]
+    deleteMany?: CotizacionHistorialScalarWhereInput | CotizacionHistorialScalarWhereInput[]
+  }
+
+  export type CotizacionHistorialUncheckedUpdateManyWithoutCotizacionNestedInput = {
+    create?: XOR<CotizacionHistorialCreateWithoutCotizacionInput, CotizacionHistorialUncheckedCreateWithoutCotizacionInput> | CotizacionHistorialCreateWithoutCotizacionInput[] | CotizacionHistorialUncheckedCreateWithoutCotizacionInput[]
+    connectOrCreate?: CotizacionHistorialCreateOrConnectWithoutCotizacionInput | CotizacionHistorialCreateOrConnectWithoutCotizacionInput[]
+    upsert?: CotizacionHistorialUpsertWithWhereUniqueWithoutCotizacionInput | CotizacionHistorialUpsertWithWhereUniqueWithoutCotizacionInput[]
+    createMany?: CotizacionHistorialCreateManyCotizacionInputEnvelope
+    set?: CotizacionHistorialWhereUniqueInput | CotizacionHistorialWhereUniqueInput[]
+    disconnect?: CotizacionHistorialWhereUniqueInput | CotizacionHistorialWhereUniqueInput[]
+    delete?: CotizacionHistorialWhereUniqueInput | CotizacionHistorialWhereUniqueInput[]
+    connect?: CotizacionHistorialWhereUniqueInput | CotizacionHistorialWhereUniqueInput[]
+    update?: CotizacionHistorialUpdateWithWhereUniqueWithoutCotizacionInput | CotizacionHistorialUpdateWithWhereUniqueWithoutCotizacionInput[]
+    updateMany?: CotizacionHistorialUpdateManyWithWhereWithoutCotizacionInput | CotizacionHistorialUpdateManyWithWhereWithoutCotizacionInput[]
+    deleteMany?: CotizacionHistorialScalarWhereInput | CotizacionHistorialScalarWhereInput[]
+  }
+
+  export type CotizacionCreateNestedOneWithoutHistorialInput = {
+    create?: XOR<CotizacionCreateWithoutHistorialInput, CotizacionUncheckedCreateWithoutHistorialInput>
+    connectOrCreate?: CotizacionCreateOrConnectWithoutHistorialInput
+    connect?: CotizacionWhereUniqueInput
+  }
+
+  export type UsuarioCreateNestedOneWithoutCotizacionesHistorialEditadoInput = {
+    create?: XOR<UsuarioCreateWithoutCotizacionesHistorialEditadoInput, UsuarioUncheckedCreateWithoutCotizacionesHistorialEditadoInput>
+    connectOrCreate?: UsuarioCreateOrConnectWithoutCotizacionesHistorialEditadoInput
+    connect?: UsuarioWhereUniqueInput
+  }
+
+  export type CotizacionUpdateOneRequiredWithoutHistorialNestedInput = {
+    create?: XOR<CotizacionCreateWithoutHistorialInput, CotizacionUncheckedCreateWithoutHistorialInput>
+    connectOrCreate?: CotizacionCreateOrConnectWithoutHistorialInput
+    upsert?: CotizacionUpsertWithoutHistorialInput
+    connect?: CotizacionWhereUniqueInput
+    update?: XOR<XOR<CotizacionUpdateToOneWithWhereWithoutHistorialInput, CotizacionUpdateWithoutHistorialInput>, CotizacionUncheckedUpdateWithoutHistorialInput>
+  }
+
+  export type UsuarioUpdateOneRequiredWithoutCotizacionesHistorialEditadoNestedInput = {
+    create?: XOR<UsuarioCreateWithoutCotizacionesHistorialEditadoInput, UsuarioUncheckedCreateWithoutCotizacionesHistorialEditadoInput>
+    connectOrCreate?: UsuarioCreateOrConnectWithoutCotizacionesHistorialEditadoInput
+    upsert?: UsuarioUpsertWithoutCotizacionesHistorialEditadoInput
+    connect?: UsuarioWhereUniqueInput
+    update?: XOR<XOR<UsuarioUpdateToOneWithWhereWithoutCotizacionesHistorialEditadoInput, UsuarioUpdateWithoutCotizacionesHistorialEditadoInput>, UsuarioUncheckedUpdateWithoutCotizacionesHistorialEditadoInput>
   }
 
   export type UsuarioCreateNestedOneWithoutAusenciasInput = {
@@ -28283,6 +29971,7 @@ export namespace Prisma {
     pedidosEditados?: PedidoCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesCreadas?: CotizacionCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesHistorialEditado?: CotizacionHistorialCreateNestedManyWithoutEditadoPorInput
     ausencias?: AusenciaCreateNestedManyWithoutUsuarioInput
     ausenciasRegistradas?: AusenciaCreateNestedManyWithoutRegistradoPorInput
   }
@@ -28307,6 +29996,7 @@ export namespace Prisma {
     pedidosEditados?: PedidoUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesCreadas?: CotizacionUncheckedCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesHistorialEditado?: CotizacionHistorialUncheckedCreateNestedManyWithoutEditadoPorInput
     ausencias?: AusenciaUncheckedCreateNestedManyWithoutUsuarioInput
     ausenciasRegistradas?: AusenciaUncheckedCreateNestedManyWithoutRegistradoPorInput
   }
@@ -28335,6 +30025,7 @@ export namespace Prisma {
     pedidosEditados?: PedidoCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesCreadas?: CotizacionCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesHistorialEditado?: CotizacionHistorialCreateNestedManyWithoutEditadoPorInput
     ausencias?: AusenciaCreateNestedManyWithoutUsuarioInput
     ausenciasRegistradas?: AusenciaCreateNestedManyWithoutRegistradoPorInput
   }
@@ -28359,6 +30050,7 @@ export namespace Prisma {
     pedidosEditados?: PedidoUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesCreadas?: CotizacionUncheckedCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesHistorialEditado?: CotizacionHistorialUncheckedCreateNestedManyWithoutEditadoPorInput
     ausencias?: AusenciaUncheckedCreateNestedManyWithoutUsuarioInput
     ausenciasRegistradas?: AusenciaUncheckedCreateNestedManyWithoutRegistradoPorInput
   }
@@ -28641,6 +30333,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     cliente: ClienteCreateNestedOneWithoutCotizacionesInput
     ultimoEditadoPor?: UsuarioCreateNestedOneWithoutCotizacionesEditadasInput
+    historial?: CotizacionHistorialCreateNestedManyWithoutCotizacionInput
   }
 
   export type CotizacionUncheckedCreateWithoutCreadoPorInput = {
@@ -28656,6 +30349,7 @@ export namespace Prisma {
     ultimoEditadoPorId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    historial?: CotizacionHistorialUncheckedCreateNestedManyWithoutCotizacionInput
   }
 
   export type CotizacionCreateOrConnectWithoutCreadoPorInput = {
@@ -28680,6 +30374,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     cliente: ClienteCreateNestedOneWithoutCotizacionesInput
     creadoPor: UsuarioCreateNestedOneWithoutCotizacionesCreadasInput
+    historial?: CotizacionHistorialCreateNestedManyWithoutCotizacionInput
   }
 
   export type CotizacionUncheckedCreateWithoutUltimoEditadoPorInput = {
@@ -28695,6 +30390,7 @@ export namespace Prisma {
     creadoPorId: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    historial?: CotizacionHistorialUncheckedCreateNestedManyWithoutCotizacionInput
   }
 
   export type CotizacionCreateOrConnectWithoutUltimoEditadoPorInput = {
@@ -28704,6 +30400,35 @@ export namespace Prisma {
 
   export type CotizacionCreateManyUltimoEditadoPorInputEnvelope = {
     data: CotizacionCreateManyUltimoEditadoPorInput | CotizacionCreateManyUltimoEditadoPorInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type CotizacionHistorialCreateWithoutEditadoPorInput = {
+    campo: string
+    valorAnterior?: string | null
+    valorNuevo?: string | null
+    motivo?: string | null
+    editadoEn?: Date | string
+    cotizacion: CotizacionCreateNestedOneWithoutHistorialInput
+  }
+
+  export type CotizacionHistorialUncheckedCreateWithoutEditadoPorInput = {
+    id?: number
+    cotizacionId: number
+    campo: string
+    valorAnterior?: string | null
+    valorNuevo?: string | null
+    motivo?: string | null
+    editadoEn?: Date | string
+  }
+
+  export type CotizacionHistorialCreateOrConnectWithoutEditadoPorInput = {
+    where: CotizacionHistorialWhereUniqueInput
+    create: XOR<CotizacionHistorialCreateWithoutEditadoPorInput, CotizacionHistorialUncheckedCreateWithoutEditadoPorInput>
+  }
+
+  export type CotizacionHistorialCreateManyEditadoPorInputEnvelope = {
+    data: CotizacionHistorialCreateManyEditadoPorInput | CotizacionHistorialCreateManyEditadoPorInput[]
     skipDuplicates?: boolean
   }
 
@@ -28791,6 +30516,7 @@ export namespace Prisma {
     pedidosEditados?: PedidoUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesCreadas?: CotizacionUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesHistorialEditado?: CotizacionHistorialUpdateManyWithoutEditadoPorNestedInput
     ausencias?: AusenciaUpdateManyWithoutUsuarioNestedInput
     ausenciasRegistradas?: AusenciaUpdateManyWithoutRegistradoPorNestedInput
   }
@@ -28815,6 +30541,7 @@ export namespace Prisma {
     pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesCreadas?: CotizacionUncheckedUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesHistorialEditado?: CotizacionHistorialUncheckedUpdateManyWithoutEditadoPorNestedInput
     ausencias?: AusenciaUncheckedUpdateManyWithoutUsuarioNestedInput
     ausenciasRegistradas?: AusenciaUncheckedUpdateManyWithoutRegistradoPorNestedInput
   }
@@ -29118,6 +30845,36 @@ export namespace Prisma {
     data: XOR<CotizacionUpdateManyMutationInput, CotizacionUncheckedUpdateManyWithoutUltimoEditadoPorInput>
   }
 
+  export type CotizacionHistorialUpsertWithWhereUniqueWithoutEditadoPorInput = {
+    where: CotizacionHistorialWhereUniqueInput
+    update: XOR<CotizacionHistorialUpdateWithoutEditadoPorInput, CotizacionHistorialUncheckedUpdateWithoutEditadoPorInput>
+    create: XOR<CotizacionHistorialCreateWithoutEditadoPorInput, CotizacionHistorialUncheckedCreateWithoutEditadoPorInput>
+  }
+
+  export type CotizacionHistorialUpdateWithWhereUniqueWithoutEditadoPorInput = {
+    where: CotizacionHistorialWhereUniqueInput
+    data: XOR<CotizacionHistorialUpdateWithoutEditadoPorInput, CotizacionHistorialUncheckedUpdateWithoutEditadoPorInput>
+  }
+
+  export type CotizacionHistorialUpdateManyWithWhereWithoutEditadoPorInput = {
+    where: CotizacionHistorialScalarWhereInput
+    data: XOR<CotizacionHistorialUpdateManyMutationInput, CotizacionHistorialUncheckedUpdateManyWithoutEditadoPorInput>
+  }
+
+  export type CotizacionHistorialScalarWhereInput = {
+    AND?: CotizacionHistorialScalarWhereInput | CotizacionHistorialScalarWhereInput[]
+    OR?: CotizacionHistorialScalarWhereInput[]
+    NOT?: CotizacionHistorialScalarWhereInput | CotizacionHistorialScalarWhereInput[]
+    id?: IntFilter<"CotizacionHistorial"> | number
+    cotizacionId?: IntFilter<"CotizacionHistorial"> | number
+    campo?: StringFilter<"CotizacionHistorial"> | string
+    valorAnterior?: StringNullableFilter<"CotizacionHistorial"> | string | null
+    valorNuevo?: StringNullableFilter<"CotizacionHistorial"> | string | null
+    motivo?: StringNullableFilter<"CotizacionHistorial"> | string | null
+    editadoPorId?: IntFilter<"CotizacionHistorial"> | number
+    editadoEn?: DateTimeFilter<"CotizacionHistorial"> | Date | string
+  }
+
   export type AusenciaUpsertWithWhereUniqueWithoutUsuarioInput = {
     where: AusenciaWhereUniqueInput
     update: XOR<AusenciaUpdateWithoutUsuarioInput, AusenciaUncheckedUpdateWithoutUsuarioInput>
@@ -29182,6 +30939,7 @@ export namespace Prisma {
     pedidosEditados?: PedidoCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesCreadas?: CotizacionCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesHistorialEditado?: CotizacionHistorialCreateNestedManyWithoutEditadoPorInput
     ausencias?: AusenciaCreateNestedManyWithoutUsuarioInput
     ausenciasRegistradas?: AusenciaCreateNestedManyWithoutRegistradoPorInput
   }
@@ -29206,6 +30964,7 @@ export namespace Prisma {
     pedidosEditados?: PedidoUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesCreadas?: CotizacionUncheckedCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesHistorialEditado?: CotizacionHistorialUncheckedCreateNestedManyWithoutEditadoPorInput
     ausencias?: AusenciaUncheckedCreateNestedManyWithoutUsuarioInput
     ausenciasRegistradas?: AusenciaUncheckedCreateNestedManyWithoutRegistradoPorInput
   }
@@ -29245,6 +31004,7 @@ export namespace Prisma {
     pedidosEditados?: PedidoUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesCreadas?: CotizacionUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesHistorialEditado?: CotizacionHistorialUpdateManyWithoutEditadoPorNestedInput
     ausencias?: AusenciaUpdateManyWithoutUsuarioNestedInput
     ausenciasRegistradas?: AusenciaUpdateManyWithoutRegistradoPorNestedInput
   }
@@ -29269,6 +31029,7 @@ export namespace Prisma {
     pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesCreadas?: CotizacionUncheckedUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesHistorialEditado?: CotizacionHistorialUncheckedUpdateManyWithoutEditadoPorNestedInput
     ausencias?: AusenciaUncheckedUpdateManyWithoutUsuarioNestedInput
     ausenciasRegistradas?: AusenciaUncheckedUpdateManyWithoutRegistradoPorNestedInput
   }
@@ -29736,6 +31497,7 @@ export namespace Prisma {
     pedidosEditados?: PedidoCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesCreadas?: CotizacionCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesHistorialEditado?: CotizacionHistorialCreateNestedManyWithoutEditadoPorInput
     ausencias?: AusenciaCreateNestedManyWithoutUsuarioInput
     ausenciasRegistradas?: AusenciaCreateNestedManyWithoutRegistradoPorInput
   }
@@ -29760,6 +31522,7 @@ export namespace Prisma {
     pedidosEditados?: PedidoUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesCreadas?: CotizacionUncheckedCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesHistorialEditado?: CotizacionHistorialUncheckedCreateNestedManyWithoutEditadoPorInput
     ausencias?: AusenciaUncheckedCreateNestedManyWithoutUsuarioInput
     ausenciasRegistradas?: AusenciaUncheckedCreateNestedManyWithoutRegistradoPorInput
   }
@@ -29863,6 +31626,7 @@ export namespace Prisma {
     pedidosEditados?: PedidoUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesCreadas?: CotizacionUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesHistorialEditado?: CotizacionHistorialUpdateManyWithoutEditadoPorNestedInput
     ausencias?: AusenciaUpdateManyWithoutUsuarioNestedInput
     ausenciasRegistradas?: AusenciaUpdateManyWithoutRegistradoPorNestedInput
   }
@@ -29887,6 +31651,7 @@ export namespace Prisma {
     pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesCreadas?: CotizacionUncheckedUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesHistorialEditado?: CotizacionHistorialUncheckedUpdateManyWithoutEditadoPorNestedInput
     ausencias?: AusenciaUncheckedUpdateManyWithoutUsuarioNestedInput
     ausenciasRegistradas?: AusenciaUncheckedUpdateManyWithoutRegistradoPorNestedInput
   }
@@ -29950,6 +31715,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     creadoPor: UsuarioCreateNestedOneWithoutCotizacionesCreadasInput
     ultimoEditadoPor?: UsuarioCreateNestedOneWithoutCotizacionesEditadasInput
+    historial?: CotizacionHistorialCreateNestedManyWithoutCotizacionInput
   }
 
   export type CotizacionUncheckedCreateWithoutClienteInput = {
@@ -29965,6 +31731,7 @@ export namespace Prisma {
     ultimoEditadoPorId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    historial?: CotizacionHistorialUncheckedCreateNestedManyWithoutCotizacionInput
   }
 
   export type CotizacionCreateOrConnectWithoutClienteInput = {
@@ -30060,6 +31827,7 @@ export namespace Prisma {
     pedidosEditados?: PedidoCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesCreadas?: CotizacionCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesHistorialEditado?: CotizacionHistorialCreateNestedManyWithoutEditadoPorInput
     ausencias?: AusenciaCreateNestedManyWithoutUsuarioInput
     ausenciasRegistradas?: AusenciaCreateNestedManyWithoutRegistradoPorInput
   }
@@ -30084,6 +31852,7 @@ export namespace Prisma {
     pedidosEditados?: PedidoUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesCreadas?: CotizacionUncheckedCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesHistorialEditado?: CotizacionHistorialUncheckedCreateNestedManyWithoutEditadoPorInput
     ausencias?: AusenciaUncheckedCreateNestedManyWithoutUsuarioInput
     ausenciasRegistradas?: AusenciaUncheckedCreateNestedManyWithoutRegistradoPorInput
   }
@@ -30112,6 +31881,7 @@ export namespace Prisma {
     pedidosCreados?: PedidoCreateNestedManyWithoutCreadoPorInput
     cotizacionesCreadas?: CotizacionCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesHistorialEditado?: CotizacionHistorialCreateNestedManyWithoutEditadoPorInput
     ausencias?: AusenciaCreateNestedManyWithoutUsuarioInput
     ausenciasRegistradas?: AusenciaCreateNestedManyWithoutRegistradoPorInput
   }
@@ -30136,6 +31906,7 @@ export namespace Prisma {
     pedidosCreados?: PedidoUncheckedCreateNestedManyWithoutCreadoPorInput
     cotizacionesCreadas?: CotizacionUncheckedCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesHistorialEditado?: CotizacionHistorialUncheckedCreateNestedManyWithoutEditadoPorInput
     ausencias?: AusenciaUncheckedCreateNestedManyWithoutUsuarioInput
     ausenciasRegistradas?: AusenciaUncheckedCreateNestedManyWithoutRegistradoPorInput
   }
@@ -30213,6 +31984,7 @@ export namespace Prisma {
     pedidosEditados?: PedidoUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesCreadas?: CotizacionUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesHistorialEditado?: CotizacionHistorialUpdateManyWithoutEditadoPorNestedInput
     ausencias?: AusenciaUpdateManyWithoutUsuarioNestedInput
     ausenciasRegistradas?: AusenciaUpdateManyWithoutRegistradoPorNestedInput
   }
@@ -30237,6 +32009,7 @@ export namespace Prisma {
     pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesCreadas?: CotizacionUncheckedUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesHistorialEditado?: CotizacionHistorialUncheckedUpdateManyWithoutEditadoPorNestedInput
     ausencias?: AusenciaUncheckedUpdateManyWithoutUsuarioNestedInput
     ausenciasRegistradas?: AusenciaUncheckedUpdateManyWithoutRegistradoPorNestedInput
   }
@@ -30271,6 +32044,7 @@ export namespace Prisma {
     pedidosCreados?: PedidoUpdateManyWithoutCreadoPorNestedInput
     cotizacionesCreadas?: CotizacionUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesHistorialEditado?: CotizacionHistorialUpdateManyWithoutEditadoPorNestedInput
     ausencias?: AusenciaUpdateManyWithoutUsuarioNestedInput
     ausenciasRegistradas?: AusenciaUpdateManyWithoutRegistradoPorNestedInput
   }
@@ -30295,6 +32069,7 @@ export namespace Prisma {
     pedidosCreados?: PedidoUncheckedUpdateManyWithoutCreadoPorNestedInput
     cotizacionesCreadas?: CotizacionUncheckedUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesHistorialEditado?: CotizacionHistorialUncheckedUpdateManyWithoutEditadoPorNestedInput
     ausencias?: AusenciaUncheckedUpdateManyWithoutUsuarioNestedInput
     ausenciasRegistradas?: AusenciaUncheckedUpdateManyWithoutRegistradoPorNestedInput
   }
@@ -30350,6 +32125,7 @@ export namespace Prisma {
     pedidosCreados?: PedidoCreateNestedManyWithoutCreadoPorInput
     pedidosEditados?: PedidoCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesEditadas?: CotizacionCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesHistorialEditado?: CotizacionHistorialCreateNestedManyWithoutEditadoPorInput
     ausencias?: AusenciaCreateNestedManyWithoutUsuarioInput
     ausenciasRegistradas?: AusenciaCreateNestedManyWithoutRegistradoPorInput
   }
@@ -30374,6 +32150,7 @@ export namespace Prisma {
     pedidosCreados?: PedidoUncheckedCreateNestedManyWithoutCreadoPorInput
     pedidosEditados?: PedidoUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesEditadas?: CotizacionUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesHistorialEditado?: CotizacionHistorialUncheckedCreateNestedManyWithoutEditadoPorInput
     ausencias?: AusenciaUncheckedCreateNestedManyWithoutUsuarioInput
     ausenciasRegistradas?: AusenciaUncheckedCreateNestedManyWithoutRegistradoPorInput
   }
@@ -30402,6 +32179,7 @@ export namespace Prisma {
     pedidosCreados?: PedidoCreateNestedManyWithoutCreadoPorInput
     pedidosEditados?: PedidoCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesCreadas?: CotizacionCreateNestedManyWithoutCreadoPorInput
+    cotizacionesHistorialEditado?: CotizacionHistorialCreateNestedManyWithoutEditadoPorInput
     ausencias?: AusenciaCreateNestedManyWithoutUsuarioInput
     ausenciasRegistradas?: AusenciaCreateNestedManyWithoutRegistradoPorInput
   }
@@ -30426,6 +32204,7 @@ export namespace Prisma {
     pedidosCreados?: PedidoUncheckedCreateNestedManyWithoutCreadoPorInput
     pedidosEditados?: PedidoUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesCreadas?: CotizacionUncheckedCreateNestedManyWithoutCreadoPorInput
+    cotizacionesHistorialEditado?: CotizacionHistorialUncheckedCreateNestedManyWithoutEditadoPorInput
     ausencias?: AusenciaUncheckedCreateNestedManyWithoutUsuarioInput
     ausenciasRegistradas?: AusenciaUncheckedCreateNestedManyWithoutRegistradoPorInput
   }
@@ -30433,6 +32212,35 @@ export namespace Prisma {
   export type UsuarioCreateOrConnectWithoutCotizacionesEditadasInput = {
     where: UsuarioWhereUniqueInput
     create: XOR<UsuarioCreateWithoutCotizacionesEditadasInput, UsuarioUncheckedCreateWithoutCotizacionesEditadasInput>
+  }
+
+  export type CotizacionHistorialCreateWithoutCotizacionInput = {
+    campo: string
+    valorAnterior?: string | null
+    valorNuevo?: string | null
+    motivo?: string | null
+    editadoEn?: Date | string
+    editadoPor: UsuarioCreateNestedOneWithoutCotizacionesHistorialEditadoInput
+  }
+
+  export type CotizacionHistorialUncheckedCreateWithoutCotizacionInput = {
+    id?: number
+    campo: string
+    valorAnterior?: string | null
+    valorNuevo?: string | null
+    motivo?: string | null
+    editadoPorId: number
+    editadoEn?: Date | string
+  }
+
+  export type CotizacionHistorialCreateOrConnectWithoutCotizacionInput = {
+    where: CotizacionHistorialWhereUniqueInput
+    create: XOR<CotizacionHistorialCreateWithoutCotizacionInput, CotizacionHistorialUncheckedCreateWithoutCotizacionInput>
+  }
+
+  export type CotizacionHistorialCreateManyCotizacionInputEnvelope = {
+    data: CotizacionHistorialCreateManyCotizacionInput | CotizacionHistorialCreateManyCotizacionInput[]
+    skipDuplicates?: boolean
   }
 
   export type ClienteUpsertWithoutCotizacionesInput = {
@@ -30503,6 +32311,7 @@ export namespace Prisma {
     pedidosCreados?: PedidoUpdateManyWithoutCreadoPorNestedInput
     pedidosEditados?: PedidoUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesEditadas?: CotizacionUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesHistorialEditado?: CotizacionHistorialUpdateManyWithoutEditadoPorNestedInput
     ausencias?: AusenciaUpdateManyWithoutUsuarioNestedInput
     ausenciasRegistradas?: AusenciaUpdateManyWithoutRegistradoPorNestedInput
   }
@@ -30527,6 +32336,7 @@ export namespace Prisma {
     pedidosCreados?: PedidoUncheckedUpdateManyWithoutCreadoPorNestedInput
     pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesEditadas?: CotizacionUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesHistorialEditado?: CotizacionHistorialUncheckedUpdateManyWithoutEditadoPorNestedInput
     ausencias?: AusenciaUncheckedUpdateManyWithoutUsuarioNestedInput
     ausenciasRegistradas?: AusenciaUncheckedUpdateManyWithoutRegistradoPorNestedInput
   }
@@ -30561,6 +32371,7 @@ export namespace Prisma {
     pedidosCreados?: PedidoUpdateManyWithoutCreadoPorNestedInput
     pedidosEditados?: PedidoUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesCreadas?: CotizacionUpdateManyWithoutCreadoPorNestedInput
+    cotizacionesHistorialEditado?: CotizacionHistorialUpdateManyWithoutEditadoPorNestedInput
     ausencias?: AusenciaUpdateManyWithoutUsuarioNestedInput
     ausenciasRegistradas?: AusenciaUpdateManyWithoutRegistradoPorNestedInput
   }
@@ -30585,6 +32396,215 @@ export namespace Prisma {
     pedidosCreados?: PedidoUncheckedUpdateManyWithoutCreadoPorNestedInput
     pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesCreadas?: CotizacionUncheckedUpdateManyWithoutCreadoPorNestedInput
+    cotizacionesHistorialEditado?: CotizacionHistorialUncheckedUpdateManyWithoutEditadoPorNestedInput
+    ausencias?: AusenciaUncheckedUpdateManyWithoutUsuarioNestedInput
+    ausenciasRegistradas?: AusenciaUncheckedUpdateManyWithoutRegistradoPorNestedInput
+  }
+
+  export type CotizacionHistorialUpsertWithWhereUniqueWithoutCotizacionInput = {
+    where: CotizacionHistorialWhereUniqueInput
+    update: XOR<CotizacionHistorialUpdateWithoutCotizacionInput, CotizacionHistorialUncheckedUpdateWithoutCotizacionInput>
+    create: XOR<CotizacionHistorialCreateWithoutCotizacionInput, CotizacionHistorialUncheckedCreateWithoutCotizacionInput>
+  }
+
+  export type CotizacionHistorialUpdateWithWhereUniqueWithoutCotizacionInput = {
+    where: CotizacionHistorialWhereUniqueInput
+    data: XOR<CotizacionHistorialUpdateWithoutCotizacionInput, CotizacionHistorialUncheckedUpdateWithoutCotizacionInput>
+  }
+
+  export type CotizacionHistorialUpdateManyWithWhereWithoutCotizacionInput = {
+    where: CotizacionHistorialScalarWhereInput
+    data: XOR<CotizacionHistorialUpdateManyMutationInput, CotizacionHistorialUncheckedUpdateManyWithoutCotizacionInput>
+  }
+
+  export type CotizacionCreateWithoutHistorialInput = {
+    numeroProforma?: string | null
+    notas?: string | null
+    requerimientoEn?: Date | string
+    cotizacionEnviadaEn?: Date | string | null
+    pedidoAprobadoEn?: Date | string | null
+    avisoAlmacenEn?: Date | string | null
+    recordatorioEnviadoEn?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    cliente: ClienteCreateNestedOneWithoutCotizacionesInput
+    creadoPor: UsuarioCreateNestedOneWithoutCotizacionesCreadasInput
+    ultimoEditadoPor?: UsuarioCreateNestedOneWithoutCotizacionesEditadasInput
+  }
+
+  export type CotizacionUncheckedCreateWithoutHistorialInput = {
+    id?: number
+    clienteId: number
+    numeroProforma?: string | null
+    notas?: string | null
+    requerimientoEn?: Date | string
+    cotizacionEnviadaEn?: Date | string | null
+    pedidoAprobadoEn?: Date | string | null
+    avisoAlmacenEn?: Date | string | null
+    recordatorioEnviadoEn?: Date | string | null
+    creadoPorId: number
+    ultimoEditadoPorId?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CotizacionCreateOrConnectWithoutHistorialInput = {
+    where: CotizacionWhereUniqueInput
+    create: XOR<CotizacionCreateWithoutHistorialInput, CotizacionUncheckedCreateWithoutHistorialInput>
+  }
+
+  export type UsuarioCreateWithoutCotizacionesHistorialEditadoInput = {
+    supabaseUserId: string
+    nombre: string
+    esAdmin?: boolean
+    esAdminKpis?: boolean
+    activo?: boolean
+    desactivadoEn?: Date | string | null
+    avatarUrl?: string | null
+    createdAt?: Date | string
+    desactivadoPor?: UsuarioCreateNestedOneWithoutDesactivadosInput
+    desactivados?: UsuarioCreateNestedManyWithoutDesactivadoPorInput
+    permisos?: PermisoCreateNestedManyWithoutUsuarioInput
+    trabajosImpresion?: TrabajoImpresionCreateNestedManyWithoutCreadoPorInput
+    archivosSubidos?: ArchivoCreateNestedManyWithoutSubidoPorInput
+    accesosIndicador?: AccesoIndicadorCreateNestedManyWithoutUsuarioInput
+    accesoIso?: AccesoISOCreateNestedOneWithoutUsuarioInput
+    pedidosCreados?: PedidoCreateNestedManyWithoutCreadoPorInput
+    pedidosEditados?: PedidoCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesCreadas?: CotizacionCreateNestedManyWithoutCreadoPorInput
+    cotizacionesEditadas?: CotizacionCreateNestedManyWithoutUltimoEditadoPorInput
+    ausencias?: AusenciaCreateNestedManyWithoutUsuarioInput
+    ausenciasRegistradas?: AusenciaCreateNestedManyWithoutRegistradoPorInput
+  }
+
+  export type UsuarioUncheckedCreateWithoutCotizacionesHistorialEditadoInput = {
+    id?: number
+    supabaseUserId: string
+    nombre: string
+    esAdmin?: boolean
+    esAdminKpis?: boolean
+    activo?: boolean
+    desactivadoEn?: Date | string | null
+    desactivadoPorId?: number | null
+    avatarUrl?: string | null
+    createdAt?: Date | string
+    desactivados?: UsuarioUncheckedCreateNestedManyWithoutDesactivadoPorInput
+    permisos?: PermisoUncheckedCreateNestedManyWithoutUsuarioInput
+    trabajosImpresion?: TrabajoImpresionUncheckedCreateNestedManyWithoutCreadoPorInput
+    archivosSubidos?: ArchivoUncheckedCreateNestedManyWithoutSubidoPorInput
+    accesosIndicador?: AccesoIndicadorUncheckedCreateNestedManyWithoutUsuarioInput
+    accesoIso?: AccesoISOUncheckedCreateNestedOneWithoutUsuarioInput
+    pedidosCreados?: PedidoUncheckedCreateNestedManyWithoutCreadoPorInput
+    pedidosEditados?: PedidoUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesCreadas?: CotizacionUncheckedCreateNestedManyWithoutCreadoPorInput
+    cotizacionesEditadas?: CotizacionUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    ausencias?: AusenciaUncheckedCreateNestedManyWithoutUsuarioInput
+    ausenciasRegistradas?: AusenciaUncheckedCreateNestedManyWithoutRegistradoPorInput
+  }
+
+  export type UsuarioCreateOrConnectWithoutCotizacionesHistorialEditadoInput = {
+    where: UsuarioWhereUniqueInput
+    create: XOR<UsuarioCreateWithoutCotizacionesHistorialEditadoInput, UsuarioUncheckedCreateWithoutCotizacionesHistorialEditadoInput>
+  }
+
+  export type CotizacionUpsertWithoutHistorialInput = {
+    update: XOR<CotizacionUpdateWithoutHistorialInput, CotizacionUncheckedUpdateWithoutHistorialInput>
+    create: XOR<CotizacionCreateWithoutHistorialInput, CotizacionUncheckedCreateWithoutHistorialInput>
+    where?: CotizacionWhereInput
+  }
+
+  export type CotizacionUpdateToOneWithWhereWithoutHistorialInput = {
+    where?: CotizacionWhereInput
+    data: XOR<CotizacionUpdateWithoutHistorialInput, CotizacionUncheckedUpdateWithoutHistorialInput>
+  }
+
+  export type CotizacionUpdateWithoutHistorialInput = {
+    numeroProforma?: NullableStringFieldUpdateOperationsInput | string | null
+    notas?: NullableStringFieldUpdateOperationsInput | string | null
+    requerimientoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    cotizacionEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    pedidoAprobadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    avisoAlmacenEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    recordatorioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    cliente?: ClienteUpdateOneRequiredWithoutCotizacionesNestedInput
+    creadoPor?: UsuarioUpdateOneRequiredWithoutCotizacionesCreadasNestedInput
+    ultimoEditadoPor?: UsuarioUpdateOneWithoutCotizacionesEditadasNestedInput
+  }
+
+  export type CotizacionUncheckedUpdateWithoutHistorialInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    clienteId?: IntFieldUpdateOperationsInput | number
+    numeroProforma?: NullableStringFieldUpdateOperationsInput | string | null
+    notas?: NullableStringFieldUpdateOperationsInput | string | null
+    requerimientoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    cotizacionEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    pedidoAprobadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    avisoAlmacenEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    recordatorioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    creadoPorId?: IntFieldUpdateOperationsInput | number
+    ultimoEditadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UsuarioUpsertWithoutCotizacionesHistorialEditadoInput = {
+    update: XOR<UsuarioUpdateWithoutCotizacionesHistorialEditadoInput, UsuarioUncheckedUpdateWithoutCotizacionesHistorialEditadoInput>
+    create: XOR<UsuarioCreateWithoutCotizacionesHistorialEditadoInput, UsuarioUncheckedCreateWithoutCotizacionesHistorialEditadoInput>
+    where?: UsuarioWhereInput
+  }
+
+  export type UsuarioUpdateToOneWithWhereWithoutCotizacionesHistorialEditadoInput = {
+    where?: UsuarioWhereInput
+    data: XOR<UsuarioUpdateWithoutCotizacionesHistorialEditadoInput, UsuarioUncheckedUpdateWithoutCotizacionesHistorialEditadoInput>
+  }
+
+  export type UsuarioUpdateWithoutCotizacionesHistorialEditadoInput = {
+    supabaseUserId?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    esAdmin?: BoolFieldUpdateOperationsInput | boolean
+    esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    desactivadoPor?: UsuarioUpdateOneWithoutDesactivadosNestedInput
+    desactivados?: UsuarioUpdateManyWithoutDesactivadoPorNestedInput
+    permisos?: PermisoUpdateManyWithoutUsuarioNestedInput
+    trabajosImpresion?: TrabajoImpresionUpdateManyWithoutCreadoPorNestedInput
+    archivosSubidos?: ArchivoUpdateManyWithoutSubidoPorNestedInput
+    accesosIndicador?: AccesoIndicadorUpdateManyWithoutUsuarioNestedInput
+    accesoIso?: AccesoISOUpdateOneWithoutUsuarioNestedInput
+    pedidosCreados?: PedidoUpdateManyWithoutCreadoPorNestedInput
+    pedidosEditados?: PedidoUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesCreadas?: CotizacionUpdateManyWithoutCreadoPorNestedInput
+    cotizacionesEditadas?: CotizacionUpdateManyWithoutUltimoEditadoPorNestedInput
+    ausencias?: AusenciaUpdateManyWithoutUsuarioNestedInput
+    ausenciasRegistradas?: AusenciaUpdateManyWithoutRegistradoPorNestedInput
+  }
+
+  export type UsuarioUncheckedUpdateWithoutCotizacionesHistorialEditadoInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    supabaseUserId?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    esAdmin?: BoolFieldUpdateOperationsInput | boolean
+    esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    desactivadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    desactivados?: UsuarioUncheckedUpdateManyWithoutDesactivadoPorNestedInput
+    permisos?: PermisoUncheckedUpdateManyWithoutUsuarioNestedInput
+    trabajosImpresion?: TrabajoImpresionUncheckedUpdateManyWithoutCreadoPorNestedInput
+    archivosSubidos?: ArchivoUncheckedUpdateManyWithoutSubidoPorNestedInput
+    accesosIndicador?: AccesoIndicadorUncheckedUpdateManyWithoutUsuarioNestedInput
+    accesoIso?: AccesoISOUncheckedUpdateOneWithoutUsuarioNestedInput
+    pedidosCreados?: PedidoUncheckedUpdateManyWithoutCreadoPorNestedInput
+    pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesCreadas?: CotizacionUncheckedUpdateManyWithoutCreadoPorNestedInput
+    cotizacionesEditadas?: CotizacionUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
     ausencias?: AusenciaUncheckedUpdateManyWithoutUsuarioNestedInput
     ausenciasRegistradas?: AusenciaUncheckedUpdateManyWithoutRegistradoPorNestedInput
   }
@@ -30609,6 +32629,7 @@ export namespace Prisma {
     pedidosEditados?: PedidoCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesCreadas?: CotizacionCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesHistorialEditado?: CotizacionHistorialCreateNestedManyWithoutEditadoPorInput
     ausenciasRegistradas?: AusenciaCreateNestedManyWithoutRegistradoPorInput
   }
 
@@ -30633,6 +32654,7 @@ export namespace Prisma {
     pedidosEditados?: PedidoUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesCreadas?: CotizacionUncheckedCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesHistorialEditado?: CotizacionHistorialUncheckedCreateNestedManyWithoutEditadoPorInput
     ausenciasRegistradas?: AusenciaUncheckedCreateNestedManyWithoutRegistradoPorInput
   }
 
@@ -30661,6 +32683,7 @@ export namespace Prisma {
     pedidosEditados?: PedidoCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesCreadas?: CotizacionCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesHistorialEditado?: CotizacionHistorialCreateNestedManyWithoutEditadoPorInput
     ausencias?: AusenciaCreateNestedManyWithoutUsuarioInput
   }
 
@@ -30685,6 +32708,7 @@ export namespace Prisma {
     pedidosEditados?: PedidoUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesCreadas?: CotizacionUncheckedCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesHistorialEditado?: CotizacionHistorialUncheckedCreateNestedManyWithoutEditadoPorInput
     ausencias?: AusenciaUncheckedCreateNestedManyWithoutUsuarioInput
   }
 
@@ -30724,6 +32748,7 @@ export namespace Prisma {
     pedidosEditados?: PedidoUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesCreadas?: CotizacionUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesHistorialEditado?: CotizacionHistorialUpdateManyWithoutEditadoPorNestedInput
     ausenciasRegistradas?: AusenciaUpdateManyWithoutRegistradoPorNestedInput
   }
 
@@ -30748,6 +32773,7 @@ export namespace Prisma {
     pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesCreadas?: CotizacionUncheckedUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesHistorialEditado?: CotizacionHistorialUncheckedUpdateManyWithoutEditadoPorNestedInput
     ausenciasRegistradas?: AusenciaUncheckedUpdateManyWithoutRegistradoPorNestedInput
   }
 
@@ -30782,6 +32808,7 @@ export namespace Prisma {
     pedidosEditados?: PedidoUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesCreadas?: CotizacionUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesHistorialEditado?: CotizacionHistorialUpdateManyWithoutEditadoPorNestedInput
     ausencias?: AusenciaUpdateManyWithoutUsuarioNestedInput
   }
 
@@ -30806,6 +32833,7 @@ export namespace Prisma {
     pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesCreadas?: CotizacionUncheckedUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesHistorialEditado?: CotizacionHistorialUncheckedUpdateManyWithoutEditadoPorNestedInput
     ausencias?: AusenciaUncheckedUpdateManyWithoutUsuarioNestedInput
   }
 
@@ -31024,6 +33052,7 @@ export namespace Prisma {
     pedidosEditados?: PedidoCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesCreadas?: CotizacionCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesHistorialEditado?: CotizacionHistorialCreateNestedManyWithoutEditadoPorInput
     ausencias?: AusenciaCreateNestedManyWithoutUsuarioInput
     ausenciasRegistradas?: AusenciaCreateNestedManyWithoutRegistradoPorInput
   }
@@ -31048,6 +33077,7 @@ export namespace Prisma {
     pedidosEditados?: PedidoUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesCreadas?: CotizacionUncheckedCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesHistorialEditado?: CotizacionHistorialUncheckedCreateNestedManyWithoutEditadoPorInput
     ausencias?: AusenciaUncheckedCreateNestedManyWithoutUsuarioInput
     ausenciasRegistradas?: AusenciaUncheckedCreateNestedManyWithoutRegistradoPorInput
   }
@@ -31121,6 +33151,7 @@ export namespace Prisma {
     pedidosEditados?: PedidoUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesCreadas?: CotizacionUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesHistorialEditado?: CotizacionHistorialUpdateManyWithoutEditadoPorNestedInput
     ausencias?: AusenciaUpdateManyWithoutUsuarioNestedInput
     ausenciasRegistradas?: AusenciaUpdateManyWithoutRegistradoPorNestedInput
   }
@@ -31145,6 +33176,7 @@ export namespace Prisma {
     pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesCreadas?: CotizacionUncheckedUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesHistorialEditado?: CotizacionHistorialUncheckedUpdateManyWithoutEditadoPorNestedInput
     ausencias?: AusenciaUncheckedUpdateManyWithoutUsuarioNestedInput
     ausenciasRegistradas?: AusenciaUncheckedUpdateManyWithoutRegistradoPorNestedInput
   }
@@ -31168,6 +33200,7 @@ export namespace Prisma {
     pedidosEditados?: PedidoCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesCreadas?: CotizacionCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesHistorialEditado?: CotizacionHistorialCreateNestedManyWithoutEditadoPorInput
     ausencias?: AusenciaCreateNestedManyWithoutUsuarioInput
     ausenciasRegistradas?: AusenciaCreateNestedManyWithoutRegistradoPorInput
   }
@@ -31192,6 +33225,7 @@ export namespace Prisma {
     pedidosEditados?: PedidoUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesCreadas?: CotizacionUncheckedCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesHistorialEditado?: CotizacionHistorialUncheckedCreateNestedManyWithoutEditadoPorInput
     ausencias?: AusenciaUncheckedCreateNestedManyWithoutUsuarioInput
     ausenciasRegistradas?: AusenciaUncheckedCreateNestedManyWithoutRegistradoPorInput
   }
@@ -31231,6 +33265,7 @@ export namespace Prisma {
     pedidosEditados?: PedidoUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesCreadas?: CotizacionUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesHistorialEditado?: CotizacionHistorialUpdateManyWithoutEditadoPorNestedInput
     ausencias?: AusenciaUpdateManyWithoutUsuarioNestedInput
     ausenciasRegistradas?: AusenciaUpdateManyWithoutRegistradoPorNestedInput
   }
@@ -31255,6 +33290,7 @@ export namespace Prisma {
     pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesCreadas?: CotizacionUncheckedUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesHistorialEditado?: CotizacionHistorialUncheckedUpdateManyWithoutEditadoPorNestedInput
     ausencias?: AusenciaUncheckedUpdateManyWithoutUsuarioNestedInput
     ausenciasRegistradas?: AusenciaUncheckedUpdateManyWithoutRegistradoPorNestedInput
   }
@@ -31278,6 +33314,7 @@ export namespace Prisma {
     pedidosEditados?: PedidoCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesCreadas?: CotizacionCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesHistorialEditado?: CotizacionHistorialCreateNestedManyWithoutEditadoPorInput
     ausencias?: AusenciaCreateNestedManyWithoutUsuarioInput
     ausenciasRegistradas?: AusenciaCreateNestedManyWithoutRegistradoPorInput
   }
@@ -31302,6 +33339,7 @@ export namespace Prisma {
     pedidosEditados?: PedidoUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesCreadas?: CotizacionUncheckedCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesHistorialEditado?: CotizacionHistorialUncheckedCreateNestedManyWithoutEditadoPorInput
     ausencias?: AusenciaUncheckedCreateNestedManyWithoutUsuarioInput
     ausenciasRegistradas?: AusenciaUncheckedCreateNestedManyWithoutRegistradoPorInput
   }
@@ -31341,6 +33379,7 @@ export namespace Prisma {
     pedidosEditados?: PedidoUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesCreadas?: CotizacionUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesHistorialEditado?: CotizacionHistorialUpdateManyWithoutEditadoPorNestedInput
     ausencias?: AusenciaUpdateManyWithoutUsuarioNestedInput
     ausenciasRegistradas?: AusenciaUpdateManyWithoutRegistradoPorNestedInput
   }
@@ -31365,6 +33404,7 @@ export namespace Prisma {
     pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesCreadas?: CotizacionUncheckedUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesHistorialEditado?: CotizacionHistorialUncheckedUpdateManyWithoutEditadoPorNestedInput
     ausencias?: AusenciaUncheckedUpdateManyWithoutUsuarioNestedInput
     ausenciasRegistradas?: AusenciaUncheckedUpdateManyWithoutRegistradoPorNestedInput
   }
@@ -31500,6 +33540,16 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type CotizacionHistorialCreateManyEditadoPorInput = {
+    id?: number
+    cotizacionId: number
+    campo: string
+    valorAnterior?: string | null
+    valorNuevo?: string | null
+    motivo?: string | null
+    editadoEn?: Date | string
+  }
+
   export type AusenciaCreateManyUsuarioInput = {
     id?: number
     desde: Date | string
@@ -31537,6 +33587,7 @@ export namespace Prisma {
     pedidosEditados?: PedidoUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesCreadas?: CotizacionUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesHistorialEditado?: CotizacionHistorialUpdateManyWithoutEditadoPorNestedInput
     ausencias?: AusenciaUpdateManyWithoutUsuarioNestedInput
     ausenciasRegistradas?: AusenciaUpdateManyWithoutRegistradoPorNestedInput
   }
@@ -31561,6 +33612,7 @@ export namespace Prisma {
     pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesCreadas?: CotizacionUncheckedUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesHistorialEditado?: CotizacionHistorialUncheckedUpdateManyWithoutEditadoPorNestedInput
     ausencias?: AusenciaUncheckedUpdateManyWithoutUsuarioNestedInput
     ausenciasRegistradas?: AusenciaUncheckedUpdateManyWithoutRegistradoPorNestedInput
   }
@@ -31850,6 +33902,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     cliente?: ClienteUpdateOneRequiredWithoutCotizacionesNestedInput
     ultimoEditadoPor?: UsuarioUpdateOneWithoutCotizacionesEditadasNestedInput
+    historial?: CotizacionHistorialUpdateManyWithoutCotizacionNestedInput
   }
 
   export type CotizacionUncheckedUpdateWithoutCreadoPorInput = {
@@ -31865,6 +33918,7 @@ export namespace Prisma {
     ultimoEditadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    historial?: CotizacionHistorialUncheckedUpdateManyWithoutCotizacionNestedInput
   }
 
   export type CotizacionUncheckedUpdateManyWithoutCreadoPorInput = {
@@ -31894,6 +33948,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     cliente?: ClienteUpdateOneRequiredWithoutCotizacionesNestedInput
     creadoPor?: UsuarioUpdateOneRequiredWithoutCotizacionesCreadasNestedInput
+    historial?: CotizacionHistorialUpdateManyWithoutCotizacionNestedInput
   }
 
   export type CotizacionUncheckedUpdateWithoutUltimoEditadoPorInput = {
@@ -31909,6 +33964,7 @@ export namespace Prisma {
     creadoPorId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    historial?: CotizacionHistorialUncheckedUpdateManyWithoutCotizacionNestedInput
   }
 
   export type CotizacionUncheckedUpdateManyWithoutUltimoEditadoPorInput = {
@@ -31924,6 +33980,35 @@ export namespace Prisma {
     creadoPorId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CotizacionHistorialUpdateWithoutEditadoPorInput = {
+    campo?: StringFieldUpdateOperationsInput | string
+    valorAnterior?: NullableStringFieldUpdateOperationsInput | string | null
+    valorNuevo?: NullableStringFieldUpdateOperationsInput | string | null
+    motivo?: NullableStringFieldUpdateOperationsInput | string | null
+    editadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    cotizacion?: CotizacionUpdateOneRequiredWithoutHistorialNestedInput
+  }
+
+  export type CotizacionHistorialUncheckedUpdateWithoutEditadoPorInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    cotizacionId?: IntFieldUpdateOperationsInput | number
+    campo?: StringFieldUpdateOperationsInput | string
+    valorAnterior?: NullableStringFieldUpdateOperationsInput | string | null
+    valorNuevo?: NullableStringFieldUpdateOperationsInput | string | null
+    motivo?: NullableStringFieldUpdateOperationsInput | string | null
+    editadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CotizacionHistorialUncheckedUpdateManyWithoutEditadoPorInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    cotizacionId?: IntFieldUpdateOperationsInput | number
+    campo?: StringFieldUpdateOperationsInput | string
+    valorAnterior?: NullableStringFieldUpdateOperationsInput | string | null
+    valorNuevo?: NullableStringFieldUpdateOperationsInput | string | null
+    motivo?: NullableStringFieldUpdateOperationsInput | string | null
+    editadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type AusenciaUpdateWithoutUsuarioInput = {
@@ -32360,6 +34445,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     creadoPor?: UsuarioUpdateOneRequiredWithoutCotizacionesCreadasNestedInput
     ultimoEditadoPor?: UsuarioUpdateOneWithoutCotizacionesEditadasNestedInput
+    historial?: CotizacionHistorialUpdateManyWithoutCotizacionNestedInput
   }
 
   export type CotizacionUncheckedUpdateWithoutClienteInput = {
@@ -32375,6 +34461,7 @@ export namespace Prisma {
     ultimoEditadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    historial?: CotizacionHistorialUncheckedUpdateManyWithoutCotizacionNestedInput
   }
 
   export type CotizacionUncheckedUpdateManyWithoutClienteInput = {
@@ -32390,6 +34477,45 @@ export namespace Prisma {
     ultimoEditadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CotizacionHistorialCreateManyCotizacionInput = {
+    id?: number
+    campo: string
+    valorAnterior?: string | null
+    valorNuevo?: string | null
+    motivo?: string | null
+    editadoPorId: number
+    editadoEn?: Date | string
+  }
+
+  export type CotizacionHistorialUpdateWithoutCotizacionInput = {
+    campo?: StringFieldUpdateOperationsInput | string
+    valorAnterior?: NullableStringFieldUpdateOperationsInput | string | null
+    valorNuevo?: NullableStringFieldUpdateOperationsInput | string | null
+    motivo?: NullableStringFieldUpdateOperationsInput | string | null
+    editadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    editadoPor?: UsuarioUpdateOneRequiredWithoutCotizacionesHistorialEditadoNestedInput
+  }
+
+  export type CotizacionHistorialUncheckedUpdateWithoutCotizacionInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    campo?: StringFieldUpdateOperationsInput | string
+    valorAnterior?: NullableStringFieldUpdateOperationsInput | string | null
+    valorNuevo?: NullableStringFieldUpdateOperationsInput | string | null
+    motivo?: NullableStringFieldUpdateOperationsInput | string | null
+    editadoPorId?: IntFieldUpdateOperationsInput | number
+    editadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CotizacionHistorialUncheckedUpdateManyWithoutCotizacionInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    campo?: StringFieldUpdateOperationsInput | string
+    valorAnterior?: NullableStringFieldUpdateOperationsInput | string | null
+    valorNuevo?: NullableStringFieldUpdateOperationsInput | string | null
+    motivo?: NullableStringFieldUpdateOperationsInput | string | null
+    editadoPorId?: IntFieldUpdateOperationsInput | number
+    editadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type CarpetaCreateManyCarpetaPadreInput = {

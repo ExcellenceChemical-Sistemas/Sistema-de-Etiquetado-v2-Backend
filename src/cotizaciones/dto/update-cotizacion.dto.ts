@@ -32,4 +32,12 @@ export class UpdateCotizacionDto {
   @IsOptional()
   @IsDateString()
   avisoAlmacenEn?: string;
+
+  // Obligatorio cuando se corrige (no cuando se marca por primera vez) una de las 3 fechas de
+  // arriba — ver ForbiddenException en cotizaciones.service.ts. El valor de la fecha en sí se
+  // ignora al marcar por primera vez: el service usa la hora real del servidor.
+  @IsOptional()
+  @IsString()
+  @MaxLength(300)
+  motivoCorreccion?: string;
 }

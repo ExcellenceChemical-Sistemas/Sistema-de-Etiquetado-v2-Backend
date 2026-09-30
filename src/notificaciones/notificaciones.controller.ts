@@ -1,4 +1,4 @@
-import { Controller, Get, Param, ParseIntPipe, Patch, Req, UseGuards } from '@nestjs/common';
+import { Controller, Delete, Get, Param, ParseIntPipe, Patch, Req, UseGuards } from '@nestjs/common';
 import type { Request } from 'express';
 import { NotificacionesService } from './notificaciones.service';
 import { SupabaseAuthGuard } from '../common/guards/supabase-auth.guard';
@@ -33,5 +33,11 @@ export class NotificacionesController {
   marcarLeida(@Param('id', ParseIntPipe) id: number, @Req() req: Request) {
     const usuario = (req as any).usuario;
     return this.notificacionesService.marcarLeida(id, usuario.id);
+  }
+
+  @Delete(':id')
+  eliminar(@Param('id', ParseIntPipe) id: number, @Req() req: Request) {
+    const usuario = (req as any).usuario;
+    return this.notificacionesService.eliminar(id, usuario.id);
   }
 }

@@ -35,4 +35,14 @@ export class NotificacionesService {
     });
     return { ok: true };
   }
+
+  async eliminar(id: number, usuarioId: number) {
+    const notificacion = await this.prisma.notificacion.findUnique({ where: { id } });
+    // Mismo criterio que marcarLeida: 404 en ambos casos, no filtra cuáles existen.
+    if (!notificacion || notificacion.usuarioId !== usuarioId) {
+      throw new NotFoundException(`Notificación con id ${id} no encontrada`);
+    }
+    await this.prisma.notificacion.delete({ where: { id } });
+    return { ok: true };
+  }
 }

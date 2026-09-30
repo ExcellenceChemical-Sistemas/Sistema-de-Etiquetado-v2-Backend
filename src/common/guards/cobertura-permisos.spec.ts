@@ -15,6 +15,7 @@ import { AccesoCarpetaGuard } from './acceso-carpeta.guard';
 import { AgentTokenGuard } from './agent-token.guard';
 
 import { AppController } from '../../app.controller';
+import { AusenciasController } from '../../ausencias/ausencias.controller';
 import { ArchivosController } from '../../carpetas/archivos.controller';
 import { CarpetasController } from '../../carpetas/carpetas.controller';
 import { ClientesController } from '../../clientes/clientes.controller';
@@ -40,6 +41,7 @@ import { UsuariosController } from '../../usuario/usuarios.controller';
  */
 const CONTROLLERS: any[] = [
   AppController,
+  AusenciasController,
   ArchivosController,
   CarpetasController,
   ClientesController,

@@ -64,6 +64,11 @@ export type Pedido = $Result.DefaultSelection<Prisma.$PedidoPayload>
  */
 export type Cotizacion = $Result.DefaultSelection<Prisma.$CotizacionPayload>
 /**
+ * Model Ausencia
+ * 
+ */
+export type Ausencia = $Result.DefaultSelection<Prisma.$AusenciaPayload>
+/**
  * Model Carpeta
  * 
  */
@@ -433,6 +438,16 @@ export class PrismaClient<
     * ```
     */
   get cotizacion(): Prisma.CotizacionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.ausencia`: Exposes CRUD operations for the **Ausencia** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Ausencias
+    * const ausencias = await prisma.ausencia.findMany()
+    * ```
+    */
+  get ausencia(): Prisma.AusenciaDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.carpeta`: Exposes CRUD operations for the **Carpeta** model.
@@ -940,6 +955,7 @@ export namespace Prisma {
     Cliente: 'Cliente',
     Pedido: 'Pedido',
     Cotizacion: 'Cotizacion',
+    Ausencia: 'Ausencia',
     Carpeta: 'Carpeta',
     Archivo: 'Archivo',
     AccesoIndicador: 'AccesoIndicador',
@@ -960,7 +976,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "usuario" | "permiso" | "fabricante" | "producto" | "plantilla" | "lote" | "trabajoImpresion" | "cliente" | "pedido" | "cotizacion" | "carpeta" | "archivo" | "accesoIndicador" | "accesoISO" | "registroAuditoria"
+      modelProps: "usuario" | "permiso" | "fabricante" | "producto" | "plantilla" | "lote" | "trabajoImpresion" | "cliente" | "pedido" | "cotizacion" | "ausencia" | "carpeta" | "archivo" | "accesoIndicador" | "accesoISO" | "registroAuditoria"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1704,6 +1720,80 @@ export namespace Prisma {
           }
         }
       }
+      Ausencia: {
+        payload: Prisma.$AusenciaPayload<ExtArgs>
+        fields: Prisma.AusenciaFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AusenciaFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AusenciaPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AusenciaFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AusenciaPayload>
+          }
+          findFirst: {
+            args: Prisma.AusenciaFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AusenciaPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AusenciaFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AusenciaPayload>
+          }
+          findMany: {
+            args: Prisma.AusenciaFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AusenciaPayload>[]
+          }
+          create: {
+            args: Prisma.AusenciaCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AusenciaPayload>
+          }
+          createMany: {
+            args: Prisma.AusenciaCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AusenciaCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AusenciaPayload>[]
+          }
+          delete: {
+            args: Prisma.AusenciaDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AusenciaPayload>
+          }
+          update: {
+            args: Prisma.AusenciaUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AusenciaPayload>
+          }
+          deleteMany: {
+            args: Prisma.AusenciaDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AusenciaUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AusenciaUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AusenciaPayload>[]
+          }
+          upsert: {
+            args: Prisma.AusenciaUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AusenciaPayload>
+          }
+          aggregate: {
+            args: Prisma.AusenciaAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAusencia>
+          }
+          groupBy: {
+            args: Prisma.AusenciaGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AusenciaGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AusenciaCountArgs<ExtArgs>
+            result: $Utils.Optional<AusenciaCountAggregateOutputType> | number
+          }
+        }
+      }
       Carpeta: {
         payload: Prisma.$CarpetaPayload<ExtArgs>
         fields: Prisma.CarpetaFieldRefs
@@ -2207,6 +2297,7 @@ export namespace Prisma {
     cliente?: ClienteOmit
     pedido?: PedidoOmit
     cotizacion?: CotizacionOmit
+    ausencia?: AusenciaOmit
     carpeta?: CarpetaOmit
     archivo?: ArchivoOmit
     accesoIndicador?: AccesoIndicadorOmit
@@ -2301,6 +2392,8 @@ export namespace Prisma {
     pedidosEditados: number
     cotizacionesCreadas: number
     cotizacionesEditadas: number
+    ausencias: number
+    ausenciasRegistradas: number
   }
 
   export type UsuarioCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2313,6 +2406,8 @@ export namespace Prisma {
     pedidosEditados?: boolean | UsuarioCountOutputTypeCountPedidosEditadosArgs
     cotizacionesCreadas?: boolean | UsuarioCountOutputTypeCountCotizacionesCreadasArgs
     cotizacionesEditadas?: boolean | UsuarioCountOutputTypeCountCotizacionesEditadasArgs
+    ausencias?: boolean | UsuarioCountOutputTypeCountAusenciasArgs
+    ausenciasRegistradas?: boolean | UsuarioCountOutputTypeCountAusenciasRegistradasArgs
   }
 
   // Custom InputTypes
@@ -2387,6 +2482,20 @@ export namespace Prisma {
    */
   export type UsuarioCountOutputTypeCountCotizacionesEditadasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: CotizacionWhereInput
+  }
+
+  /**
+   * UsuarioCountOutputType without action
+   */
+  export type UsuarioCountOutputTypeCountAusenciasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AusenciaWhereInput
+  }
+
+  /**
+   * UsuarioCountOutputType without action
+   */
+  export type UsuarioCountOutputTypeCountAusenciasRegistradasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AusenciaWhereInput
   }
 
 
@@ -2851,6 +2960,8 @@ export namespace Prisma {
     pedidosEditados?: boolean | Usuario$pedidosEditadosArgs<ExtArgs>
     cotizacionesCreadas?: boolean | Usuario$cotizacionesCreadasArgs<ExtArgs>
     cotizacionesEditadas?: boolean | Usuario$cotizacionesEditadasArgs<ExtArgs>
+    ausencias?: boolean | Usuario$ausenciasArgs<ExtArgs>
+    ausenciasRegistradas?: boolean | Usuario$ausenciasRegistradasArgs<ExtArgs>
     _count?: boolean | UsuarioCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["usuario"]>
 
@@ -2908,6 +3019,8 @@ export namespace Prisma {
     pedidosEditados?: boolean | Usuario$pedidosEditadosArgs<ExtArgs>
     cotizacionesCreadas?: boolean | Usuario$cotizacionesCreadasArgs<ExtArgs>
     cotizacionesEditadas?: boolean | Usuario$cotizacionesEditadasArgs<ExtArgs>
+    ausencias?: boolean | Usuario$ausenciasArgs<ExtArgs>
+    ausenciasRegistradas?: boolean | Usuario$ausenciasRegistradasArgs<ExtArgs>
     _count?: boolean | UsuarioCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UsuarioIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2931,6 +3044,8 @@ export namespace Prisma {
       pedidosEditados: Prisma.$PedidoPayload<ExtArgs>[]
       cotizacionesCreadas: Prisma.$CotizacionPayload<ExtArgs>[]
       cotizacionesEditadas: Prisma.$CotizacionPayload<ExtArgs>[]
+      ausencias: Prisma.$AusenciaPayload<ExtArgs>[]
+      ausenciasRegistradas: Prisma.$AusenciaPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -3348,6 +3463,8 @@ export namespace Prisma {
     pedidosEditados<T extends Usuario$pedidosEditadosArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$pedidosEditadosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PedidoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     cotizacionesCreadas<T extends Usuario$cotizacionesCreadasArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$cotizacionesCreadasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CotizacionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     cotizacionesEditadas<T extends Usuario$cotizacionesEditadasArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$cotizacionesEditadasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CotizacionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    ausencias<T extends Usuario$ausenciasArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$ausenciasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AusenciaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    ausenciasRegistradas<T extends Usuario$ausenciasRegistradasArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$ausenciasRegistradasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AusenciaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4039,6 +4156,54 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: CotizacionScalarFieldEnum | CotizacionScalarFieldEnum[]
+  }
+
+  /**
+   * Usuario.ausencias
+   */
+  export type Usuario$ausenciasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Ausencia
+     */
+    select?: AusenciaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Ausencia
+     */
+    omit?: AusenciaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AusenciaInclude<ExtArgs> | null
+    where?: AusenciaWhereInput
+    orderBy?: AusenciaOrderByWithRelationInput | AusenciaOrderByWithRelationInput[]
+    cursor?: AusenciaWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AusenciaScalarFieldEnum | AusenciaScalarFieldEnum[]
+  }
+
+  /**
+   * Usuario.ausenciasRegistradas
+   */
+  export type Usuario$ausenciasRegistradasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Ausencia
+     */
+    select?: AusenciaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Ausencia
+     */
+    omit?: AusenciaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AusenciaInclude<ExtArgs> | null
+    where?: AusenciaWhereInput
+    orderBy?: AusenciaOrderByWithRelationInput | AusenciaOrderByWithRelationInput[]
+    cursor?: AusenciaWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AusenciaScalarFieldEnum | AusenciaScalarFieldEnum[]
   }
 
   /**
@@ -14969,6 +15134,1145 @@ export namespace Prisma {
 
 
   /**
+   * Model Ausencia
+   */
+
+  export type AggregateAusencia = {
+    _count: AusenciaCountAggregateOutputType | null
+    _avg: AusenciaAvgAggregateOutputType | null
+    _sum: AusenciaSumAggregateOutputType | null
+    _min: AusenciaMinAggregateOutputType | null
+    _max: AusenciaMaxAggregateOutputType | null
+  }
+
+  export type AusenciaAvgAggregateOutputType = {
+    id: number | null
+    usuarioId: number | null
+    registradoPorId: number | null
+  }
+
+  export type AusenciaSumAggregateOutputType = {
+    id: number | null
+    usuarioId: number | null
+    registradoPorId: number | null
+  }
+
+  export type AusenciaMinAggregateOutputType = {
+    id: number | null
+    usuarioId: number | null
+    desde: Date | null
+    hasta: Date | null
+    motivo: string | null
+    registradoPorId: number | null
+    createdAt: Date | null
+  }
+
+  export type AusenciaMaxAggregateOutputType = {
+    id: number | null
+    usuarioId: number | null
+    desde: Date | null
+    hasta: Date | null
+    motivo: string | null
+    registradoPorId: number | null
+    createdAt: Date | null
+  }
+
+  export type AusenciaCountAggregateOutputType = {
+    id: number
+    usuarioId: number
+    desde: number
+    hasta: number
+    motivo: number
+    registradoPorId: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type AusenciaAvgAggregateInputType = {
+    id?: true
+    usuarioId?: true
+    registradoPorId?: true
+  }
+
+  export type AusenciaSumAggregateInputType = {
+    id?: true
+    usuarioId?: true
+    registradoPorId?: true
+  }
+
+  export type AusenciaMinAggregateInputType = {
+    id?: true
+    usuarioId?: true
+    desde?: true
+    hasta?: true
+    motivo?: true
+    registradoPorId?: true
+    createdAt?: true
+  }
+
+  export type AusenciaMaxAggregateInputType = {
+    id?: true
+    usuarioId?: true
+    desde?: true
+    hasta?: true
+    motivo?: true
+    registradoPorId?: true
+    createdAt?: true
+  }
+
+  export type AusenciaCountAggregateInputType = {
+    id?: true
+    usuarioId?: true
+    desde?: true
+    hasta?: true
+    motivo?: true
+    registradoPorId?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type AusenciaAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Ausencia to aggregate.
+     */
+    where?: AusenciaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Ausencias to fetch.
+     */
+    orderBy?: AusenciaOrderByWithRelationInput | AusenciaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AusenciaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Ausencias from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Ausencias.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Ausencias
+    **/
+    _count?: true | AusenciaCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: AusenciaAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: AusenciaSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AusenciaMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AusenciaMaxAggregateInputType
+  }
+
+  export type GetAusenciaAggregateType<T extends AusenciaAggregateArgs> = {
+        [P in keyof T & keyof AggregateAusencia]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAusencia[P]>
+      : GetScalarType<T[P], AggregateAusencia[P]>
+  }
+
+
+
+
+  export type AusenciaGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AusenciaWhereInput
+    orderBy?: AusenciaOrderByWithAggregationInput | AusenciaOrderByWithAggregationInput[]
+    by: AusenciaScalarFieldEnum[] | AusenciaScalarFieldEnum
+    having?: AusenciaScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AusenciaCountAggregateInputType | true
+    _avg?: AusenciaAvgAggregateInputType
+    _sum?: AusenciaSumAggregateInputType
+    _min?: AusenciaMinAggregateInputType
+    _max?: AusenciaMaxAggregateInputType
+  }
+
+  export type AusenciaGroupByOutputType = {
+    id: number
+    usuarioId: number
+    desde: Date
+    hasta: Date
+    motivo: string | null
+    registradoPorId: number
+    createdAt: Date
+    _count: AusenciaCountAggregateOutputType | null
+    _avg: AusenciaAvgAggregateOutputType | null
+    _sum: AusenciaSumAggregateOutputType | null
+    _min: AusenciaMinAggregateOutputType | null
+    _max: AusenciaMaxAggregateOutputType | null
+  }
+
+  type GetAusenciaGroupByPayload<T extends AusenciaGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AusenciaGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AusenciaGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AusenciaGroupByOutputType[P]>
+            : GetScalarType<T[P], AusenciaGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AusenciaSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    usuarioId?: boolean
+    desde?: boolean
+    hasta?: boolean
+    motivo?: boolean
+    registradoPorId?: boolean
+    createdAt?: boolean
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
+    registradoPor?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["ausencia"]>
+
+  export type AusenciaSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    usuarioId?: boolean
+    desde?: boolean
+    hasta?: boolean
+    motivo?: boolean
+    registradoPorId?: boolean
+    createdAt?: boolean
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
+    registradoPor?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["ausencia"]>
+
+  export type AusenciaSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    usuarioId?: boolean
+    desde?: boolean
+    hasta?: boolean
+    motivo?: boolean
+    registradoPorId?: boolean
+    createdAt?: boolean
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
+    registradoPor?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["ausencia"]>
+
+  export type AusenciaSelectScalar = {
+    id?: boolean
+    usuarioId?: boolean
+    desde?: boolean
+    hasta?: boolean
+    motivo?: boolean
+    registradoPorId?: boolean
+    createdAt?: boolean
+  }
+
+  export type AusenciaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "usuarioId" | "desde" | "hasta" | "motivo" | "registradoPorId" | "createdAt", ExtArgs["result"]["ausencia"]>
+  export type AusenciaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
+    registradoPor?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }
+  export type AusenciaIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
+    registradoPor?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }
+  export type AusenciaIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
+    registradoPor?: boolean | UsuarioDefaultArgs<ExtArgs>
+  }
+
+  export type $AusenciaPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Ausencia"
+    objects: {
+      usuario: Prisma.$UsuarioPayload<ExtArgs>
+      registradoPor: Prisma.$UsuarioPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      usuarioId: number
+      desde: Date
+      hasta: Date
+      motivo: string | null
+      registradoPorId: number
+      createdAt: Date
+    }, ExtArgs["result"]["ausencia"]>
+    composites: {}
+  }
+
+  type AusenciaGetPayload<S extends boolean | null | undefined | AusenciaDefaultArgs> = $Result.GetResult<Prisma.$AusenciaPayload, S>
+
+  type AusenciaCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AusenciaFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AusenciaCountAggregateInputType | true
+    }
+
+  export interface AusenciaDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Ausencia'], meta: { name: 'Ausencia' } }
+    /**
+     * Find zero or one Ausencia that matches the filter.
+     * @param {AusenciaFindUniqueArgs} args - Arguments to find a Ausencia
+     * @example
+     * // Get one Ausencia
+     * const ausencia = await prisma.ausencia.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AusenciaFindUniqueArgs>(args: SelectSubset<T, AusenciaFindUniqueArgs<ExtArgs>>): Prisma__AusenciaClient<$Result.GetResult<Prisma.$AusenciaPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Ausencia that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AusenciaFindUniqueOrThrowArgs} args - Arguments to find a Ausencia
+     * @example
+     * // Get one Ausencia
+     * const ausencia = await prisma.ausencia.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AusenciaFindUniqueOrThrowArgs>(args: SelectSubset<T, AusenciaFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AusenciaClient<$Result.GetResult<Prisma.$AusenciaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Ausencia that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AusenciaFindFirstArgs} args - Arguments to find a Ausencia
+     * @example
+     * // Get one Ausencia
+     * const ausencia = await prisma.ausencia.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AusenciaFindFirstArgs>(args?: SelectSubset<T, AusenciaFindFirstArgs<ExtArgs>>): Prisma__AusenciaClient<$Result.GetResult<Prisma.$AusenciaPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Ausencia that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AusenciaFindFirstOrThrowArgs} args - Arguments to find a Ausencia
+     * @example
+     * // Get one Ausencia
+     * const ausencia = await prisma.ausencia.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AusenciaFindFirstOrThrowArgs>(args?: SelectSubset<T, AusenciaFindFirstOrThrowArgs<ExtArgs>>): Prisma__AusenciaClient<$Result.GetResult<Prisma.$AusenciaPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Ausencias that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AusenciaFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Ausencias
+     * const ausencias = await prisma.ausencia.findMany()
+     * 
+     * // Get first 10 Ausencias
+     * const ausencias = await prisma.ausencia.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const ausenciaWithIdOnly = await prisma.ausencia.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AusenciaFindManyArgs>(args?: SelectSubset<T, AusenciaFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AusenciaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Ausencia.
+     * @param {AusenciaCreateArgs} args - Arguments to create a Ausencia.
+     * @example
+     * // Create one Ausencia
+     * const Ausencia = await prisma.ausencia.create({
+     *   data: {
+     *     // ... data to create a Ausencia
+     *   }
+     * })
+     * 
+     */
+    create<T extends AusenciaCreateArgs>(args: SelectSubset<T, AusenciaCreateArgs<ExtArgs>>): Prisma__AusenciaClient<$Result.GetResult<Prisma.$AusenciaPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Ausencias.
+     * @param {AusenciaCreateManyArgs} args - Arguments to create many Ausencias.
+     * @example
+     * // Create many Ausencias
+     * const ausencia = await prisma.ausencia.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AusenciaCreateManyArgs>(args?: SelectSubset<T, AusenciaCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Ausencias and returns the data saved in the database.
+     * @param {AusenciaCreateManyAndReturnArgs} args - Arguments to create many Ausencias.
+     * @example
+     * // Create many Ausencias
+     * const ausencia = await prisma.ausencia.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Ausencias and only return the `id`
+     * const ausenciaWithIdOnly = await prisma.ausencia.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AusenciaCreateManyAndReturnArgs>(args?: SelectSubset<T, AusenciaCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AusenciaPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Ausencia.
+     * @param {AusenciaDeleteArgs} args - Arguments to delete one Ausencia.
+     * @example
+     * // Delete one Ausencia
+     * const Ausencia = await prisma.ausencia.delete({
+     *   where: {
+     *     // ... filter to delete one Ausencia
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AusenciaDeleteArgs>(args: SelectSubset<T, AusenciaDeleteArgs<ExtArgs>>): Prisma__AusenciaClient<$Result.GetResult<Prisma.$AusenciaPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Ausencia.
+     * @param {AusenciaUpdateArgs} args - Arguments to update one Ausencia.
+     * @example
+     * // Update one Ausencia
+     * const ausencia = await prisma.ausencia.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AusenciaUpdateArgs>(args: SelectSubset<T, AusenciaUpdateArgs<ExtArgs>>): Prisma__AusenciaClient<$Result.GetResult<Prisma.$AusenciaPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Ausencias.
+     * @param {AusenciaDeleteManyArgs} args - Arguments to filter Ausencias to delete.
+     * @example
+     * // Delete a few Ausencias
+     * const { count } = await prisma.ausencia.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AusenciaDeleteManyArgs>(args?: SelectSubset<T, AusenciaDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Ausencias.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AusenciaUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Ausencias
+     * const ausencia = await prisma.ausencia.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AusenciaUpdateManyArgs>(args: SelectSubset<T, AusenciaUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Ausencias and returns the data updated in the database.
+     * @param {AusenciaUpdateManyAndReturnArgs} args - Arguments to update many Ausencias.
+     * @example
+     * // Update many Ausencias
+     * const ausencia = await prisma.ausencia.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Ausencias and only return the `id`
+     * const ausenciaWithIdOnly = await prisma.ausencia.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AusenciaUpdateManyAndReturnArgs>(args: SelectSubset<T, AusenciaUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AusenciaPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Ausencia.
+     * @param {AusenciaUpsertArgs} args - Arguments to update or create a Ausencia.
+     * @example
+     * // Update or create a Ausencia
+     * const ausencia = await prisma.ausencia.upsert({
+     *   create: {
+     *     // ... data to create a Ausencia
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Ausencia we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AusenciaUpsertArgs>(args: SelectSubset<T, AusenciaUpsertArgs<ExtArgs>>): Prisma__AusenciaClient<$Result.GetResult<Prisma.$AusenciaPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Ausencias.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AusenciaCountArgs} args - Arguments to filter Ausencias to count.
+     * @example
+     * // Count the number of Ausencias
+     * const count = await prisma.ausencia.count({
+     *   where: {
+     *     // ... the filter for the Ausencias we want to count
+     *   }
+     * })
+    **/
+    count<T extends AusenciaCountArgs>(
+      args?: Subset<T, AusenciaCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AusenciaCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Ausencia.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AusenciaAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AusenciaAggregateArgs>(args: Subset<T, AusenciaAggregateArgs>): Prisma.PrismaPromise<GetAusenciaAggregateType<T>>
+
+    /**
+     * Group by Ausencia.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AusenciaGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AusenciaGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AusenciaGroupByArgs['orderBy'] }
+        : { orderBy?: AusenciaGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AusenciaGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAusenciaGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Ausencia model
+   */
+  readonly fields: AusenciaFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Ausencia.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AusenciaClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    usuario<T extends UsuarioDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UsuarioDefaultArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    registradoPor<T extends UsuarioDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UsuarioDefaultArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Ausencia model
+   */
+  interface AusenciaFieldRefs {
+    readonly id: FieldRef<"Ausencia", 'Int'>
+    readonly usuarioId: FieldRef<"Ausencia", 'Int'>
+    readonly desde: FieldRef<"Ausencia", 'DateTime'>
+    readonly hasta: FieldRef<"Ausencia", 'DateTime'>
+    readonly motivo: FieldRef<"Ausencia", 'String'>
+    readonly registradoPorId: FieldRef<"Ausencia", 'Int'>
+    readonly createdAt: FieldRef<"Ausencia", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Ausencia findUnique
+   */
+  export type AusenciaFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Ausencia
+     */
+    select?: AusenciaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Ausencia
+     */
+    omit?: AusenciaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AusenciaInclude<ExtArgs> | null
+    /**
+     * Filter, which Ausencia to fetch.
+     */
+    where: AusenciaWhereUniqueInput
+  }
+
+  /**
+   * Ausencia findUniqueOrThrow
+   */
+  export type AusenciaFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Ausencia
+     */
+    select?: AusenciaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Ausencia
+     */
+    omit?: AusenciaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AusenciaInclude<ExtArgs> | null
+    /**
+     * Filter, which Ausencia to fetch.
+     */
+    where: AusenciaWhereUniqueInput
+  }
+
+  /**
+   * Ausencia findFirst
+   */
+  export type AusenciaFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Ausencia
+     */
+    select?: AusenciaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Ausencia
+     */
+    omit?: AusenciaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AusenciaInclude<ExtArgs> | null
+    /**
+     * Filter, which Ausencia to fetch.
+     */
+    where?: AusenciaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Ausencias to fetch.
+     */
+    orderBy?: AusenciaOrderByWithRelationInput | AusenciaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Ausencias.
+     */
+    cursor?: AusenciaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Ausencias from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Ausencias.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Ausencias.
+     */
+    distinct?: AusenciaScalarFieldEnum | AusenciaScalarFieldEnum[]
+  }
+
+  /**
+   * Ausencia findFirstOrThrow
+   */
+  export type AusenciaFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Ausencia
+     */
+    select?: AusenciaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Ausencia
+     */
+    omit?: AusenciaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AusenciaInclude<ExtArgs> | null
+    /**
+     * Filter, which Ausencia to fetch.
+     */
+    where?: AusenciaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Ausencias to fetch.
+     */
+    orderBy?: AusenciaOrderByWithRelationInput | AusenciaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Ausencias.
+     */
+    cursor?: AusenciaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Ausencias from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Ausencias.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Ausencias.
+     */
+    distinct?: AusenciaScalarFieldEnum | AusenciaScalarFieldEnum[]
+  }
+
+  /**
+   * Ausencia findMany
+   */
+  export type AusenciaFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Ausencia
+     */
+    select?: AusenciaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Ausencia
+     */
+    omit?: AusenciaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AusenciaInclude<ExtArgs> | null
+    /**
+     * Filter, which Ausencias to fetch.
+     */
+    where?: AusenciaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Ausencias to fetch.
+     */
+    orderBy?: AusenciaOrderByWithRelationInput | AusenciaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Ausencias.
+     */
+    cursor?: AusenciaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Ausencias from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Ausencias.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Ausencias.
+     */
+    distinct?: AusenciaScalarFieldEnum | AusenciaScalarFieldEnum[]
+  }
+
+  /**
+   * Ausencia create
+   */
+  export type AusenciaCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Ausencia
+     */
+    select?: AusenciaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Ausencia
+     */
+    omit?: AusenciaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AusenciaInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Ausencia.
+     */
+    data: XOR<AusenciaCreateInput, AusenciaUncheckedCreateInput>
+  }
+
+  /**
+   * Ausencia createMany
+   */
+  export type AusenciaCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Ausencias.
+     */
+    data: AusenciaCreateManyInput | AusenciaCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Ausencia createManyAndReturn
+   */
+  export type AusenciaCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Ausencia
+     */
+    select?: AusenciaSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Ausencia
+     */
+    omit?: AusenciaOmit<ExtArgs> | null
+    /**
+     * The data used to create many Ausencias.
+     */
+    data: AusenciaCreateManyInput | AusenciaCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AusenciaIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Ausencia update
+   */
+  export type AusenciaUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Ausencia
+     */
+    select?: AusenciaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Ausencia
+     */
+    omit?: AusenciaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AusenciaInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Ausencia.
+     */
+    data: XOR<AusenciaUpdateInput, AusenciaUncheckedUpdateInput>
+    /**
+     * Choose, which Ausencia to update.
+     */
+    where: AusenciaWhereUniqueInput
+  }
+
+  /**
+   * Ausencia updateMany
+   */
+  export type AusenciaUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Ausencias.
+     */
+    data: XOR<AusenciaUpdateManyMutationInput, AusenciaUncheckedUpdateManyInput>
+    /**
+     * Filter which Ausencias to update
+     */
+    where?: AusenciaWhereInput
+    /**
+     * Limit how many Ausencias to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Ausencia updateManyAndReturn
+   */
+  export type AusenciaUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Ausencia
+     */
+    select?: AusenciaSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Ausencia
+     */
+    omit?: AusenciaOmit<ExtArgs> | null
+    /**
+     * The data used to update Ausencias.
+     */
+    data: XOR<AusenciaUpdateManyMutationInput, AusenciaUncheckedUpdateManyInput>
+    /**
+     * Filter which Ausencias to update
+     */
+    where?: AusenciaWhereInput
+    /**
+     * Limit how many Ausencias to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AusenciaIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Ausencia upsert
+   */
+  export type AusenciaUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Ausencia
+     */
+    select?: AusenciaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Ausencia
+     */
+    omit?: AusenciaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AusenciaInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Ausencia to update in case it exists.
+     */
+    where: AusenciaWhereUniqueInput
+    /**
+     * In case the Ausencia found by the `where` argument doesn't exist, create a new Ausencia with this data.
+     */
+    create: XOR<AusenciaCreateInput, AusenciaUncheckedCreateInput>
+    /**
+     * In case the Ausencia was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AusenciaUpdateInput, AusenciaUncheckedUpdateInput>
+  }
+
+  /**
+   * Ausencia delete
+   */
+  export type AusenciaDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Ausencia
+     */
+    select?: AusenciaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Ausencia
+     */
+    omit?: AusenciaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AusenciaInclude<ExtArgs> | null
+    /**
+     * Filter which Ausencia to delete.
+     */
+    where: AusenciaWhereUniqueInput
+  }
+
+  /**
+   * Ausencia deleteMany
+   */
+  export type AusenciaDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Ausencias to delete
+     */
+    where?: AusenciaWhereInput
+    /**
+     * Limit how many Ausencias to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Ausencia without action
+   */
+  export type AusenciaDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Ausencia
+     */
+    select?: AusenciaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Ausencia
+     */
+    omit?: AusenciaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AusenciaInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model Carpeta
    */
 
@@ -20873,6 +22177,19 @@ export namespace Prisma {
   export type CotizacionScalarFieldEnum = (typeof CotizacionScalarFieldEnum)[keyof typeof CotizacionScalarFieldEnum]
 
 
+  export const AusenciaScalarFieldEnum: {
+    id: 'id',
+    usuarioId: 'usuarioId',
+    desde: 'desde',
+    hasta: 'hasta',
+    motivo: 'motivo',
+    registradoPorId: 'registradoPorId',
+    createdAt: 'createdAt'
+  };
+
+  export type AusenciaScalarFieldEnum = (typeof AusenciaScalarFieldEnum)[keyof typeof AusenciaScalarFieldEnum]
+
+
   export const CarpetaScalarFieldEnum: {
     id: 'id',
     nombre: 'nombre',
@@ -21174,6 +22491,8 @@ export namespace Prisma {
     pedidosEditados?: PedidoListRelationFilter
     cotizacionesCreadas?: CotizacionListRelationFilter
     cotizacionesEditadas?: CotizacionListRelationFilter
+    ausencias?: AusenciaListRelationFilter
+    ausenciasRegistradas?: AusenciaListRelationFilter
   }
 
   export type UsuarioOrderByWithRelationInput = {
@@ -21198,6 +22517,8 @@ export namespace Prisma {
     pedidosEditados?: PedidoOrderByRelationAggregateInput
     cotizacionesCreadas?: CotizacionOrderByRelationAggregateInput
     cotizacionesEditadas?: CotizacionOrderByRelationAggregateInput
+    ausencias?: AusenciaOrderByRelationAggregateInput
+    ausenciasRegistradas?: AusenciaOrderByRelationAggregateInput
   }
 
   export type UsuarioWhereUniqueInput = Prisma.AtLeast<{
@@ -21225,6 +22546,8 @@ export namespace Prisma {
     pedidosEditados?: PedidoListRelationFilter
     cotizacionesCreadas?: CotizacionListRelationFilter
     cotizacionesEditadas?: CotizacionListRelationFilter
+    ausencias?: AusenciaListRelationFilter
+    ausenciasRegistradas?: AusenciaListRelationFilter
   }, "id" | "supabaseUserId">
 
   export type UsuarioOrderByWithAggregationInput = {
@@ -22098,6 +23421,76 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Cotizacion"> | Date | string
   }
 
+  export type AusenciaWhereInput = {
+    AND?: AusenciaWhereInput | AusenciaWhereInput[]
+    OR?: AusenciaWhereInput[]
+    NOT?: AusenciaWhereInput | AusenciaWhereInput[]
+    id?: IntFilter<"Ausencia"> | number
+    usuarioId?: IntFilter<"Ausencia"> | number
+    desde?: DateTimeFilter<"Ausencia"> | Date | string
+    hasta?: DateTimeFilter<"Ausencia"> | Date | string
+    motivo?: StringNullableFilter<"Ausencia"> | string | null
+    registradoPorId?: IntFilter<"Ausencia"> | number
+    createdAt?: DateTimeFilter<"Ausencia"> | Date | string
+    usuario?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
+    registradoPor?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
+  }
+
+  export type AusenciaOrderByWithRelationInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+    desde?: SortOrder
+    hasta?: SortOrder
+    motivo?: SortOrderInput | SortOrder
+    registradoPorId?: SortOrder
+    createdAt?: SortOrder
+    usuario?: UsuarioOrderByWithRelationInput
+    registradoPor?: UsuarioOrderByWithRelationInput
+  }
+
+  export type AusenciaWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: AusenciaWhereInput | AusenciaWhereInput[]
+    OR?: AusenciaWhereInput[]
+    NOT?: AusenciaWhereInput | AusenciaWhereInput[]
+    usuarioId?: IntFilter<"Ausencia"> | number
+    desde?: DateTimeFilter<"Ausencia"> | Date | string
+    hasta?: DateTimeFilter<"Ausencia"> | Date | string
+    motivo?: StringNullableFilter<"Ausencia"> | string | null
+    registradoPorId?: IntFilter<"Ausencia"> | number
+    createdAt?: DateTimeFilter<"Ausencia"> | Date | string
+    usuario?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
+    registradoPor?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
+  }, "id">
+
+  export type AusenciaOrderByWithAggregationInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+    desde?: SortOrder
+    hasta?: SortOrder
+    motivo?: SortOrderInput | SortOrder
+    registradoPorId?: SortOrder
+    createdAt?: SortOrder
+    _count?: AusenciaCountOrderByAggregateInput
+    _avg?: AusenciaAvgOrderByAggregateInput
+    _max?: AusenciaMaxOrderByAggregateInput
+    _min?: AusenciaMinOrderByAggregateInput
+    _sum?: AusenciaSumOrderByAggregateInput
+  }
+
+  export type AusenciaScalarWhereWithAggregatesInput = {
+    AND?: AusenciaScalarWhereWithAggregatesInput | AusenciaScalarWhereWithAggregatesInput[]
+    OR?: AusenciaScalarWhereWithAggregatesInput[]
+    NOT?: AusenciaScalarWhereWithAggregatesInput | AusenciaScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Ausencia"> | number
+    usuarioId?: IntWithAggregatesFilter<"Ausencia"> | number
+    desde?: DateTimeWithAggregatesFilter<"Ausencia"> | Date | string
+    hasta?: DateTimeWithAggregatesFilter<"Ausencia"> | Date | string
+    motivo?: StringNullableWithAggregatesFilter<"Ausencia"> | string | null
+    registradoPorId?: IntWithAggregatesFilter<"Ausencia"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"Ausencia"> | Date | string
+  }
+
   export type CarpetaWhereInput = {
     AND?: CarpetaWhereInput | CarpetaWhereInput[]
     OR?: CarpetaWhereInput[]
@@ -22480,6 +23873,8 @@ export namespace Prisma {
     pedidosEditados?: PedidoCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesCreadas?: CotizacionCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionCreateNestedManyWithoutUltimoEditadoPorInput
+    ausencias?: AusenciaCreateNestedManyWithoutUsuarioInput
+    ausenciasRegistradas?: AusenciaCreateNestedManyWithoutRegistradoPorInput
   }
 
   export type UsuarioUncheckedCreateInput = {
@@ -22503,6 +23898,8 @@ export namespace Prisma {
     pedidosEditados?: PedidoUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesCreadas?: CotizacionUncheckedCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    ausencias?: AusenciaUncheckedCreateNestedManyWithoutUsuarioInput
+    ausenciasRegistradas?: AusenciaUncheckedCreateNestedManyWithoutRegistradoPorInput
   }
 
   export type UsuarioUpdateInput = {
@@ -22525,6 +23922,8 @@ export namespace Prisma {
     pedidosEditados?: PedidoUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesCreadas?: CotizacionUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUpdateManyWithoutUltimoEditadoPorNestedInput
+    ausencias?: AusenciaUpdateManyWithoutUsuarioNestedInput
+    ausenciasRegistradas?: AusenciaUpdateManyWithoutRegistradoPorNestedInput
   }
 
   export type UsuarioUncheckedUpdateInput = {
@@ -22548,6 +23947,8 @@ export namespace Prisma {
     pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesCreadas?: CotizacionUncheckedUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    ausencias?: AusenciaUncheckedUpdateManyWithoutUsuarioNestedInput
+    ausenciasRegistradas?: AusenciaUncheckedUpdateManyWithoutRegistradoPorNestedInput
   }
 
   export type UsuarioCreateManyInput = {
@@ -23489,6 +24890,71 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type AusenciaCreateInput = {
+    desde: Date | string
+    hasta: Date | string
+    motivo?: string | null
+    createdAt?: Date | string
+    usuario: UsuarioCreateNestedOneWithoutAusenciasInput
+    registradoPor: UsuarioCreateNestedOneWithoutAusenciasRegistradasInput
+  }
+
+  export type AusenciaUncheckedCreateInput = {
+    id?: number
+    usuarioId: number
+    desde: Date | string
+    hasta: Date | string
+    motivo?: string | null
+    registradoPorId: number
+    createdAt?: Date | string
+  }
+
+  export type AusenciaUpdateInput = {
+    desde?: DateTimeFieldUpdateOperationsInput | Date | string
+    hasta?: DateTimeFieldUpdateOperationsInput | Date | string
+    motivo?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    usuario?: UsuarioUpdateOneRequiredWithoutAusenciasNestedInput
+    registradoPor?: UsuarioUpdateOneRequiredWithoutAusenciasRegistradasNestedInput
+  }
+
+  export type AusenciaUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    usuarioId?: IntFieldUpdateOperationsInput | number
+    desde?: DateTimeFieldUpdateOperationsInput | Date | string
+    hasta?: DateTimeFieldUpdateOperationsInput | Date | string
+    motivo?: NullableStringFieldUpdateOperationsInput | string | null
+    registradoPorId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AusenciaCreateManyInput = {
+    id?: number
+    usuarioId: number
+    desde: Date | string
+    hasta: Date | string
+    motivo?: string | null
+    registradoPorId: number
+    createdAt?: Date | string
+  }
+
+  export type AusenciaUpdateManyMutationInput = {
+    desde?: DateTimeFieldUpdateOperationsInput | Date | string
+    hasta?: DateTimeFieldUpdateOperationsInput | Date | string
+    motivo?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AusenciaUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    usuarioId?: IntFieldUpdateOperationsInput | number
+    desde?: DateTimeFieldUpdateOperationsInput | Date | string
+    hasta?: DateTimeFieldUpdateOperationsInput | Date | string
+    motivo?: NullableStringFieldUpdateOperationsInput | string | null
+    registradoPorId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type CarpetaCreateInput = {
     nombre: string
     modulo: $Enums.ModuloDocumentos
@@ -23986,6 +25452,12 @@ export namespace Prisma {
     none?: CotizacionWhereInput
   }
 
+  export type AusenciaListRelationFilter = {
+    every?: AusenciaWhereInput
+    some?: AusenciaWhereInput
+    none?: AusenciaWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -24016,6 +25488,10 @@ export namespace Prisma {
   }
 
   export type CotizacionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type AusenciaOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -24825,6 +26301,48 @@ export namespace Prisma {
     ultimoEditadoPorId?: SortOrder
   }
 
+  export type AusenciaCountOrderByAggregateInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+    desde?: SortOrder
+    hasta?: SortOrder
+    motivo?: SortOrder
+    registradoPorId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type AusenciaAvgOrderByAggregateInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+    registradoPorId?: SortOrder
+  }
+
+  export type AusenciaMaxOrderByAggregateInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+    desde?: SortOrder
+    hasta?: SortOrder
+    motivo?: SortOrder
+    registradoPorId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type AusenciaMinOrderByAggregateInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+    desde?: SortOrder
+    hasta?: SortOrder
+    motivo?: SortOrder
+    registradoPorId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type AusenciaSumOrderByAggregateInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+    registradoPorId?: SortOrder
+  }
+
   export type EnumModuloDocumentosFilter<$PrismaModel = never> = {
     equals?: $Enums.ModuloDocumentos | EnumModuloDocumentosFieldRefInput<$PrismaModel>
     in?: $Enums.ModuloDocumentos[] | ListEnumModuloDocumentosFieldRefInput<$PrismaModel>
@@ -25226,6 +26744,20 @@ export namespace Prisma {
     connect?: CotizacionWhereUniqueInput | CotizacionWhereUniqueInput[]
   }
 
+  export type AusenciaCreateNestedManyWithoutUsuarioInput = {
+    create?: XOR<AusenciaCreateWithoutUsuarioInput, AusenciaUncheckedCreateWithoutUsuarioInput> | AusenciaCreateWithoutUsuarioInput[] | AusenciaUncheckedCreateWithoutUsuarioInput[]
+    connectOrCreate?: AusenciaCreateOrConnectWithoutUsuarioInput | AusenciaCreateOrConnectWithoutUsuarioInput[]
+    createMany?: AusenciaCreateManyUsuarioInputEnvelope
+    connect?: AusenciaWhereUniqueInput | AusenciaWhereUniqueInput[]
+  }
+
+  export type AusenciaCreateNestedManyWithoutRegistradoPorInput = {
+    create?: XOR<AusenciaCreateWithoutRegistradoPorInput, AusenciaUncheckedCreateWithoutRegistradoPorInput> | AusenciaCreateWithoutRegistradoPorInput[] | AusenciaUncheckedCreateWithoutRegistradoPorInput[]
+    connectOrCreate?: AusenciaCreateOrConnectWithoutRegistradoPorInput | AusenciaCreateOrConnectWithoutRegistradoPorInput[]
+    createMany?: AusenciaCreateManyRegistradoPorInputEnvelope
+    connect?: AusenciaWhereUniqueInput | AusenciaWhereUniqueInput[]
+  }
+
   export type UsuarioUncheckedCreateNestedManyWithoutDesactivadoPorInput = {
     create?: XOR<UsuarioCreateWithoutDesactivadoPorInput, UsuarioUncheckedCreateWithoutDesactivadoPorInput> | UsuarioCreateWithoutDesactivadoPorInput[] | UsuarioUncheckedCreateWithoutDesactivadoPorInput[]
     connectOrCreate?: UsuarioCreateOrConnectWithoutDesactivadoPorInput | UsuarioCreateOrConnectWithoutDesactivadoPorInput[]
@@ -25293,6 +26825,20 @@ export namespace Prisma {
     connectOrCreate?: CotizacionCreateOrConnectWithoutUltimoEditadoPorInput | CotizacionCreateOrConnectWithoutUltimoEditadoPorInput[]
     createMany?: CotizacionCreateManyUltimoEditadoPorInputEnvelope
     connect?: CotizacionWhereUniqueInput | CotizacionWhereUniqueInput[]
+  }
+
+  export type AusenciaUncheckedCreateNestedManyWithoutUsuarioInput = {
+    create?: XOR<AusenciaCreateWithoutUsuarioInput, AusenciaUncheckedCreateWithoutUsuarioInput> | AusenciaCreateWithoutUsuarioInput[] | AusenciaUncheckedCreateWithoutUsuarioInput[]
+    connectOrCreate?: AusenciaCreateOrConnectWithoutUsuarioInput | AusenciaCreateOrConnectWithoutUsuarioInput[]
+    createMany?: AusenciaCreateManyUsuarioInputEnvelope
+    connect?: AusenciaWhereUniqueInput | AusenciaWhereUniqueInput[]
+  }
+
+  export type AusenciaUncheckedCreateNestedManyWithoutRegistradoPorInput = {
+    create?: XOR<AusenciaCreateWithoutRegistradoPorInput, AusenciaUncheckedCreateWithoutRegistradoPorInput> | AusenciaCreateWithoutRegistradoPorInput[] | AusenciaUncheckedCreateWithoutRegistradoPorInput[]
+    connectOrCreate?: AusenciaCreateOrConnectWithoutRegistradoPorInput | AusenciaCreateOrConnectWithoutRegistradoPorInput[]
+    createMany?: AusenciaCreateManyRegistradoPorInputEnvelope
+    connect?: AusenciaWhereUniqueInput | AusenciaWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -25461,6 +27007,34 @@ export namespace Prisma {
     deleteMany?: CotizacionScalarWhereInput | CotizacionScalarWhereInput[]
   }
 
+  export type AusenciaUpdateManyWithoutUsuarioNestedInput = {
+    create?: XOR<AusenciaCreateWithoutUsuarioInput, AusenciaUncheckedCreateWithoutUsuarioInput> | AusenciaCreateWithoutUsuarioInput[] | AusenciaUncheckedCreateWithoutUsuarioInput[]
+    connectOrCreate?: AusenciaCreateOrConnectWithoutUsuarioInput | AusenciaCreateOrConnectWithoutUsuarioInput[]
+    upsert?: AusenciaUpsertWithWhereUniqueWithoutUsuarioInput | AusenciaUpsertWithWhereUniqueWithoutUsuarioInput[]
+    createMany?: AusenciaCreateManyUsuarioInputEnvelope
+    set?: AusenciaWhereUniqueInput | AusenciaWhereUniqueInput[]
+    disconnect?: AusenciaWhereUniqueInput | AusenciaWhereUniqueInput[]
+    delete?: AusenciaWhereUniqueInput | AusenciaWhereUniqueInput[]
+    connect?: AusenciaWhereUniqueInput | AusenciaWhereUniqueInput[]
+    update?: AusenciaUpdateWithWhereUniqueWithoutUsuarioInput | AusenciaUpdateWithWhereUniqueWithoutUsuarioInput[]
+    updateMany?: AusenciaUpdateManyWithWhereWithoutUsuarioInput | AusenciaUpdateManyWithWhereWithoutUsuarioInput[]
+    deleteMany?: AusenciaScalarWhereInput | AusenciaScalarWhereInput[]
+  }
+
+  export type AusenciaUpdateManyWithoutRegistradoPorNestedInput = {
+    create?: XOR<AusenciaCreateWithoutRegistradoPorInput, AusenciaUncheckedCreateWithoutRegistradoPorInput> | AusenciaCreateWithoutRegistradoPorInput[] | AusenciaUncheckedCreateWithoutRegistradoPorInput[]
+    connectOrCreate?: AusenciaCreateOrConnectWithoutRegistradoPorInput | AusenciaCreateOrConnectWithoutRegistradoPorInput[]
+    upsert?: AusenciaUpsertWithWhereUniqueWithoutRegistradoPorInput | AusenciaUpsertWithWhereUniqueWithoutRegistradoPorInput[]
+    createMany?: AusenciaCreateManyRegistradoPorInputEnvelope
+    set?: AusenciaWhereUniqueInput | AusenciaWhereUniqueInput[]
+    disconnect?: AusenciaWhereUniqueInput | AusenciaWhereUniqueInput[]
+    delete?: AusenciaWhereUniqueInput | AusenciaWhereUniqueInput[]
+    connect?: AusenciaWhereUniqueInput | AusenciaWhereUniqueInput[]
+    update?: AusenciaUpdateWithWhereUniqueWithoutRegistradoPorInput | AusenciaUpdateWithWhereUniqueWithoutRegistradoPorInput[]
+    updateMany?: AusenciaUpdateManyWithWhereWithoutRegistradoPorInput | AusenciaUpdateManyWithWhereWithoutRegistradoPorInput[]
+    deleteMany?: AusenciaScalarWhereInput | AusenciaScalarWhereInput[]
+  }
+
   export type IntFieldUpdateOperationsInput = {
     set?: number
     increment?: number
@@ -25611,6 +27185,34 @@ export namespace Prisma {
     update?: CotizacionUpdateWithWhereUniqueWithoutUltimoEditadoPorInput | CotizacionUpdateWithWhereUniqueWithoutUltimoEditadoPorInput[]
     updateMany?: CotizacionUpdateManyWithWhereWithoutUltimoEditadoPorInput | CotizacionUpdateManyWithWhereWithoutUltimoEditadoPorInput[]
     deleteMany?: CotizacionScalarWhereInput | CotizacionScalarWhereInput[]
+  }
+
+  export type AusenciaUncheckedUpdateManyWithoutUsuarioNestedInput = {
+    create?: XOR<AusenciaCreateWithoutUsuarioInput, AusenciaUncheckedCreateWithoutUsuarioInput> | AusenciaCreateWithoutUsuarioInput[] | AusenciaUncheckedCreateWithoutUsuarioInput[]
+    connectOrCreate?: AusenciaCreateOrConnectWithoutUsuarioInput | AusenciaCreateOrConnectWithoutUsuarioInput[]
+    upsert?: AusenciaUpsertWithWhereUniqueWithoutUsuarioInput | AusenciaUpsertWithWhereUniqueWithoutUsuarioInput[]
+    createMany?: AusenciaCreateManyUsuarioInputEnvelope
+    set?: AusenciaWhereUniqueInput | AusenciaWhereUniqueInput[]
+    disconnect?: AusenciaWhereUniqueInput | AusenciaWhereUniqueInput[]
+    delete?: AusenciaWhereUniqueInput | AusenciaWhereUniqueInput[]
+    connect?: AusenciaWhereUniqueInput | AusenciaWhereUniqueInput[]
+    update?: AusenciaUpdateWithWhereUniqueWithoutUsuarioInput | AusenciaUpdateWithWhereUniqueWithoutUsuarioInput[]
+    updateMany?: AusenciaUpdateManyWithWhereWithoutUsuarioInput | AusenciaUpdateManyWithWhereWithoutUsuarioInput[]
+    deleteMany?: AusenciaScalarWhereInput | AusenciaScalarWhereInput[]
+  }
+
+  export type AusenciaUncheckedUpdateManyWithoutRegistradoPorNestedInput = {
+    create?: XOR<AusenciaCreateWithoutRegistradoPorInput, AusenciaUncheckedCreateWithoutRegistradoPorInput> | AusenciaCreateWithoutRegistradoPorInput[] | AusenciaUncheckedCreateWithoutRegistradoPorInput[]
+    connectOrCreate?: AusenciaCreateOrConnectWithoutRegistradoPorInput | AusenciaCreateOrConnectWithoutRegistradoPorInput[]
+    upsert?: AusenciaUpsertWithWhereUniqueWithoutRegistradoPorInput | AusenciaUpsertWithWhereUniqueWithoutRegistradoPorInput[]
+    createMany?: AusenciaCreateManyRegistradoPorInputEnvelope
+    set?: AusenciaWhereUniqueInput | AusenciaWhereUniqueInput[]
+    disconnect?: AusenciaWhereUniqueInput | AusenciaWhereUniqueInput[]
+    delete?: AusenciaWhereUniqueInput | AusenciaWhereUniqueInput[]
+    connect?: AusenciaWhereUniqueInput | AusenciaWhereUniqueInput[]
+    update?: AusenciaUpdateWithWhereUniqueWithoutRegistradoPorInput | AusenciaUpdateWithWhereUniqueWithoutRegistradoPorInput[]
+    updateMany?: AusenciaUpdateManyWithWhereWithoutRegistradoPorInput | AusenciaUpdateManyWithWhereWithoutRegistradoPorInput[]
+    deleteMany?: AusenciaScalarWhereInput | AusenciaScalarWhereInput[]
   }
 
   export type UsuarioCreateNestedOneWithoutPermisosInput = {
@@ -26086,6 +27688,34 @@ export namespace Prisma {
     delete?: UsuarioWhereInput | boolean
     connect?: UsuarioWhereUniqueInput
     update?: XOR<XOR<UsuarioUpdateToOneWithWhereWithoutCotizacionesEditadasInput, UsuarioUpdateWithoutCotizacionesEditadasInput>, UsuarioUncheckedUpdateWithoutCotizacionesEditadasInput>
+  }
+
+  export type UsuarioCreateNestedOneWithoutAusenciasInput = {
+    create?: XOR<UsuarioCreateWithoutAusenciasInput, UsuarioUncheckedCreateWithoutAusenciasInput>
+    connectOrCreate?: UsuarioCreateOrConnectWithoutAusenciasInput
+    connect?: UsuarioWhereUniqueInput
+  }
+
+  export type UsuarioCreateNestedOneWithoutAusenciasRegistradasInput = {
+    create?: XOR<UsuarioCreateWithoutAusenciasRegistradasInput, UsuarioUncheckedCreateWithoutAusenciasRegistradasInput>
+    connectOrCreate?: UsuarioCreateOrConnectWithoutAusenciasRegistradasInput
+    connect?: UsuarioWhereUniqueInput
+  }
+
+  export type UsuarioUpdateOneRequiredWithoutAusenciasNestedInput = {
+    create?: XOR<UsuarioCreateWithoutAusenciasInput, UsuarioUncheckedCreateWithoutAusenciasInput>
+    connectOrCreate?: UsuarioCreateOrConnectWithoutAusenciasInput
+    upsert?: UsuarioUpsertWithoutAusenciasInput
+    connect?: UsuarioWhereUniqueInput
+    update?: XOR<XOR<UsuarioUpdateToOneWithWhereWithoutAusenciasInput, UsuarioUpdateWithoutAusenciasInput>, UsuarioUncheckedUpdateWithoutAusenciasInput>
+  }
+
+  export type UsuarioUpdateOneRequiredWithoutAusenciasRegistradasNestedInput = {
+    create?: XOR<UsuarioCreateWithoutAusenciasRegistradasInput, UsuarioUncheckedCreateWithoutAusenciasRegistradasInput>
+    connectOrCreate?: UsuarioCreateOrConnectWithoutAusenciasRegistradasInput
+    upsert?: UsuarioUpsertWithoutAusenciasRegistradasInput
+    connect?: UsuarioWhereUniqueInput
+    update?: XOR<XOR<UsuarioUpdateToOneWithWhereWithoutAusenciasRegistradasInput, UsuarioUpdateWithoutAusenciasRegistradasInput>, UsuarioUncheckedUpdateWithoutAusenciasRegistradasInput>
   }
 
   export type CarpetaCreateNestedOneWithoutHijosInput = {
@@ -26653,6 +28283,8 @@ export namespace Prisma {
     pedidosEditados?: PedidoCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesCreadas?: CotizacionCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionCreateNestedManyWithoutUltimoEditadoPorInput
+    ausencias?: AusenciaCreateNestedManyWithoutUsuarioInput
+    ausenciasRegistradas?: AusenciaCreateNestedManyWithoutRegistradoPorInput
   }
 
   export type UsuarioUncheckedCreateWithoutDesactivadosInput = {
@@ -26675,6 +28307,8 @@ export namespace Prisma {
     pedidosEditados?: PedidoUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesCreadas?: CotizacionUncheckedCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    ausencias?: AusenciaUncheckedCreateNestedManyWithoutUsuarioInput
+    ausenciasRegistradas?: AusenciaUncheckedCreateNestedManyWithoutRegistradoPorInput
   }
 
   export type UsuarioCreateOrConnectWithoutDesactivadosInput = {
@@ -26701,6 +28335,8 @@ export namespace Prisma {
     pedidosEditados?: PedidoCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesCreadas?: CotizacionCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionCreateNestedManyWithoutUltimoEditadoPorInput
+    ausencias?: AusenciaCreateNestedManyWithoutUsuarioInput
+    ausenciasRegistradas?: AusenciaCreateNestedManyWithoutRegistradoPorInput
   }
 
   export type UsuarioUncheckedCreateWithoutDesactivadoPorInput = {
@@ -26723,6 +28359,8 @@ export namespace Prisma {
     pedidosEditados?: PedidoUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesCreadas?: CotizacionUncheckedCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    ausencias?: AusenciaUncheckedCreateNestedManyWithoutUsuarioInput
+    ausenciasRegistradas?: AusenciaUncheckedCreateNestedManyWithoutRegistradoPorInput
   }
 
   export type UsuarioCreateOrConnectWithoutDesactivadoPorInput = {
@@ -27069,6 +28707,60 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type AusenciaCreateWithoutUsuarioInput = {
+    desde: Date | string
+    hasta: Date | string
+    motivo?: string | null
+    createdAt?: Date | string
+    registradoPor: UsuarioCreateNestedOneWithoutAusenciasRegistradasInput
+  }
+
+  export type AusenciaUncheckedCreateWithoutUsuarioInput = {
+    id?: number
+    desde: Date | string
+    hasta: Date | string
+    motivo?: string | null
+    registradoPorId: number
+    createdAt?: Date | string
+  }
+
+  export type AusenciaCreateOrConnectWithoutUsuarioInput = {
+    where: AusenciaWhereUniqueInput
+    create: XOR<AusenciaCreateWithoutUsuarioInput, AusenciaUncheckedCreateWithoutUsuarioInput>
+  }
+
+  export type AusenciaCreateManyUsuarioInputEnvelope = {
+    data: AusenciaCreateManyUsuarioInput | AusenciaCreateManyUsuarioInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type AusenciaCreateWithoutRegistradoPorInput = {
+    desde: Date | string
+    hasta: Date | string
+    motivo?: string | null
+    createdAt?: Date | string
+    usuario: UsuarioCreateNestedOneWithoutAusenciasInput
+  }
+
+  export type AusenciaUncheckedCreateWithoutRegistradoPorInput = {
+    id?: number
+    usuarioId: number
+    desde: Date | string
+    hasta: Date | string
+    motivo?: string | null
+    createdAt?: Date | string
+  }
+
+  export type AusenciaCreateOrConnectWithoutRegistradoPorInput = {
+    where: AusenciaWhereUniqueInput
+    create: XOR<AusenciaCreateWithoutRegistradoPorInput, AusenciaUncheckedCreateWithoutRegistradoPorInput>
+  }
+
+  export type AusenciaCreateManyRegistradoPorInputEnvelope = {
+    data: AusenciaCreateManyRegistradoPorInput | AusenciaCreateManyRegistradoPorInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UsuarioUpsertWithoutDesactivadosInput = {
     update: XOR<UsuarioUpdateWithoutDesactivadosInput, UsuarioUncheckedUpdateWithoutDesactivadosInput>
     create: XOR<UsuarioCreateWithoutDesactivadosInput, UsuarioUncheckedCreateWithoutDesactivadosInput>
@@ -27099,6 +28791,8 @@ export namespace Prisma {
     pedidosEditados?: PedidoUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesCreadas?: CotizacionUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUpdateManyWithoutUltimoEditadoPorNestedInput
+    ausencias?: AusenciaUpdateManyWithoutUsuarioNestedInput
+    ausenciasRegistradas?: AusenciaUpdateManyWithoutRegistradoPorNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutDesactivadosInput = {
@@ -27121,6 +28815,8 @@ export namespace Prisma {
     pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesCreadas?: CotizacionUncheckedUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    ausencias?: AusenciaUncheckedUpdateManyWithoutUsuarioNestedInput
+    ausenciasRegistradas?: AusenciaUncheckedUpdateManyWithoutRegistradoPorNestedInput
   }
 
   export type UsuarioUpsertWithWhereUniqueWithoutDesactivadoPorInput = {
@@ -27422,6 +29118,51 @@ export namespace Prisma {
     data: XOR<CotizacionUpdateManyMutationInput, CotizacionUncheckedUpdateManyWithoutUltimoEditadoPorInput>
   }
 
+  export type AusenciaUpsertWithWhereUniqueWithoutUsuarioInput = {
+    where: AusenciaWhereUniqueInput
+    update: XOR<AusenciaUpdateWithoutUsuarioInput, AusenciaUncheckedUpdateWithoutUsuarioInput>
+    create: XOR<AusenciaCreateWithoutUsuarioInput, AusenciaUncheckedCreateWithoutUsuarioInput>
+  }
+
+  export type AusenciaUpdateWithWhereUniqueWithoutUsuarioInput = {
+    where: AusenciaWhereUniqueInput
+    data: XOR<AusenciaUpdateWithoutUsuarioInput, AusenciaUncheckedUpdateWithoutUsuarioInput>
+  }
+
+  export type AusenciaUpdateManyWithWhereWithoutUsuarioInput = {
+    where: AusenciaScalarWhereInput
+    data: XOR<AusenciaUpdateManyMutationInput, AusenciaUncheckedUpdateManyWithoutUsuarioInput>
+  }
+
+  export type AusenciaScalarWhereInput = {
+    AND?: AusenciaScalarWhereInput | AusenciaScalarWhereInput[]
+    OR?: AusenciaScalarWhereInput[]
+    NOT?: AusenciaScalarWhereInput | AusenciaScalarWhereInput[]
+    id?: IntFilter<"Ausencia"> | number
+    usuarioId?: IntFilter<"Ausencia"> | number
+    desde?: DateTimeFilter<"Ausencia"> | Date | string
+    hasta?: DateTimeFilter<"Ausencia"> | Date | string
+    motivo?: StringNullableFilter<"Ausencia"> | string | null
+    registradoPorId?: IntFilter<"Ausencia"> | number
+    createdAt?: DateTimeFilter<"Ausencia"> | Date | string
+  }
+
+  export type AusenciaUpsertWithWhereUniqueWithoutRegistradoPorInput = {
+    where: AusenciaWhereUniqueInput
+    update: XOR<AusenciaUpdateWithoutRegistradoPorInput, AusenciaUncheckedUpdateWithoutRegistradoPorInput>
+    create: XOR<AusenciaCreateWithoutRegistradoPorInput, AusenciaUncheckedCreateWithoutRegistradoPorInput>
+  }
+
+  export type AusenciaUpdateWithWhereUniqueWithoutRegistradoPorInput = {
+    where: AusenciaWhereUniqueInput
+    data: XOR<AusenciaUpdateWithoutRegistradoPorInput, AusenciaUncheckedUpdateWithoutRegistradoPorInput>
+  }
+
+  export type AusenciaUpdateManyWithWhereWithoutRegistradoPorInput = {
+    where: AusenciaScalarWhereInput
+    data: XOR<AusenciaUpdateManyMutationInput, AusenciaUncheckedUpdateManyWithoutRegistradoPorInput>
+  }
+
   export type UsuarioCreateWithoutPermisosInput = {
     supabaseUserId: string
     nombre: string
@@ -27441,6 +29182,8 @@ export namespace Prisma {
     pedidosEditados?: PedidoCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesCreadas?: CotizacionCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionCreateNestedManyWithoutUltimoEditadoPorInput
+    ausencias?: AusenciaCreateNestedManyWithoutUsuarioInput
+    ausenciasRegistradas?: AusenciaCreateNestedManyWithoutRegistradoPorInput
   }
 
   export type UsuarioUncheckedCreateWithoutPermisosInput = {
@@ -27463,6 +29206,8 @@ export namespace Prisma {
     pedidosEditados?: PedidoUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesCreadas?: CotizacionUncheckedCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    ausencias?: AusenciaUncheckedCreateNestedManyWithoutUsuarioInput
+    ausenciasRegistradas?: AusenciaUncheckedCreateNestedManyWithoutRegistradoPorInput
   }
 
   export type UsuarioCreateOrConnectWithoutPermisosInput = {
@@ -27500,6 +29245,8 @@ export namespace Prisma {
     pedidosEditados?: PedidoUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesCreadas?: CotizacionUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUpdateManyWithoutUltimoEditadoPorNestedInput
+    ausencias?: AusenciaUpdateManyWithoutUsuarioNestedInput
+    ausenciasRegistradas?: AusenciaUpdateManyWithoutRegistradoPorNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutPermisosInput = {
@@ -27522,6 +29269,8 @@ export namespace Prisma {
     pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesCreadas?: CotizacionUncheckedUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    ausencias?: AusenciaUncheckedUpdateManyWithoutUsuarioNestedInput
+    ausenciasRegistradas?: AusenciaUncheckedUpdateManyWithoutRegistradoPorNestedInput
   }
 
   export type LoteCreateWithoutFabricanteInput = {
@@ -27987,6 +29736,8 @@ export namespace Prisma {
     pedidosEditados?: PedidoCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesCreadas?: CotizacionCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionCreateNestedManyWithoutUltimoEditadoPorInput
+    ausencias?: AusenciaCreateNestedManyWithoutUsuarioInput
+    ausenciasRegistradas?: AusenciaCreateNestedManyWithoutRegistradoPorInput
   }
 
   export type UsuarioUncheckedCreateWithoutTrabajosImpresionInput = {
@@ -28009,6 +29760,8 @@ export namespace Prisma {
     pedidosEditados?: PedidoUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesCreadas?: CotizacionUncheckedCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    ausencias?: AusenciaUncheckedCreateNestedManyWithoutUsuarioInput
+    ausenciasRegistradas?: AusenciaUncheckedCreateNestedManyWithoutRegistradoPorInput
   }
 
   export type UsuarioCreateOrConnectWithoutTrabajosImpresionInput = {
@@ -28110,6 +29863,8 @@ export namespace Prisma {
     pedidosEditados?: PedidoUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesCreadas?: CotizacionUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUpdateManyWithoutUltimoEditadoPorNestedInput
+    ausencias?: AusenciaUpdateManyWithoutUsuarioNestedInput
+    ausenciasRegistradas?: AusenciaUpdateManyWithoutRegistradoPorNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutTrabajosImpresionInput = {
@@ -28132,6 +29887,8 @@ export namespace Prisma {
     pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesCreadas?: CotizacionUncheckedUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    ausencias?: AusenciaUncheckedUpdateManyWithoutUsuarioNestedInput
+    ausenciasRegistradas?: AusenciaUncheckedUpdateManyWithoutRegistradoPorNestedInput
   }
 
   export type PedidoCreateWithoutClienteInput = {
@@ -28303,6 +30060,8 @@ export namespace Prisma {
     pedidosEditados?: PedidoCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesCreadas?: CotizacionCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionCreateNestedManyWithoutUltimoEditadoPorInput
+    ausencias?: AusenciaCreateNestedManyWithoutUsuarioInput
+    ausenciasRegistradas?: AusenciaCreateNestedManyWithoutRegistradoPorInput
   }
 
   export type UsuarioUncheckedCreateWithoutPedidosCreadosInput = {
@@ -28325,6 +30084,8 @@ export namespace Prisma {
     pedidosEditados?: PedidoUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesCreadas?: CotizacionUncheckedCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    ausencias?: AusenciaUncheckedCreateNestedManyWithoutUsuarioInput
+    ausenciasRegistradas?: AusenciaUncheckedCreateNestedManyWithoutRegistradoPorInput
   }
 
   export type UsuarioCreateOrConnectWithoutPedidosCreadosInput = {
@@ -28351,6 +30112,8 @@ export namespace Prisma {
     pedidosCreados?: PedidoCreateNestedManyWithoutCreadoPorInput
     cotizacionesCreadas?: CotizacionCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionCreateNestedManyWithoutUltimoEditadoPorInput
+    ausencias?: AusenciaCreateNestedManyWithoutUsuarioInput
+    ausenciasRegistradas?: AusenciaCreateNestedManyWithoutRegistradoPorInput
   }
 
   export type UsuarioUncheckedCreateWithoutPedidosEditadosInput = {
@@ -28373,6 +30136,8 @@ export namespace Prisma {
     pedidosCreados?: PedidoUncheckedCreateNestedManyWithoutCreadoPorInput
     cotizacionesCreadas?: CotizacionUncheckedCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    ausencias?: AusenciaUncheckedCreateNestedManyWithoutUsuarioInput
+    ausenciasRegistradas?: AusenciaUncheckedCreateNestedManyWithoutRegistradoPorInput
   }
 
   export type UsuarioCreateOrConnectWithoutPedidosEditadosInput = {
@@ -28448,6 +30213,8 @@ export namespace Prisma {
     pedidosEditados?: PedidoUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesCreadas?: CotizacionUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUpdateManyWithoutUltimoEditadoPorNestedInput
+    ausencias?: AusenciaUpdateManyWithoutUsuarioNestedInput
+    ausenciasRegistradas?: AusenciaUpdateManyWithoutRegistradoPorNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutPedidosCreadosInput = {
@@ -28470,6 +30237,8 @@ export namespace Prisma {
     pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesCreadas?: CotizacionUncheckedUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    ausencias?: AusenciaUncheckedUpdateManyWithoutUsuarioNestedInput
+    ausenciasRegistradas?: AusenciaUncheckedUpdateManyWithoutRegistradoPorNestedInput
   }
 
   export type UsuarioUpsertWithoutPedidosEditadosInput = {
@@ -28502,6 +30271,8 @@ export namespace Prisma {
     pedidosCreados?: PedidoUpdateManyWithoutCreadoPorNestedInput
     cotizacionesCreadas?: CotizacionUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUpdateManyWithoutUltimoEditadoPorNestedInput
+    ausencias?: AusenciaUpdateManyWithoutUsuarioNestedInput
+    ausenciasRegistradas?: AusenciaUpdateManyWithoutRegistradoPorNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutPedidosEditadosInput = {
@@ -28524,6 +30295,8 @@ export namespace Prisma {
     pedidosCreados?: PedidoUncheckedUpdateManyWithoutCreadoPorNestedInput
     cotizacionesCreadas?: CotizacionUncheckedUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    ausencias?: AusenciaUncheckedUpdateManyWithoutUsuarioNestedInput
+    ausenciasRegistradas?: AusenciaUncheckedUpdateManyWithoutRegistradoPorNestedInput
   }
 
   export type ClienteCreateWithoutCotizacionesInput = {
@@ -28577,6 +30350,8 @@ export namespace Prisma {
     pedidosCreados?: PedidoCreateNestedManyWithoutCreadoPorInput
     pedidosEditados?: PedidoCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesEditadas?: CotizacionCreateNestedManyWithoutUltimoEditadoPorInput
+    ausencias?: AusenciaCreateNestedManyWithoutUsuarioInput
+    ausenciasRegistradas?: AusenciaCreateNestedManyWithoutRegistradoPorInput
   }
 
   export type UsuarioUncheckedCreateWithoutCotizacionesCreadasInput = {
@@ -28599,6 +30374,8 @@ export namespace Prisma {
     pedidosCreados?: PedidoUncheckedCreateNestedManyWithoutCreadoPorInput
     pedidosEditados?: PedidoUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesEditadas?: CotizacionUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    ausencias?: AusenciaUncheckedCreateNestedManyWithoutUsuarioInput
+    ausenciasRegistradas?: AusenciaUncheckedCreateNestedManyWithoutRegistradoPorInput
   }
 
   export type UsuarioCreateOrConnectWithoutCotizacionesCreadasInput = {
@@ -28625,6 +30402,8 @@ export namespace Prisma {
     pedidosCreados?: PedidoCreateNestedManyWithoutCreadoPorInput
     pedidosEditados?: PedidoCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesCreadas?: CotizacionCreateNestedManyWithoutCreadoPorInput
+    ausencias?: AusenciaCreateNestedManyWithoutUsuarioInput
+    ausenciasRegistradas?: AusenciaCreateNestedManyWithoutRegistradoPorInput
   }
 
   export type UsuarioUncheckedCreateWithoutCotizacionesEditadasInput = {
@@ -28647,6 +30426,8 @@ export namespace Prisma {
     pedidosCreados?: PedidoUncheckedCreateNestedManyWithoutCreadoPorInput
     pedidosEditados?: PedidoUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesCreadas?: CotizacionUncheckedCreateNestedManyWithoutCreadoPorInput
+    ausencias?: AusenciaUncheckedCreateNestedManyWithoutUsuarioInput
+    ausenciasRegistradas?: AusenciaUncheckedCreateNestedManyWithoutRegistradoPorInput
   }
 
   export type UsuarioCreateOrConnectWithoutCotizacionesEditadasInput = {
@@ -28722,6 +30503,8 @@ export namespace Prisma {
     pedidosCreados?: PedidoUpdateManyWithoutCreadoPorNestedInput
     pedidosEditados?: PedidoUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesEditadas?: CotizacionUpdateManyWithoutUltimoEditadoPorNestedInput
+    ausencias?: AusenciaUpdateManyWithoutUsuarioNestedInput
+    ausenciasRegistradas?: AusenciaUpdateManyWithoutRegistradoPorNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutCotizacionesCreadasInput = {
@@ -28744,6 +30527,8 @@ export namespace Prisma {
     pedidosCreados?: PedidoUncheckedUpdateManyWithoutCreadoPorNestedInput
     pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesEditadas?: CotizacionUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    ausencias?: AusenciaUncheckedUpdateManyWithoutUsuarioNestedInput
+    ausenciasRegistradas?: AusenciaUncheckedUpdateManyWithoutRegistradoPorNestedInput
   }
 
   export type UsuarioUpsertWithoutCotizacionesEditadasInput = {
@@ -28776,6 +30561,8 @@ export namespace Prisma {
     pedidosCreados?: PedidoUpdateManyWithoutCreadoPorNestedInput
     pedidosEditados?: PedidoUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesCreadas?: CotizacionUpdateManyWithoutCreadoPorNestedInput
+    ausencias?: AusenciaUpdateManyWithoutUsuarioNestedInput
+    ausenciasRegistradas?: AusenciaUpdateManyWithoutRegistradoPorNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutCotizacionesEditadasInput = {
@@ -28798,6 +30585,228 @@ export namespace Prisma {
     pedidosCreados?: PedidoUncheckedUpdateManyWithoutCreadoPorNestedInput
     pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesCreadas?: CotizacionUncheckedUpdateManyWithoutCreadoPorNestedInput
+    ausencias?: AusenciaUncheckedUpdateManyWithoutUsuarioNestedInput
+    ausenciasRegistradas?: AusenciaUncheckedUpdateManyWithoutRegistradoPorNestedInput
+  }
+
+  export type UsuarioCreateWithoutAusenciasInput = {
+    supabaseUserId: string
+    nombre: string
+    esAdmin?: boolean
+    esAdminKpis?: boolean
+    activo?: boolean
+    desactivadoEn?: Date | string | null
+    avatarUrl?: string | null
+    createdAt?: Date | string
+    desactivadoPor?: UsuarioCreateNestedOneWithoutDesactivadosInput
+    desactivados?: UsuarioCreateNestedManyWithoutDesactivadoPorInput
+    permisos?: PermisoCreateNestedManyWithoutUsuarioInput
+    trabajosImpresion?: TrabajoImpresionCreateNestedManyWithoutCreadoPorInput
+    archivosSubidos?: ArchivoCreateNestedManyWithoutSubidoPorInput
+    accesosIndicador?: AccesoIndicadorCreateNestedManyWithoutUsuarioInput
+    accesoIso?: AccesoISOCreateNestedOneWithoutUsuarioInput
+    pedidosCreados?: PedidoCreateNestedManyWithoutCreadoPorInput
+    pedidosEditados?: PedidoCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesCreadas?: CotizacionCreateNestedManyWithoutCreadoPorInput
+    cotizacionesEditadas?: CotizacionCreateNestedManyWithoutUltimoEditadoPorInput
+    ausenciasRegistradas?: AusenciaCreateNestedManyWithoutRegistradoPorInput
+  }
+
+  export type UsuarioUncheckedCreateWithoutAusenciasInput = {
+    id?: number
+    supabaseUserId: string
+    nombre: string
+    esAdmin?: boolean
+    esAdminKpis?: boolean
+    activo?: boolean
+    desactivadoEn?: Date | string | null
+    desactivadoPorId?: number | null
+    avatarUrl?: string | null
+    createdAt?: Date | string
+    desactivados?: UsuarioUncheckedCreateNestedManyWithoutDesactivadoPorInput
+    permisos?: PermisoUncheckedCreateNestedManyWithoutUsuarioInput
+    trabajosImpresion?: TrabajoImpresionUncheckedCreateNestedManyWithoutCreadoPorInput
+    archivosSubidos?: ArchivoUncheckedCreateNestedManyWithoutSubidoPorInput
+    accesosIndicador?: AccesoIndicadorUncheckedCreateNestedManyWithoutUsuarioInput
+    accesoIso?: AccesoISOUncheckedCreateNestedOneWithoutUsuarioInput
+    pedidosCreados?: PedidoUncheckedCreateNestedManyWithoutCreadoPorInput
+    pedidosEditados?: PedidoUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesCreadas?: CotizacionUncheckedCreateNestedManyWithoutCreadoPorInput
+    cotizacionesEditadas?: CotizacionUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    ausenciasRegistradas?: AusenciaUncheckedCreateNestedManyWithoutRegistradoPorInput
+  }
+
+  export type UsuarioCreateOrConnectWithoutAusenciasInput = {
+    where: UsuarioWhereUniqueInput
+    create: XOR<UsuarioCreateWithoutAusenciasInput, UsuarioUncheckedCreateWithoutAusenciasInput>
+  }
+
+  export type UsuarioCreateWithoutAusenciasRegistradasInput = {
+    supabaseUserId: string
+    nombre: string
+    esAdmin?: boolean
+    esAdminKpis?: boolean
+    activo?: boolean
+    desactivadoEn?: Date | string | null
+    avatarUrl?: string | null
+    createdAt?: Date | string
+    desactivadoPor?: UsuarioCreateNestedOneWithoutDesactivadosInput
+    desactivados?: UsuarioCreateNestedManyWithoutDesactivadoPorInput
+    permisos?: PermisoCreateNestedManyWithoutUsuarioInput
+    trabajosImpresion?: TrabajoImpresionCreateNestedManyWithoutCreadoPorInput
+    archivosSubidos?: ArchivoCreateNestedManyWithoutSubidoPorInput
+    accesosIndicador?: AccesoIndicadorCreateNestedManyWithoutUsuarioInput
+    accesoIso?: AccesoISOCreateNestedOneWithoutUsuarioInput
+    pedidosCreados?: PedidoCreateNestedManyWithoutCreadoPorInput
+    pedidosEditados?: PedidoCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesCreadas?: CotizacionCreateNestedManyWithoutCreadoPorInput
+    cotizacionesEditadas?: CotizacionCreateNestedManyWithoutUltimoEditadoPorInput
+    ausencias?: AusenciaCreateNestedManyWithoutUsuarioInput
+  }
+
+  export type UsuarioUncheckedCreateWithoutAusenciasRegistradasInput = {
+    id?: number
+    supabaseUserId: string
+    nombre: string
+    esAdmin?: boolean
+    esAdminKpis?: boolean
+    activo?: boolean
+    desactivadoEn?: Date | string | null
+    desactivadoPorId?: number | null
+    avatarUrl?: string | null
+    createdAt?: Date | string
+    desactivados?: UsuarioUncheckedCreateNestedManyWithoutDesactivadoPorInput
+    permisos?: PermisoUncheckedCreateNestedManyWithoutUsuarioInput
+    trabajosImpresion?: TrabajoImpresionUncheckedCreateNestedManyWithoutCreadoPorInput
+    archivosSubidos?: ArchivoUncheckedCreateNestedManyWithoutSubidoPorInput
+    accesosIndicador?: AccesoIndicadorUncheckedCreateNestedManyWithoutUsuarioInput
+    accesoIso?: AccesoISOUncheckedCreateNestedOneWithoutUsuarioInput
+    pedidosCreados?: PedidoUncheckedCreateNestedManyWithoutCreadoPorInput
+    pedidosEditados?: PedidoUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesCreadas?: CotizacionUncheckedCreateNestedManyWithoutCreadoPorInput
+    cotizacionesEditadas?: CotizacionUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    ausencias?: AusenciaUncheckedCreateNestedManyWithoutUsuarioInput
+  }
+
+  export type UsuarioCreateOrConnectWithoutAusenciasRegistradasInput = {
+    where: UsuarioWhereUniqueInput
+    create: XOR<UsuarioCreateWithoutAusenciasRegistradasInput, UsuarioUncheckedCreateWithoutAusenciasRegistradasInput>
+  }
+
+  export type UsuarioUpsertWithoutAusenciasInput = {
+    update: XOR<UsuarioUpdateWithoutAusenciasInput, UsuarioUncheckedUpdateWithoutAusenciasInput>
+    create: XOR<UsuarioCreateWithoutAusenciasInput, UsuarioUncheckedCreateWithoutAusenciasInput>
+    where?: UsuarioWhereInput
+  }
+
+  export type UsuarioUpdateToOneWithWhereWithoutAusenciasInput = {
+    where?: UsuarioWhereInput
+    data: XOR<UsuarioUpdateWithoutAusenciasInput, UsuarioUncheckedUpdateWithoutAusenciasInput>
+  }
+
+  export type UsuarioUpdateWithoutAusenciasInput = {
+    supabaseUserId?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    esAdmin?: BoolFieldUpdateOperationsInput | boolean
+    esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    desactivadoPor?: UsuarioUpdateOneWithoutDesactivadosNestedInput
+    desactivados?: UsuarioUpdateManyWithoutDesactivadoPorNestedInput
+    permisos?: PermisoUpdateManyWithoutUsuarioNestedInput
+    trabajosImpresion?: TrabajoImpresionUpdateManyWithoutCreadoPorNestedInput
+    archivosSubidos?: ArchivoUpdateManyWithoutSubidoPorNestedInput
+    accesosIndicador?: AccesoIndicadorUpdateManyWithoutUsuarioNestedInput
+    accesoIso?: AccesoISOUpdateOneWithoutUsuarioNestedInput
+    pedidosCreados?: PedidoUpdateManyWithoutCreadoPorNestedInput
+    pedidosEditados?: PedidoUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesCreadas?: CotizacionUpdateManyWithoutCreadoPorNestedInput
+    cotizacionesEditadas?: CotizacionUpdateManyWithoutUltimoEditadoPorNestedInput
+    ausenciasRegistradas?: AusenciaUpdateManyWithoutRegistradoPorNestedInput
+  }
+
+  export type UsuarioUncheckedUpdateWithoutAusenciasInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    supabaseUserId?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    esAdmin?: BoolFieldUpdateOperationsInput | boolean
+    esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    desactivadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    desactivados?: UsuarioUncheckedUpdateManyWithoutDesactivadoPorNestedInput
+    permisos?: PermisoUncheckedUpdateManyWithoutUsuarioNestedInput
+    trabajosImpresion?: TrabajoImpresionUncheckedUpdateManyWithoutCreadoPorNestedInput
+    archivosSubidos?: ArchivoUncheckedUpdateManyWithoutSubidoPorNestedInput
+    accesosIndicador?: AccesoIndicadorUncheckedUpdateManyWithoutUsuarioNestedInput
+    accesoIso?: AccesoISOUncheckedUpdateOneWithoutUsuarioNestedInput
+    pedidosCreados?: PedidoUncheckedUpdateManyWithoutCreadoPorNestedInput
+    pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesCreadas?: CotizacionUncheckedUpdateManyWithoutCreadoPorNestedInput
+    cotizacionesEditadas?: CotizacionUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    ausenciasRegistradas?: AusenciaUncheckedUpdateManyWithoutRegistradoPorNestedInput
+  }
+
+  export type UsuarioUpsertWithoutAusenciasRegistradasInput = {
+    update: XOR<UsuarioUpdateWithoutAusenciasRegistradasInput, UsuarioUncheckedUpdateWithoutAusenciasRegistradasInput>
+    create: XOR<UsuarioCreateWithoutAusenciasRegistradasInput, UsuarioUncheckedCreateWithoutAusenciasRegistradasInput>
+    where?: UsuarioWhereInput
+  }
+
+  export type UsuarioUpdateToOneWithWhereWithoutAusenciasRegistradasInput = {
+    where?: UsuarioWhereInput
+    data: XOR<UsuarioUpdateWithoutAusenciasRegistradasInput, UsuarioUncheckedUpdateWithoutAusenciasRegistradasInput>
+  }
+
+  export type UsuarioUpdateWithoutAusenciasRegistradasInput = {
+    supabaseUserId?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    esAdmin?: BoolFieldUpdateOperationsInput | boolean
+    esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    desactivadoPor?: UsuarioUpdateOneWithoutDesactivadosNestedInput
+    desactivados?: UsuarioUpdateManyWithoutDesactivadoPorNestedInput
+    permisos?: PermisoUpdateManyWithoutUsuarioNestedInput
+    trabajosImpresion?: TrabajoImpresionUpdateManyWithoutCreadoPorNestedInput
+    archivosSubidos?: ArchivoUpdateManyWithoutSubidoPorNestedInput
+    accesosIndicador?: AccesoIndicadorUpdateManyWithoutUsuarioNestedInput
+    accesoIso?: AccesoISOUpdateOneWithoutUsuarioNestedInput
+    pedidosCreados?: PedidoUpdateManyWithoutCreadoPorNestedInput
+    pedidosEditados?: PedidoUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesCreadas?: CotizacionUpdateManyWithoutCreadoPorNestedInput
+    cotizacionesEditadas?: CotizacionUpdateManyWithoutUltimoEditadoPorNestedInput
+    ausencias?: AusenciaUpdateManyWithoutUsuarioNestedInput
+  }
+
+  export type UsuarioUncheckedUpdateWithoutAusenciasRegistradasInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    supabaseUserId?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    esAdmin?: BoolFieldUpdateOperationsInput | boolean
+    esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    desactivadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    desactivados?: UsuarioUncheckedUpdateManyWithoutDesactivadoPorNestedInput
+    permisos?: PermisoUncheckedUpdateManyWithoutUsuarioNestedInput
+    trabajosImpresion?: TrabajoImpresionUncheckedUpdateManyWithoutCreadoPorNestedInput
+    archivosSubidos?: ArchivoUncheckedUpdateManyWithoutSubidoPorNestedInput
+    accesosIndicador?: AccesoIndicadorUncheckedUpdateManyWithoutUsuarioNestedInput
+    accesoIso?: AccesoISOUncheckedUpdateOneWithoutUsuarioNestedInput
+    pedidosCreados?: PedidoUncheckedUpdateManyWithoutCreadoPorNestedInput
+    pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesCreadas?: CotizacionUncheckedUpdateManyWithoutCreadoPorNestedInput
+    cotizacionesEditadas?: CotizacionUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    ausencias?: AusenciaUncheckedUpdateManyWithoutUsuarioNestedInput
   }
 
   export type CarpetaCreateWithoutHijosInput = {
@@ -29015,6 +31024,8 @@ export namespace Prisma {
     pedidosEditados?: PedidoCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesCreadas?: CotizacionCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionCreateNestedManyWithoutUltimoEditadoPorInput
+    ausencias?: AusenciaCreateNestedManyWithoutUsuarioInput
+    ausenciasRegistradas?: AusenciaCreateNestedManyWithoutRegistradoPorInput
   }
 
   export type UsuarioUncheckedCreateWithoutArchivosSubidosInput = {
@@ -29037,6 +31048,8 @@ export namespace Prisma {
     pedidosEditados?: PedidoUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesCreadas?: CotizacionUncheckedCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    ausencias?: AusenciaUncheckedCreateNestedManyWithoutUsuarioInput
+    ausenciasRegistradas?: AusenciaUncheckedCreateNestedManyWithoutRegistradoPorInput
   }
 
   export type UsuarioCreateOrConnectWithoutArchivosSubidosInput = {
@@ -29108,6 +31121,8 @@ export namespace Prisma {
     pedidosEditados?: PedidoUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesCreadas?: CotizacionUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUpdateManyWithoutUltimoEditadoPorNestedInput
+    ausencias?: AusenciaUpdateManyWithoutUsuarioNestedInput
+    ausenciasRegistradas?: AusenciaUpdateManyWithoutRegistradoPorNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutArchivosSubidosInput = {
@@ -29130,6 +31145,8 @@ export namespace Prisma {
     pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesCreadas?: CotizacionUncheckedUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    ausencias?: AusenciaUncheckedUpdateManyWithoutUsuarioNestedInput
+    ausenciasRegistradas?: AusenciaUncheckedUpdateManyWithoutRegistradoPorNestedInput
   }
 
   export type UsuarioCreateWithoutAccesosIndicadorInput = {
@@ -29151,6 +31168,8 @@ export namespace Prisma {
     pedidosEditados?: PedidoCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesCreadas?: CotizacionCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionCreateNestedManyWithoutUltimoEditadoPorInput
+    ausencias?: AusenciaCreateNestedManyWithoutUsuarioInput
+    ausenciasRegistradas?: AusenciaCreateNestedManyWithoutRegistradoPorInput
   }
 
   export type UsuarioUncheckedCreateWithoutAccesosIndicadorInput = {
@@ -29173,6 +31192,8 @@ export namespace Prisma {
     pedidosEditados?: PedidoUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesCreadas?: CotizacionUncheckedCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    ausencias?: AusenciaUncheckedCreateNestedManyWithoutUsuarioInput
+    ausenciasRegistradas?: AusenciaUncheckedCreateNestedManyWithoutRegistradoPorInput
   }
 
   export type UsuarioCreateOrConnectWithoutAccesosIndicadorInput = {
@@ -29210,6 +31231,8 @@ export namespace Prisma {
     pedidosEditados?: PedidoUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesCreadas?: CotizacionUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUpdateManyWithoutUltimoEditadoPorNestedInput
+    ausencias?: AusenciaUpdateManyWithoutUsuarioNestedInput
+    ausenciasRegistradas?: AusenciaUpdateManyWithoutRegistradoPorNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutAccesosIndicadorInput = {
@@ -29232,6 +31255,8 @@ export namespace Prisma {
     pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesCreadas?: CotizacionUncheckedUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    ausencias?: AusenciaUncheckedUpdateManyWithoutUsuarioNestedInput
+    ausenciasRegistradas?: AusenciaUncheckedUpdateManyWithoutRegistradoPorNestedInput
   }
 
   export type UsuarioCreateWithoutAccesoIsoInput = {
@@ -29253,6 +31278,8 @@ export namespace Prisma {
     pedidosEditados?: PedidoCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesCreadas?: CotizacionCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionCreateNestedManyWithoutUltimoEditadoPorInput
+    ausencias?: AusenciaCreateNestedManyWithoutUsuarioInput
+    ausenciasRegistradas?: AusenciaCreateNestedManyWithoutRegistradoPorInput
   }
 
   export type UsuarioUncheckedCreateWithoutAccesoIsoInput = {
@@ -29275,6 +31302,8 @@ export namespace Prisma {
     pedidosEditados?: PedidoUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesCreadas?: CotizacionUncheckedCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    ausencias?: AusenciaUncheckedCreateNestedManyWithoutUsuarioInput
+    ausenciasRegistradas?: AusenciaUncheckedCreateNestedManyWithoutRegistradoPorInput
   }
 
   export type UsuarioCreateOrConnectWithoutAccesoIsoInput = {
@@ -29312,6 +31341,8 @@ export namespace Prisma {
     pedidosEditados?: PedidoUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesCreadas?: CotizacionUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUpdateManyWithoutUltimoEditadoPorNestedInput
+    ausencias?: AusenciaUpdateManyWithoutUsuarioNestedInput
+    ausenciasRegistradas?: AusenciaUpdateManyWithoutRegistradoPorNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutAccesoIsoInput = {
@@ -29334,6 +31365,8 @@ export namespace Prisma {
     pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesCreadas?: CotizacionUncheckedUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    ausencias?: AusenciaUncheckedUpdateManyWithoutUsuarioNestedInput
+    ausenciasRegistradas?: AusenciaUncheckedUpdateManyWithoutRegistradoPorNestedInput
   }
 
   export type UsuarioCreateManyDesactivadoPorInput = {
@@ -29467,6 +31500,24 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type AusenciaCreateManyUsuarioInput = {
+    id?: number
+    desde: Date | string
+    hasta: Date | string
+    motivo?: string | null
+    registradoPorId: number
+    createdAt?: Date | string
+  }
+
+  export type AusenciaCreateManyRegistradoPorInput = {
+    id?: number
+    usuarioId: number
+    desde: Date | string
+    hasta: Date | string
+    motivo?: string | null
+    createdAt?: Date | string
+  }
+
   export type UsuarioUpdateWithoutDesactivadoPorInput = {
     supabaseUserId?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
@@ -29486,6 +31537,8 @@ export namespace Prisma {
     pedidosEditados?: PedidoUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesCreadas?: CotizacionUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUpdateManyWithoutUltimoEditadoPorNestedInput
+    ausencias?: AusenciaUpdateManyWithoutUsuarioNestedInput
+    ausenciasRegistradas?: AusenciaUpdateManyWithoutRegistradoPorNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutDesactivadoPorInput = {
@@ -29508,6 +31561,8 @@ export namespace Prisma {
     pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesCreadas?: CotizacionUncheckedUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    ausencias?: AusenciaUncheckedUpdateManyWithoutUsuarioNestedInput
+    ausenciasRegistradas?: AusenciaUncheckedUpdateManyWithoutRegistradoPorNestedInput
   }
 
   export type UsuarioUncheckedUpdateManyWithoutDesactivadoPorInput = {
@@ -29869,6 +31924,58 @@ export namespace Prisma {
     creadoPorId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AusenciaUpdateWithoutUsuarioInput = {
+    desde?: DateTimeFieldUpdateOperationsInput | Date | string
+    hasta?: DateTimeFieldUpdateOperationsInput | Date | string
+    motivo?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    registradoPor?: UsuarioUpdateOneRequiredWithoutAusenciasRegistradasNestedInput
+  }
+
+  export type AusenciaUncheckedUpdateWithoutUsuarioInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    desde?: DateTimeFieldUpdateOperationsInput | Date | string
+    hasta?: DateTimeFieldUpdateOperationsInput | Date | string
+    motivo?: NullableStringFieldUpdateOperationsInput | string | null
+    registradoPorId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AusenciaUncheckedUpdateManyWithoutUsuarioInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    desde?: DateTimeFieldUpdateOperationsInput | Date | string
+    hasta?: DateTimeFieldUpdateOperationsInput | Date | string
+    motivo?: NullableStringFieldUpdateOperationsInput | string | null
+    registradoPorId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AusenciaUpdateWithoutRegistradoPorInput = {
+    desde?: DateTimeFieldUpdateOperationsInput | Date | string
+    hasta?: DateTimeFieldUpdateOperationsInput | Date | string
+    motivo?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    usuario?: UsuarioUpdateOneRequiredWithoutAusenciasNestedInput
+  }
+
+  export type AusenciaUncheckedUpdateWithoutRegistradoPorInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    usuarioId?: IntFieldUpdateOperationsInput | number
+    desde?: DateTimeFieldUpdateOperationsInput | Date | string
+    hasta?: DateTimeFieldUpdateOperationsInput | Date | string
+    motivo?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AusenciaUncheckedUpdateManyWithoutRegistradoPorInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    usuarioId?: IntFieldUpdateOperationsInput | number
+    desde?: DateTimeFieldUpdateOperationsInput | Date | string
+    hasta?: DateTimeFieldUpdateOperationsInput | Date | string
+    motivo?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type LoteCreateManyFabricanteInput = {

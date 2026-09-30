@@ -39,6 +39,8 @@ model Usuario {
   pedidosEditados      Pedido[]           @relation("PedidosEditados")
   cotizacionesCreadas  Cotizacion[]       @relation("CotizacionesCreadas")
   cotizacionesEditadas Cotizacion[]       @relation("CotizacionesEditadas")
+  ausencias            Ausencia[]         @relation("AusenciasDelUsuario")
+  ausenciasRegistradas Ausencia[]         @relation("AusenciasRegistradas")
 }
 
 model Permiso {
@@ -327,6 +329,27 @@ model Cotizacion {
 
   @@index([clienteId])
   @@map("cotizaciones")
+}
+
+// Registro de vacaciones/licencias, cargado a mano por un admin cuando alguien
+// sale. Sirve para que Cotizaciones (y a futuro Pedidos) marquen como
+// sospechosa una fecha de etapa que el propio usuario cargó dentro de un
+// período en el que no estaba trabajando — ver calcularAlertas() en
+// cotizaciones.service.ts. No reemplaza ningún sistema de RR.HH., es
+// deliberadamente mínimo: solo lo que hace falta para ese cruce.
+model Ausencia {
+  id              Int      @id @default(autoincrement())
+  usuarioId       Int
+  usuario         Usuario  @relation("AusenciasDelUsuario", fields: [usuarioId], references: [id], onDelete: Cascade)
+  desde           DateTime @db.Date // día calendario, inclusive
+  hasta           DateTime @db.Date // día calendario, inclusive
+  motivo          String?
+  registradoPorId Int
+  registradoPor   Usuario  @relation("AusenciasRegistradas", fields: [registradoPorId], references: [id])
+  createdAt       DateTime @default(now())
+
+  @@index([usuarioId])
+  @@map("ausencias")
 }
 
 // ──────────────────────────────────────────

@@ -264,6 +264,16 @@ exports.Prisma.CotizacionScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.AusenciaScalarFieldEnum = {
+  id: 'id',
+  usuarioId: 'usuarioId',
+  desde: 'desde',
+  hasta: 'hasta',
+  motivo: 'motivo',
+  registradoPorId: 'registradoPorId',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.CarpetaScalarFieldEnum = {
   id: 'id',
   nombre: 'nombre',
@@ -406,6 +416,7 @@ exports.Prisma.ModelName = {
   Cliente: 'Cliente',
   Pedido: 'Pedido',
   Cotizacion: 'Cotizacion',
+  Ausencia: 'Ausencia',
   Carpeta: 'Carpeta',
   Archivo: 'Archivo',
   AccesoIndicador: 'AccesoIndicador',

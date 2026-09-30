@@ -3,8 +3,65 @@ import { Prisma } from '../generated/prisma';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateCotizacionDto } from './dto/create-cotizacion.dto';
 import { UpdateCotizacionDto } from './dto/update-cotizacion.dto';
+import { AusenciasService } from '../ausencias/ausencias.service';
+import { esDiaNoLaboral } from '../common/fecha/feriados-peru';
 
 export type EstadoCotizacion = 'RECIBIDO' | 'COTIZADO' | 'APROBADO' | 'AVISADO_ALMACEN';
+
+export type TipoAlertaCotizacion = 'FERIADO_O_FIN_DE_SEMANA' | 'AUSENCIA_REGISTRADA';
+
+export interface AlertaCotizacion {
+  campo: 'cotizacionEnviadaEn' | 'pedidoAprobadoEn' | 'avisoAlmacenEn';
+  tipo: TipoAlertaCotizacion;
+  motivo?: string;
+}
+
+// Las 3 etapas que Joel carga sobre su propio trabajo (a diferencia de requerimientoEn, que es
+// la hora del SMS del cliente y puede caer en cualquier momento real). Si una de estas cae en un
+// día que la empresa no trabaja, o dentro de una ausencia registrada de quien la cargó/editó, es
+// evidencia de que el dato fue puesto para "cuadrar" el indicador en vez de reflejar lo real —
+// ver la conversación que originó esto: Joel cargaba datos de días en que estaba de vacaciones.
+const CAMPOS_A_VERIFICAR = ['cotizacionEnviadaEn', 'pedidoAprobadoEn', 'avisoAlmacenEn'] as const;
+
+function diaDentroDeRango(dia: Date, desde: Date, hasta: Date): boolean {
+  const d = new Date(dia.getFullYear(), dia.getMonth(), dia.getDate()).getTime();
+  const ini = new Date(desde.getFullYear(), desde.getMonth(), desde.getDate()).getTime();
+  const fin = new Date(hasta.getFullYear(), hasta.getMonth(), hasta.getDate()).getTime();
+  return d >= ini && d <= fin;
+}
+
+export function calcularAlertasCotizacion(
+  cotizacion: {
+    cotizacionEnviadaEn: Date | null;
+    pedidoAprobadoEn: Date | null;
+    avisoAlmacenEn: Date | null;
+    creadoPorId: number;
+    ultimoEditadoPorId: number | null;
+  },
+  ausenciasPorUsuario: Map<number, { desde: Date; hasta: Date; motivo: string | null }[]>,
+): AlertaCotizacion[] {
+  const responsables = [cotizacion.creadoPorId, cotizacion.ultimoEditadoPorId].filter(
+    (id): id is number => id != null,
+  );
+  const ausencias = responsables.flatMap((id) => ausenciasPorUsuario.get(id) ?? []);
+
+  const alertas: AlertaCotizacion[] = [];
+  for (const campo of CAMPOS_A_VERIFICAR) {
+    const fecha = cotizacion[campo];
+    if (!fecha) continue;
+
+    if (esDiaNoLaboral(fecha)) {
+      alertas.push({ campo, tipo: 'FERIADO_O_FIN_DE_SEMANA' });
+      continue;
+    }
+
+    const ausenciaQueAplica = ausencias.find((a) => diaDentroDeRango(fecha, a.desde, a.hasta));
+    if (ausenciaQueAplica) {
+      alertas.push({ campo, tipo: 'AUSENCIA_REGISTRADA', motivo: ausenciaQueAplica.motivo ?? undefined });
+    }
+  }
+  return alertas;
+}
 
 // Sin columna "estado" en la tabla (mismo criterio que Pedido): se deriva de qué fechas están
 // seteadas, así nunca se desincroniza de la fecha real de cada etapa.
@@ -34,7 +91,26 @@ const INCLUDE_COTIZACION = {
 
 @Injectable()
 export class CotizacionesService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private ausenciasService: AusenciasService,
+  ) {}
+
+  private async conAlertas<
+    T extends {
+      creadoPorId: number;
+      ultimoEditadoPorId: number | null;
+      cotizacionEnviadaEn: Date | null;
+      pedidoAprobadoEn: Date | null;
+      avisoAlmacenEn: Date | null;
+    },
+  >(cotizaciones: T[]): Promise<(T & { alertas: AlertaCotizacion[] })[]> {
+    const usuarioIds = cotizaciones.flatMap((c) => [c.creadoPorId, c.ultimoEditadoPorId]);
+    const ausenciasPorUsuario = await this.ausenciasService.obtenerPorUsuarios(
+      usuarioIds.filter((id): id is number => id != null),
+    );
+    return cotizaciones.map((c) => ({ ...c, alertas: calcularAlertasCotizacion(c, ausenciasPorUsuario) }));
+  }
 
   async create(dto: CreateCotizacionDto, creadoPorId: number) {
     const cotizacion = await this.prisma.cotizacion.create({
@@ -47,7 +123,8 @@ export class CotizacionesService {
       },
       include: INCLUDE_COTIZACION,
     });
-    return { ...cotizacion, estado: derivarEstadoCotizacion(cotizacion) };
+    const [conAlertas] = await this.conAlertas([cotizacion]);
+    return { ...conAlertas, estado: derivarEstadoCotizacion(cotizacion) };
   }
 
   async findAll(estado?: EstadoCotizacion) {
@@ -56,7 +133,8 @@ export class CotizacionesService {
       include: INCLUDE_COTIZACION,
       orderBy: { requerimientoEn: 'desc' },
     });
-    return cotizaciones.map((c) => ({ ...c, estado: derivarEstadoCotizacion(c) }));
+    const conAlertas = await this.conAlertas(cotizaciones);
+    return conAlertas.map((c) => ({ ...c, estado: derivarEstadoCotizacion(c) }));
   }
 
   async findOne(id: number) {
@@ -67,7 +145,8 @@ export class CotizacionesService {
     if (!cotizacion) {
       throw new NotFoundException(`Cotización con id ${id} no encontrada`);
     }
-    return { ...cotizacion, estado: derivarEstadoCotizacion(cotizacion) };
+    const [conAlertas] = await this.conAlertas([cotizacion]);
+    return { ...conAlertas, estado: derivarEstadoCotizacion(cotizacion) };
   }
 
   async update(id: number, dto: UpdateCotizacionDto, editadoPorId: number) {
@@ -95,7 +174,8 @@ export class CotizacionesService {
         },
         include: INCLUDE_COTIZACION,
       });
-      return { ...cotizacion, estado: derivarEstadoCotizacion(cotizacion) };
+      const [conAlertas] = await this.conAlertas([cotizacion]);
+      return { ...conAlertas, estado: derivarEstadoCotizacion(cotizacion) };
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
         throw new ConflictException(`Ya existe una cotización con la proforma "${dto.numeroProforma?.trim()}"`);

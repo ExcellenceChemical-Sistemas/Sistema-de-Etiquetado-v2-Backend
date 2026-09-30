@@ -17,6 +17,7 @@ import { CarpetasModule } from './carpetas/carpetas.module';
 import { ClientesModule } from './clientes/clientes.module';
 import { PedidosModule } from './pedidos/pedidos.module';
 import { CotizacionesModule } from './cotizaciones/cotizaciones.module';
+import { AusenciasModule } from './ausencias/ausencias.module';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { CotizacionesModule } from './cotizaciones/cotizaciones.module';
     ClientesModule,
     PedidosModule,
     CotizacionesModule,
+    AusenciasModule,
   ],
   // AppController expone GET /api/salud (monitoreo). Antes no estaba registrado y nunca se servía.
   controllers: [AppController],

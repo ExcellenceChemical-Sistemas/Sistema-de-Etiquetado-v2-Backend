@@ -24,6 +24,7 @@ import { EtiquetasPublicasController } from '../../etiquetas/etiquetas-publicas.
 import { EtiquetasController } from '../../etiquetas/etiquetas.controller';
 import { FabricantesController } from '../../fabricantes/fabricantes.controller';
 import { LotesController } from '../../lotes/lotes.controller';
+import { NotificacionesController } from '../../notificaciones/notificaciones.controller';
 import { PedidosController } from '../../pedidos/pedidos.controller';
 import { PedidosPublicosController } from '../../pedidos/pedidos-publicos.controller';
 import { PlantillasController } from '../../plantillas/plantillas.controller';
@@ -50,6 +51,7 @@ const CONTROLLERS: any[] = [
   EtiquetasController,
   FabricantesController,
   LotesController,
+  NotificacionesController,
   PedidosController,
   PedidosPublicosController,
   PlantillasController,
@@ -79,6 +81,10 @@ const SOLO_SESION = new Map<string, string>([
   ['GET /etiquetas/agente/estado', 'el controller exige ETIQUETAS.puedeVer o puedeCrear dentro del método (no usa PermisosGuard porque acepta cualquiera de las dos)'],
   ['GET /etiquetas/vista-previa/:id', 'VistaPreviaService.obtener solo la devuelve a quien la pidió (o admin); quien genera puede no tener ETIQUETAS.puedeVer'],
   ['GET /etiquetas/trabajos/:id', 'TrabajosImpresionService.obtenerEstado solo lo devuelve a su creador (o admin) y da 404 si es ajeno; tiene tests'],
+  ['GET /notificaciones', 'cada quien ve sus propias notificaciones; el service filtra por el id que sale del token'],
+  ['GET /notificaciones/no-leidas/cantidad', 'mismo motivo que arriba, solo cuenta las del usuario autenticado'],
+  ['PATCH /notificaciones/leer-todas', 'marca como leídas solo las notificaciones del usuario autenticado'],
+  ['PATCH /notificaciones/:id/leer', 'NotificacionesService.marcarLeida da 404 si la notificación es de otro usuario'],
 ]);
 
 type Ruta = {

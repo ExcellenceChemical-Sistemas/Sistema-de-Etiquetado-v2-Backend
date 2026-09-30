@@ -174,18 +174,37 @@ algún momento se decide mover esa lógica a este backend, hay que decidir prime
 viviendo solo en n8n o si se reescribe acá para no terminar con dos sistemas mandando el mismo
 correo sin coordinarse.
 
+**El aviso de "pedido vencido" SÍ vive en este backend, como notificación interna (no correo).**
+`NotificacionesModule` (`GET /notificaciones`, `GET /notificaciones/no-leidas/cantidad`,
+`PATCH /notificaciones/:id/leer`, `PATCH /notificaciones/leer-todas`, todas solo con
+`SupabaseAuthGuard` — cada una filtra por el usuario del token, ver `SOLO_SESION` en
+`cobertura-permisos.spec.ts`) expone la bandeja. `AlertasPedidosService` (`pedidos/alertas-pedidos.service.ts`,
+cron `@nestjs/schedule` cada 30 min) revisa pedidos sin `entregadoEn` que acumularon ≥48 horas
+**hábiles** (`common/fecha/horas-habiles.ts`: lunes a viernes, 7:30am–5:30pm, sin contar noches ni
+fines de semana) desde `recibidoEn`, y crea una `Notificacion` para cada usuario con
+`esAdmin=true` o `PEDIDOS.puedeVer=true`. `Pedido.alerta48hEnviadaEn` evita mandarla dos veces,
+mismo patrón que `avisoSalioEnviadoEn`. Es un sistema separado del aviso por correo al cliente de
+arriba — uno es interno (personal de la empresa), el otro es externo (al cliente).
+
 **`Cotizacion` (módulo `cotizaciones`) — seguimiento del proceso de Joel, con auditoría contra
 manipulación de fechas.** Mismo patrón que `Pedido` (sin columna `estado`, derivado en
 `cotizaciones.service.ts` de qué de `cotizacionEnviadaEn`/`pedidoAprobadoEn`/`avisoAlmacenEn` está
-seteado), pero a diferencia de `Pedido` estas fechas (más `requerimientoEn`) **no son libremente
-editables**: surgió porque un vendedor cargaba datos retroactivos (incluso de días de vacaciones)
-para mejorar su propio indicador de tiempo de respuesta, algo que el Excel anterior no podía
-detectar. La política, igual para las 4 fechas:
+seteado). De las 4 fechas, 3 (`CAMPOS_PROTEGIDOS`: `cotizacionEnviadaEn`, `pedidoAprobadoEn`,
+`avisoAlmacenEn`) **no son libremente editables**: surgió porque un vendedor cargaba datos
+retroactivos (incluso de días de vacaciones) para mejorar su propio indicador de tiempo de
+respuesta, algo que el Excel anterior no podía detectar. La política, igual para esas 3:
 - **Al marcar por primera vez**, el valor que mande el cliente HTTP se ignora — `create()`/`update()`
   siempre usan `new Date()` del servidor. Nadie elige la fecha real de cada etapa.
 - **Corregir una fecha ya marcada** es exclusivo de `esAdmin` (chequeado en el service, no solo
   oculto en el frontend) y exige `motivoCorreccion` no vacío (`BadRequestException` si falta,
   `ForbiddenException` si no es admin).
+
+`requerimientoEn` (fecha en que llegó el pedido del cliente) quedó **afuera** de esa protección a
+pedido explícito del negocio: es de carga y edición libre desde `create()`/`update()`, sin exigir
+`esAdmin` ni `motivoCorreccion` (ver comentario en `CAMPOS_PROTEGIDOS`, `cotizaciones.service.ts`).
+Esto reabre el hueco que la política original evitaba para ese campo puntual — decisión consciente,
+no un descuido. Sigue incluida en `calcularAlertasCotizacion()` (feriado/ausencia/carga tardía)
+como control informativo, nunca bloqueante.
 - Cada cambio (incluida la marca inicial) escribe una fila en `CotizacionHistorial` (`campo`,
   `valorAnterior`, `valorNuevo`, `motivo`, `editadoPorId`, `editadoEn` con `@default(now())`,
   inmutable) dentro de la misma `$transaction` que el `update` — es la evidencia real de cuándo

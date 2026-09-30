@@ -240,12 +240,23 @@ exports.Prisma.PedidoScalarFieldEnum = {
   entregadoEn: 'entregadoEn',
   avisoSalioEnviadoEn: 'avisoSalioEnviadoEn',
   avisoEntregadoEnviadoEn: 'avisoEntregadoEnviadoEn',
+  alerta48hEnviadaEn: 'alerta48hEnviadaEn',
   categoriaObservacion: 'categoriaObservacion',
   detalleObservacion: 'detalleObservacion',
   creadoPorId: 'creadoPorId',
   ultimoEditadoPorId: 'ultimoEditadoPorId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
+};
+
+exports.Prisma.NotificacionScalarFieldEnum = {
+  id: 'id',
+  usuarioId: 'usuarioId',
+  tipo: 'tipo',
+  mensaje: 'mensaje',
+  pedidoId: 'pedidoId',
+  leidaEn: 'leidaEn',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.CotizacionScalarFieldEnum = {
@@ -386,6 +397,10 @@ exports.CategoriaObservacionPedido = exports.$Enums.CategoriaObservacionPedido =
   OTRO: 'OTRO'
 };
 
+exports.TipoNotificacion = exports.$Enums.TipoNotificacion = {
+  PEDIDO_VENCIDO: 'PEDIDO_VENCIDO'
+};
+
 exports.ModuloDocumentos = exports.$Enums.ModuloDocumentos = {
   KPIS: 'KPIS',
   ISO: 'ISO'
@@ -428,6 +443,7 @@ exports.Prisma.ModelName = {
   TrabajoImpresion: 'TrabajoImpresion',
   Cliente: 'Cliente',
   Pedido: 'Pedido',
+  Notificacion: 'Notificacion',
   Cotizacion: 'Cotizacion',
   CotizacionHistorial: 'CotizacionHistorial',
   Ausencia: 'Ausencia',

@@ -37,6 +37,7 @@ model Usuario {
   accesoIso         AccesoISO?
   pedidosCreados    Pedido[]           @relation("PedidosCreados")
   pedidosEditados   Pedido[]           @relation("PedidosEditados")
+  notificaciones    Notificacion[]
   cotizacionesCreadas Cotizacion[]     @relation("CotizacionesCreadas")
   cotizacionesEditadas Cotizacion[]    @relation("CotizacionesEditadas")
   cotizacionesHistorialEditado CotizacionHistorial[]
@@ -295,6 +296,9 @@ model Pedido {
   // (por ejemplo, si alguien corrige la fecha despues).
   avisoSalioEnviadoEn     DateTime?
   avisoEntregadoEnviadoEn DateTime?
+  // Cuándo se creó la notificación interna de "pedido vencido" (ver NotificacionesModule /
+  // AlertasPedidosService). Evita mandarla dos veces, mismo patrón que los avisos de arriba.
+  alerta48hEnviadaEn      DateTime?
   categoriaObservacion    CategoriaObservacionPedido?
   detalleObservacion      String?
   creadoPorId             Int
@@ -303,9 +307,33 @@ model Pedido {
   ultimoEditadoPor        Usuario?                    @relation("PedidosEditados", fields: [ultimoEditadoPorId], references: [id])
   createdAt               DateTime                    @default(now())
   updatedAt               DateTime                    @updatedAt
+  notificaciones          Notificacion[]
 
   @@index([clienteId])
   @@map("pedidos")
+}
+
+// Notificación interna (no correo) para avisar dentro del sistema, ej. "este pedido lleva
+// más de 48h hábiles sin marcarse como entregado" (AlertasPedidosService). No reemplaza el
+// aviso por correo al cliente (ese sigue siendo el workflow de n8n, ver CLAUDE.md) — este es
+// un aviso interno para el personal (quien tiene acceso a PEDIDOS + los admins).
+model Notificacion {
+  id        Int              @id @default(autoincrement())
+  usuarioId Int
+  usuario   Usuario          @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  tipo      TipoNotificacion
+  mensaje   String
+  pedidoId  Int?
+  pedido    Pedido?          @relation(fields: [pedidoId], references: [id], onDelete: Cascade)
+  leidaEn   DateTime?
+  createdAt DateTime         @default(now())
+
+  @@index([usuarioId])
+  @@map("notificaciones")
+}
+
+enum TipoNotificacion {
+  PEDIDO_VENCIDO
 }
 
 // Seguimiento del proceso de cotización de Joel: mismo patrón que Pedido (fechas por etapa,

@@ -59,6 +59,11 @@ export type Cliente = $Result.DefaultSelection<Prisma.$ClientePayload>
  */
 export type Pedido = $Result.DefaultSelection<Prisma.$PedidoPayload>
 /**
+ * Model Notificacion
+ * 
+ */
+export type Notificacion = $Result.DefaultSelection<Prisma.$NotificacionPayload>
+/**
  * Model Cotizacion
  * 
  */
@@ -148,6 +153,13 @@ export const CategoriaObservacionPedido: {
 export type CategoriaObservacionPedido = (typeof CategoriaObservacionPedido)[keyof typeof CategoriaObservacionPedido]
 
 
+export const TipoNotificacion: {
+  PEDIDO_VENCIDO: 'PEDIDO_VENCIDO'
+};
+
+export type TipoNotificacion = (typeof TipoNotificacion)[keyof typeof TipoNotificacion]
+
+
 export const ModuloDocumentos: {
   KPIS: 'KPIS',
   ISO: 'ISO'
@@ -208,6 +220,10 @@ export const TipoDocumentoCliente: typeof $Enums.TipoDocumentoCliente
 export type CategoriaObservacionPedido = $Enums.CategoriaObservacionPedido
 
 export const CategoriaObservacionPedido: typeof $Enums.CategoriaObservacionPedido
+
+export type TipoNotificacion = $Enums.TipoNotificacion
+
+export const TipoNotificacion: typeof $Enums.TipoNotificacion
 
 export type ModuloDocumentos = $Enums.ModuloDocumentos
 
@@ -435,6 +451,16 @@ export class PrismaClient<
     * ```
     */
   get pedido(): Prisma.PedidoDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.notificacion`: Exposes CRUD operations for the **Notificacion** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Notificacions
+    * const notificacions = await prisma.notificacion.findMany()
+    * ```
+    */
+  get notificacion(): Prisma.NotificacionDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.cotizacion`: Exposes CRUD operations for the **Cotizacion** model.
@@ -971,6 +997,7 @@ export namespace Prisma {
     TrabajoImpresion: 'TrabajoImpresion',
     Cliente: 'Cliente',
     Pedido: 'Pedido',
+    Notificacion: 'Notificacion',
     Cotizacion: 'Cotizacion',
     CotizacionHistorial: 'CotizacionHistorial',
     Ausencia: 'Ausencia',
@@ -994,7 +1021,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "usuario" | "permiso" | "fabricante" | "producto" | "plantilla" | "lote" | "trabajoImpresion" | "cliente" | "pedido" | "cotizacion" | "cotizacionHistorial" | "ausencia" | "carpeta" | "archivo" | "accesoIndicador" | "accesoISO" | "registroAuditoria"
+      modelProps: "usuario" | "permiso" | "fabricante" | "producto" | "plantilla" | "lote" | "trabajoImpresion" | "cliente" | "pedido" | "notificacion" | "cotizacion" | "cotizacionHistorial" | "ausencia" | "carpeta" | "archivo" | "accesoIndicador" | "accesoISO" | "registroAuditoria"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1661,6 +1688,80 @@ export namespace Prisma {
           count: {
             args: Prisma.PedidoCountArgs<ExtArgs>
             result: $Utils.Optional<PedidoCountAggregateOutputType> | number
+          }
+        }
+      }
+      Notificacion: {
+        payload: Prisma.$NotificacionPayload<ExtArgs>
+        fields: Prisma.NotificacionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.NotificacionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificacionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.NotificacionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificacionPayload>
+          }
+          findFirst: {
+            args: Prisma.NotificacionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificacionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.NotificacionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificacionPayload>
+          }
+          findMany: {
+            args: Prisma.NotificacionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificacionPayload>[]
+          }
+          create: {
+            args: Prisma.NotificacionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificacionPayload>
+          }
+          createMany: {
+            args: Prisma.NotificacionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.NotificacionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificacionPayload>[]
+          }
+          delete: {
+            args: Prisma.NotificacionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificacionPayload>
+          }
+          update: {
+            args: Prisma.NotificacionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificacionPayload>
+          }
+          deleteMany: {
+            args: Prisma.NotificacionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.NotificacionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.NotificacionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificacionPayload>[]
+          }
+          upsert: {
+            args: Prisma.NotificacionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificacionPayload>
+          }
+          aggregate: {
+            args: Prisma.NotificacionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateNotificacion>
+          }
+          groupBy: {
+            args: Prisma.NotificacionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<NotificacionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.NotificacionCountArgs<ExtArgs>
+            result: $Utils.Optional<NotificacionCountAggregateOutputType> | number
           }
         }
       }
@@ -2388,6 +2489,7 @@ export namespace Prisma {
     trabajoImpresion?: TrabajoImpresionOmit
     cliente?: ClienteOmit
     pedido?: PedidoOmit
+    notificacion?: NotificacionOmit
     cotizacion?: CotizacionOmit
     cotizacionHistorial?: CotizacionHistorialOmit
     ausencia?: AusenciaOmit
@@ -2483,6 +2585,7 @@ export namespace Prisma {
     accesosIndicador: number
     pedidosCreados: number
     pedidosEditados: number
+    notificaciones: number
     cotizacionesCreadas: number
     cotizacionesEditadas: number
     cotizacionesHistorialEditado: number
@@ -2498,6 +2601,7 @@ export namespace Prisma {
     accesosIndicador?: boolean | UsuarioCountOutputTypeCountAccesosIndicadorArgs
     pedidosCreados?: boolean | UsuarioCountOutputTypeCountPedidosCreadosArgs
     pedidosEditados?: boolean | UsuarioCountOutputTypeCountPedidosEditadosArgs
+    notificaciones?: boolean | UsuarioCountOutputTypeCountNotificacionesArgs
     cotizacionesCreadas?: boolean | UsuarioCountOutputTypeCountCotizacionesCreadasArgs
     cotizacionesEditadas?: boolean | UsuarioCountOutputTypeCountCotizacionesEditadasArgs
     cotizacionesHistorialEditado?: boolean | UsuarioCountOutputTypeCountCotizacionesHistorialEditadoArgs
@@ -2563,6 +2667,13 @@ export namespace Prisma {
    */
   export type UsuarioCountOutputTypeCountPedidosEditadosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: PedidoWhereInput
+  }
+
+  /**
+   * UsuarioCountOutputType without action
+   */
+  export type UsuarioCountOutputTypeCountNotificacionesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: NotificacionWhereInput
   }
 
   /**
@@ -2762,6 +2873,37 @@ export namespace Prisma {
    */
   export type ClienteCountOutputTypeCountCotizacionesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: CotizacionWhereInput
+  }
+
+
+  /**
+   * Count Type PedidoCountOutputType
+   */
+
+  export type PedidoCountOutputType = {
+    notificaciones: number
+  }
+
+  export type PedidoCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    notificaciones?: boolean | PedidoCountOutputTypeCountNotificacionesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * PedidoCountOutputType without action
+   */
+  export type PedidoCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PedidoCountOutputType
+     */
+    select?: PedidoCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * PedidoCountOutputType without action
+   */
+  export type PedidoCountOutputTypeCountNotificacionesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: NotificacionWhereInput
   }
 
 
@@ -3091,6 +3233,7 @@ export namespace Prisma {
     accesoIso?: boolean | Usuario$accesoIsoArgs<ExtArgs>
     pedidosCreados?: boolean | Usuario$pedidosCreadosArgs<ExtArgs>
     pedidosEditados?: boolean | Usuario$pedidosEditadosArgs<ExtArgs>
+    notificaciones?: boolean | Usuario$notificacionesArgs<ExtArgs>
     cotizacionesCreadas?: boolean | Usuario$cotizacionesCreadasArgs<ExtArgs>
     cotizacionesEditadas?: boolean | Usuario$cotizacionesEditadasArgs<ExtArgs>
     cotizacionesHistorialEditado?: boolean | Usuario$cotizacionesHistorialEditadoArgs<ExtArgs>
@@ -3151,6 +3294,7 @@ export namespace Prisma {
     accesoIso?: boolean | Usuario$accesoIsoArgs<ExtArgs>
     pedidosCreados?: boolean | Usuario$pedidosCreadosArgs<ExtArgs>
     pedidosEditados?: boolean | Usuario$pedidosEditadosArgs<ExtArgs>
+    notificaciones?: boolean | Usuario$notificacionesArgs<ExtArgs>
     cotizacionesCreadas?: boolean | Usuario$cotizacionesCreadasArgs<ExtArgs>
     cotizacionesEditadas?: boolean | Usuario$cotizacionesEditadasArgs<ExtArgs>
     cotizacionesHistorialEditado?: boolean | Usuario$cotizacionesHistorialEditadoArgs<ExtArgs>
@@ -3177,6 +3321,7 @@ export namespace Prisma {
       accesoIso: Prisma.$AccesoISOPayload<ExtArgs> | null
       pedidosCreados: Prisma.$PedidoPayload<ExtArgs>[]
       pedidosEditados: Prisma.$PedidoPayload<ExtArgs>[]
+      notificaciones: Prisma.$NotificacionPayload<ExtArgs>[]
       cotizacionesCreadas: Prisma.$CotizacionPayload<ExtArgs>[]
       cotizacionesEditadas: Prisma.$CotizacionPayload<ExtArgs>[]
       cotizacionesHistorialEditado: Prisma.$CotizacionHistorialPayload<ExtArgs>[]
@@ -3597,6 +3742,7 @@ export namespace Prisma {
     accesoIso<T extends Usuario$accesoIsoArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$accesoIsoArgs<ExtArgs>>): Prisma__AccesoISOClient<$Result.GetResult<Prisma.$AccesoISOPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     pedidosCreados<T extends Usuario$pedidosCreadosArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$pedidosCreadosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PedidoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     pedidosEditados<T extends Usuario$pedidosEditadosArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$pedidosEditadosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PedidoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    notificaciones<T extends Usuario$notificacionesArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$notificacionesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificacionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     cotizacionesCreadas<T extends Usuario$cotizacionesCreadasArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$cotizacionesCreadasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CotizacionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     cotizacionesEditadas<T extends Usuario$cotizacionesEditadasArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$cotizacionesEditadasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CotizacionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     cotizacionesHistorialEditado<T extends Usuario$cotizacionesHistorialEditadoArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$cotizacionesHistorialEditadoArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CotizacionHistorialPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -4245,6 +4391,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: PedidoScalarFieldEnum | PedidoScalarFieldEnum[]
+  }
+
+  /**
+   * Usuario.notificaciones
+   */
+  export type Usuario$notificacionesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notificacion
+     */
+    select?: NotificacionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notificacion
+     */
+    omit?: NotificacionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificacionInclude<ExtArgs> | null
+    where?: NotificacionWhereInput
+    orderBy?: NotificacionOrderByWithRelationInput | NotificacionOrderByWithRelationInput[]
+    cursor?: NotificacionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: NotificacionScalarFieldEnum | NotificacionScalarFieldEnum[]
   }
 
   /**
@@ -12784,6 +12954,7 @@ export namespace Prisma {
     entregadoEn: Date | null
     avisoSalioEnviadoEn: Date | null
     avisoEntregadoEnviadoEn: Date | null
+    alerta48hEnviadaEn: Date | null
     categoriaObservacion: $Enums.CategoriaObservacionPedido | null
     detalleObservacion: string | null
     creadoPorId: number | null
@@ -12804,6 +12975,7 @@ export namespace Prisma {
     entregadoEn: Date | null
     avisoSalioEnviadoEn: Date | null
     avisoEntregadoEnviadoEn: Date | null
+    alerta48hEnviadaEn: Date | null
     categoriaObservacion: $Enums.CategoriaObservacionPedido | null
     detalleObservacion: string | null
     creadoPorId: number | null
@@ -12824,6 +12996,7 @@ export namespace Prisma {
     entregadoEn: number
     avisoSalioEnviadoEn: number
     avisoEntregadoEnviadoEn: number
+    alerta48hEnviadaEn: number
     categoriaObservacion: number
     detalleObservacion: number
     creadoPorId: number
@@ -12860,6 +13033,7 @@ export namespace Prisma {
     entregadoEn?: true
     avisoSalioEnviadoEn?: true
     avisoEntregadoEnviadoEn?: true
+    alerta48hEnviadaEn?: true
     categoriaObservacion?: true
     detalleObservacion?: true
     creadoPorId?: true
@@ -12880,6 +13054,7 @@ export namespace Prisma {
     entregadoEn?: true
     avisoSalioEnviadoEn?: true
     avisoEntregadoEnviadoEn?: true
+    alerta48hEnviadaEn?: true
     categoriaObservacion?: true
     detalleObservacion?: true
     creadoPorId?: true
@@ -12900,6 +13075,7 @@ export namespace Prisma {
     entregadoEn?: true
     avisoSalioEnviadoEn?: true
     avisoEntregadoEnviadoEn?: true
+    alerta48hEnviadaEn?: true
     categoriaObservacion?: true
     detalleObservacion?: true
     creadoPorId?: true
@@ -13007,6 +13183,7 @@ export namespace Prisma {
     entregadoEn: Date | null
     avisoSalioEnviadoEn: Date | null
     avisoEntregadoEnviadoEn: Date | null
+    alerta48hEnviadaEn: Date | null
     categoriaObservacion: $Enums.CategoriaObservacionPedido | null
     detalleObservacion: string | null
     creadoPorId: number
@@ -13046,6 +13223,7 @@ export namespace Prisma {
     entregadoEn?: boolean
     avisoSalioEnviadoEn?: boolean
     avisoEntregadoEnviadoEn?: boolean
+    alerta48hEnviadaEn?: boolean
     categoriaObservacion?: boolean
     detalleObservacion?: boolean
     creadoPorId?: boolean
@@ -13055,6 +13233,8 @@ export namespace Prisma {
     cliente?: boolean | ClienteDefaultArgs<ExtArgs>
     creadoPor?: boolean | UsuarioDefaultArgs<ExtArgs>
     ultimoEditadoPor?: boolean | Pedido$ultimoEditadoPorArgs<ExtArgs>
+    notificaciones?: boolean | Pedido$notificacionesArgs<ExtArgs>
+    _count?: boolean | PedidoCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["pedido"]>
 
   export type PedidoSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -13069,6 +13249,7 @@ export namespace Prisma {
     entregadoEn?: boolean
     avisoSalioEnviadoEn?: boolean
     avisoEntregadoEnviadoEn?: boolean
+    alerta48hEnviadaEn?: boolean
     categoriaObservacion?: boolean
     detalleObservacion?: boolean
     creadoPorId?: boolean
@@ -13092,6 +13273,7 @@ export namespace Prisma {
     entregadoEn?: boolean
     avisoSalioEnviadoEn?: boolean
     avisoEntregadoEnviadoEn?: boolean
+    alerta48hEnviadaEn?: boolean
     categoriaObservacion?: boolean
     detalleObservacion?: boolean
     creadoPorId?: boolean
@@ -13115,6 +13297,7 @@ export namespace Prisma {
     entregadoEn?: boolean
     avisoSalioEnviadoEn?: boolean
     avisoEntregadoEnviadoEn?: boolean
+    alerta48hEnviadaEn?: boolean
     categoriaObservacion?: boolean
     detalleObservacion?: boolean
     creadoPorId?: boolean
@@ -13123,11 +13306,13 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type PedidoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "clienteId" | "numeroProforma" | "tokenSeguimiento" | "recibidoEn" | "inicioPreparacionEn" | "preparadoEn" | "salioEn" | "entregadoEn" | "avisoSalioEnviadoEn" | "avisoEntregadoEnviadoEn" | "categoriaObservacion" | "detalleObservacion" | "creadoPorId" | "ultimoEditadoPorId" | "createdAt" | "updatedAt", ExtArgs["result"]["pedido"]>
+  export type PedidoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "clienteId" | "numeroProforma" | "tokenSeguimiento" | "recibidoEn" | "inicioPreparacionEn" | "preparadoEn" | "salioEn" | "entregadoEn" | "avisoSalioEnviadoEn" | "avisoEntregadoEnviadoEn" | "alerta48hEnviadaEn" | "categoriaObservacion" | "detalleObservacion" | "creadoPorId" | "ultimoEditadoPorId" | "createdAt" | "updatedAt", ExtArgs["result"]["pedido"]>
   export type PedidoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     cliente?: boolean | ClienteDefaultArgs<ExtArgs>
     creadoPor?: boolean | UsuarioDefaultArgs<ExtArgs>
     ultimoEditadoPor?: boolean | Pedido$ultimoEditadoPorArgs<ExtArgs>
+    notificaciones?: boolean | Pedido$notificacionesArgs<ExtArgs>
+    _count?: boolean | PedidoCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type PedidoIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     cliente?: boolean | ClienteDefaultArgs<ExtArgs>
@@ -13146,6 +13331,7 @@ export namespace Prisma {
       cliente: Prisma.$ClientePayload<ExtArgs>
       creadoPor: Prisma.$UsuarioPayload<ExtArgs>
       ultimoEditadoPor: Prisma.$UsuarioPayload<ExtArgs> | null
+      notificaciones: Prisma.$NotificacionPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -13159,6 +13345,7 @@ export namespace Prisma {
       entregadoEn: Date | null
       avisoSalioEnviadoEn: Date | null
       avisoEntregadoEnviadoEn: Date | null
+      alerta48hEnviadaEn: Date | null
       categoriaObservacion: $Enums.CategoriaObservacionPedido | null
       detalleObservacion: string | null
       creadoPorId: number
@@ -13562,6 +13749,7 @@ export namespace Prisma {
     cliente<T extends ClienteDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ClienteDefaultArgs<ExtArgs>>): Prisma__ClienteClient<$Result.GetResult<Prisma.$ClientePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     creadoPor<T extends UsuarioDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UsuarioDefaultArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     ultimoEditadoPor<T extends Pedido$ultimoEditadoPorArgs<ExtArgs> = {}>(args?: Subset<T, Pedido$ultimoEditadoPorArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    notificaciones<T extends Pedido$notificacionesArgs<ExtArgs> = {}>(args?: Subset<T, Pedido$notificacionesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificacionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -13602,6 +13790,7 @@ export namespace Prisma {
     readonly entregadoEn: FieldRef<"Pedido", 'DateTime'>
     readonly avisoSalioEnviadoEn: FieldRef<"Pedido", 'DateTime'>
     readonly avisoEntregadoEnviadoEn: FieldRef<"Pedido", 'DateTime'>
+    readonly alerta48hEnviadaEn: FieldRef<"Pedido", 'DateTime'>
     readonly categoriaObservacion: FieldRef<"Pedido", 'CategoriaObservacionPedido'>
     readonly detalleObservacion: FieldRef<"Pedido", 'String'>
     readonly creadoPorId: FieldRef<"Pedido", 'Int'>
@@ -14028,6 +14217,30 @@ export namespace Prisma {
   }
 
   /**
+   * Pedido.notificaciones
+   */
+  export type Pedido$notificacionesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notificacion
+     */
+    select?: NotificacionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notificacion
+     */
+    omit?: NotificacionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificacionInclude<ExtArgs> | null
+    where?: NotificacionWhereInput
+    orderBy?: NotificacionOrderByWithRelationInput | NotificacionOrderByWithRelationInput[]
+    cursor?: NotificacionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: NotificacionScalarFieldEnum | NotificacionScalarFieldEnum[]
+  }
+
+  /**
    * Pedido without action
    */
   export type PedidoDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -14043,6 +14256,1164 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: PedidoInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Notificacion
+   */
+
+  export type AggregateNotificacion = {
+    _count: NotificacionCountAggregateOutputType | null
+    _avg: NotificacionAvgAggregateOutputType | null
+    _sum: NotificacionSumAggregateOutputType | null
+    _min: NotificacionMinAggregateOutputType | null
+    _max: NotificacionMaxAggregateOutputType | null
+  }
+
+  export type NotificacionAvgAggregateOutputType = {
+    id: number | null
+    usuarioId: number | null
+    pedidoId: number | null
+  }
+
+  export type NotificacionSumAggregateOutputType = {
+    id: number | null
+    usuarioId: number | null
+    pedidoId: number | null
+  }
+
+  export type NotificacionMinAggregateOutputType = {
+    id: number | null
+    usuarioId: number | null
+    tipo: $Enums.TipoNotificacion | null
+    mensaje: string | null
+    pedidoId: number | null
+    leidaEn: Date | null
+    createdAt: Date | null
+  }
+
+  export type NotificacionMaxAggregateOutputType = {
+    id: number | null
+    usuarioId: number | null
+    tipo: $Enums.TipoNotificacion | null
+    mensaje: string | null
+    pedidoId: number | null
+    leidaEn: Date | null
+    createdAt: Date | null
+  }
+
+  export type NotificacionCountAggregateOutputType = {
+    id: number
+    usuarioId: number
+    tipo: number
+    mensaje: number
+    pedidoId: number
+    leidaEn: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type NotificacionAvgAggregateInputType = {
+    id?: true
+    usuarioId?: true
+    pedidoId?: true
+  }
+
+  export type NotificacionSumAggregateInputType = {
+    id?: true
+    usuarioId?: true
+    pedidoId?: true
+  }
+
+  export type NotificacionMinAggregateInputType = {
+    id?: true
+    usuarioId?: true
+    tipo?: true
+    mensaje?: true
+    pedidoId?: true
+    leidaEn?: true
+    createdAt?: true
+  }
+
+  export type NotificacionMaxAggregateInputType = {
+    id?: true
+    usuarioId?: true
+    tipo?: true
+    mensaje?: true
+    pedidoId?: true
+    leidaEn?: true
+    createdAt?: true
+  }
+
+  export type NotificacionCountAggregateInputType = {
+    id?: true
+    usuarioId?: true
+    tipo?: true
+    mensaje?: true
+    pedidoId?: true
+    leidaEn?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type NotificacionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Notificacion to aggregate.
+     */
+    where?: NotificacionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Notificacions to fetch.
+     */
+    orderBy?: NotificacionOrderByWithRelationInput | NotificacionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: NotificacionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Notificacions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Notificacions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Notificacions
+    **/
+    _count?: true | NotificacionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: NotificacionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: NotificacionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: NotificacionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: NotificacionMaxAggregateInputType
+  }
+
+  export type GetNotificacionAggregateType<T extends NotificacionAggregateArgs> = {
+        [P in keyof T & keyof AggregateNotificacion]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateNotificacion[P]>
+      : GetScalarType<T[P], AggregateNotificacion[P]>
+  }
+
+
+
+
+  export type NotificacionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: NotificacionWhereInput
+    orderBy?: NotificacionOrderByWithAggregationInput | NotificacionOrderByWithAggregationInput[]
+    by: NotificacionScalarFieldEnum[] | NotificacionScalarFieldEnum
+    having?: NotificacionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: NotificacionCountAggregateInputType | true
+    _avg?: NotificacionAvgAggregateInputType
+    _sum?: NotificacionSumAggregateInputType
+    _min?: NotificacionMinAggregateInputType
+    _max?: NotificacionMaxAggregateInputType
+  }
+
+  export type NotificacionGroupByOutputType = {
+    id: number
+    usuarioId: number
+    tipo: $Enums.TipoNotificacion
+    mensaje: string
+    pedidoId: number | null
+    leidaEn: Date | null
+    createdAt: Date
+    _count: NotificacionCountAggregateOutputType | null
+    _avg: NotificacionAvgAggregateOutputType | null
+    _sum: NotificacionSumAggregateOutputType | null
+    _min: NotificacionMinAggregateOutputType | null
+    _max: NotificacionMaxAggregateOutputType | null
+  }
+
+  type GetNotificacionGroupByPayload<T extends NotificacionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<NotificacionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof NotificacionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], NotificacionGroupByOutputType[P]>
+            : GetScalarType<T[P], NotificacionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type NotificacionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    usuarioId?: boolean
+    tipo?: boolean
+    mensaje?: boolean
+    pedidoId?: boolean
+    leidaEn?: boolean
+    createdAt?: boolean
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
+    pedido?: boolean | Notificacion$pedidoArgs<ExtArgs>
+  }, ExtArgs["result"]["notificacion"]>
+
+  export type NotificacionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    usuarioId?: boolean
+    tipo?: boolean
+    mensaje?: boolean
+    pedidoId?: boolean
+    leidaEn?: boolean
+    createdAt?: boolean
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
+    pedido?: boolean | Notificacion$pedidoArgs<ExtArgs>
+  }, ExtArgs["result"]["notificacion"]>
+
+  export type NotificacionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    usuarioId?: boolean
+    tipo?: boolean
+    mensaje?: boolean
+    pedidoId?: boolean
+    leidaEn?: boolean
+    createdAt?: boolean
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
+    pedido?: boolean | Notificacion$pedidoArgs<ExtArgs>
+  }, ExtArgs["result"]["notificacion"]>
+
+  export type NotificacionSelectScalar = {
+    id?: boolean
+    usuarioId?: boolean
+    tipo?: boolean
+    mensaje?: boolean
+    pedidoId?: boolean
+    leidaEn?: boolean
+    createdAt?: boolean
+  }
+
+  export type NotificacionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "usuarioId" | "tipo" | "mensaje" | "pedidoId" | "leidaEn" | "createdAt", ExtArgs["result"]["notificacion"]>
+  export type NotificacionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
+    pedido?: boolean | Notificacion$pedidoArgs<ExtArgs>
+  }
+  export type NotificacionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
+    pedido?: boolean | Notificacion$pedidoArgs<ExtArgs>
+  }
+  export type NotificacionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
+    pedido?: boolean | Notificacion$pedidoArgs<ExtArgs>
+  }
+
+  export type $NotificacionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Notificacion"
+    objects: {
+      usuario: Prisma.$UsuarioPayload<ExtArgs>
+      pedido: Prisma.$PedidoPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      usuarioId: number
+      tipo: $Enums.TipoNotificacion
+      mensaje: string
+      pedidoId: number | null
+      leidaEn: Date | null
+      createdAt: Date
+    }, ExtArgs["result"]["notificacion"]>
+    composites: {}
+  }
+
+  type NotificacionGetPayload<S extends boolean | null | undefined | NotificacionDefaultArgs> = $Result.GetResult<Prisma.$NotificacionPayload, S>
+
+  type NotificacionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<NotificacionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: NotificacionCountAggregateInputType | true
+    }
+
+  export interface NotificacionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Notificacion'], meta: { name: 'Notificacion' } }
+    /**
+     * Find zero or one Notificacion that matches the filter.
+     * @param {NotificacionFindUniqueArgs} args - Arguments to find a Notificacion
+     * @example
+     * // Get one Notificacion
+     * const notificacion = await prisma.notificacion.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends NotificacionFindUniqueArgs>(args: SelectSubset<T, NotificacionFindUniqueArgs<ExtArgs>>): Prisma__NotificacionClient<$Result.GetResult<Prisma.$NotificacionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Notificacion that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {NotificacionFindUniqueOrThrowArgs} args - Arguments to find a Notificacion
+     * @example
+     * // Get one Notificacion
+     * const notificacion = await prisma.notificacion.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends NotificacionFindUniqueOrThrowArgs>(args: SelectSubset<T, NotificacionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__NotificacionClient<$Result.GetResult<Prisma.$NotificacionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Notificacion that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NotificacionFindFirstArgs} args - Arguments to find a Notificacion
+     * @example
+     * // Get one Notificacion
+     * const notificacion = await prisma.notificacion.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends NotificacionFindFirstArgs>(args?: SelectSubset<T, NotificacionFindFirstArgs<ExtArgs>>): Prisma__NotificacionClient<$Result.GetResult<Prisma.$NotificacionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Notificacion that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NotificacionFindFirstOrThrowArgs} args - Arguments to find a Notificacion
+     * @example
+     * // Get one Notificacion
+     * const notificacion = await prisma.notificacion.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends NotificacionFindFirstOrThrowArgs>(args?: SelectSubset<T, NotificacionFindFirstOrThrowArgs<ExtArgs>>): Prisma__NotificacionClient<$Result.GetResult<Prisma.$NotificacionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Notificacions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NotificacionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Notificacions
+     * const notificacions = await prisma.notificacion.findMany()
+     * 
+     * // Get first 10 Notificacions
+     * const notificacions = await prisma.notificacion.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const notificacionWithIdOnly = await prisma.notificacion.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends NotificacionFindManyArgs>(args?: SelectSubset<T, NotificacionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificacionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Notificacion.
+     * @param {NotificacionCreateArgs} args - Arguments to create a Notificacion.
+     * @example
+     * // Create one Notificacion
+     * const Notificacion = await prisma.notificacion.create({
+     *   data: {
+     *     // ... data to create a Notificacion
+     *   }
+     * })
+     * 
+     */
+    create<T extends NotificacionCreateArgs>(args: SelectSubset<T, NotificacionCreateArgs<ExtArgs>>): Prisma__NotificacionClient<$Result.GetResult<Prisma.$NotificacionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Notificacions.
+     * @param {NotificacionCreateManyArgs} args - Arguments to create many Notificacions.
+     * @example
+     * // Create many Notificacions
+     * const notificacion = await prisma.notificacion.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends NotificacionCreateManyArgs>(args?: SelectSubset<T, NotificacionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Notificacions and returns the data saved in the database.
+     * @param {NotificacionCreateManyAndReturnArgs} args - Arguments to create many Notificacions.
+     * @example
+     * // Create many Notificacions
+     * const notificacion = await prisma.notificacion.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Notificacions and only return the `id`
+     * const notificacionWithIdOnly = await prisma.notificacion.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends NotificacionCreateManyAndReturnArgs>(args?: SelectSubset<T, NotificacionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificacionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Notificacion.
+     * @param {NotificacionDeleteArgs} args - Arguments to delete one Notificacion.
+     * @example
+     * // Delete one Notificacion
+     * const Notificacion = await prisma.notificacion.delete({
+     *   where: {
+     *     // ... filter to delete one Notificacion
+     *   }
+     * })
+     * 
+     */
+    delete<T extends NotificacionDeleteArgs>(args: SelectSubset<T, NotificacionDeleteArgs<ExtArgs>>): Prisma__NotificacionClient<$Result.GetResult<Prisma.$NotificacionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Notificacion.
+     * @param {NotificacionUpdateArgs} args - Arguments to update one Notificacion.
+     * @example
+     * // Update one Notificacion
+     * const notificacion = await prisma.notificacion.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends NotificacionUpdateArgs>(args: SelectSubset<T, NotificacionUpdateArgs<ExtArgs>>): Prisma__NotificacionClient<$Result.GetResult<Prisma.$NotificacionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Notificacions.
+     * @param {NotificacionDeleteManyArgs} args - Arguments to filter Notificacions to delete.
+     * @example
+     * // Delete a few Notificacions
+     * const { count } = await prisma.notificacion.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends NotificacionDeleteManyArgs>(args?: SelectSubset<T, NotificacionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Notificacions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NotificacionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Notificacions
+     * const notificacion = await prisma.notificacion.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends NotificacionUpdateManyArgs>(args: SelectSubset<T, NotificacionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Notificacions and returns the data updated in the database.
+     * @param {NotificacionUpdateManyAndReturnArgs} args - Arguments to update many Notificacions.
+     * @example
+     * // Update many Notificacions
+     * const notificacion = await prisma.notificacion.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Notificacions and only return the `id`
+     * const notificacionWithIdOnly = await prisma.notificacion.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends NotificacionUpdateManyAndReturnArgs>(args: SelectSubset<T, NotificacionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificacionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Notificacion.
+     * @param {NotificacionUpsertArgs} args - Arguments to update or create a Notificacion.
+     * @example
+     * // Update or create a Notificacion
+     * const notificacion = await prisma.notificacion.upsert({
+     *   create: {
+     *     // ... data to create a Notificacion
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Notificacion we want to update
+     *   }
+     * })
+     */
+    upsert<T extends NotificacionUpsertArgs>(args: SelectSubset<T, NotificacionUpsertArgs<ExtArgs>>): Prisma__NotificacionClient<$Result.GetResult<Prisma.$NotificacionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Notificacions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NotificacionCountArgs} args - Arguments to filter Notificacions to count.
+     * @example
+     * // Count the number of Notificacions
+     * const count = await prisma.notificacion.count({
+     *   where: {
+     *     // ... the filter for the Notificacions we want to count
+     *   }
+     * })
+    **/
+    count<T extends NotificacionCountArgs>(
+      args?: Subset<T, NotificacionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], NotificacionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Notificacion.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NotificacionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends NotificacionAggregateArgs>(args: Subset<T, NotificacionAggregateArgs>): Prisma.PrismaPromise<GetNotificacionAggregateType<T>>
+
+    /**
+     * Group by Notificacion.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NotificacionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends NotificacionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: NotificacionGroupByArgs['orderBy'] }
+        : { orderBy?: NotificacionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, NotificacionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetNotificacionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Notificacion model
+   */
+  readonly fields: NotificacionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Notificacion.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__NotificacionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    usuario<T extends UsuarioDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UsuarioDefaultArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    pedido<T extends Notificacion$pedidoArgs<ExtArgs> = {}>(args?: Subset<T, Notificacion$pedidoArgs<ExtArgs>>): Prisma__PedidoClient<$Result.GetResult<Prisma.$PedidoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Notificacion model
+   */
+  interface NotificacionFieldRefs {
+    readonly id: FieldRef<"Notificacion", 'Int'>
+    readonly usuarioId: FieldRef<"Notificacion", 'Int'>
+    readonly tipo: FieldRef<"Notificacion", 'TipoNotificacion'>
+    readonly mensaje: FieldRef<"Notificacion", 'String'>
+    readonly pedidoId: FieldRef<"Notificacion", 'Int'>
+    readonly leidaEn: FieldRef<"Notificacion", 'DateTime'>
+    readonly createdAt: FieldRef<"Notificacion", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Notificacion findUnique
+   */
+  export type NotificacionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notificacion
+     */
+    select?: NotificacionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notificacion
+     */
+    omit?: NotificacionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificacionInclude<ExtArgs> | null
+    /**
+     * Filter, which Notificacion to fetch.
+     */
+    where: NotificacionWhereUniqueInput
+  }
+
+  /**
+   * Notificacion findUniqueOrThrow
+   */
+  export type NotificacionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notificacion
+     */
+    select?: NotificacionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notificacion
+     */
+    omit?: NotificacionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificacionInclude<ExtArgs> | null
+    /**
+     * Filter, which Notificacion to fetch.
+     */
+    where: NotificacionWhereUniqueInput
+  }
+
+  /**
+   * Notificacion findFirst
+   */
+  export type NotificacionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notificacion
+     */
+    select?: NotificacionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notificacion
+     */
+    omit?: NotificacionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificacionInclude<ExtArgs> | null
+    /**
+     * Filter, which Notificacion to fetch.
+     */
+    where?: NotificacionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Notificacions to fetch.
+     */
+    orderBy?: NotificacionOrderByWithRelationInput | NotificacionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Notificacions.
+     */
+    cursor?: NotificacionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Notificacions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Notificacions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Notificacions.
+     */
+    distinct?: NotificacionScalarFieldEnum | NotificacionScalarFieldEnum[]
+  }
+
+  /**
+   * Notificacion findFirstOrThrow
+   */
+  export type NotificacionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notificacion
+     */
+    select?: NotificacionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notificacion
+     */
+    omit?: NotificacionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificacionInclude<ExtArgs> | null
+    /**
+     * Filter, which Notificacion to fetch.
+     */
+    where?: NotificacionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Notificacions to fetch.
+     */
+    orderBy?: NotificacionOrderByWithRelationInput | NotificacionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Notificacions.
+     */
+    cursor?: NotificacionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Notificacions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Notificacions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Notificacions.
+     */
+    distinct?: NotificacionScalarFieldEnum | NotificacionScalarFieldEnum[]
+  }
+
+  /**
+   * Notificacion findMany
+   */
+  export type NotificacionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notificacion
+     */
+    select?: NotificacionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notificacion
+     */
+    omit?: NotificacionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificacionInclude<ExtArgs> | null
+    /**
+     * Filter, which Notificacions to fetch.
+     */
+    where?: NotificacionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Notificacions to fetch.
+     */
+    orderBy?: NotificacionOrderByWithRelationInput | NotificacionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Notificacions.
+     */
+    cursor?: NotificacionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Notificacions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Notificacions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Notificacions.
+     */
+    distinct?: NotificacionScalarFieldEnum | NotificacionScalarFieldEnum[]
+  }
+
+  /**
+   * Notificacion create
+   */
+  export type NotificacionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notificacion
+     */
+    select?: NotificacionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notificacion
+     */
+    omit?: NotificacionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificacionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Notificacion.
+     */
+    data: XOR<NotificacionCreateInput, NotificacionUncheckedCreateInput>
+  }
+
+  /**
+   * Notificacion createMany
+   */
+  export type NotificacionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Notificacions.
+     */
+    data: NotificacionCreateManyInput | NotificacionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Notificacion createManyAndReturn
+   */
+  export type NotificacionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notificacion
+     */
+    select?: NotificacionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notificacion
+     */
+    omit?: NotificacionOmit<ExtArgs> | null
+    /**
+     * The data used to create many Notificacions.
+     */
+    data: NotificacionCreateManyInput | NotificacionCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificacionIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Notificacion update
+   */
+  export type NotificacionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notificacion
+     */
+    select?: NotificacionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notificacion
+     */
+    omit?: NotificacionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificacionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Notificacion.
+     */
+    data: XOR<NotificacionUpdateInput, NotificacionUncheckedUpdateInput>
+    /**
+     * Choose, which Notificacion to update.
+     */
+    where: NotificacionWhereUniqueInput
+  }
+
+  /**
+   * Notificacion updateMany
+   */
+  export type NotificacionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Notificacions.
+     */
+    data: XOR<NotificacionUpdateManyMutationInput, NotificacionUncheckedUpdateManyInput>
+    /**
+     * Filter which Notificacions to update
+     */
+    where?: NotificacionWhereInput
+    /**
+     * Limit how many Notificacions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Notificacion updateManyAndReturn
+   */
+  export type NotificacionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notificacion
+     */
+    select?: NotificacionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notificacion
+     */
+    omit?: NotificacionOmit<ExtArgs> | null
+    /**
+     * The data used to update Notificacions.
+     */
+    data: XOR<NotificacionUpdateManyMutationInput, NotificacionUncheckedUpdateManyInput>
+    /**
+     * Filter which Notificacions to update
+     */
+    where?: NotificacionWhereInput
+    /**
+     * Limit how many Notificacions to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificacionIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Notificacion upsert
+   */
+  export type NotificacionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notificacion
+     */
+    select?: NotificacionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notificacion
+     */
+    omit?: NotificacionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificacionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Notificacion to update in case it exists.
+     */
+    where: NotificacionWhereUniqueInput
+    /**
+     * In case the Notificacion found by the `where` argument doesn't exist, create a new Notificacion with this data.
+     */
+    create: XOR<NotificacionCreateInput, NotificacionUncheckedCreateInput>
+    /**
+     * In case the Notificacion was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<NotificacionUpdateInput, NotificacionUncheckedUpdateInput>
+  }
+
+  /**
+   * Notificacion delete
+   */
+  export type NotificacionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notificacion
+     */
+    select?: NotificacionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notificacion
+     */
+    omit?: NotificacionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificacionInclude<ExtArgs> | null
+    /**
+     * Filter which Notificacion to delete.
+     */
+    where: NotificacionWhereUniqueInput
+  }
+
+  /**
+   * Notificacion deleteMany
+   */
+  export type NotificacionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Notificacions to delete
+     */
+    where?: NotificacionWhereInput
+    /**
+     * Limit how many Notificacions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Notificacion.pedido
+   */
+  export type Notificacion$pedidoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pedido
+     */
+    select?: PedidoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Pedido
+     */
+    omit?: PedidoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PedidoInclude<ExtArgs> | null
+    where?: PedidoWhereInput
+  }
+
+  /**
+   * Notificacion without action
+   */
+  export type NotificacionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notificacion
+     */
+    select?: NotificacionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notificacion
+     */
+    omit?: NotificacionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificacionInclude<ExtArgs> | null
   }
 
 
@@ -23490,6 +24861,7 @@ export namespace Prisma {
     entregadoEn: 'entregadoEn',
     avisoSalioEnviadoEn: 'avisoSalioEnviadoEn',
     avisoEntregadoEnviadoEn: 'avisoEntregadoEnviadoEn',
+    alerta48hEnviadaEn: 'alerta48hEnviadaEn',
     categoriaObservacion: 'categoriaObservacion',
     detalleObservacion: 'detalleObservacion',
     creadoPorId: 'creadoPorId',
@@ -23499,6 +24871,19 @@ export namespace Prisma {
   };
 
   export type PedidoScalarFieldEnum = (typeof PedidoScalarFieldEnum)[keyof typeof PedidoScalarFieldEnum]
+
+
+  export const NotificacionScalarFieldEnum: {
+    id: 'id',
+    usuarioId: 'usuarioId',
+    tipo: 'tipo',
+    mensaje: 'mensaje',
+    pedidoId: 'pedidoId',
+    leidaEn: 'leidaEn',
+    createdAt: 'createdAt'
+  };
+
+  export type NotificacionScalarFieldEnum = (typeof NotificacionScalarFieldEnum)[keyof typeof NotificacionScalarFieldEnum]
 
 
   export const CotizacionScalarFieldEnum: {
@@ -23765,6 +25150,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'TipoNotificacion'
+   */
+  export type EnumTipoNotificacionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TipoNotificacion'>
+    
+
+
+  /**
+   * Reference to a field of type 'TipoNotificacion[]'
+   */
+  export type ListEnumTipoNotificacionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TipoNotificacion[]'>
+    
+
+
+  /**
    * Reference to a field of type 'ModuloDocumentos'
    */
   export type EnumModuloDocumentosFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ModuloDocumentos'>
@@ -23846,6 +25245,7 @@ export namespace Prisma {
     accesoIso?: XOR<AccesoISONullableScalarRelationFilter, AccesoISOWhereInput> | null
     pedidosCreados?: PedidoListRelationFilter
     pedidosEditados?: PedidoListRelationFilter
+    notificaciones?: NotificacionListRelationFilter
     cotizacionesCreadas?: CotizacionListRelationFilter
     cotizacionesEditadas?: CotizacionListRelationFilter
     cotizacionesHistorialEditado?: CotizacionHistorialListRelationFilter
@@ -23873,6 +25273,7 @@ export namespace Prisma {
     accesoIso?: AccesoISOOrderByWithRelationInput
     pedidosCreados?: PedidoOrderByRelationAggregateInput
     pedidosEditados?: PedidoOrderByRelationAggregateInput
+    notificaciones?: NotificacionOrderByRelationAggregateInput
     cotizacionesCreadas?: CotizacionOrderByRelationAggregateInput
     cotizacionesEditadas?: CotizacionOrderByRelationAggregateInput
     cotizacionesHistorialEditado?: CotizacionHistorialOrderByRelationAggregateInput
@@ -23903,6 +25304,7 @@ export namespace Prisma {
     accesoIso?: XOR<AccesoISONullableScalarRelationFilter, AccesoISOWhereInput> | null
     pedidosCreados?: PedidoListRelationFilter
     pedidosEditados?: PedidoListRelationFilter
+    notificaciones?: NotificacionListRelationFilter
     cotizacionesCreadas?: CotizacionListRelationFilter
     cotizacionesEditadas?: CotizacionListRelationFilter
     cotizacionesHistorialEditado?: CotizacionHistorialListRelationFilter
@@ -24570,6 +25972,7 @@ export namespace Prisma {
     entregadoEn?: DateTimeNullableFilter<"Pedido"> | Date | string | null
     avisoSalioEnviadoEn?: DateTimeNullableFilter<"Pedido"> | Date | string | null
     avisoEntregadoEnviadoEn?: DateTimeNullableFilter<"Pedido"> | Date | string | null
+    alerta48hEnviadaEn?: DateTimeNullableFilter<"Pedido"> | Date | string | null
     categoriaObservacion?: EnumCategoriaObservacionPedidoNullableFilter<"Pedido"> | $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: StringNullableFilter<"Pedido"> | string | null
     creadoPorId?: IntFilter<"Pedido"> | number
@@ -24579,6 +25982,7 @@ export namespace Prisma {
     cliente?: XOR<ClienteScalarRelationFilter, ClienteWhereInput>
     creadoPor?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
     ultimoEditadoPor?: XOR<UsuarioNullableScalarRelationFilter, UsuarioWhereInput> | null
+    notificaciones?: NotificacionListRelationFilter
   }
 
   export type PedidoOrderByWithRelationInput = {
@@ -24593,6 +25997,7 @@ export namespace Prisma {
     entregadoEn?: SortOrderInput | SortOrder
     avisoSalioEnviadoEn?: SortOrderInput | SortOrder
     avisoEntregadoEnviadoEn?: SortOrderInput | SortOrder
+    alerta48hEnviadaEn?: SortOrderInput | SortOrder
     categoriaObservacion?: SortOrderInput | SortOrder
     detalleObservacion?: SortOrderInput | SortOrder
     creadoPorId?: SortOrder
@@ -24602,6 +26007,7 @@ export namespace Prisma {
     cliente?: ClienteOrderByWithRelationInput
     creadoPor?: UsuarioOrderByWithRelationInput
     ultimoEditadoPor?: UsuarioOrderByWithRelationInput
+    notificaciones?: NotificacionOrderByRelationAggregateInput
   }
 
   export type PedidoWhereUniqueInput = Prisma.AtLeast<{
@@ -24619,6 +26025,7 @@ export namespace Prisma {
     entregadoEn?: DateTimeNullableFilter<"Pedido"> | Date | string | null
     avisoSalioEnviadoEn?: DateTimeNullableFilter<"Pedido"> | Date | string | null
     avisoEntregadoEnviadoEn?: DateTimeNullableFilter<"Pedido"> | Date | string | null
+    alerta48hEnviadaEn?: DateTimeNullableFilter<"Pedido"> | Date | string | null
     categoriaObservacion?: EnumCategoriaObservacionPedidoNullableFilter<"Pedido"> | $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: StringNullableFilter<"Pedido"> | string | null
     creadoPorId?: IntFilter<"Pedido"> | number
@@ -24628,6 +26035,7 @@ export namespace Prisma {
     cliente?: XOR<ClienteScalarRelationFilter, ClienteWhereInput>
     creadoPor?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
     ultimoEditadoPor?: XOR<UsuarioNullableScalarRelationFilter, UsuarioWhereInput> | null
+    notificaciones?: NotificacionListRelationFilter
   }, "id" | "numeroProforma" | "tokenSeguimiento">
 
   export type PedidoOrderByWithAggregationInput = {
@@ -24642,6 +26050,7 @@ export namespace Prisma {
     entregadoEn?: SortOrderInput | SortOrder
     avisoSalioEnviadoEn?: SortOrderInput | SortOrder
     avisoEntregadoEnviadoEn?: SortOrderInput | SortOrder
+    alerta48hEnviadaEn?: SortOrderInput | SortOrder
     categoriaObservacion?: SortOrderInput | SortOrder
     detalleObservacion?: SortOrderInput | SortOrder
     creadoPorId?: SortOrder
@@ -24670,12 +26079,83 @@ export namespace Prisma {
     entregadoEn?: DateTimeNullableWithAggregatesFilter<"Pedido"> | Date | string | null
     avisoSalioEnviadoEn?: DateTimeNullableWithAggregatesFilter<"Pedido"> | Date | string | null
     avisoEntregadoEnviadoEn?: DateTimeNullableWithAggregatesFilter<"Pedido"> | Date | string | null
+    alerta48hEnviadaEn?: DateTimeNullableWithAggregatesFilter<"Pedido"> | Date | string | null
     categoriaObservacion?: EnumCategoriaObservacionPedidoNullableWithAggregatesFilter<"Pedido"> | $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: StringNullableWithAggregatesFilter<"Pedido"> | string | null
     creadoPorId?: IntWithAggregatesFilter<"Pedido"> | number
     ultimoEditadoPorId?: IntNullableWithAggregatesFilter<"Pedido"> | number | null
     createdAt?: DateTimeWithAggregatesFilter<"Pedido"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Pedido"> | Date | string
+  }
+
+  export type NotificacionWhereInput = {
+    AND?: NotificacionWhereInput | NotificacionWhereInput[]
+    OR?: NotificacionWhereInput[]
+    NOT?: NotificacionWhereInput | NotificacionWhereInput[]
+    id?: IntFilter<"Notificacion"> | number
+    usuarioId?: IntFilter<"Notificacion"> | number
+    tipo?: EnumTipoNotificacionFilter<"Notificacion"> | $Enums.TipoNotificacion
+    mensaje?: StringFilter<"Notificacion"> | string
+    pedidoId?: IntNullableFilter<"Notificacion"> | number | null
+    leidaEn?: DateTimeNullableFilter<"Notificacion"> | Date | string | null
+    createdAt?: DateTimeFilter<"Notificacion"> | Date | string
+    usuario?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
+    pedido?: XOR<PedidoNullableScalarRelationFilter, PedidoWhereInput> | null
+  }
+
+  export type NotificacionOrderByWithRelationInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+    tipo?: SortOrder
+    mensaje?: SortOrder
+    pedidoId?: SortOrderInput | SortOrder
+    leidaEn?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    usuario?: UsuarioOrderByWithRelationInput
+    pedido?: PedidoOrderByWithRelationInput
+  }
+
+  export type NotificacionWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: NotificacionWhereInput | NotificacionWhereInput[]
+    OR?: NotificacionWhereInput[]
+    NOT?: NotificacionWhereInput | NotificacionWhereInput[]
+    usuarioId?: IntFilter<"Notificacion"> | number
+    tipo?: EnumTipoNotificacionFilter<"Notificacion"> | $Enums.TipoNotificacion
+    mensaje?: StringFilter<"Notificacion"> | string
+    pedidoId?: IntNullableFilter<"Notificacion"> | number | null
+    leidaEn?: DateTimeNullableFilter<"Notificacion"> | Date | string | null
+    createdAt?: DateTimeFilter<"Notificacion"> | Date | string
+    usuario?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
+    pedido?: XOR<PedidoNullableScalarRelationFilter, PedidoWhereInput> | null
+  }, "id">
+
+  export type NotificacionOrderByWithAggregationInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+    tipo?: SortOrder
+    mensaje?: SortOrder
+    pedidoId?: SortOrderInput | SortOrder
+    leidaEn?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: NotificacionCountOrderByAggregateInput
+    _avg?: NotificacionAvgOrderByAggregateInput
+    _max?: NotificacionMaxOrderByAggregateInput
+    _min?: NotificacionMinOrderByAggregateInput
+    _sum?: NotificacionSumOrderByAggregateInput
+  }
+
+  export type NotificacionScalarWhereWithAggregatesInput = {
+    AND?: NotificacionScalarWhereWithAggregatesInput | NotificacionScalarWhereWithAggregatesInput[]
+    OR?: NotificacionScalarWhereWithAggregatesInput[]
+    NOT?: NotificacionScalarWhereWithAggregatesInput | NotificacionScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Notificacion"> | number
+    usuarioId?: IntWithAggregatesFilter<"Notificacion"> | number
+    tipo?: EnumTipoNotificacionWithAggregatesFilter<"Notificacion"> | $Enums.TipoNotificacion
+    mensaje?: StringWithAggregatesFilter<"Notificacion"> | string
+    pedidoId?: IntNullableWithAggregatesFilter<"Notificacion"> | number | null
+    leidaEn?: DateTimeNullableWithAggregatesFilter<"Notificacion"> | Date | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Notificacion"> | Date | string
   }
 
   export type CotizacionWhereInput = {
@@ -25309,6 +26789,7 @@ export namespace Prisma {
     accesoIso?: AccesoISOCreateNestedOneWithoutUsuarioInput
     pedidosCreados?: PedidoCreateNestedManyWithoutCreadoPorInput
     pedidosEditados?: PedidoCreateNestedManyWithoutUltimoEditadoPorInput
+    notificaciones?: NotificacionCreateNestedManyWithoutUsuarioInput
     cotizacionesCreadas?: CotizacionCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesHistorialEditado?: CotizacionHistorialCreateNestedManyWithoutEditadoPorInput
@@ -25335,6 +26816,7 @@ export namespace Prisma {
     accesoIso?: AccesoISOUncheckedCreateNestedOneWithoutUsuarioInput
     pedidosCreados?: PedidoUncheckedCreateNestedManyWithoutCreadoPorInput
     pedidosEditados?: PedidoUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    notificaciones?: NotificacionUncheckedCreateNestedManyWithoutUsuarioInput
     cotizacionesCreadas?: CotizacionUncheckedCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesHistorialEditado?: CotizacionHistorialUncheckedCreateNestedManyWithoutEditadoPorInput
@@ -25360,6 +26842,7 @@ export namespace Prisma {
     accesoIso?: AccesoISOUpdateOneWithoutUsuarioNestedInput
     pedidosCreados?: PedidoUpdateManyWithoutCreadoPorNestedInput
     pedidosEditados?: PedidoUpdateManyWithoutUltimoEditadoPorNestedInput
+    notificaciones?: NotificacionUpdateManyWithoutUsuarioNestedInput
     cotizacionesCreadas?: CotizacionUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesHistorialEditado?: CotizacionHistorialUpdateManyWithoutEditadoPorNestedInput
@@ -25386,6 +26869,7 @@ export namespace Prisma {
     accesoIso?: AccesoISOUncheckedUpdateOneWithoutUsuarioNestedInput
     pedidosCreados?: PedidoUncheckedUpdateManyWithoutCreadoPorNestedInput
     pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    notificaciones?: NotificacionUncheckedUpdateManyWithoutUsuarioNestedInput
     cotizacionesCreadas?: CotizacionUncheckedUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesHistorialEditado?: CotizacionHistorialUncheckedUpdateManyWithoutEditadoPorNestedInput
@@ -26102,6 +27586,7 @@ export namespace Prisma {
     entregadoEn?: Date | string | null
     avisoSalioEnviadoEn?: Date | string | null
     avisoEntregadoEnviadoEn?: Date | string | null
+    alerta48hEnviadaEn?: Date | string | null
     categoriaObservacion?: $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: string | null
     createdAt?: Date | string
@@ -26109,6 +27594,7 @@ export namespace Prisma {
     cliente: ClienteCreateNestedOneWithoutPedidosInput
     creadoPor: UsuarioCreateNestedOneWithoutPedidosCreadosInput
     ultimoEditadoPor?: UsuarioCreateNestedOneWithoutPedidosEditadosInput
+    notificaciones?: NotificacionCreateNestedManyWithoutPedidoInput
   }
 
   export type PedidoUncheckedCreateInput = {
@@ -26123,12 +27609,14 @@ export namespace Prisma {
     entregadoEn?: Date | string | null
     avisoSalioEnviadoEn?: Date | string | null
     avisoEntregadoEnviadoEn?: Date | string | null
+    alerta48hEnviadaEn?: Date | string | null
     categoriaObservacion?: $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: string | null
     creadoPorId: number
     ultimoEditadoPorId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    notificaciones?: NotificacionUncheckedCreateNestedManyWithoutPedidoInput
   }
 
   export type PedidoUpdateInput = {
@@ -26141,6 +27629,7 @@ export namespace Prisma {
     entregadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoSalioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoEntregadoEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    alerta48hEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     categoriaObservacion?: NullableEnumCategoriaObservacionPedidoFieldUpdateOperationsInput | $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -26148,6 +27637,7 @@ export namespace Prisma {
     cliente?: ClienteUpdateOneRequiredWithoutPedidosNestedInput
     creadoPor?: UsuarioUpdateOneRequiredWithoutPedidosCreadosNestedInput
     ultimoEditadoPor?: UsuarioUpdateOneWithoutPedidosEditadosNestedInput
+    notificaciones?: NotificacionUpdateManyWithoutPedidoNestedInput
   }
 
   export type PedidoUncheckedUpdateInput = {
@@ -26162,12 +27652,14 @@ export namespace Prisma {
     entregadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoSalioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoEntregadoEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    alerta48hEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     categoriaObservacion?: NullableEnumCategoriaObservacionPedidoFieldUpdateOperationsInput | $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: NullableStringFieldUpdateOperationsInput | string | null
     creadoPorId?: IntFieldUpdateOperationsInput | number
     ultimoEditadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    notificaciones?: NotificacionUncheckedUpdateManyWithoutPedidoNestedInput
   }
 
   export type PedidoCreateManyInput = {
@@ -26182,6 +27674,7 @@ export namespace Prisma {
     entregadoEn?: Date | string | null
     avisoSalioEnviadoEn?: Date | string | null
     avisoEntregadoEnviadoEn?: Date | string | null
+    alerta48hEnviadaEn?: Date | string | null
     categoriaObservacion?: $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: string | null
     creadoPorId: number
@@ -26200,6 +27693,7 @@ export namespace Prisma {
     entregadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoSalioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoEntregadoEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    alerta48hEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     categoriaObservacion?: NullableEnumCategoriaObservacionPedidoFieldUpdateOperationsInput | $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -26218,12 +27712,78 @@ export namespace Prisma {
     entregadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoSalioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoEntregadoEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    alerta48hEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     categoriaObservacion?: NullableEnumCategoriaObservacionPedidoFieldUpdateOperationsInput | $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: NullableStringFieldUpdateOperationsInput | string | null
     creadoPorId?: IntFieldUpdateOperationsInput | number
     ultimoEditadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type NotificacionCreateInput = {
+    tipo: $Enums.TipoNotificacion
+    mensaje: string
+    leidaEn?: Date | string | null
+    createdAt?: Date | string
+    usuario: UsuarioCreateNestedOneWithoutNotificacionesInput
+    pedido?: PedidoCreateNestedOneWithoutNotificacionesInput
+  }
+
+  export type NotificacionUncheckedCreateInput = {
+    id?: number
+    usuarioId: number
+    tipo: $Enums.TipoNotificacion
+    mensaje: string
+    pedidoId?: number | null
+    leidaEn?: Date | string | null
+    createdAt?: Date | string
+  }
+
+  export type NotificacionUpdateInput = {
+    tipo?: EnumTipoNotificacionFieldUpdateOperationsInput | $Enums.TipoNotificacion
+    mensaje?: StringFieldUpdateOperationsInput | string
+    leidaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    usuario?: UsuarioUpdateOneRequiredWithoutNotificacionesNestedInput
+    pedido?: PedidoUpdateOneWithoutNotificacionesNestedInput
+  }
+
+  export type NotificacionUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    usuarioId?: IntFieldUpdateOperationsInput | number
+    tipo?: EnumTipoNotificacionFieldUpdateOperationsInput | $Enums.TipoNotificacion
+    mensaje?: StringFieldUpdateOperationsInput | string
+    pedidoId?: NullableIntFieldUpdateOperationsInput | number | null
+    leidaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type NotificacionCreateManyInput = {
+    id?: number
+    usuarioId: number
+    tipo: $Enums.TipoNotificacion
+    mensaje: string
+    pedidoId?: number | null
+    leidaEn?: Date | string | null
+    createdAt?: Date | string
+  }
+
+  export type NotificacionUpdateManyMutationInput = {
+    tipo?: EnumTipoNotificacionFieldUpdateOperationsInput | $Enums.TipoNotificacion
+    mensaje?: StringFieldUpdateOperationsInput | string
+    leidaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type NotificacionUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    usuarioId?: IntFieldUpdateOperationsInput | number
+    tipo?: EnumTipoNotificacionFieldUpdateOperationsInput | $Enums.TipoNotificacion
+    mensaje?: StringFieldUpdateOperationsInput | string
+    pedidoId?: NullableIntFieldUpdateOperationsInput | number | null
+    leidaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type CotizacionCreateInput = {
@@ -26964,6 +28524,12 @@ export namespace Prisma {
     none?: PedidoWhereInput
   }
 
+  export type NotificacionListRelationFilter = {
+    every?: NotificacionWhereInput
+    some?: NotificacionWhereInput
+    none?: NotificacionWhereInput
+  }
+
   export type CotizacionListRelationFilter = {
     every?: CotizacionWhereInput
     some?: CotizacionWhereInput
@@ -27008,6 +28574,10 @@ export namespace Prisma {
   }
 
   export type PedidoOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type NotificacionOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -27695,6 +29265,7 @@ export namespace Prisma {
     entregadoEn?: SortOrder
     avisoSalioEnviadoEn?: SortOrder
     avisoEntregadoEnviadoEn?: SortOrder
+    alerta48hEnviadaEn?: SortOrder
     categoriaObservacion?: SortOrder
     detalleObservacion?: SortOrder
     creadoPorId?: SortOrder
@@ -27722,6 +29293,7 @@ export namespace Prisma {
     entregadoEn?: SortOrder
     avisoSalioEnviadoEn?: SortOrder
     avisoEntregadoEnviadoEn?: SortOrder
+    alerta48hEnviadaEn?: SortOrder
     categoriaObservacion?: SortOrder
     detalleObservacion?: SortOrder
     creadoPorId?: SortOrder
@@ -27742,6 +29314,7 @@ export namespace Prisma {
     entregadoEn?: SortOrder
     avisoSalioEnviadoEn?: SortOrder
     avisoEntregadoEnviadoEn?: SortOrder
+    alerta48hEnviadaEn?: SortOrder
     categoriaObservacion?: SortOrder
     detalleObservacion?: SortOrder
     creadoPorId?: SortOrder
@@ -27765,6 +29338,70 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedEnumCategoriaObservacionPedidoNullableFilter<$PrismaModel>
     _max?: NestedEnumCategoriaObservacionPedidoNullableFilter<$PrismaModel>
+  }
+
+  export type EnumTipoNotificacionFilter<$PrismaModel = never> = {
+    equals?: $Enums.TipoNotificacion | EnumTipoNotificacionFieldRefInput<$PrismaModel>
+    in?: $Enums.TipoNotificacion[] | ListEnumTipoNotificacionFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TipoNotificacion[] | ListEnumTipoNotificacionFieldRefInput<$PrismaModel>
+    not?: NestedEnumTipoNotificacionFilter<$PrismaModel> | $Enums.TipoNotificacion
+  }
+
+  export type PedidoNullableScalarRelationFilter = {
+    is?: PedidoWhereInput | null
+    isNot?: PedidoWhereInput | null
+  }
+
+  export type NotificacionCountOrderByAggregateInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+    tipo?: SortOrder
+    mensaje?: SortOrder
+    pedidoId?: SortOrder
+    leidaEn?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type NotificacionAvgOrderByAggregateInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+    pedidoId?: SortOrder
+  }
+
+  export type NotificacionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+    tipo?: SortOrder
+    mensaje?: SortOrder
+    pedidoId?: SortOrder
+    leidaEn?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type NotificacionMinOrderByAggregateInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+    tipo?: SortOrder
+    mensaje?: SortOrder
+    pedidoId?: SortOrder
+    leidaEn?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type NotificacionSumOrderByAggregateInput = {
+    id?: SortOrder
+    usuarioId?: SortOrder
+    pedidoId?: SortOrder
+  }
+
+  export type EnumTipoNotificacionWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.TipoNotificacion | EnumTipoNotificacionFieldRefInput<$PrismaModel>
+    in?: $Enums.TipoNotificacion[] | ListEnumTipoNotificacionFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TipoNotificacion[] | ListEnumTipoNotificacionFieldRefInput<$PrismaModel>
+    not?: NestedEnumTipoNotificacionWithAggregatesFilter<$PrismaModel> | $Enums.TipoNotificacion
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumTipoNotificacionFilter<$PrismaModel>
+    _max?: NestedEnumTipoNotificacionFilter<$PrismaModel>
   }
 
   export type CotizacionCountOrderByAggregateInput = {
@@ -28308,6 +29945,13 @@ export namespace Prisma {
     connect?: PedidoWhereUniqueInput | PedidoWhereUniqueInput[]
   }
 
+  export type NotificacionCreateNestedManyWithoutUsuarioInput = {
+    create?: XOR<NotificacionCreateWithoutUsuarioInput, NotificacionUncheckedCreateWithoutUsuarioInput> | NotificacionCreateWithoutUsuarioInput[] | NotificacionUncheckedCreateWithoutUsuarioInput[]
+    connectOrCreate?: NotificacionCreateOrConnectWithoutUsuarioInput | NotificacionCreateOrConnectWithoutUsuarioInput[]
+    createMany?: NotificacionCreateManyUsuarioInputEnvelope
+    connect?: NotificacionWhereUniqueInput | NotificacionWhereUniqueInput[]
+  }
+
   export type CotizacionCreateNestedManyWithoutCreadoPorInput = {
     create?: XOR<CotizacionCreateWithoutCreadoPorInput, CotizacionUncheckedCreateWithoutCreadoPorInput> | CotizacionCreateWithoutCreadoPorInput[] | CotizacionUncheckedCreateWithoutCreadoPorInput[]
     connectOrCreate?: CotizacionCreateOrConnectWithoutCreadoPorInput | CotizacionCreateOrConnectWithoutCreadoPorInput[]
@@ -28396,6 +30040,13 @@ export namespace Prisma {
     connectOrCreate?: PedidoCreateOrConnectWithoutUltimoEditadoPorInput | PedidoCreateOrConnectWithoutUltimoEditadoPorInput[]
     createMany?: PedidoCreateManyUltimoEditadoPorInputEnvelope
     connect?: PedidoWhereUniqueInput | PedidoWhereUniqueInput[]
+  }
+
+  export type NotificacionUncheckedCreateNestedManyWithoutUsuarioInput = {
+    create?: XOR<NotificacionCreateWithoutUsuarioInput, NotificacionUncheckedCreateWithoutUsuarioInput> | NotificacionCreateWithoutUsuarioInput[] | NotificacionUncheckedCreateWithoutUsuarioInput[]
+    connectOrCreate?: NotificacionCreateOrConnectWithoutUsuarioInput | NotificacionCreateOrConnectWithoutUsuarioInput[]
+    createMany?: NotificacionCreateManyUsuarioInputEnvelope
+    connect?: NotificacionWhereUniqueInput | NotificacionWhereUniqueInput[]
   }
 
   export type CotizacionUncheckedCreateNestedManyWithoutCreadoPorInput = {
@@ -28569,6 +30220,20 @@ export namespace Prisma {
     update?: PedidoUpdateWithWhereUniqueWithoutUltimoEditadoPorInput | PedidoUpdateWithWhereUniqueWithoutUltimoEditadoPorInput[]
     updateMany?: PedidoUpdateManyWithWhereWithoutUltimoEditadoPorInput | PedidoUpdateManyWithWhereWithoutUltimoEditadoPorInput[]
     deleteMany?: PedidoScalarWhereInput | PedidoScalarWhereInput[]
+  }
+
+  export type NotificacionUpdateManyWithoutUsuarioNestedInput = {
+    create?: XOR<NotificacionCreateWithoutUsuarioInput, NotificacionUncheckedCreateWithoutUsuarioInput> | NotificacionCreateWithoutUsuarioInput[] | NotificacionUncheckedCreateWithoutUsuarioInput[]
+    connectOrCreate?: NotificacionCreateOrConnectWithoutUsuarioInput | NotificacionCreateOrConnectWithoutUsuarioInput[]
+    upsert?: NotificacionUpsertWithWhereUniqueWithoutUsuarioInput | NotificacionUpsertWithWhereUniqueWithoutUsuarioInput[]
+    createMany?: NotificacionCreateManyUsuarioInputEnvelope
+    set?: NotificacionWhereUniqueInput | NotificacionWhereUniqueInput[]
+    disconnect?: NotificacionWhereUniqueInput | NotificacionWhereUniqueInput[]
+    delete?: NotificacionWhereUniqueInput | NotificacionWhereUniqueInput[]
+    connect?: NotificacionWhereUniqueInput | NotificacionWhereUniqueInput[]
+    update?: NotificacionUpdateWithWhereUniqueWithoutUsuarioInput | NotificacionUpdateWithWhereUniqueWithoutUsuarioInput[]
+    updateMany?: NotificacionUpdateManyWithWhereWithoutUsuarioInput | NotificacionUpdateManyWithWhereWithoutUsuarioInput[]
+    deleteMany?: NotificacionScalarWhereInput | NotificacionScalarWhereInput[]
   }
 
   export type CotizacionUpdateManyWithoutCreadoPorNestedInput = {
@@ -28763,6 +30428,20 @@ export namespace Prisma {
     update?: PedidoUpdateWithWhereUniqueWithoutUltimoEditadoPorInput | PedidoUpdateWithWhereUniqueWithoutUltimoEditadoPorInput[]
     updateMany?: PedidoUpdateManyWithWhereWithoutUltimoEditadoPorInput | PedidoUpdateManyWithWhereWithoutUltimoEditadoPorInput[]
     deleteMany?: PedidoScalarWhereInput | PedidoScalarWhereInput[]
+  }
+
+  export type NotificacionUncheckedUpdateManyWithoutUsuarioNestedInput = {
+    create?: XOR<NotificacionCreateWithoutUsuarioInput, NotificacionUncheckedCreateWithoutUsuarioInput> | NotificacionCreateWithoutUsuarioInput[] | NotificacionUncheckedCreateWithoutUsuarioInput[]
+    connectOrCreate?: NotificacionCreateOrConnectWithoutUsuarioInput | NotificacionCreateOrConnectWithoutUsuarioInput[]
+    upsert?: NotificacionUpsertWithWhereUniqueWithoutUsuarioInput | NotificacionUpsertWithWhereUniqueWithoutUsuarioInput[]
+    createMany?: NotificacionCreateManyUsuarioInputEnvelope
+    set?: NotificacionWhereUniqueInput | NotificacionWhereUniqueInput[]
+    disconnect?: NotificacionWhereUniqueInput | NotificacionWhereUniqueInput[]
+    delete?: NotificacionWhereUniqueInput | NotificacionWhereUniqueInput[]
+    connect?: NotificacionWhereUniqueInput | NotificacionWhereUniqueInput[]
+    update?: NotificacionUpdateWithWhereUniqueWithoutUsuarioInput | NotificacionUpdateWithWhereUniqueWithoutUsuarioInput[]
+    updateMany?: NotificacionUpdateManyWithWhereWithoutUsuarioInput | NotificacionUpdateManyWithWhereWithoutUsuarioInput[]
+    deleteMany?: NotificacionScalarWhereInput | NotificacionScalarWhereInput[]
   }
 
   export type CotizacionUncheckedUpdateManyWithoutCreadoPorNestedInput = {
@@ -29236,6 +30915,20 @@ export namespace Prisma {
     connect?: UsuarioWhereUniqueInput
   }
 
+  export type NotificacionCreateNestedManyWithoutPedidoInput = {
+    create?: XOR<NotificacionCreateWithoutPedidoInput, NotificacionUncheckedCreateWithoutPedidoInput> | NotificacionCreateWithoutPedidoInput[] | NotificacionUncheckedCreateWithoutPedidoInput[]
+    connectOrCreate?: NotificacionCreateOrConnectWithoutPedidoInput | NotificacionCreateOrConnectWithoutPedidoInput[]
+    createMany?: NotificacionCreateManyPedidoInputEnvelope
+    connect?: NotificacionWhereUniqueInput | NotificacionWhereUniqueInput[]
+  }
+
+  export type NotificacionUncheckedCreateNestedManyWithoutPedidoInput = {
+    create?: XOR<NotificacionCreateWithoutPedidoInput, NotificacionUncheckedCreateWithoutPedidoInput> | NotificacionCreateWithoutPedidoInput[] | NotificacionUncheckedCreateWithoutPedidoInput[]
+    connectOrCreate?: NotificacionCreateOrConnectWithoutPedidoInput | NotificacionCreateOrConnectWithoutPedidoInput[]
+    createMany?: NotificacionCreateManyPedidoInputEnvelope
+    connect?: NotificacionWhereUniqueInput | NotificacionWhereUniqueInput[]
+  }
+
   export type NullableEnumCategoriaObservacionPedidoFieldUpdateOperationsInput = {
     set?: $Enums.CategoriaObservacionPedido | null
   }
@@ -29264,6 +30957,68 @@ export namespace Prisma {
     delete?: UsuarioWhereInput | boolean
     connect?: UsuarioWhereUniqueInput
     update?: XOR<XOR<UsuarioUpdateToOneWithWhereWithoutPedidosEditadosInput, UsuarioUpdateWithoutPedidosEditadosInput>, UsuarioUncheckedUpdateWithoutPedidosEditadosInput>
+  }
+
+  export type NotificacionUpdateManyWithoutPedidoNestedInput = {
+    create?: XOR<NotificacionCreateWithoutPedidoInput, NotificacionUncheckedCreateWithoutPedidoInput> | NotificacionCreateWithoutPedidoInput[] | NotificacionUncheckedCreateWithoutPedidoInput[]
+    connectOrCreate?: NotificacionCreateOrConnectWithoutPedidoInput | NotificacionCreateOrConnectWithoutPedidoInput[]
+    upsert?: NotificacionUpsertWithWhereUniqueWithoutPedidoInput | NotificacionUpsertWithWhereUniqueWithoutPedidoInput[]
+    createMany?: NotificacionCreateManyPedidoInputEnvelope
+    set?: NotificacionWhereUniqueInput | NotificacionWhereUniqueInput[]
+    disconnect?: NotificacionWhereUniqueInput | NotificacionWhereUniqueInput[]
+    delete?: NotificacionWhereUniqueInput | NotificacionWhereUniqueInput[]
+    connect?: NotificacionWhereUniqueInput | NotificacionWhereUniqueInput[]
+    update?: NotificacionUpdateWithWhereUniqueWithoutPedidoInput | NotificacionUpdateWithWhereUniqueWithoutPedidoInput[]
+    updateMany?: NotificacionUpdateManyWithWhereWithoutPedidoInput | NotificacionUpdateManyWithWhereWithoutPedidoInput[]
+    deleteMany?: NotificacionScalarWhereInput | NotificacionScalarWhereInput[]
+  }
+
+  export type NotificacionUncheckedUpdateManyWithoutPedidoNestedInput = {
+    create?: XOR<NotificacionCreateWithoutPedidoInput, NotificacionUncheckedCreateWithoutPedidoInput> | NotificacionCreateWithoutPedidoInput[] | NotificacionUncheckedCreateWithoutPedidoInput[]
+    connectOrCreate?: NotificacionCreateOrConnectWithoutPedidoInput | NotificacionCreateOrConnectWithoutPedidoInput[]
+    upsert?: NotificacionUpsertWithWhereUniqueWithoutPedidoInput | NotificacionUpsertWithWhereUniqueWithoutPedidoInput[]
+    createMany?: NotificacionCreateManyPedidoInputEnvelope
+    set?: NotificacionWhereUniqueInput | NotificacionWhereUniqueInput[]
+    disconnect?: NotificacionWhereUniqueInput | NotificacionWhereUniqueInput[]
+    delete?: NotificacionWhereUniqueInput | NotificacionWhereUniqueInput[]
+    connect?: NotificacionWhereUniqueInput | NotificacionWhereUniqueInput[]
+    update?: NotificacionUpdateWithWhereUniqueWithoutPedidoInput | NotificacionUpdateWithWhereUniqueWithoutPedidoInput[]
+    updateMany?: NotificacionUpdateManyWithWhereWithoutPedidoInput | NotificacionUpdateManyWithWhereWithoutPedidoInput[]
+    deleteMany?: NotificacionScalarWhereInput | NotificacionScalarWhereInput[]
+  }
+
+  export type UsuarioCreateNestedOneWithoutNotificacionesInput = {
+    create?: XOR<UsuarioCreateWithoutNotificacionesInput, UsuarioUncheckedCreateWithoutNotificacionesInput>
+    connectOrCreate?: UsuarioCreateOrConnectWithoutNotificacionesInput
+    connect?: UsuarioWhereUniqueInput
+  }
+
+  export type PedidoCreateNestedOneWithoutNotificacionesInput = {
+    create?: XOR<PedidoCreateWithoutNotificacionesInput, PedidoUncheckedCreateWithoutNotificacionesInput>
+    connectOrCreate?: PedidoCreateOrConnectWithoutNotificacionesInput
+    connect?: PedidoWhereUniqueInput
+  }
+
+  export type EnumTipoNotificacionFieldUpdateOperationsInput = {
+    set?: $Enums.TipoNotificacion
+  }
+
+  export type UsuarioUpdateOneRequiredWithoutNotificacionesNestedInput = {
+    create?: XOR<UsuarioCreateWithoutNotificacionesInput, UsuarioUncheckedCreateWithoutNotificacionesInput>
+    connectOrCreate?: UsuarioCreateOrConnectWithoutNotificacionesInput
+    upsert?: UsuarioUpsertWithoutNotificacionesInput
+    connect?: UsuarioWhereUniqueInput
+    update?: XOR<XOR<UsuarioUpdateToOneWithWhereWithoutNotificacionesInput, UsuarioUpdateWithoutNotificacionesInput>, UsuarioUncheckedUpdateWithoutNotificacionesInput>
+  }
+
+  export type PedidoUpdateOneWithoutNotificacionesNestedInput = {
+    create?: XOR<PedidoCreateWithoutNotificacionesInput, PedidoUncheckedCreateWithoutNotificacionesInput>
+    connectOrCreate?: PedidoCreateOrConnectWithoutNotificacionesInput
+    upsert?: PedidoUpsertWithoutNotificacionesInput
+    disconnect?: PedidoWhereInput | boolean
+    delete?: PedidoWhereInput | boolean
+    connect?: PedidoWhereUniqueInput
+    update?: XOR<XOR<PedidoUpdateToOneWithWhereWithoutNotificacionesInput, PedidoUpdateWithoutNotificacionesInput>, PedidoUncheckedUpdateWithoutNotificacionesInput>
   }
 
   export type ClienteCreateNestedOneWithoutCotizacionesInput = {
@@ -29869,6 +31624,23 @@ export namespace Prisma {
     _max?: NestedEnumCategoriaObservacionPedidoNullableFilter<$PrismaModel>
   }
 
+  export type NestedEnumTipoNotificacionFilter<$PrismaModel = never> = {
+    equals?: $Enums.TipoNotificacion | EnumTipoNotificacionFieldRefInput<$PrismaModel>
+    in?: $Enums.TipoNotificacion[] | ListEnumTipoNotificacionFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TipoNotificacion[] | ListEnumTipoNotificacionFieldRefInput<$PrismaModel>
+    not?: NestedEnumTipoNotificacionFilter<$PrismaModel> | $Enums.TipoNotificacion
+  }
+
+  export type NestedEnumTipoNotificacionWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.TipoNotificacion | EnumTipoNotificacionFieldRefInput<$PrismaModel>
+    in?: $Enums.TipoNotificacion[] | ListEnumTipoNotificacionFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TipoNotificacion[] | ListEnumTipoNotificacionFieldRefInput<$PrismaModel>
+    not?: NestedEnumTipoNotificacionWithAggregatesFilter<$PrismaModel> | $Enums.TipoNotificacion
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumTipoNotificacionFilter<$PrismaModel>
+    _max?: NestedEnumTipoNotificacionFilter<$PrismaModel>
+  }
+
   export type NestedEnumModuloDocumentosFilter<$PrismaModel = never> = {
     equals?: $Enums.ModuloDocumentos | EnumModuloDocumentosFieldRefInput<$PrismaModel>
     in?: $Enums.ModuloDocumentos[] | ListEnumModuloDocumentosFieldRefInput<$PrismaModel>
@@ -29971,6 +31743,7 @@ export namespace Prisma {
     accesoIso?: AccesoISOCreateNestedOneWithoutUsuarioInput
     pedidosCreados?: PedidoCreateNestedManyWithoutCreadoPorInput
     pedidosEditados?: PedidoCreateNestedManyWithoutUltimoEditadoPorInput
+    notificaciones?: NotificacionCreateNestedManyWithoutUsuarioInput
     cotizacionesCreadas?: CotizacionCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesHistorialEditado?: CotizacionHistorialCreateNestedManyWithoutEditadoPorInput
@@ -29996,6 +31769,7 @@ export namespace Prisma {
     accesoIso?: AccesoISOUncheckedCreateNestedOneWithoutUsuarioInput
     pedidosCreados?: PedidoUncheckedCreateNestedManyWithoutCreadoPorInput
     pedidosEditados?: PedidoUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    notificaciones?: NotificacionUncheckedCreateNestedManyWithoutUsuarioInput
     cotizacionesCreadas?: CotizacionUncheckedCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesHistorialEditado?: CotizacionHistorialUncheckedCreateNestedManyWithoutEditadoPorInput
@@ -30025,6 +31799,7 @@ export namespace Prisma {
     accesoIso?: AccesoISOCreateNestedOneWithoutUsuarioInput
     pedidosCreados?: PedidoCreateNestedManyWithoutCreadoPorInput
     pedidosEditados?: PedidoCreateNestedManyWithoutUltimoEditadoPorInput
+    notificaciones?: NotificacionCreateNestedManyWithoutUsuarioInput
     cotizacionesCreadas?: CotizacionCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesHistorialEditado?: CotizacionHistorialCreateNestedManyWithoutEditadoPorInput
@@ -30050,6 +31825,7 @@ export namespace Prisma {
     accesoIso?: AccesoISOUncheckedCreateNestedOneWithoutUsuarioInput
     pedidosCreados?: PedidoUncheckedCreateNestedManyWithoutCreadoPorInput
     pedidosEditados?: PedidoUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    notificaciones?: NotificacionUncheckedCreateNestedManyWithoutUsuarioInput
     cotizacionesCreadas?: CotizacionUncheckedCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesHistorialEditado?: CotizacionHistorialUncheckedCreateNestedManyWithoutEditadoPorInput
@@ -30239,12 +32015,14 @@ export namespace Prisma {
     entregadoEn?: Date | string | null
     avisoSalioEnviadoEn?: Date | string | null
     avisoEntregadoEnviadoEn?: Date | string | null
+    alerta48hEnviadaEn?: Date | string | null
     categoriaObservacion?: $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     cliente: ClienteCreateNestedOneWithoutPedidosInput
     ultimoEditadoPor?: UsuarioCreateNestedOneWithoutPedidosEditadosInput
+    notificaciones?: NotificacionCreateNestedManyWithoutPedidoInput
   }
 
   export type PedidoUncheckedCreateWithoutCreadoPorInput = {
@@ -30259,11 +32037,13 @@ export namespace Prisma {
     entregadoEn?: Date | string | null
     avisoSalioEnviadoEn?: Date | string | null
     avisoEntregadoEnviadoEn?: Date | string | null
+    alerta48hEnviadaEn?: Date | string | null
     categoriaObservacion?: $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: string | null
     ultimoEditadoPorId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    notificaciones?: NotificacionUncheckedCreateNestedManyWithoutPedidoInput
   }
 
   export type PedidoCreateOrConnectWithoutCreadoPorInput = {
@@ -30286,12 +32066,14 @@ export namespace Prisma {
     entregadoEn?: Date | string | null
     avisoSalioEnviadoEn?: Date | string | null
     avisoEntregadoEnviadoEn?: Date | string | null
+    alerta48hEnviadaEn?: Date | string | null
     categoriaObservacion?: $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     cliente: ClienteCreateNestedOneWithoutPedidosInput
     creadoPor: UsuarioCreateNestedOneWithoutPedidosCreadosInput
+    notificaciones?: NotificacionCreateNestedManyWithoutPedidoInput
   }
 
   export type PedidoUncheckedCreateWithoutUltimoEditadoPorInput = {
@@ -30306,11 +32088,13 @@ export namespace Prisma {
     entregadoEn?: Date | string | null
     avisoSalioEnviadoEn?: Date | string | null
     avisoEntregadoEnviadoEn?: Date | string | null
+    alerta48hEnviadaEn?: Date | string | null
     categoriaObservacion?: $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: string | null
     creadoPorId: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    notificaciones?: NotificacionUncheckedCreateNestedManyWithoutPedidoInput
   }
 
   export type PedidoCreateOrConnectWithoutUltimoEditadoPorInput = {
@@ -30320,6 +32104,33 @@ export namespace Prisma {
 
   export type PedidoCreateManyUltimoEditadoPorInputEnvelope = {
     data: PedidoCreateManyUltimoEditadoPorInput | PedidoCreateManyUltimoEditadoPorInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type NotificacionCreateWithoutUsuarioInput = {
+    tipo: $Enums.TipoNotificacion
+    mensaje: string
+    leidaEn?: Date | string | null
+    createdAt?: Date | string
+    pedido?: PedidoCreateNestedOneWithoutNotificacionesInput
+  }
+
+  export type NotificacionUncheckedCreateWithoutUsuarioInput = {
+    id?: number
+    tipo: $Enums.TipoNotificacion
+    mensaje: string
+    pedidoId?: number | null
+    leidaEn?: Date | string | null
+    createdAt?: Date | string
+  }
+
+  export type NotificacionCreateOrConnectWithoutUsuarioInput = {
+    where: NotificacionWhereUniqueInput
+    create: XOR<NotificacionCreateWithoutUsuarioInput, NotificacionUncheckedCreateWithoutUsuarioInput>
+  }
+
+  export type NotificacionCreateManyUsuarioInputEnvelope = {
+    data: NotificacionCreateManyUsuarioInput | NotificacionCreateManyUsuarioInput[]
     skipDuplicates?: boolean
   }
 
@@ -30516,6 +32327,7 @@ export namespace Prisma {
     accesoIso?: AccesoISOUpdateOneWithoutUsuarioNestedInput
     pedidosCreados?: PedidoUpdateManyWithoutCreadoPorNestedInput
     pedidosEditados?: PedidoUpdateManyWithoutUltimoEditadoPorNestedInput
+    notificaciones?: NotificacionUpdateManyWithoutUsuarioNestedInput
     cotizacionesCreadas?: CotizacionUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesHistorialEditado?: CotizacionHistorialUpdateManyWithoutEditadoPorNestedInput
@@ -30541,6 +32353,7 @@ export namespace Prisma {
     accesoIso?: AccesoISOUncheckedUpdateOneWithoutUsuarioNestedInput
     pedidosCreados?: PedidoUncheckedUpdateManyWithoutCreadoPorNestedInput
     pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    notificaciones?: NotificacionUncheckedUpdateManyWithoutUsuarioNestedInput
     cotizacionesCreadas?: CotizacionUncheckedUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesHistorialEditado?: CotizacionHistorialUncheckedUpdateManyWithoutEditadoPorNestedInput
@@ -30772,6 +32585,7 @@ export namespace Prisma {
     entregadoEn?: DateTimeNullableFilter<"Pedido"> | Date | string | null
     avisoSalioEnviadoEn?: DateTimeNullableFilter<"Pedido"> | Date | string | null
     avisoEntregadoEnviadoEn?: DateTimeNullableFilter<"Pedido"> | Date | string | null
+    alerta48hEnviadaEn?: DateTimeNullableFilter<"Pedido"> | Date | string | null
     categoriaObservacion?: EnumCategoriaObservacionPedidoNullableFilter<"Pedido"> | $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: StringNullableFilter<"Pedido"> | string | null
     creadoPorId?: IntFilter<"Pedido"> | number
@@ -30794,6 +32608,35 @@ export namespace Prisma {
   export type PedidoUpdateManyWithWhereWithoutUltimoEditadoPorInput = {
     where: PedidoScalarWhereInput
     data: XOR<PedidoUpdateManyMutationInput, PedidoUncheckedUpdateManyWithoutUltimoEditadoPorInput>
+  }
+
+  export type NotificacionUpsertWithWhereUniqueWithoutUsuarioInput = {
+    where: NotificacionWhereUniqueInput
+    update: XOR<NotificacionUpdateWithoutUsuarioInput, NotificacionUncheckedUpdateWithoutUsuarioInput>
+    create: XOR<NotificacionCreateWithoutUsuarioInput, NotificacionUncheckedCreateWithoutUsuarioInput>
+  }
+
+  export type NotificacionUpdateWithWhereUniqueWithoutUsuarioInput = {
+    where: NotificacionWhereUniqueInput
+    data: XOR<NotificacionUpdateWithoutUsuarioInput, NotificacionUncheckedUpdateWithoutUsuarioInput>
+  }
+
+  export type NotificacionUpdateManyWithWhereWithoutUsuarioInput = {
+    where: NotificacionScalarWhereInput
+    data: XOR<NotificacionUpdateManyMutationInput, NotificacionUncheckedUpdateManyWithoutUsuarioInput>
+  }
+
+  export type NotificacionScalarWhereInput = {
+    AND?: NotificacionScalarWhereInput | NotificacionScalarWhereInput[]
+    OR?: NotificacionScalarWhereInput[]
+    NOT?: NotificacionScalarWhereInput | NotificacionScalarWhereInput[]
+    id?: IntFilter<"Notificacion"> | number
+    usuarioId?: IntFilter<"Notificacion"> | number
+    tipo?: EnumTipoNotificacionFilter<"Notificacion"> | $Enums.TipoNotificacion
+    mensaje?: StringFilter<"Notificacion"> | string
+    pedidoId?: IntNullableFilter<"Notificacion"> | number | null
+    leidaEn?: DateTimeNullableFilter<"Notificacion"> | Date | string | null
+    createdAt?: DateTimeFilter<"Notificacion"> | Date | string
   }
 
   export type CotizacionUpsertWithWhereUniqueWithoutCreadoPorInput = {
@@ -30939,6 +32782,7 @@ export namespace Prisma {
     accesoIso?: AccesoISOCreateNestedOneWithoutUsuarioInput
     pedidosCreados?: PedidoCreateNestedManyWithoutCreadoPorInput
     pedidosEditados?: PedidoCreateNestedManyWithoutUltimoEditadoPorInput
+    notificaciones?: NotificacionCreateNestedManyWithoutUsuarioInput
     cotizacionesCreadas?: CotizacionCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesHistorialEditado?: CotizacionHistorialCreateNestedManyWithoutEditadoPorInput
@@ -30964,6 +32808,7 @@ export namespace Prisma {
     accesoIso?: AccesoISOUncheckedCreateNestedOneWithoutUsuarioInput
     pedidosCreados?: PedidoUncheckedCreateNestedManyWithoutCreadoPorInput
     pedidosEditados?: PedidoUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    notificaciones?: NotificacionUncheckedCreateNestedManyWithoutUsuarioInput
     cotizacionesCreadas?: CotizacionUncheckedCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesHistorialEditado?: CotizacionHistorialUncheckedCreateNestedManyWithoutEditadoPorInput
@@ -31004,6 +32849,7 @@ export namespace Prisma {
     accesoIso?: AccesoISOUpdateOneWithoutUsuarioNestedInput
     pedidosCreados?: PedidoUpdateManyWithoutCreadoPorNestedInput
     pedidosEditados?: PedidoUpdateManyWithoutUltimoEditadoPorNestedInput
+    notificaciones?: NotificacionUpdateManyWithoutUsuarioNestedInput
     cotizacionesCreadas?: CotizacionUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesHistorialEditado?: CotizacionHistorialUpdateManyWithoutEditadoPorNestedInput
@@ -31029,6 +32875,7 @@ export namespace Prisma {
     accesoIso?: AccesoISOUncheckedUpdateOneWithoutUsuarioNestedInput
     pedidosCreados?: PedidoUncheckedUpdateManyWithoutCreadoPorNestedInput
     pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    notificaciones?: NotificacionUncheckedUpdateManyWithoutUsuarioNestedInput
     cotizacionesCreadas?: CotizacionUncheckedUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesHistorialEditado?: CotizacionHistorialUncheckedUpdateManyWithoutEditadoPorNestedInput
@@ -31497,6 +33344,7 @@ export namespace Prisma {
     accesoIso?: AccesoISOCreateNestedOneWithoutUsuarioInput
     pedidosCreados?: PedidoCreateNestedManyWithoutCreadoPorInput
     pedidosEditados?: PedidoCreateNestedManyWithoutUltimoEditadoPorInput
+    notificaciones?: NotificacionCreateNestedManyWithoutUsuarioInput
     cotizacionesCreadas?: CotizacionCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesHistorialEditado?: CotizacionHistorialCreateNestedManyWithoutEditadoPorInput
@@ -31522,6 +33370,7 @@ export namespace Prisma {
     accesoIso?: AccesoISOUncheckedCreateNestedOneWithoutUsuarioInput
     pedidosCreados?: PedidoUncheckedCreateNestedManyWithoutCreadoPorInput
     pedidosEditados?: PedidoUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    notificaciones?: NotificacionUncheckedCreateNestedManyWithoutUsuarioInput
     cotizacionesCreadas?: CotizacionUncheckedCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesHistorialEditado?: CotizacionHistorialUncheckedCreateNestedManyWithoutEditadoPorInput
@@ -31626,6 +33475,7 @@ export namespace Prisma {
     accesoIso?: AccesoISOUpdateOneWithoutUsuarioNestedInput
     pedidosCreados?: PedidoUpdateManyWithoutCreadoPorNestedInput
     pedidosEditados?: PedidoUpdateManyWithoutUltimoEditadoPorNestedInput
+    notificaciones?: NotificacionUpdateManyWithoutUsuarioNestedInput
     cotizacionesCreadas?: CotizacionUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesHistorialEditado?: CotizacionHistorialUpdateManyWithoutEditadoPorNestedInput
@@ -31651,6 +33501,7 @@ export namespace Prisma {
     accesoIso?: AccesoISOUncheckedUpdateOneWithoutUsuarioNestedInput
     pedidosCreados?: PedidoUncheckedUpdateManyWithoutCreadoPorNestedInput
     pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    notificaciones?: NotificacionUncheckedUpdateManyWithoutUsuarioNestedInput
     cotizacionesCreadas?: CotizacionUncheckedUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesHistorialEditado?: CotizacionHistorialUncheckedUpdateManyWithoutEditadoPorNestedInput
@@ -31668,12 +33519,14 @@ export namespace Prisma {
     entregadoEn?: Date | string | null
     avisoSalioEnviadoEn?: Date | string | null
     avisoEntregadoEnviadoEn?: Date | string | null
+    alerta48hEnviadaEn?: Date | string | null
     categoriaObservacion?: $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     creadoPor: UsuarioCreateNestedOneWithoutPedidosCreadosInput
     ultimoEditadoPor?: UsuarioCreateNestedOneWithoutPedidosEditadosInput
+    notificaciones?: NotificacionCreateNestedManyWithoutPedidoInput
   }
 
   export type PedidoUncheckedCreateWithoutClienteInput = {
@@ -31687,12 +33540,14 @@ export namespace Prisma {
     entregadoEn?: Date | string | null
     avisoSalioEnviadoEn?: Date | string | null
     avisoEntregadoEnviadoEn?: Date | string | null
+    alerta48hEnviadaEn?: Date | string | null
     categoriaObservacion?: $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: string | null
     creadoPorId: number
     ultimoEditadoPorId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    notificaciones?: NotificacionUncheckedCreateNestedManyWithoutPedidoInput
   }
 
   export type PedidoCreateOrConnectWithoutClienteInput = {
@@ -31827,6 +33682,7 @@ export namespace Prisma {
     accesosIndicador?: AccesoIndicadorCreateNestedManyWithoutUsuarioInput
     accesoIso?: AccesoISOCreateNestedOneWithoutUsuarioInput
     pedidosEditados?: PedidoCreateNestedManyWithoutUltimoEditadoPorInput
+    notificaciones?: NotificacionCreateNestedManyWithoutUsuarioInput
     cotizacionesCreadas?: CotizacionCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesHistorialEditado?: CotizacionHistorialCreateNestedManyWithoutEditadoPorInput
@@ -31852,6 +33708,7 @@ export namespace Prisma {
     accesosIndicador?: AccesoIndicadorUncheckedCreateNestedManyWithoutUsuarioInput
     accesoIso?: AccesoISOUncheckedCreateNestedOneWithoutUsuarioInput
     pedidosEditados?: PedidoUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    notificaciones?: NotificacionUncheckedCreateNestedManyWithoutUsuarioInput
     cotizacionesCreadas?: CotizacionUncheckedCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesHistorialEditado?: CotizacionHistorialUncheckedCreateNestedManyWithoutEditadoPorInput
@@ -31881,6 +33738,7 @@ export namespace Prisma {
     accesosIndicador?: AccesoIndicadorCreateNestedManyWithoutUsuarioInput
     accesoIso?: AccesoISOCreateNestedOneWithoutUsuarioInput
     pedidosCreados?: PedidoCreateNestedManyWithoutCreadoPorInput
+    notificaciones?: NotificacionCreateNestedManyWithoutUsuarioInput
     cotizacionesCreadas?: CotizacionCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesHistorialEditado?: CotizacionHistorialCreateNestedManyWithoutEditadoPorInput
@@ -31906,6 +33764,7 @@ export namespace Prisma {
     accesosIndicador?: AccesoIndicadorUncheckedCreateNestedManyWithoutUsuarioInput
     accesoIso?: AccesoISOUncheckedCreateNestedOneWithoutUsuarioInput
     pedidosCreados?: PedidoUncheckedCreateNestedManyWithoutCreadoPorInput
+    notificaciones?: NotificacionUncheckedCreateNestedManyWithoutUsuarioInput
     cotizacionesCreadas?: CotizacionUncheckedCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesHistorialEditado?: CotizacionHistorialUncheckedCreateNestedManyWithoutEditadoPorInput
@@ -31916,6 +33775,33 @@ export namespace Prisma {
   export type UsuarioCreateOrConnectWithoutPedidosEditadosInput = {
     where: UsuarioWhereUniqueInput
     create: XOR<UsuarioCreateWithoutPedidosEditadosInput, UsuarioUncheckedCreateWithoutPedidosEditadosInput>
+  }
+
+  export type NotificacionCreateWithoutPedidoInput = {
+    tipo: $Enums.TipoNotificacion
+    mensaje: string
+    leidaEn?: Date | string | null
+    createdAt?: Date | string
+    usuario: UsuarioCreateNestedOneWithoutNotificacionesInput
+  }
+
+  export type NotificacionUncheckedCreateWithoutPedidoInput = {
+    id?: number
+    usuarioId: number
+    tipo: $Enums.TipoNotificacion
+    mensaje: string
+    leidaEn?: Date | string | null
+    createdAt?: Date | string
+  }
+
+  export type NotificacionCreateOrConnectWithoutPedidoInput = {
+    where: NotificacionWhereUniqueInput
+    create: XOR<NotificacionCreateWithoutPedidoInput, NotificacionUncheckedCreateWithoutPedidoInput>
+  }
+
+  export type NotificacionCreateManyPedidoInputEnvelope = {
+    data: NotificacionCreateManyPedidoInput | NotificacionCreateManyPedidoInput[]
+    skipDuplicates?: boolean
   }
 
   export type ClienteUpsertWithoutPedidosInput = {
@@ -31984,6 +33870,7 @@ export namespace Prisma {
     accesosIndicador?: AccesoIndicadorUpdateManyWithoutUsuarioNestedInput
     accesoIso?: AccesoISOUpdateOneWithoutUsuarioNestedInput
     pedidosEditados?: PedidoUpdateManyWithoutUltimoEditadoPorNestedInput
+    notificaciones?: NotificacionUpdateManyWithoutUsuarioNestedInput
     cotizacionesCreadas?: CotizacionUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesHistorialEditado?: CotizacionHistorialUpdateManyWithoutEditadoPorNestedInput
@@ -32009,6 +33896,7 @@ export namespace Prisma {
     accesosIndicador?: AccesoIndicadorUncheckedUpdateManyWithoutUsuarioNestedInput
     accesoIso?: AccesoISOUncheckedUpdateOneWithoutUsuarioNestedInput
     pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    notificaciones?: NotificacionUncheckedUpdateManyWithoutUsuarioNestedInput
     cotizacionesCreadas?: CotizacionUncheckedUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesHistorialEditado?: CotizacionHistorialUncheckedUpdateManyWithoutEditadoPorNestedInput
@@ -32044,6 +33932,7 @@ export namespace Prisma {
     accesosIndicador?: AccesoIndicadorUpdateManyWithoutUsuarioNestedInput
     accesoIso?: AccesoISOUpdateOneWithoutUsuarioNestedInput
     pedidosCreados?: PedidoUpdateManyWithoutCreadoPorNestedInput
+    notificaciones?: NotificacionUpdateManyWithoutUsuarioNestedInput
     cotizacionesCreadas?: CotizacionUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesHistorialEditado?: CotizacionHistorialUpdateManyWithoutEditadoPorNestedInput
@@ -32069,11 +33958,244 @@ export namespace Prisma {
     accesosIndicador?: AccesoIndicadorUncheckedUpdateManyWithoutUsuarioNestedInput
     accesoIso?: AccesoISOUncheckedUpdateOneWithoutUsuarioNestedInput
     pedidosCreados?: PedidoUncheckedUpdateManyWithoutCreadoPorNestedInput
+    notificaciones?: NotificacionUncheckedUpdateManyWithoutUsuarioNestedInput
     cotizacionesCreadas?: CotizacionUncheckedUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesHistorialEditado?: CotizacionHistorialUncheckedUpdateManyWithoutEditadoPorNestedInput
     ausencias?: AusenciaUncheckedUpdateManyWithoutUsuarioNestedInput
     ausenciasRegistradas?: AusenciaUncheckedUpdateManyWithoutRegistradoPorNestedInput
+  }
+
+  export type NotificacionUpsertWithWhereUniqueWithoutPedidoInput = {
+    where: NotificacionWhereUniqueInput
+    update: XOR<NotificacionUpdateWithoutPedidoInput, NotificacionUncheckedUpdateWithoutPedidoInput>
+    create: XOR<NotificacionCreateWithoutPedidoInput, NotificacionUncheckedCreateWithoutPedidoInput>
+  }
+
+  export type NotificacionUpdateWithWhereUniqueWithoutPedidoInput = {
+    where: NotificacionWhereUniqueInput
+    data: XOR<NotificacionUpdateWithoutPedidoInput, NotificacionUncheckedUpdateWithoutPedidoInput>
+  }
+
+  export type NotificacionUpdateManyWithWhereWithoutPedidoInput = {
+    where: NotificacionScalarWhereInput
+    data: XOR<NotificacionUpdateManyMutationInput, NotificacionUncheckedUpdateManyWithoutPedidoInput>
+  }
+
+  export type UsuarioCreateWithoutNotificacionesInput = {
+    supabaseUserId: string
+    nombre: string
+    esAdmin?: boolean
+    esAdminKpis?: boolean
+    activo?: boolean
+    desactivadoEn?: Date | string | null
+    avatarUrl?: string | null
+    createdAt?: Date | string
+    desactivadoPor?: UsuarioCreateNestedOneWithoutDesactivadosInput
+    desactivados?: UsuarioCreateNestedManyWithoutDesactivadoPorInput
+    permisos?: PermisoCreateNestedManyWithoutUsuarioInput
+    trabajosImpresion?: TrabajoImpresionCreateNestedManyWithoutCreadoPorInput
+    archivosSubidos?: ArchivoCreateNestedManyWithoutSubidoPorInput
+    accesosIndicador?: AccesoIndicadorCreateNestedManyWithoutUsuarioInput
+    accesoIso?: AccesoISOCreateNestedOneWithoutUsuarioInput
+    pedidosCreados?: PedidoCreateNestedManyWithoutCreadoPorInput
+    pedidosEditados?: PedidoCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesCreadas?: CotizacionCreateNestedManyWithoutCreadoPorInput
+    cotizacionesEditadas?: CotizacionCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesHistorialEditado?: CotizacionHistorialCreateNestedManyWithoutEditadoPorInput
+    ausencias?: AusenciaCreateNestedManyWithoutUsuarioInput
+    ausenciasRegistradas?: AusenciaCreateNestedManyWithoutRegistradoPorInput
+  }
+
+  export type UsuarioUncheckedCreateWithoutNotificacionesInput = {
+    id?: number
+    supabaseUserId: string
+    nombre: string
+    esAdmin?: boolean
+    esAdminKpis?: boolean
+    activo?: boolean
+    desactivadoEn?: Date | string | null
+    desactivadoPorId?: number | null
+    avatarUrl?: string | null
+    createdAt?: Date | string
+    desactivados?: UsuarioUncheckedCreateNestedManyWithoutDesactivadoPorInput
+    permisos?: PermisoUncheckedCreateNestedManyWithoutUsuarioInput
+    trabajosImpresion?: TrabajoImpresionUncheckedCreateNestedManyWithoutCreadoPorInput
+    archivosSubidos?: ArchivoUncheckedCreateNestedManyWithoutSubidoPorInput
+    accesosIndicador?: AccesoIndicadorUncheckedCreateNestedManyWithoutUsuarioInput
+    accesoIso?: AccesoISOUncheckedCreateNestedOneWithoutUsuarioInput
+    pedidosCreados?: PedidoUncheckedCreateNestedManyWithoutCreadoPorInput
+    pedidosEditados?: PedidoUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesCreadas?: CotizacionUncheckedCreateNestedManyWithoutCreadoPorInput
+    cotizacionesEditadas?: CotizacionUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    cotizacionesHistorialEditado?: CotizacionHistorialUncheckedCreateNestedManyWithoutEditadoPorInput
+    ausencias?: AusenciaUncheckedCreateNestedManyWithoutUsuarioInput
+    ausenciasRegistradas?: AusenciaUncheckedCreateNestedManyWithoutRegistradoPorInput
+  }
+
+  export type UsuarioCreateOrConnectWithoutNotificacionesInput = {
+    where: UsuarioWhereUniqueInput
+    create: XOR<UsuarioCreateWithoutNotificacionesInput, UsuarioUncheckedCreateWithoutNotificacionesInput>
+  }
+
+  export type PedidoCreateWithoutNotificacionesInput = {
+    numeroProforma: string
+    tokenSeguimiento?: string
+    recibidoEn?: Date | string
+    inicioPreparacionEn?: Date | string | null
+    preparadoEn?: Date | string | null
+    salioEn?: Date | string | null
+    entregadoEn?: Date | string | null
+    avisoSalioEnviadoEn?: Date | string | null
+    avisoEntregadoEnviadoEn?: Date | string | null
+    alerta48hEnviadaEn?: Date | string | null
+    categoriaObservacion?: $Enums.CategoriaObservacionPedido | null
+    detalleObservacion?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    cliente: ClienteCreateNestedOneWithoutPedidosInput
+    creadoPor: UsuarioCreateNestedOneWithoutPedidosCreadosInput
+    ultimoEditadoPor?: UsuarioCreateNestedOneWithoutPedidosEditadosInput
+  }
+
+  export type PedidoUncheckedCreateWithoutNotificacionesInput = {
+    id?: number
+    clienteId: number
+    numeroProforma: string
+    tokenSeguimiento?: string
+    recibidoEn?: Date | string
+    inicioPreparacionEn?: Date | string | null
+    preparadoEn?: Date | string | null
+    salioEn?: Date | string | null
+    entregadoEn?: Date | string | null
+    avisoSalioEnviadoEn?: Date | string | null
+    avisoEntregadoEnviadoEn?: Date | string | null
+    alerta48hEnviadaEn?: Date | string | null
+    categoriaObservacion?: $Enums.CategoriaObservacionPedido | null
+    detalleObservacion?: string | null
+    creadoPorId: number
+    ultimoEditadoPorId?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PedidoCreateOrConnectWithoutNotificacionesInput = {
+    where: PedidoWhereUniqueInput
+    create: XOR<PedidoCreateWithoutNotificacionesInput, PedidoUncheckedCreateWithoutNotificacionesInput>
+  }
+
+  export type UsuarioUpsertWithoutNotificacionesInput = {
+    update: XOR<UsuarioUpdateWithoutNotificacionesInput, UsuarioUncheckedUpdateWithoutNotificacionesInput>
+    create: XOR<UsuarioCreateWithoutNotificacionesInput, UsuarioUncheckedCreateWithoutNotificacionesInput>
+    where?: UsuarioWhereInput
+  }
+
+  export type UsuarioUpdateToOneWithWhereWithoutNotificacionesInput = {
+    where?: UsuarioWhereInput
+    data: XOR<UsuarioUpdateWithoutNotificacionesInput, UsuarioUncheckedUpdateWithoutNotificacionesInput>
+  }
+
+  export type UsuarioUpdateWithoutNotificacionesInput = {
+    supabaseUserId?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    esAdmin?: BoolFieldUpdateOperationsInput | boolean
+    esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    desactivadoPor?: UsuarioUpdateOneWithoutDesactivadosNestedInput
+    desactivados?: UsuarioUpdateManyWithoutDesactivadoPorNestedInput
+    permisos?: PermisoUpdateManyWithoutUsuarioNestedInput
+    trabajosImpresion?: TrabajoImpresionUpdateManyWithoutCreadoPorNestedInput
+    archivosSubidos?: ArchivoUpdateManyWithoutSubidoPorNestedInput
+    accesosIndicador?: AccesoIndicadorUpdateManyWithoutUsuarioNestedInput
+    accesoIso?: AccesoISOUpdateOneWithoutUsuarioNestedInput
+    pedidosCreados?: PedidoUpdateManyWithoutCreadoPorNestedInput
+    pedidosEditados?: PedidoUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesCreadas?: CotizacionUpdateManyWithoutCreadoPorNestedInput
+    cotizacionesEditadas?: CotizacionUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesHistorialEditado?: CotizacionHistorialUpdateManyWithoutEditadoPorNestedInput
+    ausencias?: AusenciaUpdateManyWithoutUsuarioNestedInput
+    ausenciasRegistradas?: AusenciaUpdateManyWithoutRegistradoPorNestedInput
+  }
+
+  export type UsuarioUncheckedUpdateWithoutNotificacionesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    supabaseUserId?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    esAdmin?: BoolFieldUpdateOperationsInput | boolean
+    esAdminKpis?: BoolFieldUpdateOperationsInput | boolean
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    desactivadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    desactivadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    desactivados?: UsuarioUncheckedUpdateManyWithoutDesactivadoPorNestedInput
+    permisos?: PermisoUncheckedUpdateManyWithoutUsuarioNestedInput
+    trabajosImpresion?: TrabajoImpresionUncheckedUpdateManyWithoutCreadoPorNestedInput
+    archivosSubidos?: ArchivoUncheckedUpdateManyWithoutSubidoPorNestedInput
+    accesosIndicador?: AccesoIndicadorUncheckedUpdateManyWithoutUsuarioNestedInput
+    accesoIso?: AccesoISOUncheckedUpdateOneWithoutUsuarioNestedInput
+    pedidosCreados?: PedidoUncheckedUpdateManyWithoutCreadoPorNestedInput
+    pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesCreadas?: CotizacionUncheckedUpdateManyWithoutCreadoPorNestedInput
+    cotizacionesEditadas?: CotizacionUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    cotizacionesHistorialEditado?: CotizacionHistorialUncheckedUpdateManyWithoutEditadoPorNestedInput
+    ausencias?: AusenciaUncheckedUpdateManyWithoutUsuarioNestedInput
+    ausenciasRegistradas?: AusenciaUncheckedUpdateManyWithoutRegistradoPorNestedInput
+  }
+
+  export type PedidoUpsertWithoutNotificacionesInput = {
+    update: XOR<PedidoUpdateWithoutNotificacionesInput, PedidoUncheckedUpdateWithoutNotificacionesInput>
+    create: XOR<PedidoCreateWithoutNotificacionesInput, PedidoUncheckedCreateWithoutNotificacionesInput>
+    where?: PedidoWhereInput
+  }
+
+  export type PedidoUpdateToOneWithWhereWithoutNotificacionesInput = {
+    where?: PedidoWhereInput
+    data: XOR<PedidoUpdateWithoutNotificacionesInput, PedidoUncheckedUpdateWithoutNotificacionesInput>
+  }
+
+  export type PedidoUpdateWithoutNotificacionesInput = {
+    numeroProforma?: StringFieldUpdateOperationsInput | string
+    tokenSeguimiento?: StringFieldUpdateOperationsInput | string
+    recibidoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    inicioPreparacionEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    preparadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    salioEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    entregadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    avisoSalioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    avisoEntregadoEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    alerta48hEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    categoriaObservacion?: NullableEnumCategoriaObservacionPedidoFieldUpdateOperationsInput | $Enums.CategoriaObservacionPedido | null
+    detalleObservacion?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    cliente?: ClienteUpdateOneRequiredWithoutPedidosNestedInput
+    creadoPor?: UsuarioUpdateOneRequiredWithoutPedidosCreadosNestedInput
+    ultimoEditadoPor?: UsuarioUpdateOneWithoutPedidosEditadosNestedInput
+  }
+
+  export type PedidoUncheckedUpdateWithoutNotificacionesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    clienteId?: IntFieldUpdateOperationsInput | number
+    numeroProforma?: StringFieldUpdateOperationsInput | string
+    tokenSeguimiento?: StringFieldUpdateOperationsInput | string
+    recibidoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    inicioPreparacionEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    preparadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    salioEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    entregadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    avisoSalioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    avisoEntregadoEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    alerta48hEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    categoriaObservacion?: NullableEnumCategoriaObservacionPedidoFieldUpdateOperationsInput | $Enums.CategoriaObservacionPedido | null
+    detalleObservacion?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoPorId?: IntFieldUpdateOperationsInput | number
+    ultimoEditadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ClienteCreateWithoutCotizacionesInput = {
@@ -32126,6 +34248,7 @@ export namespace Prisma {
     accesoIso?: AccesoISOCreateNestedOneWithoutUsuarioInput
     pedidosCreados?: PedidoCreateNestedManyWithoutCreadoPorInput
     pedidosEditados?: PedidoCreateNestedManyWithoutUltimoEditadoPorInput
+    notificaciones?: NotificacionCreateNestedManyWithoutUsuarioInput
     cotizacionesEditadas?: CotizacionCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesHistorialEditado?: CotizacionHistorialCreateNestedManyWithoutEditadoPorInput
     ausencias?: AusenciaCreateNestedManyWithoutUsuarioInput
@@ -32151,6 +34274,7 @@ export namespace Prisma {
     accesoIso?: AccesoISOUncheckedCreateNestedOneWithoutUsuarioInput
     pedidosCreados?: PedidoUncheckedCreateNestedManyWithoutCreadoPorInput
     pedidosEditados?: PedidoUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    notificaciones?: NotificacionUncheckedCreateNestedManyWithoutUsuarioInput
     cotizacionesEditadas?: CotizacionUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesHistorialEditado?: CotizacionHistorialUncheckedCreateNestedManyWithoutEditadoPorInput
     ausencias?: AusenciaUncheckedCreateNestedManyWithoutUsuarioInput
@@ -32180,6 +34304,7 @@ export namespace Prisma {
     accesoIso?: AccesoISOCreateNestedOneWithoutUsuarioInput
     pedidosCreados?: PedidoCreateNestedManyWithoutCreadoPorInput
     pedidosEditados?: PedidoCreateNestedManyWithoutUltimoEditadoPorInput
+    notificaciones?: NotificacionCreateNestedManyWithoutUsuarioInput
     cotizacionesCreadas?: CotizacionCreateNestedManyWithoutCreadoPorInput
     cotizacionesHistorialEditado?: CotizacionHistorialCreateNestedManyWithoutEditadoPorInput
     ausencias?: AusenciaCreateNestedManyWithoutUsuarioInput
@@ -32205,6 +34330,7 @@ export namespace Prisma {
     accesoIso?: AccesoISOUncheckedCreateNestedOneWithoutUsuarioInput
     pedidosCreados?: PedidoUncheckedCreateNestedManyWithoutCreadoPorInput
     pedidosEditados?: PedidoUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    notificaciones?: NotificacionUncheckedCreateNestedManyWithoutUsuarioInput
     cotizacionesCreadas?: CotizacionUncheckedCreateNestedManyWithoutCreadoPorInput
     cotizacionesHistorialEditado?: CotizacionHistorialUncheckedCreateNestedManyWithoutEditadoPorInput
     ausencias?: AusenciaUncheckedCreateNestedManyWithoutUsuarioInput
@@ -32312,6 +34438,7 @@ export namespace Prisma {
     accesoIso?: AccesoISOUpdateOneWithoutUsuarioNestedInput
     pedidosCreados?: PedidoUpdateManyWithoutCreadoPorNestedInput
     pedidosEditados?: PedidoUpdateManyWithoutUltimoEditadoPorNestedInput
+    notificaciones?: NotificacionUpdateManyWithoutUsuarioNestedInput
     cotizacionesEditadas?: CotizacionUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesHistorialEditado?: CotizacionHistorialUpdateManyWithoutEditadoPorNestedInput
     ausencias?: AusenciaUpdateManyWithoutUsuarioNestedInput
@@ -32337,6 +34464,7 @@ export namespace Prisma {
     accesoIso?: AccesoISOUncheckedUpdateOneWithoutUsuarioNestedInput
     pedidosCreados?: PedidoUncheckedUpdateManyWithoutCreadoPorNestedInput
     pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    notificaciones?: NotificacionUncheckedUpdateManyWithoutUsuarioNestedInput
     cotizacionesEditadas?: CotizacionUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesHistorialEditado?: CotizacionHistorialUncheckedUpdateManyWithoutEditadoPorNestedInput
     ausencias?: AusenciaUncheckedUpdateManyWithoutUsuarioNestedInput
@@ -32372,6 +34500,7 @@ export namespace Prisma {
     accesoIso?: AccesoISOUpdateOneWithoutUsuarioNestedInput
     pedidosCreados?: PedidoUpdateManyWithoutCreadoPorNestedInput
     pedidosEditados?: PedidoUpdateManyWithoutUltimoEditadoPorNestedInput
+    notificaciones?: NotificacionUpdateManyWithoutUsuarioNestedInput
     cotizacionesCreadas?: CotizacionUpdateManyWithoutCreadoPorNestedInput
     cotizacionesHistorialEditado?: CotizacionHistorialUpdateManyWithoutEditadoPorNestedInput
     ausencias?: AusenciaUpdateManyWithoutUsuarioNestedInput
@@ -32397,6 +34526,7 @@ export namespace Prisma {
     accesoIso?: AccesoISOUncheckedUpdateOneWithoutUsuarioNestedInput
     pedidosCreados?: PedidoUncheckedUpdateManyWithoutCreadoPorNestedInput
     pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    notificaciones?: NotificacionUncheckedUpdateManyWithoutUsuarioNestedInput
     cotizacionesCreadas?: CotizacionUncheckedUpdateManyWithoutCreadoPorNestedInput
     cotizacionesHistorialEditado?: CotizacionHistorialUncheckedUpdateManyWithoutEditadoPorNestedInput
     ausencias?: AusenciaUncheckedUpdateManyWithoutUsuarioNestedInput
@@ -32473,6 +34603,7 @@ export namespace Prisma {
     accesoIso?: AccesoISOCreateNestedOneWithoutUsuarioInput
     pedidosCreados?: PedidoCreateNestedManyWithoutCreadoPorInput
     pedidosEditados?: PedidoCreateNestedManyWithoutUltimoEditadoPorInput
+    notificaciones?: NotificacionCreateNestedManyWithoutUsuarioInput
     cotizacionesCreadas?: CotizacionCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionCreateNestedManyWithoutUltimoEditadoPorInput
     ausencias?: AusenciaCreateNestedManyWithoutUsuarioInput
@@ -32498,6 +34629,7 @@ export namespace Prisma {
     accesoIso?: AccesoISOUncheckedCreateNestedOneWithoutUsuarioInput
     pedidosCreados?: PedidoUncheckedCreateNestedManyWithoutCreadoPorInput
     pedidosEditados?: PedidoUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    notificaciones?: NotificacionUncheckedCreateNestedManyWithoutUsuarioInput
     cotizacionesCreadas?: CotizacionUncheckedCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
     ausencias?: AusenciaUncheckedCreateNestedManyWithoutUsuarioInput
@@ -32580,6 +34712,7 @@ export namespace Prisma {
     accesoIso?: AccesoISOUpdateOneWithoutUsuarioNestedInput
     pedidosCreados?: PedidoUpdateManyWithoutCreadoPorNestedInput
     pedidosEditados?: PedidoUpdateManyWithoutUltimoEditadoPorNestedInput
+    notificaciones?: NotificacionUpdateManyWithoutUsuarioNestedInput
     cotizacionesCreadas?: CotizacionUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUpdateManyWithoutUltimoEditadoPorNestedInput
     ausencias?: AusenciaUpdateManyWithoutUsuarioNestedInput
@@ -32605,6 +34738,7 @@ export namespace Prisma {
     accesoIso?: AccesoISOUncheckedUpdateOneWithoutUsuarioNestedInput
     pedidosCreados?: PedidoUncheckedUpdateManyWithoutCreadoPorNestedInput
     pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    notificaciones?: NotificacionUncheckedUpdateManyWithoutUsuarioNestedInput
     cotizacionesCreadas?: CotizacionUncheckedUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
     ausencias?: AusenciaUncheckedUpdateManyWithoutUsuarioNestedInput
@@ -32629,6 +34763,7 @@ export namespace Prisma {
     accesoIso?: AccesoISOCreateNestedOneWithoutUsuarioInput
     pedidosCreados?: PedidoCreateNestedManyWithoutCreadoPorInput
     pedidosEditados?: PedidoCreateNestedManyWithoutUltimoEditadoPorInput
+    notificaciones?: NotificacionCreateNestedManyWithoutUsuarioInput
     cotizacionesCreadas?: CotizacionCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesHistorialEditado?: CotizacionHistorialCreateNestedManyWithoutEditadoPorInput
@@ -32654,6 +34789,7 @@ export namespace Prisma {
     accesoIso?: AccesoISOUncheckedCreateNestedOneWithoutUsuarioInput
     pedidosCreados?: PedidoUncheckedCreateNestedManyWithoutCreadoPorInput
     pedidosEditados?: PedidoUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    notificaciones?: NotificacionUncheckedCreateNestedManyWithoutUsuarioInput
     cotizacionesCreadas?: CotizacionUncheckedCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesHistorialEditado?: CotizacionHistorialUncheckedCreateNestedManyWithoutEditadoPorInput
@@ -32683,6 +34819,7 @@ export namespace Prisma {
     accesoIso?: AccesoISOCreateNestedOneWithoutUsuarioInput
     pedidosCreados?: PedidoCreateNestedManyWithoutCreadoPorInput
     pedidosEditados?: PedidoCreateNestedManyWithoutUltimoEditadoPorInput
+    notificaciones?: NotificacionCreateNestedManyWithoutUsuarioInput
     cotizacionesCreadas?: CotizacionCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesHistorialEditado?: CotizacionHistorialCreateNestedManyWithoutEditadoPorInput
@@ -32708,6 +34845,7 @@ export namespace Prisma {
     accesoIso?: AccesoISOUncheckedCreateNestedOneWithoutUsuarioInput
     pedidosCreados?: PedidoUncheckedCreateNestedManyWithoutCreadoPorInput
     pedidosEditados?: PedidoUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    notificaciones?: NotificacionUncheckedCreateNestedManyWithoutUsuarioInput
     cotizacionesCreadas?: CotizacionUncheckedCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesHistorialEditado?: CotizacionHistorialUncheckedCreateNestedManyWithoutEditadoPorInput
@@ -32748,6 +34886,7 @@ export namespace Prisma {
     accesoIso?: AccesoISOUpdateOneWithoutUsuarioNestedInput
     pedidosCreados?: PedidoUpdateManyWithoutCreadoPorNestedInput
     pedidosEditados?: PedidoUpdateManyWithoutUltimoEditadoPorNestedInput
+    notificaciones?: NotificacionUpdateManyWithoutUsuarioNestedInput
     cotizacionesCreadas?: CotizacionUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesHistorialEditado?: CotizacionHistorialUpdateManyWithoutEditadoPorNestedInput
@@ -32773,6 +34912,7 @@ export namespace Prisma {
     accesoIso?: AccesoISOUncheckedUpdateOneWithoutUsuarioNestedInput
     pedidosCreados?: PedidoUncheckedUpdateManyWithoutCreadoPorNestedInput
     pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    notificaciones?: NotificacionUncheckedUpdateManyWithoutUsuarioNestedInput
     cotizacionesCreadas?: CotizacionUncheckedUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesHistorialEditado?: CotizacionHistorialUncheckedUpdateManyWithoutEditadoPorNestedInput
@@ -32808,6 +34948,7 @@ export namespace Prisma {
     accesoIso?: AccesoISOUpdateOneWithoutUsuarioNestedInput
     pedidosCreados?: PedidoUpdateManyWithoutCreadoPorNestedInput
     pedidosEditados?: PedidoUpdateManyWithoutUltimoEditadoPorNestedInput
+    notificaciones?: NotificacionUpdateManyWithoutUsuarioNestedInput
     cotizacionesCreadas?: CotizacionUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesHistorialEditado?: CotizacionHistorialUpdateManyWithoutEditadoPorNestedInput
@@ -32833,6 +34974,7 @@ export namespace Prisma {
     accesoIso?: AccesoISOUncheckedUpdateOneWithoutUsuarioNestedInput
     pedidosCreados?: PedidoUncheckedUpdateManyWithoutCreadoPorNestedInput
     pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    notificaciones?: NotificacionUncheckedUpdateManyWithoutUsuarioNestedInput
     cotizacionesCreadas?: CotizacionUncheckedUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesHistorialEditado?: CotizacionHistorialUncheckedUpdateManyWithoutEditadoPorNestedInput
@@ -33052,6 +35194,7 @@ export namespace Prisma {
     accesoIso?: AccesoISOCreateNestedOneWithoutUsuarioInput
     pedidosCreados?: PedidoCreateNestedManyWithoutCreadoPorInput
     pedidosEditados?: PedidoCreateNestedManyWithoutUltimoEditadoPorInput
+    notificaciones?: NotificacionCreateNestedManyWithoutUsuarioInput
     cotizacionesCreadas?: CotizacionCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesHistorialEditado?: CotizacionHistorialCreateNestedManyWithoutEditadoPorInput
@@ -33077,6 +35220,7 @@ export namespace Prisma {
     accesoIso?: AccesoISOUncheckedCreateNestedOneWithoutUsuarioInput
     pedidosCreados?: PedidoUncheckedCreateNestedManyWithoutCreadoPorInput
     pedidosEditados?: PedidoUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    notificaciones?: NotificacionUncheckedCreateNestedManyWithoutUsuarioInput
     cotizacionesCreadas?: CotizacionUncheckedCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesHistorialEditado?: CotizacionHistorialUncheckedCreateNestedManyWithoutEditadoPorInput
@@ -33151,6 +35295,7 @@ export namespace Prisma {
     accesoIso?: AccesoISOUpdateOneWithoutUsuarioNestedInput
     pedidosCreados?: PedidoUpdateManyWithoutCreadoPorNestedInput
     pedidosEditados?: PedidoUpdateManyWithoutUltimoEditadoPorNestedInput
+    notificaciones?: NotificacionUpdateManyWithoutUsuarioNestedInput
     cotizacionesCreadas?: CotizacionUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesHistorialEditado?: CotizacionHistorialUpdateManyWithoutEditadoPorNestedInput
@@ -33176,6 +35321,7 @@ export namespace Prisma {
     accesoIso?: AccesoISOUncheckedUpdateOneWithoutUsuarioNestedInput
     pedidosCreados?: PedidoUncheckedUpdateManyWithoutCreadoPorNestedInput
     pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    notificaciones?: NotificacionUncheckedUpdateManyWithoutUsuarioNestedInput
     cotizacionesCreadas?: CotizacionUncheckedUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesHistorialEditado?: CotizacionHistorialUncheckedUpdateManyWithoutEditadoPorNestedInput
@@ -33200,6 +35346,7 @@ export namespace Prisma {
     accesoIso?: AccesoISOCreateNestedOneWithoutUsuarioInput
     pedidosCreados?: PedidoCreateNestedManyWithoutCreadoPorInput
     pedidosEditados?: PedidoCreateNestedManyWithoutUltimoEditadoPorInput
+    notificaciones?: NotificacionCreateNestedManyWithoutUsuarioInput
     cotizacionesCreadas?: CotizacionCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesHistorialEditado?: CotizacionHistorialCreateNestedManyWithoutEditadoPorInput
@@ -33225,6 +35372,7 @@ export namespace Prisma {
     accesoIso?: AccesoISOUncheckedCreateNestedOneWithoutUsuarioInput
     pedidosCreados?: PedidoUncheckedCreateNestedManyWithoutCreadoPorInput
     pedidosEditados?: PedidoUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    notificaciones?: NotificacionUncheckedCreateNestedManyWithoutUsuarioInput
     cotizacionesCreadas?: CotizacionUncheckedCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesHistorialEditado?: CotizacionHistorialUncheckedCreateNestedManyWithoutEditadoPorInput
@@ -33265,6 +35413,7 @@ export namespace Prisma {
     accesoIso?: AccesoISOUpdateOneWithoutUsuarioNestedInput
     pedidosCreados?: PedidoUpdateManyWithoutCreadoPorNestedInput
     pedidosEditados?: PedidoUpdateManyWithoutUltimoEditadoPorNestedInput
+    notificaciones?: NotificacionUpdateManyWithoutUsuarioNestedInput
     cotizacionesCreadas?: CotizacionUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesHistorialEditado?: CotizacionHistorialUpdateManyWithoutEditadoPorNestedInput
@@ -33290,6 +35439,7 @@ export namespace Prisma {
     accesoIso?: AccesoISOUncheckedUpdateOneWithoutUsuarioNestedInput
     pedidosCreados?: PedidoUncheckedUpdateManyWithoutCreadoPorNestedInput
     pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    notificaciones?: NotificacionUncheckedUpdateManyWithoutUsuarioNestedInput
     cotizacionesCreadas?: CotizacionUncheckedUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesHistorialEditado?: CotizacionHistorialUncheckedUpdateManyWithoutEditadoPorNestedInput
@@ -33314,6 +35464,7 @@ export namespace Prisma {
     accesosIndicador?: AccesoIndicadorCreateNestedManyWithoutUsuarioInput
     pedidosCreados?: PedidoCreateNestedManyWithoutCreadoPorInput
     pedidosEditados?: PedidoCreateNestedManyWithoutUltimoEditadoPorInput
+    notificaciones?: NotificacionCreateNestedManyWithoutUsuarioInput
     cotizacionesCreadas?: CotizacionCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesHistorialEditado?: CotizacionHistorialCreateNestedManyWithoutEditadoPorInput
@@ -33339,6 +35490,7 @@ export namespace Prisma {
     accesosIndicador?: AccesoIndicadorUncheckedCreateNestedManyWithoutUsuarioInput
     pedidosCreados?: PedidoUncheckedCreateNestedManyWithoutCreadoPorInput
     pedidosEditados?: PedidoUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
+    notificaciones?: NotificacionUncheckedCreateNestedManyWithoutUsuarioInput
     cotizacionesCreadas?: CotizacionUncheckedCreateNestedManyWithoutCreadoPorInput
     cotizacionesEditadas?: CotizacionUncheckedCreateNestedManyWithoutUltimoEditadoPorInput
     cotizacionesHistorialEditado?: CotizacionHistorialUncheckedCreateNestedManyWithoutEditadoPorInput
@@ -33379,6 +35531,7 @@ export namespace Prisma {
     accesosIndicador?: AccesoIndicadorUpdateManyWithoutUsuarioNestedInput
     pedidosCreados?: PedidoUpdateManyWithoutCreadoPorNestedInput
     pedidosEditados?: PedidoUpdateManyWithoutUltimoEditadoPorNestedInput
+    notificaciones?: NotificacionUpdateManyWithoutUsuarioNestedInput
     cotizacionesCreadas?: CotizacionUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesHistorialEditado?: CotizacionHistorialUpdateManyWithoutEditadoPorNestedInput
@@ -33404,6 +35557,7 @@ export namespace Prisma {
     accesosIndicador?: AccesoIndicadorUncheckedUpdateManyWithoutUsuarioNestedInput
     pedidosCreados?: PedidoUncheckedUpdateManyWithoutCreadoPorNestedInput
     pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    notificaciones?: NotificacionUncheckedUpdateManyWithoutUsuarioNestedInput
     cotizacionesCreadas?: CotizacionUncheckedUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesHistorialEditado?: CotizacionHistorialUncheckedUpdateManyWithoutEditadoPorNestedInput
@@ -33486,6 +35640,7 @@ export namespace Prisma {
     entregadoEn?: Date | string | null
     avisoSalioEnviadoEn?: Date | string | null
     avisoEntregadoEnviadoEn?: Date | string | null
+    alerta48hEnviadaEn?: Date | string | null
     categoriaObservacion?: $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: string | null
     ultimoEditadoPorId?: number | null
@@ -33505,11 +35660,21 @@ export namespace Prisma {
     entregadoEn?: Date | string | null
     avisoSalioEnviadoEn?: Date | string | null
     avisoEntregadoEnviadoEn?: Date | string | null
+    alerta48hEnviadaEn?: Date | string | null
     categoriaObservacion?: $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: string | null
     creadoPorId: number
     createdAt?: Date | string
     updatedAt?: Date | string
+  }
+
+  export type NotificacionCreateManyUsuarioInput = {
+    id?: number
+    tipo: $Enums.TipoNotificacion
+    mensaje: string
+    pedidoId?: number | null
+    leidaEn?: Date | string | null
+    createdAt?: Date | string
   }
 
   export type CotizacionCreateManyCreadoPorInput = {
@@ -33587,6 +35752,7 @@ export namespace Prisma {
     accesoIso?: AccesoISOUpdateOneWithoutUsuarioNestedInput
     pedidosCreados?: PedidoUpdateManyWithoutCreadoPorNestedInput
     pedidosEditados?: PedidoUpdateManyWithoutUltimoEditadoPorNestedInput
+    notificaciones?: NotificacionUpdateManyWithoutUsuarioNestedInput
     cotizacionesCreadas?: CotizacionUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesHistorialEditado?: CotizacionHistorialUpdateManyWithoutEditadoPorNestedInput
@@ -33612,6 +35778,7 @@ export namespace Prisma {
     accesoIso?: AccesoISOUncheckedUpdateOneWithoutUsuarioNestedInput
     pedidosCreados?: PedidoUncheckedUpdateManyWithoutCreadoPorNestedInput
     pedidosEditados?: PedidoUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
+    notificaciones?: NotificacionUncheckedUpdateManyWithoutUsuarioNestedInput
     cotizacionesCreadas?: CotizacionUncheckedUpdateManyWithoutCreadoPorNestedInput
     cotizacionesEditadas?: CotizacionUncheckedUpdateManyWithoutUltimoEditadoPorNestedInput
     cotizacionesHistorialEditado?: CotizacionHistorialUncheckedUpdateManyWithoutEditadoPorNestedInput
@@ -33790,12 +35957,14 @@ export namespace Prisma {
     entregadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoSalioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoEntregadoEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    alerta48hEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     categoriaObservacion?: NullableEnumCategoriaObservacionPedidoFieldUpdateOperationsInput | $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     cliente?: ClienteUpdateOneRequiredWithoutPedidosNestedInput
     ultimoEditadoPor?: UsuarioUpdateOneWithoutPedidosEditadosNestedInput
+    notificaciones?: NotificacionUpdateManyWithoutPedidoNestedInput
   }
 
   export type PedidoUncheckedUpdateWithoutCreadoPorInput = {
@@ -33810,11 +35979,13 @@ export namespace Prisma {
     entregadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoSalioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoEntregadoEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    alerta48hEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     categoriaObservacion?: NullableEnumCategoriaObservacionPedidoFieldUpdateOperationsInput | $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: NullableStringFieldUpdateOperationsInput | string | null
     ultimoEditadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    notificaciones?: NotificacionUncheckedUpdateManyWithoutPedidoNestedInput
   }
 
   export type PedidoUncheckedUpdateManyWithoutCreadoPorInput = {
@@ -33829,6 +36000,7 @@ export namespace Prisma {
     entregadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoSalioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoEntregadoEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    alerta48hEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     categoriaObservacion?: NullableEnumCategoriaObservacionPedidoFieldUpdateOperationsInput | $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: NullableStringFieldUpdateOperationsInput | string | null
     ultimoEditadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -33846,12 +36018,14 @@ export namespace Prisma {
     entregadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoSalioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoEntregadoEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    alerta48hEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     categoriaObservacion?: NullableEnumCategoriaObservacionPedidoFieldUpdateOperationsInput | $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     cliente?: ClienteUpdateOneRequiredWithoutPedidosNestedInput
     creadoPor?: UsuarioUpdateOneRequiredWithoutPedidosCreadosNestedInput
+    notificaciones?: NotificacionUpdateManyWithoutPedidoNestedInput
   }
 
   export type PedidoUncheckedUpdateWithoutUltimoEditadoPorInput = {
@@ -33866,11 +36040,13 @@ export namespace Prisma {
     entregadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoSalioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoEntregadoEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    alerta48hEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     categoriaObservacion?: NullableEnumCategoriaObservacionPedidoFieldUpdateOperationsInput | $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: NullableStringFieldUpdateOperationsInput | string | null
     creadoPorId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    notificaciones?: NotificacionUncheckedUpdateManyWithoutPedidoNestedInput
   }
 
   export type PedidoUncheckedUpdateManyWithoutUltimoEditadoPorInput = {
@@ -33885,11 +36061,38 @@ export namespace Prisma {
     entregadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoSalioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoEntregadoEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    alerta48hEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     categoriaObservacion?: NullableEnumCategoriaObservacionPedidoFieldUpdateOperationsInput | $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: NullableStringFieldUpdateOperationsInput | string | null
     creadoPorId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type NotificacionUpdateWithoutUsuarioInput = {
+    tipo?: EnumTipoNotificacionFieldUpdateOperationsInput | $Enums.TipoNotificacion
+    mensaje?: StringFieldUpdateOperationsInput | string
+    leidaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    pedido?: PedidoUpdateOneWithoutNotificacionesNestedInput
+  }
+
+  export type NotificacionUncheckedUpdateWithoutUsuarioInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    tipo?: EnumTipoNotificacionFieldUpdateOperationsInput | $Enums.TipoNotificacion
+    mensaje?: StringFieldUpdateOperationsInput | string
+    pedidoId?: NullableIntFieldUpdateOperationsInput | number | null
+    leidaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type NotificacionUncheckedUpdateManyWithoutUsuarioInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    tipo?: EnumTipoNotificacionFieldUpdateOperationsInput | $Enums.TipoNotificacion
+    mensaje?: StringFieldUpdateOperationsInput | string
+    pedidoId?: NullableIntFieldUpdateOperationsInput | number | null
+    leidaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type CotizacionUpdateWithoutCreadoPorInput = {
@@ -34356,6 +36559,7 @@ export namespace Prisma {
     entregadoEn?: Date | string | null
     avisoSalioEnviadoEn?: Date | string | null
     avisoEntregadoEnviadoEn?: Date | string | null
+    alerta48hEnviadaEn?: Date | string | null
     categoriaObservacion?: $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: string | null
     creadoPorId: number
@@ -34389,12 +36593,14 @@ export namespace Prisma {
     entregadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoSalioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoEntregadoEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    alerta48hEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     categoriaObservacion?: NullableEnumCategoriaObservacionPedidoFieldUpdateOperationsInput | $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     creadoPor?: UsuarioUpdateOneRequiredWithoutPedidosCreadosNestedInput
     ultimoEditadoPor?: UsuarioUpdateOneWithoutPedidosEditadosNestedInput
+    notificaciones?: NotificacionUpdateManyWithoutPedidoNestedInput
   }
 
   export type PedidoUncheckedUpdateWithoutClienteInput = {
@@ -34408,12 +36614,14 @@ export namespace Prisma {
     entregadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoSalioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoEntregadoEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    alerta48hEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     categoriaObservacion?: NullableEnumCategoriaObservacionPedidoFieldUpdateOperationsInput | $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: NullableStringFieldUpdateOperationsInput | string | null
     creadoPorId?: IntFieldUpdateOperationsInput | number
     ultimoEditadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    notificaciones?: NotificacionUncheckedUpdateManyWithoutPedidoNestedInput
   }
 
   export type PedidoUncheckedUpdateManyWithoutClienteInput = {
@@ -34427,6 +36635,7 @@ export namespace Prisma {
     entregadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoSalioEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     avisoEntregadoEnviadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    alerta48hEnviadaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     categoriaObservacion?: NullableEnumCategoriaObservacionPedidoFieldUpdateOperationsInput | $Enums.CategoriaObservacionPedido | null
     detalleObservacion?: NullableStringFieldUpdateOperationsInput | string | null
     creadoPorId?: IntFieldUpdateOperationsInput | number
@@ -34479,6 +36688,41 @@ export namespace Prisma {
     ultimoEditadoPorId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type NotificacionCreateManyPedidoInput = {
+    id?: number
+    usuarioId: number
+    tipo: $Enums.TipoNotificacion
+    mensaje: string
+    leidaEn?: Date | string | null
+    createdAt?: Date | string
+  }
+
+  export type NotificacionUpdateWithoutPedidoInput = {
+    tipo?: EnumTipoNotificacionFieldUpdateOperationsInput | $Enums.TipoNotificacion
+    mensaje?: StringFieldUpdateOperationsInput | string
+    leidaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    usuario?: UsuarioUpdateOneRequiredWithoutNotificacionesNestedInput
+  }
+
+  export type NotificacionUncheckedUpdateWithoutPedidoInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    usuarioId?: IntFieldUpdateOperationsInput | number
+    tipo?: EnumTipoNotificacionFieldUpdateOperationsInput | $Enums.TipoNotificacion
+    mensaje?: StringFieldUpdateOperationsInput | string
+    leidaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type NotificacionUncheckedUpdateManyWithoutPedidoInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    usuarioId?: IntFieldUpdateOperationsInput | number
+    tipo?: EnumTipoNotificacionFieldUpdateOperationsInput | $Enums.TipoNotificacion
+    mensaje?: StringFieldUpdateOperationsInput | string
+    leidaEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type CotizacionHistorialCreateManyCotizacionInput = {

@@ -17,6 +17,8 @@ export class UpdateCotizacionDto {
   @MaxLength(1000)
   notas?: string;
 
+  // A diferencia de las 3 de abajo, requerimientoEn se puede editar libremente: no exige
+  // esAdmin ni motivoCorreccion (ver comentario en cotizaciones.service.ts, CAMPOS_PROTEGIDOS).
   @IsOptional()
   @IsDateString()
   requerimientoEn?: string;
@@ -33,9 +35,10 @@ export class UpdateCotizacionDto {
   @IsDateString()
   avisoAlmacenEn?: string;
 
-  // Obligatorio cuando se corrige (no cuando se marca por primera vez) una de las 3 fechas de
-  // arriba — ver ForbiddenException en cotizaciones.service.ts. El valor de la fecha en sí se
-  // ignora al marcar por primera vez: el service usa la hora real del servidor.
+  // Obligatorio cuando se corrige (no cuando se marca por primera vez) una de las 3 fechas
+  // protegidas de arriba (cotizacionEnviadaEn/pedidoAprobadoEn/avisoAlmacenEn) — ver
+  // ForbiddenException en cotizaciones.service.ts. El valor de la fecha en sí se ignora al marcar
+  // por primera vez: el service usa la hora real del servidor. No aplica a requerimientoEn.
   @IsOptional()
   @IsString()
   @MaxLength(300)

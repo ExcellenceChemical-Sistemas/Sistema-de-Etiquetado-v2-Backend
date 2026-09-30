@@ -1,16 +1,21 @@
-import { IsInt, IsOptional, IsString, MaxLength } from 'class-validator';
+import { IsDateString, IsInt, IsOptional, IsString, MaxLength } from 'class-validator';
 
 // Se crea apenas llega el pedido del cliente, antes de que exista proforma (KEYFACIL la genera
 // recién cuando Joel cotiza) — por eso numeroProforma no va acá, se completa junto con
 // cotizacionEnviadaEn en el PATCH (ver UpdateCotizacionDto).
 //
-// requerimientoEn NO se recibe acá: el service la fija siempre con la hora real del servidor al
-// crear (mismo motivo que cotizacionEnviadaEn/pedidoAprobadoEn/avisoAlmacenEn — que Joel no pueda
-// elegir una fecha más antigua "de memoria" para mejorar su indicador). Corregirla después de
-// creada es cosa exclusiva de un Admin, vía PATCH con motivoCorreccion.
+// requerimientoEn SÍ se puede mandar acá (a diferencia de cotizacionEnviadaEn/pedidoAprobadoEn/
+// avisoAlmacenEn, que siempre usan la hora real del servidor): a pedido explícito, deja de estar
+// protegida contra carga manual — se puede editar libremente en create() y en update(), sin
+// exigir esAdmin ni motivoCorreccion. Si no se manda, el service usa la hora del servidor (mismo
+// comportamiento de antes).
 export class CreateCotizacionDto {
   @IsInt()
   clienteId: number;
+
+  @IsOptional()
+  @IsDateString()
+  requerimientoEn?: string;
 
   @IsOptional()
   @IsString()

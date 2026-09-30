@@ -37,10 +37,9 @@ export interface PedidoRelacionado {
   tokenSeguimiento: string;
 }
 
-// numeroProforma se compara tal cual llega el PATCH (ver calcularCambiosSimples). Las 4 fechas de
-// abajo (incluida requerimientoEn desde ahora) tienen su propia política en create()/update(): se
-// fijan con la hora real de servidor al crear/marcar (nadie elige la fecha), y solo un Admin puede
-// corregirlas después.
+// numeroProforma se compara tal cual llega el PATCH (ver calcularCambiosSimples). requerimientoEn
+// se puede cargar/editar libremente (ver más abajo). Las otras 3 se fijan con la hora real de
+// servidor al marcar por primera vez, y solo un Admin puede corregirlas después.
 export type CampoRastreado =
   | 'numeroProforma'
   | 'requerimientoEn'
@@ -48,13 +47,20 @@ export type CampoRastreado =
   | 'pedidoAprobadoEn'
   | 'avisoAlmacenEn';
 
-// Las 4 fechas que reflejan el trabajo de Joel sobre la cotización. requerimientoEn se sumó acá
-// (antes era de carga libre, "la hora del SMS del cliente") porque el mismo hueco que motivó la
-// política de las otras 3 aplica igual: si Joel puede elegir esa fecha, puede acercarla a la de
-// envío para inflar su indicador de tiempo de respuesta — igual de fácil que en el Excel. Ahora
-// requerimientoEn se fija al momento real en que Joel la carga en el sistema (create()), y solo se
-// puede corregir después con motivo y solo por un Admin, igual que las otras 3 — ver update().
+// Las 4 fechas que reflejan el trabajo de Joel sobre la cotización, usadas para las alertas de
+// integridad (feriado/ausencia/carga tardía — ver calcularAlertasCotizacion). requerimientoEn se
+// incluye acá también: aunque ya no está protegida contra edición libre (ver CAMPOS_PROTEGIDOS),
+// las alertas siguen siendo útiles como información para un supervisor, nunca bloquean nada.
 const CAMPOS_A_VERIFICAR = ['requerimientoEn', 'cotizacionEnviadaEn', 'pedidoAprobadoEn', 'avisoAlmacenEn'] as const;
+
+// Subconjunto de CAMPOS_A_VERIFICAR con la política estricta (primera marca = hora del servidor,
+// corrección posterior = exclusiva de Admin + motivo obligatorio). requerimientoEn quedó afuera a
+// pedido explícito: es la hora en que el cliente pide el producto, no algo que el sistema pueda
+// determinar solo — el usuario que carga la cotización la conoce mejor que el reloj del servidor.
+// Con esto se reabre el hueco que la política original evitaba (alguien podría cargar una fecha
+// retroactiva para mejorar su propio indicador); las alertas de integridad (arriba) son el control
+// que queda para que un supervisor lo note, no para impedirlo.
+const CAMPOS_PROTEGIDOS = ['cotizacionEnviadaEn', 'pedidoAprobadoEn', 'avisoAlmacenEn'] as const;
 
 // Si el valor de una etapa se cargó o corrigió más de este umbral después de la fecha que dice
 // (comparado contra la hora real de servidor en que se guardó el cambio, no editable por nadie),
@@ -206,12 +212,13 @@ export class CotizacionesService {
   }
 
   async create(dto: CreateCotizacionDto, creadoPorId: number) {
-    // requerimientoEn no se recibe del cliente: siempre la hora real del servidor al crear (ver
-    // comentario de CAMPOS_A_VERIFICAR). Corregirla después es cosa exclusiva de un Admin.
+    // requerimientoEn es de carga libre (ver CAMPOS_PROTEGIDOS): si viene en el body se usa tal
+    // cual, si no, el default del schema (hora del servidor) aplica solo.
     const cotizacion = await this.prisma.cotizacion.create({
       data: {
         clienteId: dto.clienteId,
         notas: dto.notas?.trim() || undefined,
+        ...(dto.requerimientoEn && { requerimientoEn: new Date(dto.requerimientoEn) }),
         creadoPorId,
         ultimoEditadoPorId: creadoPorId,
       },
@@ -295,17 +302,27 @@ export class CotizacionesService {
       throw new BadRequestException('Para marcar la cotización como enviada hace falta el número de proforma de KEYFACIL');
     }
 
-    // Las 4 fechas de Joel: la PRIMERA vez que se marcan usan la hora real del servidor, sin
+    // Las 3 fechas protegidas: la PRIMERA vez que se marcan usan la hora real del servidor, sin
     // importar qué fecha mande el cliente — así el indicador mide lo que pasó de verdad, no lo
     // que alguien prefiera que haya pasado. Corregir una que ya estaba marcada es cosa del Admin
     // general únicamente, y exige un motivo (queda en el historial junto al valor anterior).
-    // requerimientoEn siempre tiene un valor previo (se fija en create()), así que para ella este
-    // bucle SIEMPRE toma la rama de "corrección" — nunca la de "primera marca".
     const ahora = new Date();
     const resueltos: Partial<Record<'requerimientoEn' | 'cotizacionEnviadaEn' | 'pedidoAprobadoEn' | 'avisoAlmacenEn', Date>> = {};
     const cambiosEtapa: { campo: CampoRastreado; valorAnterior: string | null; valorNuevo: string; motivo: string | null }[] = [];
 
-    for (const campo of CAMPOS_A_VERIFICAR) {
+    // requerimientoEn: de carga libre (ver CAMPOS_PROTEGIDOS), cualquiera con permiso de editar
+    // puede cambiarla, sin motivo ni restricción de Admin.
+    if (dto.requerimientoEn) {
+      const valorFinal = new Date(dto.requerimientoEn);
+      const nuevoTexto = valorFinal.toISOString();
+      const anteriorTexto = actual.requerimientoEn.toISOString();
+      resueltos.requerimientoEn = valorFinal;
+      if (anteriorTexto !== nuevoTexto) {
+        cambiosEtapa.push({ campo: 'requerimientoEn', valorAnterior: anteriorTexto, valorNuevo: nuevoTexto, motivo: null });
+      }
+    }
+
+    for (const campo of CAMPOS_PROTEGIDOS) {
       const crudo = dto[campo];
       if (!crudo) continue;
       const valorActual = actual[campo];

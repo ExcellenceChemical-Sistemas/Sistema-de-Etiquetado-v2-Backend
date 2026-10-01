@@ -295,6 +295,53 @@ export class CotizacionesService {
   async update(id: number, dto: UpdateCotizacionDto, editadoPorId: number, esAdmin: boolean) {
     const actual = await this.findOne(id);
 
+    // Deshacer una etapa (no corregirla): vuelve esa fecha y las que dependen de ella a null, para
+    // el caso de un clic accidental ("Marcar pedido aprobado" sobre la cotización equivocada, por
+    // ejemplo). Es su propia rama porque no tiene sentido combinarla con marcar/corregir fechas en
+    // el mismo PATCH — deja su propia entrada en el historial, con motivo obligatorio, igual que
+    // una corrección.
+    if (dto.revertirEtapa) {
+      if (!esAdmin) {
+        throw new ForbiddenException('Solo un administrador puede deshacer una etapa ya marcada');
+      }
+      const motivoTrim = dto.motivoCorreccion?.trim();
+      if (!motivoTrim) {
+        throw new BadRequestException('Para deshacer una etapa hace falta indicar el motivo');
+      }
+      const ordenEtapas = ['cotizacionEnviadaEn', 'pedidoAprobadoEn', 'avisoAlmacenEn'] as const;
+      const desde = ordenEtapas.indexOf(dto.revertirEtapa);
+      const camposALimpiar = ordenEtapas.slice(desde).filter((campo) => actual[campo]);
+      if (camposALimpiar.length === 0) {
+        throw new BadRequestException('Esa etapa no está marcada');
+      }
+
+      const cotizacion = await this.prisma.$transaction(async (tx) => {
+        const actualizada = await tx.cotizacion.update({
+          where: { id },
+          data: {
+            ...Object.fromEntries(camposALimpiar.map((campo) => [campo, null])),
+            ultimoEditadoPorId: editadoPorId,
+          },
+          include: INCLUDE_COTIZACION,
+        });
+        for (const campo of camposALimpiar) {
+          await tx.cotizacionHistorial.create({
+            data: {
+              cotizacionId: id,
+              campo,
+              valorAnterior: (actual[campo] as Date).toISOString(),
+              valorNuevo: null,
+              motivo: motivoTrim,
+              editadoPorId,
+            },
+          });
+        }
+        return actualizada;
+      });
+      const [conAlertas] = await this.conAlertas([cotizacion]);
+      return { ...conAlertas, estado: derivarEstadoCotizacion(cotizacion) };
+    }
+
     // No se puede marcar "cotización enviada" sin saber la proforma de KEYFACIL — o ya está
     // guardada de antes, o viene en este mismo PATCH.
     const proformaFinal = dto.numeroProforma !== undefined ? dto.numeroProforma.trim() : actual.numeroProforma;

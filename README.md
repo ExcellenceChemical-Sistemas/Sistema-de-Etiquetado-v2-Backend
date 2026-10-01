@@ -6,7 +6,11 @@ Cubre estos dominios:
 
 1. **Etiquetado** — fabricantes, productos, lotes (con COA y ficha de seguridad), plantillas y generación/impresión de etiquetas (con soporte de rombo NFPA 704).
 2. **KPIs / Documentación ISO** (Fase 3) — árbol de carpetas y archivos de gestión, con un modelo de permisos granular propio. El estado de decisiones y pendientes de este módulo vive en [`contexto-fase3-kpis-iso.md`](./contexto-fase3-kpis-iso.md), que es su fuente de verdad.
-3. **Pedidos / tiempo de entrega** — reemplaza el registro manual en Excel del lead time de pedidos (recepción → inicio de preparación → preparado → salida → entrega), con su lista de clientes. Permisos vía el recurso `PEDIDOS`.
+3. **Pedidos / tiempo de entrega** — reemplaza el registro manual en Excel del lead time de pedidos (recepción → inicio de preparación → preparado → salida → entrega). Permisos vía el recurso `PEDIDOS`.
+4. **Cotizaciones** — seguimiento del proceso de Joel (pedido del cliente → cotización enviada → aprobación → aviso a almacén), con auditoría contra manipulación de fechas: las 3 etapas protegidas usan siempre la hora real del servidor al marcarse por primera vez, y corregirlas o deshacerlas (`revertirEtapa`) es exclusivo de un admin con motivo obligatorio. Permisos vía el recurso `COTIZACIONES`.
+5. **Clientes** — alimenta los formularios de Pedidos y Cotizaciones. Permisos vía el recurso `CLIENTES`.
+
+Además, dos módulos de soporte sin UI propia dedicada: **Ausencias** (registro de vacaciones/licencias por usuario, usado para las alertas de integridad de Cotizaciones) y **Notificaciones** (bandeja interna + Web Push para alertas de pedidos/cotizaciones vencidos, en reemplazo de los correos que antes mandaba un workflow de n8n).
 
 El código y el lenguaje de dominio están en español; los identificadores, comentarios y mensajes de error nuevos deben mantener esa convención.
 
@@ -34,9 +38,12 @@ Prefijo global de rutas: **`/api`**.
 | `lotes` | CRUD de lotes + COA (certificado de análisis) |
 | `plantillas` | CRUD de plantillas de etiqueta |
 | `pedidos` | CRUD de pedidos; el estado se **deriva** de las fechas de cada etapa (no hay columna `estado`) |
-| `clientes` | CRUD de clientes; alimenta el autocompletado del formulario de pedido |
+| `clientes` | CRUD de clientes; alimenta el autocompletado de los formularios de pedido y cotización |
+| `cotizaciones` | Seguimiento del proceso de Joel; estado derivado, fechas protegidas con auditoría (`CotizacionHistorial`) |
+| `ausencias` | Registro simple de vacaciones/licencias por usuario, fuente de verdad de las alertas de integridad de Cotizaciones |
+| `notificaciones` | Bandeja interna + Web Push (crons de alertas de Pedidos/Cotizaciones vencidos y resumen diario) |
 | `etiquetas` | Cola de trabajos de impresión, y limpieza programada (el renderizado lo hace `agente-impresion`) |
-| `usuario` | Perfil propio, administración de usuarios, permisos CRUD y accesos de KPIs/ISO |
+| `usuario` | Perfil propio, administración de usuarios, permisos CRUD, segundo factor (TOTP) y accesos de KPIs/ISO |
 | `carpetas` | Módulo KPIs/ISO: árbol de carpetas, archivos y resolución de accesos |
 | `prisma` | Módulo global de acceso a base de datos |
 | `storage` | Wrapper sobre Supabase Storage |
@@ -47,7 +54,7 @@ Prefijo global de rutas: **`/api`**.
 ### Etiquetado
 
 - **Usuario**: espejo local de Supabase Auth (`supabaseUserId` único, `nombre`, `esAdmin`, `esAdminKpis`, `avatarUrl`). Relación 1:N con `Permiso`, `AccesoIndicador` y `TrabajoImpresion`; 1:1 opcional con `AccesoISO`. `activo` (por defecto `true`): en `false` la cuenta no puede usar el sistema pero conserva su historial; `desactivadoEn` / `desactivadoPorId` dicen cuándo y quién la desactivó.
-- **Permiso**: por usuario + `Recurso` (`LOTES`, `PRODUCTOS`, `FABRICANTES`, `PLANTILLAS`, `USUARIOS`, `ETIQUETAS`, `PEDIDOS`; no existe un recurso `COA`: subir el COA es `LOTES.puedeEditar`), con los flags `puedeVer` / `puedeCrear` / `puedeEditar` / `puedeEliminar`.
+- **Permiso**: por usuario + `Recurso` (`LOTES`, `PRODUCTOS`, `FABRICANTES`, `PLANTILLAS`, `USUARIOS`, `ETIQUETAS`, `PEDIDOS`, `COTIZACIONES`, `CLIENTES`; no existe un recurso `COA`: subir el COA es `LOTES.puedeEditar`), con los flags `puedeVer` / `puedeCrear` / `puedeEditar` / `puedeEliminar`.
 - **Fabricante** y **Producto**: `nombre` + `nombreNormalizado` (minúsculas, sin acentos), ambos únicos, para evitar duplicados tipo "Ácido Cítrico" vs "acido citrico". Los services **deben** setear `nombreNormalizado` al escribir.
 - **Producto**: sin fabricante fijo (varía por lote); campos NFPA opcionales (`nfpaSalud`, `nfpaInflamabilidad`, `nfpaReactividad`, 0-4) `fichaSeguridadUrl` y `fichaTecnicaUrl` opcionales (PDF en Storage; rutas `/productos/:id/ficha-seguridad` y `/ficha-tecnica`: POST sube o reemplaza, GET da URL firmada, DELETE quita). Clasificación GHS opcional, que se muestra solo en la página pública del QR (no en la etiqueta impresa): `pictogramasGhs` (códigos `GHS01`–`GHS09`), `palabraAdvertencia` (`PELIGRO` | `ATENCION`), `frasesH` y `frasesP`.
 - **Lote**: `numeroLote`, `coaUrl`, único compuesto `[productoId, fabricanteId, numeroLote]`.
@@ -86,7 +93,7 @@ La autenticación vive **100% en Supabase Auth**; el backend solo mantiene un es
 | Guard | Uso |
 |---|---|
 | `SupabaseAuthGuard` | Todas las rutas de usuario final |
-| `PermisosGuard` + `@RequierePermiso('RECURSO', 'accion')` | Módulos CRUD (`fabricantes`, `productos`, `lotes`, `plantillas`, `pedidos`, `clientes`, generación de etiquetas). Un `PermisosGuard` sin `@RequierePermiso` deja pasar a todos: el test de cobertura lo detecta |
+| `PermisosGuard` + `@RequierePermiso('RECURSO', 'accion')` | Módulos CRUD (`fabricantes`, `productos`, `lotes`, `plantillas`, `pedidos`, `clientes`, `cotizaciones`, generación de etiquetas). Un `PermisosGuard` sin `@RequierePermiso` deja pasar a todos: el test de cobertura lo detecta |
 | `AccesoCarpetaGuard` + `@RequiereAccesoCarpeta({ accion, esArchivo? })` | Módulo `carpetas`. Acciones: `ver`, `descargar`, `crear`, `editar`, `eliminar` |
 | `EsAdminGuard` | Administración de usuarios y permisos CRUD (solo `esAdmin`) |
 | `EsAdminKpisGuard` | Gestión de accesos de KPIs/ISO (acepta `esAdmin` **o** `esAdminKpis`) |
@@ -204,6 +211,16 @@ Las respuestas de este módulo se limitan a lo que cada endpoint toca, vía cons
 
 El tipo de archivo se infiere del `mimetype` en la subida; un tipo no soportado da `400`.
 
+## Cotizaciones, ausencias y notificaciones
+
+`/api/cotizaciones` sigue el patrón REST estándar y se controla con el recurso `COTIZACIONES`. Igual que `Pedido`, no tiene columna `estado`: se deriva de qué fechas están seteadas. De las 4 fechas del proceso, 3 (`cotizacionEnviadaEn`, `pedidoAprobadoEn`, `avisoAlmacenEn`) tienen auditoría anti-manipulación: la primera vez que se marcan siempre usan la hora real del servidor (el valor que mande el cliente se ignora), y corregirlas o deshacerlas (`revertirEtapa`, que también limpia en cascada las etapas posteriores) es exclusivo de un admin con `motivoCorreccion` obligatorio. Cada cambio queda en `CotizacionHistorial` (inmutable). `calcularAlertasCotizacion()` marca además banderas informativas (feriado/fin de semana, ausencia registrada, carga tardía) que nunca bloquean nada, solo avisan.
+
+`/api/ausencias` (`EsAdminGuard`) es un registro simple de vacaciones/licencias por usuario que alimenta la alerta de "ausencia registrada" de arriba — no es un módulo de RR.HH.
+
+`NotificacionesModule` (`GET /notificaciones`, contador de no leídas, marcar leída/s) expone una bandeja interna por usuario. Los crons de `AlertasPedidosService` y `AlertasCotizacionesService` (`@nestjs/schedule`) crean esas notificaciones para pedidos/cotizaciones que llevan demasiado tiempo sin avanzar, y `ResumenDiarioService` manda un resumen único cada mañana hábil si queda algo pendiente. `PushService` manda además Web Push nativo del navegador para esas mismas alertas (mejor esfuerzo: si falla o no hay claves VAPID configuradas, la notificación en campana igual se crea). El aviso al **cliente** por correo (pedido salió/entregado) sigue siendo un workflow externo de n8n, no vive acá.
+
+Ver `CLAUDE.md` para el detalle completo de cada uno de estos tres módulos.
+
 ## Storage (Supabase)
 
 Tres buckets:
@@ -220,12 +237,13 @@ El backend no renderiza etiquetas: crea el trabajo de impresión y el `agente-im
 
 ## Lectura de fichas de seguridad
 
-`POST /api/productos/analizar-ficha` (`src/productos/fds-parser.ts`) lee el texto del PDF con `pdf-parse` y devuelve `{ pictogramasGhs, palabraAdvertencia, frasesH, frasesP, noPeligroso }`:
+`POST /api/productos/analizar-ficha` (`src/productos/fds-parser.ts`) lee el texto del PDF con `pdf-parse` y devuelve `{ pictogramasGhs, palabraAdvertencia, frasesH, frasesP, noPeligroso, origen }`:
 
 - Toma la **sección 2** (ignorando el índice del documento) y, si no la ubica, busca en todo el PDF.
 - Extrae los códigos H/P y usa el texto oficial en español de las frases H; los pictogramas se deducen de los códigos H según el Anexo V del CLP (con las reglas de irritación vs. corrosivo y nocivo vs. tóxico).
 - Entiende fichas en español, inglés y portugués, y varios formatos (código antes o después del texto, entre paréntesis, combinaciones como `H301+H311+H331`).
 - `noPeligroso: true` si la ficha dice que el producto no está clasificado como peligroso.
+- **Fallback a OCR** (`src/productos/ocr-ficha.ts`) si `pdf-parse` no encuentra texto (PDF escaneado): `pdftoppm` (poppler) renderiza las páginas a PNG y `tesseract` (`spa+eng`) las lee; el texto resultante pasa por el mismo parser de arriba. `origen` en la respuesta vale `'texto'` o `'ocr'`, para que el frontend avise que una lectura por OCR es menos confiable. Si ni el texto ni el OCR encuentran nada legible, `400` y la clasificación se marca a mano. `poppler-utils`/`tesseract-ocr`/`tesseract-ocr-spa` son binarios de sistema instalados en el `Dockerfile`, no corren en local fuera del contenedor.
 - **No hace OCR**: si el PDF no tiene texto (escaneado) responde 400 y la clasificación se marca a mano.
 
 Es una propuesta: el formulario del producto la muestra y una persona la revisa antes de guardar.

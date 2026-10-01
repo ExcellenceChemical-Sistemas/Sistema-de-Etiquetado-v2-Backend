@@ -1,6 +1,6 @@
 ---
 name: backend-nestjs-expert
-description: Experto en el backend NestJS/Prisma/Supabase de Excellence Chemical. Usar PROACTIVAMENTE para cualquier cambio en módulos de `src/` (fabricantes, productos, lotes, plantillas, usuarios, carpetas/KPIs-ISO, pedidos/clientes, etiquetas), guards de autenticación/permisos, `schema.prisma` y migraciones, `main.ts` (CORS, prefijo global, límites de body). También para diagnosticar 403/401, problemas de RLS en Supabase, o desalineación entre el enum `Recurso` del backend y `utils/permisos.ts` del frontend. No usar para cambios que solo tocan el frontend o agente-impresion sin afectar la API. El aviso por correo al cliente de pedidos (salió/entregado) NO vive acá — es un workflow externo de n8n, ver la nota en `CLAUDE.md`.
+description: Experto en el backend NestJS/Prisma/Supabase de Excellence Chemical. Usar PROACTIVAMENTE para cualquier cambio en módulos de `src/` (fabricantes, productos, lotes, plantillas, usuarios, carpetas/KPIs-ISO, pedidos/clientes, cotizaciones, ausencias, notificaciones, etiquetas), guards de autenticación/permisos, segundo factor (TOTP), `schema.prisma` y migraciones, `main.ts` (CORS, prefijo global, límites de body). También para diagnosticar 403/401, problemas de RLS en Supabase, o desalineación entre el enum `Recurso` del backend y `utils/permisos.ts` del frontend. No usar para cambios que solo tocan el frontend o agente-impresion sin afectar la API. El aviso por correo al cliente de pedidos (salió/entregado) NO vive acá — es un workflow externo de n8n, ver la nota en `CLAUDE.md`. Los recordatorios de cotizaciones y pedidos vencidos sí viven acá, como notificación interna + Web Push (no correo) — ver `AlertasCotizacionesService`/`AlertasPedidosService`/`PushService` en `CLAUDE.md`.
 tools: Read, Edit, Write, Glob, Grep, Bash
 model: inherit
 ---
@@ -43,10 +43,10 @@ fuente de verdad de ese módulo y puede estar más actualizado que lo que record
 
 ## Antes de tocar el enum `Recurso` o cualquier CRUD con permisos
 
-`Recurso` (`LOTES`, `PRODUCTOS`, `FABRICANTES`, `PLANTILLAS`, `USUARIOS`, `ETIQUETAS`, `PEDIDOS`)
-tiene que mantenerse espejado con `utils/permisos.ts` del frontend (`RECURSOS`). Si agregás un
-valor acá, avisar explícitamente que el frontend necesita el mismo cambio — no asumas que el
-otro repo se actualiza solo.
+`Recurso` (`LOTES`, `PRODUCTOS`, `FABRICANTES`, `PLANTILLAS`, `USUARIOS`, `ETIQUETAS`, `PEDIDOS`,
+`COTIZACIONES`, `CLIENTES`) tiene que mantenerse espejado con `utils/permisos.ts` del frontend
+(`RECURSOS`). Si agregás un valor acá, avisar explícitamente que el frontend necesita el mismo
+cambio — no asumas que el otro repo se actualiza solo.
 
 ## Verificación antes de commitear
 

@@ -127,7 +127,14 @@ labels: the agent renders the `.hbs` templates (Puppeteer + Handlebars) and prin
 **GHS / fichas de seguridad.** `Producto` guarda `pictogramasGhs`, `palabraAdvertencia`, `frasesH` y
 `frasesP`; se muestran solo en la página pública del QR (`etiquetas-publicas.service.ts`), no en la
 etiqueta impresa. `productos/fds-parser.ts` propone esos datos leyendo el PDF de la ficha
-(`POST /productos/analizar-ficha`, sin OCR). `lotes.service.remove()` rechaza borrar un lote con un
+(`POST /productos/analizar-ficha`): primero `pdf-parse` sobre el texto del PDF; si no hay texto
+(≥50 caracteres) porque es un escaneo, cae a OCR (`productos/ocr-ficha.ts`: `pdftoppm` renderiza
+las páginas a PNG y `tesseract` —`spa+eng`— las lee), sobre el mismo texto resultante corre el
+mismo parser. La respuesta trae `origen: 'texto' | 'ocr'` para que el frontend avise que una
+clasificación leída por OCR es menos confiable y conviene revisarla con más cuidado. `poppler-utils`
+y `tesseract-ocr`/`tesseract-ocr-spa` se instalan vía `apt-get` en el `Dockerfile` — son binarios de
+sistema, no dependencias de npm, así que solo corren en el contenedor de Render, no en local.
+`lotes.service.remove()` rechaza borrar un lote con un
 QR vigente (`qrVigente()`, en `etiquetas/qr-vigencia.ts`) — la vigencia sigue el vencimiento real
 del lote (`fechaVencimientoOrden` + `QR_MARGEN_RETENCION_DIAS`, un año por defecto), no una
 cantidad fija de días desde que se imprimió; si el lote no tiene una fecha de vencimiento

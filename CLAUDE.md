@@ -223,6 +223,18 @@ reinicios del proceso el mismo día, no hace falta un campo nuevo en ningún mod
 unión de quienes reciben alertas de Pedidos (`PEDIDOS.puedeVer`) y de Cotizaciones
 (`COTIZACIONES.puedeEditar`) + admins.
 
+**`PushService` (`notificaciones/push.service.ts`) manda Web Push nativo del navegador además de
+la `Notificacion` en campana, para que la alerta llegue aunque el usuario no tenga la pestaña
+abierta.** Lo llaman las 3 fuentes de arriba (`AlertasPedidosService`, `AlertasCotizacionesService`,
+`ResumenDiarioService`) justo después de crear la(s) `Notificacion` correspondiente — la campana
+sigue siendo la fuente de verdad, el push es "mejor esfuerzo" y nunca lanza (si `web-push` falla o
+`VAPID_PUBLIC_KEY`/`VAPID_PRIVATE_KEY` no están configuradas en el entorno, el cron sigue normal y
+solo se pierde el push, no la notificación). Suscripciones en `SuscripcionPush` (una fila por
+navegador/dispositivo, `endpoint` único); el frontend se suscribe vía
+`POST /notificaciones/push/suscripciones` y pide la clave pública con
+`GET /notificaciones/push/clave-publica`. Una suscripción que el navegador invalidó (404/410 al
+mandar) se borra sola en el próximo intento fallido.
+
 **`Cotizacion` (módulo `cotizaciones`) — seguimiento del proceso de Joel, con auditoría contra
 manipulación de fechas.** Mismo patrón que `Pedido` (sin columna `estado`, derivado en
 `cotizaciones.service.ts` de qué de `cotizacionEnviadaEn`/`pedidoAprobadoEn`/`avisoAlmacenEn` está

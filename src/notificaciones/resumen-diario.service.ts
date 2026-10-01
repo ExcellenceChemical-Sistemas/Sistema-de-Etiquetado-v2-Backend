@@ -1,6 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
 import { PrismaService } from '../prisma/prisma.service';
+import { PushService } from './push.service';
 
 // Resumen de lo que sigue abierto, no de lo que pasó ese día puntual: cuenta entidades que ya
 // dispararon alguna de las 4 alertas puntuales y siguen sin resolverse. Si no hay nada pendiente
@@ -10,7 +11,10 @@ import { PrismaService } from '../prisma/prisma.service';
 export class ResumenDiarioService {
   private readonly logger = new Logger(ResumenDiarioService.name);
 
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private push: PushService,
+  ) {}
 
   @Cron('0 8 * * 1-5')
   async enviarResumenDiario() {
@@ -57,6 +61,7 @@ export class ResumenDiarioService {
       })),
     });
     this.logger.log(`Resumen diario enviado a ${destinatarioIds.length} usuario(s): ${partes.join(', ')}`);
+    await this.push.enviarA(destinatarioIds, { titulo: 'Resumen diario', cuerpo: partes.join(', ') });
   }
 
   // Union de quienes reciben alertas de Pedidos o Cotizaciones + admins, para no dejar afuera a

@@ -2,6 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
 import { PrismaService } from '../prisma/prisma.service';
 import { CotizacionesService } from './cotizaciones.service';
+import { PushService } from '../notificaciones/push.service';
 import { horasHabilesEntre, Refrigerio } from '../common/fecha/horas-habiles';
 
 // SLA real: 1h entre aprobación del cliente y aviso a almacén (reloj real, no horas hábiles —
@@ -21,6 +22,7 @@ export class AlertasCotizacionesService {
   constructor(
     private prisma: PrismaService,
     private cotizacionesService: CotizacionesService,
+    private push: PushService,
   ) {}
 
   @Cron('*/15 * * * *')
@@ -47,6 +49,13 @@ export class AlertasCotizacionesService {
     this.logger.log(
       `Recordatorio de aviso a almacén: ${pendientes.length} cotización(es) notificadas a ${destinatarioIds.length} usuario(s)`,
     );
+
+    for (const c of pendientes) {
+      await this.push.enviarA(destinatarioIds, {
+        titulo: 'Cotización sin aviso a almacén',
+        cuerpo: `${c.cliente.nombre}${c.numeroProforma ? ` (${c.numeroProforma})` : ''} está aprobada hace más de ${HORAS_SLA_AVISO_ALMACEN}h sin avisar a almacén.`,
+      });
+    }
   }
 
   @Cron('*/30 * * * *')
@@ -85,6 +94,10 @@ export class AlertasCotizacionesService {
           })),
         }),
       ]);
+      await this.push.enviarA(destinatarioIds, {
+        titulo: 'Cotización con respuesta lenta',
+        cuerpo: `${cotizacion.cliente.nombre}${cotizacion.numeroProforma ? ` (${cotizacion.numeroProforma})` : ''} lleva más de ${UMBRAL_HORAS_RESPUESTA_LENTA}h hábiles sin enviarse al cliente.`,
+      });
     }
     this.logger.log(`Alerta de respuesta lenta: ${lentas.length} cotización(es) notificadas`);
   }

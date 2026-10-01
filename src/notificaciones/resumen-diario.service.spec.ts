@@ -35,7 +35,8 @@ function crearServicio(overrides: {
       findMany: jest.fn(() => Promise.resolve(overrides.usuarios ?? [{ id: 1 }])),
     },
   };
-  return { servicio: new ResumenDiarioService(prisma), prisma };
+  const push: any = { enviarA: jest.fn(() => Promise.resolve()) };
+  return { servicio: new ResumenDiarioService(prisma, push), prisma, push };
 }
 
 describe('ResumenDiarioService', () => {

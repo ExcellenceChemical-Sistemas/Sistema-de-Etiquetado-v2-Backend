@@ -263,6 +263,15 @@ exports.Prisma.NotificacionScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.SuscripcionPushScalarFieldEnum = {
+  id: 'id',
+  usuarioId: 'usuarioId',
+  endpoint: 'endpoint',
+  p256dh: 'p256dh',
+  auth: 'auth',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.CotizacionScalarFieldEnum = {
   id: 'id',
   clienteId: 'clienteId',
@@ -453,6 +462,7 @@ exports.Prisma.ModelName = {
   Cliente: 'Cliente',
   Pedido: 'Pedido',
   Notificacion: 'Notificacion',
+  SuscripcionPush: 'SuscripcionPush',
   Cotizacion: 'Cotizacion',
   CotizacionHistorial: 'CotizacionHistorial',
   Ausencia: 'Ausencia',

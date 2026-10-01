@@ -1,6 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
 import { PrismaService } from '../prisma/prisma.service';
+import { PushService } from '../notificaciones/push.service';
 import { horasHabilesEntre, Refrigerio } from '../common/fecha/horas-habiles';
 
 const UMBRAL_HORAS_RECIBIDO = 48;
@@ -15,7 +16,10 @@ const DIAS_MINIMOS_SALIO = 2;
 export class AlertasPedidosService {
   private readonly logger = new Logger(AlertasPedidosService.name);
 
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private push: PushService,
+  ) {}
 
   @Cron('*/30 * * * *')
   async avisarPedidosVencidos() {
@@ -84,6 +88,10 @@ export class AlertasPedidosService {
           })),
         }),
       ]);
+      await this.push.enviarA(destinatarioIds, {
+        titulo: 'Pedido vencido',
+        cuerpo: `El pedido ${pedido.numeroProforma} (${pedido.cliente.nombre}) lleva más de ${UMBRAL_HORAS_RECIBIDO}h hábiles sin entregarse.`,
+      });
     }
     this.logger.log(`Alerta de ${UMBRAL_HORAS_RECIBIDO}h sin salir: ${vencidos.length} pedido(s) notificados`);
   }
@@ -116,6 +124,10 @@ export class AlertasPedidosService {
           })),
         }),
       ]);
+      await this.push.enviarA(destinatarioIds, {
+        titulo: 'Pedido sin entregar',
+        cuerpo: `El pedido ${pedido.numeroProforma} (${pedido.cliente.nombre}) salió hace más de ${UMBRAL_HORAS_SALIO}h hábiles y no se marcó entregado.`,
+      });
     }
     this.logger.log(`Alerta de ${UMBRAL_HORAS_SALIO}h sin entregar: ${vencidos.length} pedido(s) notificados`);
   }

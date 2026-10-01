@@ -86,6 +86,9 @@ const SOLO_SESION = new Map<string, string>([
   ['PATCH /notificaciones/leer-todas', 'marca como leídas solo las notificaciones del usuario autenticado'],
   ['PATCH /notificaciones/:id/leer', 'NotificacionesService.marcarLeida da 404 si la notificación es de otro usuario'],
   ['DELETE /notificaciones/:id', 'NotificacionesService.eliminar da 404 si la notificación es de otro usuario'],
+  ['GET /notificaciones/push/clave-publica', 'clave pública VAPID, no es un dato sensible ni por usuario'],
+  ['POST /notificaciones/push/suscripciones', 'PushService.suscribir asocia la suscripción al id que sale del token'],
+  ['DELETE /notificaciones/push/suscripciones', 'PushService.desuscribir filtra por el id que sale del token'],
 ]);
 
 type Ruta = {

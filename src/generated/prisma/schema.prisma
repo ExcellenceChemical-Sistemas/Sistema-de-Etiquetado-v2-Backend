@@ -49,6 +49,7 @@ model Usuario {
   cotizacionesHistorialEditado CotizacionHistorial[]
   ausencias                    Ausencia[]            @relation("AusenciasDelUsuario")
   ausenciasRegistradas         Ausencia[]            @relation("AusenciasRegistradas")
+  suscripcionesPush            SuscripcionPush[]
 }
 
 model Permiso {
@@ -350,6 +351,22 @@ enum TipoNotificacion {
   COTIZACION_SIN_AVISO_ALMACEN
   COTIZACION_RESPUESTA_LENTA
   RESUMEN_DIARIO
+}
+
+// Suscripción del navegador a Web Push (PushSubscription del navegador), una fila por
+// dispositivo/navegador. endpoint es único: si el usuario se vuelve a suscribir desde el mismo
+// navegador (ej. reinstaló), se reasigna en vez de duplicar (ver PushService.suscribir).
+model SuscripcionPush {
+  id        Int      @id @default(autoincrement())
+  usuarioId Int
+  usuario   Usuario  @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  endpoint  String   @unique
+  p256dh    String
+  auth      String
+  createdAt DateTime @default(now())
+
+  @@index([usuarioId])
+  @@map("suscripciones_push")
 }
 
 // Seguimiento del proceso de cotización de Joel: mismo patrón que Pedido (fechas por etapa,

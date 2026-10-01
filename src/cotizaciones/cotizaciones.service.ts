@@ -448,14 +448,14 @@ export class CotizacionesService {
   }
 
   // Recordatorio (AlertasCotizacionesService, notificación interna — ya no correo vía n8n):
-  // cotizaciones aprobadas hace más de `horas` que todavía no se avisaron a almacén. Reserva
+  // cotizaciones aprobadas antes de `limite` (el corte de las 5pm hora Perú más reciente que ya
+  // pasó, ver corte-aviso-almacen.ts) que todavía no se avisaron a almacén. Reserva
   // (recordatorioEnviadoEn) con updateMany antes de devolver la lista, mismo patrón que
   // avisoSalioEnviadoEn en Pedidos — así no se manda el mismo aviso dos veces.
-  async findPendientesDeRecordatorio(horas: number) {
-    const limite = new Date(Date.now() - horas * 3_600_000);
+  async findPendientesDeRecordatorio(limite: Date) {
     const candidatas = await this.prisma.cotizacion.findMany({
       where: {
-        pedidoAprobadoEn: { not: null, lt: limite },
+        pedidoAprobadoEn: { not: null, lte: limite },
         avisoAlmacenEn: null,
         recordatorioEnviadoEn: null,
       },

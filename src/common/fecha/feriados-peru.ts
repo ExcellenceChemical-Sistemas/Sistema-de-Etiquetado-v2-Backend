@@ -37,19 +37,23 @@ const FERIADOS_FIJOS: [mes: number, dia: number][] = [
   [12, 25],
 ];
 
-export function esFeriadoPeru(fecha: Date): boolean {
-  const mes = fecha.getMonth() + 1;
-  const dia = fecha.getDate();
+// Año/mes(1-12)/día puros, sin Date ni huso horario: la usan tanto esFeriadoPeru (con los
+// getters locales de un Date, igual que siempre) como corte-aviso-almacen.ts (que ya hizo la
+// conversión a hora Perú a mano y no quiere que un getMonth()/getDate() local la pise).
+export function esFeriadoPeruYMD(anio: number, mes: number, dia: number): boolean {
   if (FERIADOS_FIJOS.some(([m, d]) => m === mes && d === dia)) return true;
 
-  const pascua = domingoDePascua(fecha.getFullYear());
+  const pascua = domingoDePascua(anio);
   const juevesSanto = new Date(pascua);
   juevesSanto.setDate(pascua.getDate() - 3);
   const viernesSanto = new Date(pascua);
   viernesSanto.setDate(pascua.getDate() - 2);
-  const esMismoDia = (a: Date, b: Date) =>
-    a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
-  return esMismoDia(fecha, juevesSanto) || esMismoDia(fecha, viernesSanto);
+  const esMismaFecha = (d: Date) => d.getFullYear() === anio && d.getMonth() + 1 === mes && d.getDate() === dia;
+  return esMismaFecha(juevesSanto) || esMismaFecha(viernesSanto);
+}
+
+export function esFeriadoPeru(fecha: Date): boolean {
+  return esFeriadoPeruYMD(fecha.getFullYear(), fecha.getMonth() + 1, fecha.getDate());
 }
 
 export function esDiaNoLaboral(fecha: Date): boolean {

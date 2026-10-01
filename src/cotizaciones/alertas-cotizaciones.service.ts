@@ -4,11 +4,13 @@ import { PrismaService } from '../prisma/prisma.service';
 import { CotizacionesService } from './cotizaciones.service';
 import { PushService } from '../notificaciones/push.service';
 import { horasHabilesEntre, Refrigerio } from '../common/fecha/horas-habiles';
+import { corteAvisoAlmacenVigente } from './corte-aviso-almacen';
 
-// SLA real: 1h entre aprobación del cliente y aviso a almacén (reloj real, no horas hábiles —
-// política previa, sin cambios). Antes lo disparaba un cron de n8n que mandaba un correo; ahora
-// es una notificación interna, el correo se revisaba poco.
-const HORAS_SLA_AVISO_ALMACEN = 1;
+// Joel no avisa a almacén apenas aprueba cada cotización: junta las del día y las avisa en un
+// solo corte a las 5pm hora Perú (política confirmada con el negocio, 2026-10-01 — antes era un
+// SLA de 1h de reloj real desde la aprobación, que disparaba ruido apenas Joel aprobaba algo a la
+// mañana, mucho antes de su corte normal). Antes lo disparaba un cron de n8n que mandaba un
+// correo; ahora es una notificación interna, el correo se revisaba poco.
 
 // Cotización sin cotizar (cotizacionEnviadaEn) que tarda mucho desde que llegó el requerimiento
 // del cliente. Horas hábiles, no reloj real — igual que las alertas de Pedidos.
@@ -29,7 +31,8 @@ export class AlertasCotizacionesService {
   async avisarRecordatorioAlmacen() {
     // findPendientesDeRecordatorio ya reserva el envío (recordatorioEnviadoEn) antes de devolver
     // la lista, así que no hace falta otra marca de dedupe acá.
-    const pendientes = await this.cotizacionesService.findPendientesDeRecordatorio(HORAS_SLA_AVISO_ALMACEN);
+    const limite = corteAvisoAlmacenVigente(new Date());
+    const pendientes = await this.cotizacionesService.findPendientesDeRecordatorio(limite);
     if (!pendientes.length) return;
 
     const destinatarioIds = await this.destinatariosCotizaciones();
@@ -40,7 +43,7 @@ export class AlertasCotizacionesService {
         destinatarioIds.map((usuarioId) => ({
           usuarioId,
           tipo: 'COTIZACION_SIN_AVISO_ALMACEN' as const,
-          mensaje: `La cotización de ${c.cliente.nombre}${c.numeroProforma ? ` (${c.numeroProforma})` : ''} está aprobada hace más de ${HORAS_SLA_AVISO_ALMACEN}h sin avisar a almacén.`,
+          mensaje: `La cotización de ${c.cliente.nombre}${c.numeroProforma ? ` (${c.numeroProforma})` : ''} sigue sin avisar a almacén después del corte de las 5pm.`,
           cotizacionId: c.id,
         })),
       ),
@@ -53,7 +56,7 @@ export class AlertasCotizacionesService {
     for (const c of pendientes) {
       await this.push.enviarA(destinatarioIds, {
         titulo: 'Cotización sin aviso a almacén',
-        cuerpo: `${c.cliente.nombre}${c.numeroProforma ? ` (${c.numeroProforma})` : ''} está aprobada hace más de ${HORAS_SLA_AVISO_ALMACEN}h sin avisar a almacén.`,
+        cuerpo: `${c.cliente.nombre}${c.numeroProforma ? ` (${c.numeroProforma})` : ''} sigue sin avisar a almacén después del corte de las 5pm.`,
       });
     }
   }

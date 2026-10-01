@@ -208,9 +208,16 @@ según cómo avance, pero nunca ambas al mismo tiempo.
 correo.** Antes lo disparaba un cron de n8n que llamaba `POST /cotizaciones/recordatorios/despachar`
 (ruta eliminada) y mandaba un correo — se sacó porque el correo se revisaba poco.
 `AlertasCotizacionesService` (`cotizaciones/alertas-cotizaciones.service.ts`) corre dos cosas:
-- Cada 15 min, llama directo a `CotizacionesService.findPendientesDeRecordatorio()` (cotizaciones
-  aprobadas hace más de 1h sin `avisoAlmacenEn`, SLA de reloj real, no horas hábiles — sin cambios
-  respecto a la política previa) y crea `COTIZACION_SIN_AVISO_ALMACEN`.
+- Cada 15 min, llama a `CotizacionesService.findPendientesDeRecordatorio(limite)` con el corte
+  calculado por `corte-aviso-almacen.ts`: Joel no avisa a almacén apenas aprueba cada cotización,
+  junta las del día y las avisa en un solo corte a las 5pm hora Perú, así que una cotización
+  aprobada esa misma mañana no está "demorada" todavía — el umbral viejo (1h de reloj real desde
+  la aprobación) generaba ruido apenas Joel aprobaba algo lejos de su corte real. `corteAvisoAlmacenVigente()`
+  calcula las 5pm hora Perú del día **hábil** más reciente que ya pasó (si hoy es hábil pero
+  todavía no son las 5pm, usa el corte de ayer; fines de semana/feriados no tienen corte propio),
+  con aritmética explícita en UTC-5 — nunca `getHours()`/`getDay()` locales, el proceso de Node
+  no necesariamente corre en huso horario de Perú. Las cotizaciones aprobadas antes de ese corte
+  y sin `avisoAlmacenEn` crean `COTIZACION_SIN_AVISO_ALMACEN`.
 - Cada 30 min, revisa cotizaciones sin `cotizacionEnviadaEn` con ≥24h **hábiles** desde
   `requerimientoEn` (`alertaLentaEnviadaEn` como dedupe) y crea `COTIZACION_RESPUESTA_LENTA`.
 

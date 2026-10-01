@@ -219,6 +219,8 @@ El tipo de archivo se infiere del `mimetype` en la subida; un tipo no soportado 
 
 `NotificacionesModule` (`GET /notificaciones`, contador de no leídas, marcar leída/s) expone una bandeja interna por usuario. Los crons de `AlertasPedidosService` y `AlertasCotizacionesService` (`@nestjs/schedule`) crean esas notificaciones para pedidos/cotizaciones que llevan demasiado tiempo sin avanzar, y `ResumenDiarioService` manda un resumen único cada mañana hábil si queda algo pendiente. `PushService` manda además Web Push nativo del navegador para esas mismas alertas (mejor esfuerzo: si falla o no hay claves VAPID configuradas, la notificación en campana igual se crea). El aviso al **cliente** por correo (pedido salió/entregado) sigue siendo un workflow externo de n8n, no vive acá.
 
+**"Cotización aprobada sin avisar a almacén"** no usa un SLA de reloj real: Joel aprueba cotizaciones durante todo el día pero avisa a almacén en un solo corte diario, a las 5pm hora Perú. `corte-aviso-almacen.ts` calcula las 5pm del día hábil más reciente que ya pasó (con aritmética UTC-5 explícita, no depende del huso del proceso) y solo alerta cotizaciones aprobadas antes de ese corte.
+
 Ver `CLAUDE.md` para el detalle completo de cada uno de estos tres módulos.
 
 ## Storage (Supabase)

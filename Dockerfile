@@ -1,7 +1,9 @@
 FROM node:22-slim
 
-# OpenSSL: lo necesita el motor de Prisma en runtime
-RUN apt-get update && apt-get install -y --no-install-recommends     openssl     ca-certificates     && rm -rf /var/lib/apt/lists/*
+# OpenSSL: lo necesita el motor de Prisma en runtime.
+# poppler-utils (pdftoppm) + tesseract-ocr: respaldo para leer fichas de seguridad (FDS)
+# escaneadas sin texto embebido (ver src/productos/ocr-ficha.ts).
+RUN apt-get update && apt-get install -y --no-install-recommends     openssl     ca-certificates     poppler-utils     tesseract-ocr     tesseract-ocr-spa     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 

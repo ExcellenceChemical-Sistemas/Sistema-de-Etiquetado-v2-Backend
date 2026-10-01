@@ -1,6 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const pdfParse: (b: Buffer) => Promise<{ text: string }> = require('pdf-parse/lib/pdf-parse.js');
 import { clasificarDesdeTexto } from './fds-parser';
+import { textoPorOcr } from './ocr-ficha';
 import {
   BadRequestException,
   Body,
@@ -93,12 +94,24 @@ export class ProductosController {
     } catch {
       throw new BadRequestException('No se pudo leer el PDF');
     }
-    if (texto.trim().length < 50) {
+
+    if (texto.trim().length >= 50) {
+      return { ...clasificarDesdeTexto(texto), origen: 'texto' as const };
+    }
+
+    // Sin texto embebido: probablemente escaneada. Se intenta OCR como respaldo antes de rendirse.
+    let textoOcr: string;
+    try {
+      textoOcr = await textoPorOcr(file.buffer);
+    } catch {
+      textoOcr = '';
+    }
+    if (textoOcr.trim().length < 50) {
       throw new BadRequestException(
-        'El PDF no tiene texto legible (parece escaneado). Marca la clasificación a mano.',
+        'El PDF no tiene texto legible y el OCR no pudo leerlo. Marca la clasificación a mano.',
       );
     }
-    return clasificarDesdeTexto(texto);
+    return { ...clasificarDesdeTexto(textoOcr), origen: 'ocr' as const };
   }
 
   // --- Ficha de seguridad: es parte del recurso PRODUCTOS ---

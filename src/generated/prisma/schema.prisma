@@ -380,15 +380,15 @@ model SuscripcionPush {
 // registran los 4 momentos que hoy Katherine carga a mano en Excel (DS del indicador comercial):
 // llega el pedido del cliente -> Joel cotiza -> el cliente aprueba -> Joel avisa a almacén.
 model Cotizacion {
-  id                    Int                   @id @default(autoincrement())
+  id                    Int                         @id @default(autoincrement())
   clienteId             Int
-  cliente               Cliente               @relation(fields: [clienteId], references: [id], onDelete: Restrict)
+  cliente               Cliente                     @relation(fields: [clienteId], references: [id], onDelete: Restrict)
   // Número de proforma de KEYFACIL (siempre "PF01-..."). Nulo hasta que Joel cotiza: no existe
   // todavía cuando recién llega el pedido del cliente. Postgres permite varios NULL en una
   // columna @unique, así que no choca entre sí mientras no se haya cotizado.
-  numeroProforma        String?               @unique
+  numeroProforma        String?                     @unique
   notas                 String?
-  requerimientoEn       DateTime              @default(now())
+  requerimientoEn       DateTime                    @default(now())
   cotizacionEnviadaEn   DateTime?
   pedidoAprobadoEn      DateTime?
   avisoAlmacenEn        DateTime?
@@ -398,12 +398,18 @@ model Cotizacion {
   // Cuándo se avisó que la cotización tarda en enviarse (requerimientoEn viejo sin
   // cotizacionEnviadaEn) — ver AlertasCotizacionesService. Mismo criterio de "una sola vez".
   alertaLentaEnviadaEn  DateTime?
+  // Mismo campo de excepción que Pedido (ver CategoriaObservacionPedido arriba): se reutiliza el
+  // mismo enum a propósito, para que "Insumo sin stock"/"Cancelado"/etc. signifiquen lo mismo y se
+  // puedan comparar en los reportes, en vez de mantener dos catálogos que dicen lo mismo con otro
+  // nombre.
+  categoriaObservacion  CategoriaObservacionPedido?
+  detalleObservacion    String?
   creadoPorId           Int
-  creadoPor             Usuario               @relation("CotizacionesCreadas", fields: [creadoPorId], references: [id])
+  creadoPor             Usuario                     @relation("CotizacionesCreadas", fields: [creadoPorId], references: [id])
   ultimoEditadoPorId    Int?
-  ultimoEditadoPor      Usuario?              @relation("CotizacionesEditadas", fields: [ultimoEditadoPorId], references: [id])
-  createdAt             DateTime              @default(now())
-  updatedAt             DateTime              @updatedAt
+  ultimoEditadoPor      Usuario?                    @relation("CotizacionesEditadas", fields: [ultimoEditadoPorId], references: [id])
+  createdAt             DateTime                    @default(now())
+  updatedAt             DateTime                    @updatedAt
   historial             CotizacionHistorial[]
   notificaciones        Notificacion[]
 

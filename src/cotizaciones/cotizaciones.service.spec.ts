@@ -302,6 +302,55 @@ describe('update — fechas protegidas (marcar vs. corregir)', () => {
     const { servicio } = crearServicio([{ ...COTIZACION_VACIA }], { errorUpdate: otro });
     await expect(servicio.update(1, { numeroProforma: 'PF01-1' } as any, 7, false)).rejects.toBe(otro);
   });
+
+  it('corregir requerimientoEn a una fecha posterior a una etapa ya marcada → BadRequest, no escribe', async () => {
+    const { servicio, prisma } = crearServicio([
+      {
+        ...COTIZACION_VACIA,
+        requerimientoEn: new Date('2026-09-01T10:00:00Z'),
+        cotizacionEnviadaEn: new Date('2026-09-02T10:00:00Z'),
+      },
+    ]);
+    await expect(
+      servicio.update(1, { requerimientoEn: '2026-09-05T00:00:00.000Z' } as any, 7, false),
+    ).rejects.toBeInstanceOf(BadRequestException);
+    expect(prisma.cotizacion.update).not.toHaveBeenCalled();
+  });
+
+  it('corregir una etapa ya marcada a una fecha anterior a la etapa previa → BadRequest, no escribe (admin + motivo)', async () => {
+    const { servicio, prisma } = crearServicio([
+      {
+        ...COTIZACION_VACIA,
+        requerimientoEn: new Date('2026-09-01T10:00:00Z'),
+        cotizacionEnviadaEn: new Date('2026-09-05T10:00:00Z'),
+        numeroProforma: 'PF01-1',
+      },
+    ]);
+    await expect(
+      servicio.update(
+        1,
+        { cotizacionEnviadaEn: '2026-08-31T10:00:00.000Z', motivoCorreccion: 'corrección' } as any,
+        7,
+        true,
+      ),
+    ).rejects.toBeInstanceOf(BadRequestException);
+    expect(prisma.cotizacion.update).not.toHaveBeenCalled();
+  });
+});
+
+describe('update — observación', () => {
+  it('guarda categoría y detalle de la observación', async () => {
+    const { servicio, prisma } = crearServicio([{ ...COTIZACION_VACIA }]);
+    await servicio.update(
+      1,
+      { categoriaObservacion: 'INSUMO_SIN_STOCK', detalleObservacion: 'Falta reactivo X' } as any,
+      7,
+      false,
+    );
+    const data = prisma.cotizacion.update.mock.calls[0][0].data;
+    expect(data.categoriaObservacion).toBe('INSUMO_SIN_STOCK');
+    expect(data.detalleObservacion).toBe('Falta reactivo X');
+  });
 });
 
 describe('update — revertirEtapa', () => {

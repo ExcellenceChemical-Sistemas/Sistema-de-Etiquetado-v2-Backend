@@ -2,6 +2,7 @@ import { ConflictException, Injectable, NotFoundException } from '@nestjs/common
 import { randomBytes } from 'crypto';
 import { Prisma } from '../generated/prisma';
 import { PrismaService } from '../prisma/prisma.service';
+import { validarOrdenCronologico } from '../common/validacion/orden-etapas';
 import { CreatePedidoDto } from './dto/create-pedido.dto';
 import { UpdatePedidoDto } from './dto/update-pedido.dto';
 
@@ -114,7 +115,22 @@ export class PedidosService {
   }
 
   async update(id: number, dto: UpdatePedidoDto, editadoPorId: number) {
-    await this.findOne(id);
+    const actual = await this.findOne(id);
+
+    // Valida con la foto final (lo que ya estaba + lo que llega en este PATCH), no solo los
+    // campos que vienen en el DTO: un admin podría corregir una fecha intermedia y romper el
+    // orden contra una etapa que no está tocando en este mismo pedido.
+    validarOrdenCronologico([
+      { label: 'Recibido', valor: dto.recibidoEn ? new Date(dto.recibidoEn) : actual.recibidoEn },
+      {
+        label: 'Inicio de preparación',
+        valor: dto.inicioPreparacionEn ? new Date(dto.inicioPreparacionEn) : actual.inicioPreparacionEn,
+      },
+      { label: 'Preparado', valor: dto.preparadoEn ? new Date(dto.preparadoEn) : actual.preparadoEn },
+      { label: 'Salió', valor: dto.salioEn ? new Date(dto.salioEn) : actual.salioEn },
+      { label: 'Entregado', valor: dto.entregadoEn ? new Date(dto.entregadoEn) : actual.entregadoEn },
+    ]);
+
     const pedido = await this.prisma.pedido.update({
       where: { id },
       data: {

@@ -283,6 +283,8 @@ exports.Prisma.CotizacionScalarFieldEnum = {
   avisoAlmacenEn: 'avisoAlmacenEn',
   recordatorioEnviadoEn: 'recordatorioEnviadoEn',
   alertaLentaEnviadaEn: 'alertaLentaEnviadaEn',
+  categoriaObservacion: 'categoriaObservacion',
+  detalleObservacion: 'detalleObservacion',
   creadoPorId: 'creadoPorId',
   ultimoEditadoPorId: 'ultimoEditadoPorId',
   createdAt: 'createdAt',

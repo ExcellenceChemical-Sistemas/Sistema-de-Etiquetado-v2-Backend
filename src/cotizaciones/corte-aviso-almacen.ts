@@ -1,14 +1,19 @@
 import { esFeriadoPeruYMD } from '../common/fecha/feriados-peru';
 
 // Joel no avisa a almacén apenas aprueba cada cotización: junta todas las del día y hace un solo
-// corte a las 5pm hora Perú (política confirmada con el negocio — ver AlertasCotizacionesService).
-// Antes de ese corte, una cotización aprobada esa misma mañana no está "demorada" todavía.
+// corte, que en la práctica despacha entre las 5pm y las 5:30pm hora Perú (política confirmada
+// con el negocio — ver AlertasCotizacionesService). El corte "vigente" cierra a las 5:30pm, no a
+// las 5pm en punto: con el límite en 5pm, el cron de recordatorio (cada 15 min) podía avisar que
+// algo "sigue sin avisar a almacén" mientras Joel todavía estaba dentro de su ventana normal de
+// trabajo, antes de que haya terminado de hacerlo. Antes de ese corte, una cotización aprobada
+// esa misma mañana no está "demorada" todavía.
 //
 // Escrito con aritmética explícita en UTC-5 (Perú no tiene horario de verano, el offset es fijo)
 // para no depender de en qué huso horario corre el proceso de Node — nunca usar getHours()/
 // getDay()/setHours() locales acá, dan un resultado distinto según el huso del servidor.
 const OFFSET_PERU_MINUTOS = 5 * 60;
 const HORA_CORTE = 17; // 5pm hora Perú
+const MINUTO_CORTE = 30; // el corte cierra a las 5:30pm, no a las 5pm en punto — ver nota arriba
 
 // No es un instante real: son los campos UTC de un Date corrido 5h atrás, que por eso coinciden
 // con la hora de pared en Perú del instante original. Leerlos con los getters *UTC* (nunca los
@@ -23,20 +28,20 @@ function esDiaHabilPeru(camposPeru: Date): boolean {
   return !esFeriadoPeruYMD(camposPeru.getUTCFullYear(), camposPeru.getUTCMonth() + 1, camposPeru.getUTCDate());
 }
 
-// El corte vigente en este momento: las 5pm hora Perú del día hábil más reciente que ya pasó.
-// Si "ahora" cae en un día hábil pero todavía no son las 5pm, el corte vigente es el del día
+// El corte vigente en este momento: las 5:30pm hora Perú del día hábil más reciente que ya pasó.
+// Si "ahora" cae en un día hábil pero todavía no son las 5:30pm, el corte vigente es el del día
 // hábil anterior (el de hoy todavía no llegó). Fines de semana y feriados no tienen corte propio
 // — se salta hacia atrás hasta encontrar un día hábil.
 export function corteAvisoAlmacenVigente(ahoraUtc: Date): Date {
   let camposPeru = comoCamposPeru(ahoraUtc);
 
-  // El día de "hoy" (i === 0) solo cuenta si ya pasaron las 5pm — por eso se compara la hora.
+  // El día de "hoy" (i === 0) solo cuenta si ya pasaron las 5:30pm — por eso se compara la hora.
   // Cualquier día anterior a hoy (i > 0) ya quedó atrás por completo: si es hábil, su corte de
-  // las 5pm quedó en el pasado sin importar a qué hora del día actual estemos parados.
+  // las 5:30pm quedó en el pasado sin importar a qué hora del día actual estemos parados.
   for (let i = 0; i < 14; i++) {
     if (esDiaHabilPeru(camposPeru)) {
       const corteDelDiaComoCampos = new Date(
-        Date.UTC(camposPeru.getUTCFullYear(), camposPeru.getUTCMonth(), camposPeru.getUTCDate(), HORA_CORTE, 0, 0, 0),
+        Date.UTC(camposPeru.getUTCFullYear(), camposPeru.getUTCMonth(), camposPeru.getUTCDate(), HORA_CORTE, MINUTO_CORTE, 0, 0),
       );
       if (i > 0 || corteDelDiaComoCampos <= camposPeru) {
         // Campos Perú → instante UTC real: deshace el corrimiento de comoCamposPeru.

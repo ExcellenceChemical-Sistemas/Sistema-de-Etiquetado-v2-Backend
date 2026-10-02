@@ -214,11 +214,14 @@ correo.** Antes lo disparaba un cron de n8n que llamaba `POST /cotizaciones/reco
 `AlertasCotizacionesService` (`cotizaciones/alertas-cotizaciones.service.ts`) corre dos cosas:
 - Cada 15 min, llama a `CotizacionesService.findPendientesDeRecordatorio(limite)` con el corte
   calculado por `corte-aviso-almacen.ts`: Joel no avisa a almacén apenas aprueba cada cotización,
-  junta las del día y las avisa en un solo corte a las 5pm hora Perú, así que una cotización
-  aprobada esa misma mañana no está "demorada" todavía — el umbral viejo (1h de reloj real desde
-  la aprobación) generaba ruido apenas Joel aprobaba algo lejos de su corte real. `corteAvisoAlmacenVigente()`
-  calcula las 5pm hora Perú del día **hábil** más reciente que ya pasó (si hoy es hábil pero
-  todavía no son las 5pm, usa el corte de ayer; fines de semana/feriados no tienen corte propio),
+  junta las del día y las despacha en un solo corte entre las 5pm y las 5:30pm hora Perú, así que
+  una cotización aprobada esa misma mañana no está "demorada" todavía — el umbral viejo (1h de
+  reloj real desde la aprobación) generaba ruido apenas Joel aprobaba algo lejos de su corte real.
+  El corte vigente cierra a las **5:30pm**, no a las 5pm en punto (2026-10-02: con el límite en
+  5pm el recordatorio podía dispararse mientras Joel seguía dentro de su ventana normal de
+  trabajo). `corteAvisoAlmacenVigente()` calcula las 5:30pm hora Perú del día **hábil** más
+  reciente que ya pasó (si hoy es hábil pero todavía no son las 5:30pm, usa el corte de ayer;
+  fines de semana/feriados no tienen corte propio),
   con aritmética explícita en UTC-5 — nunca `getHours()`/`getDay()` locales, el proceso de Node
   no necesariamente corre en huso horario de Perú. Las cotizaciones aprobadas antes de ese corte
   y sin `avisoAlmacenEn` crean `COTIZACION_SIN_AVISO_ALMACEN`.

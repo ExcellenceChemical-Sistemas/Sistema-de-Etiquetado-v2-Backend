@@ -1,4 +1,4 @@
-import { ConflictException, NotFoundException } from '@nestjs/common';
+import { BadRequestException, ConflictException, NotFoundException } from '@nestjs/common';
 import { Prisma } from '../generated/prisma';
 import { PedidosService } from './pedidos.service';
 
@@ -104,6 +104,39 @@ describe('update', () => {
     const { servicio, prisma } = crearServicio([]);
     await expect(servicio.update(99, {} as any, 7)).rejects.toBeInstanceOf(NotFoundException);
     expect(prisma.pedido.update).not.toHaveBeenCalled();
+  });
+
+  it('una etapa posterior anterior a una ya marcada → BadRequest y no escribe', async () => {
+    const { servicio, prisma } = crearServicio([
+      { ...PEDIDO_VACIO, recibidoEn: new Date('2026-09-02T20:30:00Z') },
+    ]);
+    await expect(
+      servicio.update(1, { preparadoEn: '2026-09-02T20:00:00.000Z' } as any, 7),
+    ).rejects.toBeInstanceOf(BadRequestException);
+    expect(prisma.pedido.update).not.toHaveBeenCalled();
+  });
+
+  it('corregir una etapa intermedia que rompe el orden contra otra ya marcada → BadRequest', async () => {
+    const { servicio, prisma } = crearServicio([
+      {
+        ...PEDIDO_VACIO,
+        recibidoEn: new Date('2026-09-01T10:00:00Z'),
+        preparadoEn: new Date('2026-09-02T10:00:00Z'),
+        salioEn: new Date('2026-09-03T10:00:00Z'),
+      },
+    ]);
+    await expect(
+      servicio.update(1, { preparadoEn: '2026-09-04T10:00:00.000Z' } as any, 7),
+    ).rejects.toBeInstanceOf(BadRequestException);
+    expect(prisma.pedido.update).not.toHaveBeenCalled();
+  });
+
+  it('etapas en orden, aunque falten intermedias → no rechaza', async () => {
+    const { servicio, prisma } = crearServicio([
+      { ...PEDIDO_VACIO, recibidoEn: new Date('2026-09-01T10:00:00Z') },
+    ]);
+    await servicio.update(1, { entregadoEn: '2026-09-02T10:00:00.000Z' } as any, 7);
+    expect(prisma.pedido.update).toHaveBeenCalled();
   });
 });
 

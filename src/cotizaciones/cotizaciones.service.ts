@@ -5,6 +5,7 @@ import { CreateCotizacionDto } from './dto/create-cotizacion.dto';
 import { UpdateCotizacionDto } from './dto/update-cotizacion.dto';
 import { AusenciasService } from '../ausencias/ausencias.service';
 import { esDiaNoLaboral } from '../common/fecha/feriados-peru';
+import { validarOrdenCronologico } from '../common/validacion/orden-etapas';
 
 export type EstadoCotizacion = 'RECIBIDO' | 'COTIZADO' | 'APROBADO' | 'AVISADO_ALMACEN';
 
@@ -402,6 +403,15 @@ export class CotizacionesService {
 
     const cambiosSimples = this.calcularCambiosSimples({ numeroProforma: actual.numeroProforma }, dto);
 
+    // Misma validación que Pedido: con la foto final (lo que ya estaba + lo que llega en este
+    // PATCH), para atrapar también el caso de un admin corrigiendo una etapa intermedia.
+    validarOrdenCronologico([
+      { label: 'Requerimiento del cliente', valor: resueltos.requerimientoEn ?? actual.requerimientoEn },
+      { label: 'Cotización enviada', valor: resueltos.cotizacionEnviadaEn ?? actual.cotizacionEnviadaEn },
+      { label: 'Pedido aprobado', valor: resueltos.pedidoAprobadoEn ?? actual.pedidoAprobadoEn },
+      { label: 'Aviso a almacén', valor: resueltos.avisoAlmacenEn ?? actual.avisoAlmacenEn },
+    ]);
+
     try {
       const cotizacion = await this.prisma.$transaction(async (tx) => {
         const actualizada = await tx.cotizacion.update({
@@ -414,6 +424,8 @@ export class CotizacionesService {
             ...(resueltos.cotizacionEnviadaEn && { cotizacionEnviadaEn: resueltos.cotizacionEnviadaEn }),
             ...(resueltos.pedidoAprobadoEn && { pedidoAprobadoEn: resueltos.pedidoAprobadoEn }),
             ...(resueltos.avisoAlmacenEn && { avisoAlmacenEn: resueltos.avisoAlmacenEn }),
+            ...(dto.categoriaObservacion !== undefined && { categoriaObservacion: dto.categoriaObservacion }),
+            ...(dto.detalleObservacion !== undefined && { detalleObservacion: dto.detalleObservacion }),
             ultimoEditadoPorId: editadoPorId,
           },
           include: INCLUDE_COTIZACION,

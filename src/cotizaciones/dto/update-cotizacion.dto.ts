@@ -1,4 +1,5 @@
-import { IsDateString, IsIn, IsInt, IsOptional, IsString, MaxLength } from 'class-validator';
+import { IsDateString, IsEnum, IsIn, IsInt, IsOptional, IsString, MaxLength } from 'class-validator';
+import { CategoriaObservacionPedido } from '../../generated/prisma';
 
 // Un solo endpoint de edición para todo: marcar una etapa (mandando solo esa fecha) y corregir
 // una fecha ya marcada usan el mismo PATCH — mismo criterio que UpdatePedidoDto.
@@ -53,4 +54,15 @@ export class UpdateCotizacionDto {
   @IsOptional()
   @IsIn(['cotizacionEnviadaEn', 'pedidoAprobadoEn', 'avisoAlmacenEn'])
   revertirEtapa?: 'cotizacionEnviadaEn' | 'pedidoAprobadoEn' | 'avisoAlmacenEn';
+
+  // Misma excepción que Pedido (categoría + detalle libre) — ver comentario en schema.prisma
+  // sobre por qué se reutiliza CategoriaObservacionPedido en vez de un enum propio.
+  @IsOptional()
+  @IsEnum(CategoriaObservacionPedido)
+  categoriaObservacion?: CategoriaObservacionPedido;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(500)
+  detalleObservacion?: string;
 }

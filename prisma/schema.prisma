@@ -398,6 +398,12 @@ model Cotizacion {
   // Cuándo se avisó que la cotización tarda en enviarse (requerimientoEn viejo sin
   // cotizacionEnviadaEn) — ver AlertasCotizacionesService. Mismo criterio de "una sola vez".
   alertaLentaEnviadaEn  DateTime?
+  // Mismo campo de excepción que Pedido (ver CategoriaObservacionPedido arriba): se reutiliza el
+  // mismo enum a propósito, para que "Insumo sin stock"/"Cancelado"/etc. signifiquen lo mismo y se
+  // puedan comparar en los reportes, en vez de mantener dos catálogos que dicen lo mismo con otro
+  // nombre.
+  categoriaObservacion CategoriaObservacionPedido?
+  detalleObservacion   String?
   creadoPorId         Int
   creadoPor           Usuario   @relation("CotizacionesCreadas", fields: [creadoPorId], references: [id])
   ultimoEditadoPorId  Int?

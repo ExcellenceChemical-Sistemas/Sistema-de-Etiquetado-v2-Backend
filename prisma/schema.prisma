@@ -320,6 +320,11 @@ model Pedido {
   notificaciones          Notificacion[]
 
   @@index([clienteId])
+  // Cubren el WHERE de AlertasPedidosService.avisarSinSalir/avisarSalioSinEntregar (cron cada
+  // 30 min, src/pedidos/alertas-pedidos.service.ts): columnas de igualdad/IS NULL primero, el
+  // rango de fecha al final, mismo criterio que los índices de Cotizacion abajo.
+  @@index([alerta48hEnviadaEn, entregadoEn, salioEn, recibidoEn])
+  @@index([alertaSalioSinEntregarEnviadaEn, entregadoEn, salioEn])
   @@map("pedidos")
 }
 
@@ -403,6 +408,11 @@ model Cotizacion {
   notificaciones      Notificacion[]
 
   @@index([clienteId])
+  // Cubren el WHERE de CotizacionesService.findPendientesDeRecordatorio (cron cada 15 min) y de
+  // AlertasCotizacionesService.avisarRespuestaLenta (cron cada 30 min, ambos en
+  // src/cotizaciones/): columnas de igualdad/IS NULL primero, el rango de fecha al final.
+  @@index([recordatorioEnviadoEn, avisoAlmacenEn, pedidoAprobadoEn])
+  @@index([alertaLentaEnviadaEn, cotizacionEnviadaEn, requerimientoEn])
   @@map("cotizaciones")
 }
 

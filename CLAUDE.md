@@ -46,8 +46,12 @@ at a `storagePath` that does not exist in Supabase Storage.
 `.env` at repo root (git-ignored). Required: `DATABASE_URL` (Postgres, used at runtime by the
 pg driver adapter), `DIRECT_URL` (used by `prisma.config.ts` for migrations — Prisma CLI does
 **not** read `DATABASE_URL` here), `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `AGENT_TOKEN`
-(shared secret for the print agent). Optional: `PORT` (3000), `FRONTEND_URL` (added to CORS),
-`EPSON_PRINTER_NAME`, `EPSON_PAPER_SIZE`.
+(shared secret for the print agent). Optional: `PORT` (3000), `FRONTEND_URL` (added to CORS, also
+used to build the public `/e/:token` link sent to the print agent — see
+`trabajos-impresion.service.ts`), `FRONTEND_URLS` (plural — comma-separated list of extra CORS
+origins on top of `FRONTEND_URL` and the two hardcoded `localhost:3000`/`3001`; meant for a
+hosting migration window where the frontend briefly lives on two domains at once — see
+`main.ts`), `EPSON_PRINTER_NAME`, `EPSON_PAPER_SIZE`.
 `SEGUIMIENTO_DIAS_TRAS_ENTREGA` (90) es cuánto sigue abriendo el enlace público `/p/<token>` de
 un pedido entregado.
 

@@ -448,10 +448,30 @@ export class CotizacionesService {
       return { ...conAlertas, estado: derivarEstadoCotizacion(cotizacion) };
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
-        throw new ConflictException(`Ya existe una cotización con la proforma "${dto.numeroProforma?.trim()}"`);
+        const proforma = dto.numeroProforma?.trim();
+        throw new ConflictException(
+          `Ya existe una cotización con la proforma "${proforma}"${await this.sufijoFechaRegistroProforma(proforma)}`,
+        );
       }
       throw error;
     }
+  }
+
+  // Para el mensaje de proforma duplicada: cuándo quedó registrada esa proforma en la cotización
+  // que ya la tiene, para que quien ve el aviso pueda ubicarla sin tener que buscarla a mano.
+  // Se lee del historial (no de un campo propio en Cotizacion, que no existe) porque
+  // numeroProforma siempre se marca a través de update(), que deja su entrada ahí.
+  private async sufijoFechaRegistroProforma(proforma: string | undefined): Promise<string> {
+    if (!proforma) return '';
+    const existente = await this.prisma.cotizacion.findUnique({ where: { numeroProforma: proforma }, select: { id: true } });
+    if (!existente) return '';
+    const historial = await this.prisma.cotizacionHistorial.findFirst({
+      where: { cotizacionId: existente.id, campo: 'numeroProforma', valorNuevo: proforma },
+      orderBy: { editadoEn: 'desc' },
+    });
+    if (!historial) return '';
+    const fecha = historial.editadoEn.toLocaleString('es-PE', { timeZone: 'America/Lima' });
+    return ` (registrada el ${fecha})`;
   }
 
   async remove(id: number) {

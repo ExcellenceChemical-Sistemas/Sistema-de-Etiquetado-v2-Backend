@@ -2,6 +2,8 @@
 jest.mock('../../infrastructure/supabase/supabase-admin.client', () => ({ supabaseAdmin: {} }));
 
 import 'reflect-metadata';
+import * as fs from 'fs';
+import * as path from 'path';
 import { RequestMethod } from '@nestjs/common';
 import { GUARDS_METADATA, METHOD_METADATA, PATH_METADATA } from '@nestjs/common/constants';
 import { Recurso } from '../../generated/prisma';
@@ -139,9 +141,46 @@ function permisoDe(r: Ruta): PermisoRequerido | undefined {
   return Reflect.getMetadata(PERMISO_KEY, r.handler) ?? Reflect.getMetadata(PERMISO_KEY, r.clase);
 }
 
+/**
+ * Busca todos los *.controller.ts bajo src/ y, por cada uno que exporte una
+ * clase con @Controller, verifica que esa misma clase (por referencia) esté
+ * en CONTROLLERS. Así un controller nuevo que se olvide de agregar arriba
+ * hace fallar este test en vez de simplemente no quedar cubierto.
+ */
+const srcRaiz = path.resolve(__dirname, '..', '..');
+
+function archivosDeControllers(): string[] {
+  const out: string[] = [];
+  const recorrer = (dir: string) => {
+    for (const entrada of fs.readdirSync(dir, { withFileTypes: true })) {
+      const full = path.join(dir, entrada.name);
+      if (entrada.isDirectory()) recorrer(full);
+      else if (entrada.isFile() && entrada.name.endsWith('.controller.ts')) out.push(full);
+    }
+  };
+  recorrer(srcRaiz);
+  return out;
+}
+
 describe('cobertura de guards en los controllers', () => {
   it('encuentra rutas (si falla, el test dejó de leer la metadata)', () => {
     expect(TODAS.length).toBeGreaterThan(40);
+  });
+
+  it('todo *.controller.ts en src/ está en CONTROLLERS', () => {
+    const faltantes: string[] = [];
+    for (const archivo of archivosDeControllers()) {
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
+      const modulo = require(archivo);
+      for (const exportado of Object.values(modulo)) {
+        if (typeof exportado !== 'function') continue;
+        if (Reflect.getMetadata(PATH_METADATA, exportado) === undefined) continue; // no es un @Controller
+        if (!CONTROLLERS.includes(exportado)) {
+          faltantes.push(`${path.relative(srcRaiz, archivo)} -> ${exportado.name}`);
+        }
+      }
+    }
+    expect(faltantes).toEqual([]);
   });
 
   it('las listas de excepciones no tienen rutas que ya no existen', () => {

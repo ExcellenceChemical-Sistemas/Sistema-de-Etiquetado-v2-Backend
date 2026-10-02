@@ -88,13 +88,16 @@ loads the mirror row with `permisos` + `accesosIndicador` + `accesoIso`, and att
 - CRUD modules (`fabricantes`, `productos`, `lotes`, `plantillas`, `pedidos`, `clientes`, `cotizaciones`):
   `SupabaseAuthGuard` + `PermisosGuard` with `@RequierePermiso('RECURSO', 'puedeVer'|'puedeCrear'|'puedeEditar'|'puedeEliminar')`.
   `Recurso` enum: LOTES, PRODUCTOS, FABRICANTES, PLANTILLAS, USUARIOS, ETIQUETAS, PEDIDOS, COTIZACIONES,
-  CLIENTES. There is no `COA` resource (removed by the `quitar_recurso_coa` migration): COA upload is
-  `LOTES.puedeEditar`. `pedidos`, `cotizaciones`, and `clientes` used to all gate on `PEDIDOS` but were
-  split into their own resources: the three have different owners in practice (one person despachos
+  CLIENTES, REGISTRO_LIMPIEZA. There is no `COA` resource (removed by the `quitar_recurso_coa` migration):
+  COA upload is `LOTES.puedeEditar`. `pedidos`, `cotizaciones`, and `clientes` used to all gate on `PEDIDOS`
+  but were split into their own resources: the three have different owners in practice (one person despachos
   pedidos, another cotiza, Clientes can be a third), so access needs to be grantable independently. The
   frontend's `Permisosgrid.vue` auto-ticks `CLIENTES.puedeVer`+`puedeCrear` when `PEDIDOS.puedeCrear` or
   `COTIZACIONES.puedeCrear` is granted, since both forms' client combobox and "create new client" link
-  read/write `/clientes`.
+  read/write `/clientes`. `REGISTRO_LIMPIEZA` is the odd one out: it has no controller, no table, no guard
+  anywhere in this repo — it only exists so the frontend's `PermisosGuard`-style route gating (sidebar +
+  `rutasPermisos.ts`) can restrict who sees the Registro de limpieza screen, which links out to an external
+  Google Form and reads a published Google Sheet CSV directly from the browser (see frontend `CLAUDE.md`).
 - `carpetas` module: `SupabaseAuthGuard` + `AccesoCarpetaGuard` with `@RequiereAccesoCarpeta({ accion })`.
   Access is resolved per-folder by walking the parent chain (`AccesoDocumentosService`): most-specific
   folder wins; KPIS access is tied to a `proceso`, ISO access to the whole ISO concept

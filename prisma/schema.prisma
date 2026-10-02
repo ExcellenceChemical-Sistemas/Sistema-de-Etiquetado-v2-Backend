@@ -81,6 +81,10 @@ enum Recurso {
   // recurso propio con encargados distintos a Pedidos y a Cotizaciones — mismo motivo
   // que la separación de arriba.
   CLIENTES
+  // Gatea la pantalla de Registro de limpieza del frontend (link a un Google Form +
+  // historial leído de un CSV publicado). No tiene controller propio en el backend:
+  // no hay datos de este recurso en la base, solo controla ver/entrar a la pantalla.
+  REGISTRO_LIMPIEZA
 }
 
 // ──────────────────────────────────────────

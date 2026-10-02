@@ -389,7 +389,8 @@ exports.Recurso = exports.$Enums.Recurso = {
   ETIQUETAS: 'ETIQUETAS',
   PEDIDOS: 'PEDIDOS',
   COTIZACIONES: 'COTIZACIONES',
-  CLIENTES: 'CLIENTES'
+  CLIENTES: 'CLIENTES',
+  REGISTRO_LIMPIEZA: 'REGISTRO_LIMPIEZA'
 };
 
 exports.EstadoTrabajoImpresion = exports.$Enums.EstadoTrabajoImpresion = {

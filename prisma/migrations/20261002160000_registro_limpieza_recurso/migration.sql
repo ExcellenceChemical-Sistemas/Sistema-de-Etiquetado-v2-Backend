@@ -1,0 +1,2 @@
+-- AlterEnum
+ALTER TYPE "Recurso" ADD VALUE 'REGISTRO_LIMPIEZA';

@@ -36,7 +36,7 @@ export class PedidosController {
   @RequierePermiso('PEDIDOS', 'puedeEditar')
   update(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdatePedidoDto, @Req() req: Request) {
     const usuario = (req as any).usuario;
-    return this.pedidosService.update(id, dto, usuario.id);
+    return this.pedidosService.update(id, dto, usuario.id, !!usuario.esAdmin);
   }
 
   @Delete(':id')

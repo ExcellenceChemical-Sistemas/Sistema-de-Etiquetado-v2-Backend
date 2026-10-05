@@ -1,4 +1,4 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, ConflictException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { randomBytes } from 'crypto';
 import { Prisma } from '../generated/prisma';
 import { PrismaService } from '../prisma/prisma.service';
@@ -114,8 +114,37 @@ export class PedidosService {
     return { ...conCotizacion, estado: derivarEstado(pedido) };
   }
 
-  async update(id: number, dto: UpdatePedidoDto, editadoPorId: number) {
+  async update(id: number, dto: UpdatePedidoDto, editadoPorId: number, esAdmin: boolean) {
     const actual = await this.findOne(id);
+
+    // Deshacer una etapa (no corregirla): vuelve esa fecha y las que dependen de ella a null, para
+    // el caso de un clic accidental ("Marcar salió" sobre el pedido equivocado, por ejemplo).
+    // Misma rama que Cotizacion.update, propia porque no tiene sentido combinarla con marcar/
+    // corregir fechas en el mismo PATCH. Pedido no tiene tabla de historial, así que esto no deja
+    // más rastro que ultimoEditadoPorId (a diferencia de Cotizacion, que sí guarda el motivo).
+    if (dto.revertirEtapa) {
+      if (!esAdmin) {
+        throw new ForbiddenException('Solo un administrador puede deshacer una etapa ya marcada');
+      }
+      if (!dto.motivoCorreccion?.trim()) {
+        throw new BadRequestException('Para deshacer una etapa hace falta indicar el motivo');
+      }
+      const ordenEtapas = ['inicioPreparacionEn', 'preparadoEn', 'salioEn', 'entregadoEn'] as const;
+      const desde = ordenEtapas.indexOf(dto.revertirEtapa);
+      const camposALimpiar = ordenEtapas.slice(desde).filter((campo) => actual[campo]);
+      if (camposALimpiar.length === 0) {
+        throw new BadRequestException('Esa etapa no está marcada');
+      }
+      const pedido = await this.prisma.pedido.update({
+        where: { id },
+        data: {
+          ...Object.fromEntries(camposALimpiar.map((campo) => [campo, null])),
+          ultimoEditadoPorId: editadoPorId,
+        },
+        include: INCLUDE_PEDIDO,
+      });
+      return { ...pedido, estado: derivarEstado(pedido) };
+    }
 
     // Valida con la foto final (lo que ya estaba + lo que llega en este PATCH), no solo los
     // campos que vienen en el DTO: un admin podría corregir una fecha intermedia y romper el

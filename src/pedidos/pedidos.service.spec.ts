@@ -1,4 +1,4 @@
-import { BadRequestException, ConflictException, NotFoundException } from '@nestjs/common';
+import { BadRequestException, ConflictException, ForbiddenException, NotFoundException } from '@nestjs/common';
 import { Prisma } from '../generated/prisma';
 import { PedidosService } from './pedidos.service';
 
@@ -91,7 +91,7 @@ describe('filtro por estado en findAll', () => {
 describe('update', () => {
   it('registra quién editó y solo escribe las fechas que llegaron', async () => {
     const { servicio, prisma } = crearServicio([{ ...PEDIDO_VACIO }]);
-    await servicio.update(1, { salioEn: '2026-09-02T08:00:00.000Z' } as any, 7);
+    await servicio.update(1, { salioEn: '2026-09-02T08:00:00.000Z' } as any, 7, false);
 
     const data = prisma.pedido.update.mock.calls[0][0].data;
     expect(data.ultimoEditadoPorId).toBe(7);
@@ -102,7 +102,7 @@ describe('update', () => {
 
   it('un pedido inexistente → NotFound y no escribe', async () => {
     const { servicio, prisma } = crearServicio([]);
-    await expect(servicio.update(99, {} as any, 7)).rejects.toBeInstanceOf(NotFoundException);
+    await expect(servicio.update(99, {} as any, 7, false)).rejects.toBeInstanceOf(NotFoundException);
     expect(prisma.pedido.update).not.toHaveBeenCalled();
   });
 
@@ -111,7 +111,7 @@ describe('update', () => {
       { ...PEDIDO_VACIO, recibidoEn: new Date('2026-09-02T20:30:00Z') },
     ]);
     await expect(
-      servicio.update(1, { preparadoEn: '2026-09-02T20:00:00.000Z' } as any, 7),
+      servicio.update(1, { preparadoEn: '2026-09-02T20:00:00.000Z' } as any, 7, false),
     ).rejects.toBeInstanceOf(BadRequestException);
     expect(prisma.pedido.update).not.toHaveBeenCalled();
   });
@@ -126,7 +126,7 @@ describe('update', () => {
       },
     ]);
     await expect(
-      servicio.update(1, { preparadoEn: '2026-09-04T10:00:00.000Z' } as any, 7),
+      servicio.update(1, { preparadoEn: '2026-09-04T10:00:00.000Z' } as any, 7, false),
     ).rejects.toBeInstanceOf(BadRequestException);
     expect(prisma.pedido.update).not.toHaveBeenCalled();
   });
@@ -135,8 +135,51 @@ describe('update', () => {
     const { servicio, prisma } = crearServicio([
       { ...PEDIDO_VACIO, recibidoEn: new Date('2026-09-01T10:00:00Z') },
     ]);
-    await servicio.update(1, { entregadoEn: '2026-09-02T10:00:00.000Z' } as any, 7);
+    await servicio.update(1, { entregadoEn: '2026-09-02T10:00:00.000Z' } as any, 7, false);
     expect(prisma.pedido.update).toHaveBeenCalled();
+  });
+});
+
+describe('update — revertirEtapa (deshacer)', () => {
+  it('no admin → Forbidden y no escribe', async () => {
+    const { servicio, prisma } = crearServicio([{ ...PEDIDO_VACIO, salioEn: F }]);
+    await expect(
+      servicio.update(1, { revertirEtapa: 'salioEn', motivoCorreccion: 'clic por error' } as any, 7, false),
+    ).rejects.toBeInstanceOf(ForbiddenException);
+    expect(prisma.pedido.update).not.toHaveBeenCalled();
+  });
+
+  it('admin sin motivo → BadRequest y no escribe', async () => {
+    const { servicio, prisma } = crearServicio([{ ...PEDIDO_VACIO, salioEn: F }]);
+    await expect(
+      servicio.update(1, { revertirEtapa: 'salioEn' } as any, 7, true),
+    ).rejects.toBeInstanceOf(BadRequestException);
+    expect(prisma.pedido.update).not.toHaveBeenCalled();
+  });
+
+  it('etapa que no está marcada → BadRequest', async () => {
+    const { servicio, prisma } = crearServicio([{ ...PEDIDO_VACIO }]);
+    await expect(
+      servicio.update(1, { revertirEtapa: 'salioEn', motivoCorreccion: 'nunca se marcó' } as any, 7, true),
+    ).rejects.toBeInstanceOf(BadRequestException);
+    expect(prisma.pedido.update).not.toHaveBeenCalled();
+  });
+
+  it('deshacer una etapa intermedia arrastra las posteriores ya marcadas', async () => {
+    const { servicio, prisma } = crearServicio([
+      { ...PEDIDO_VACIO, preparadoEn: F, salioEn: F, entregadoEn: F },
+    ]);
+    await servicio.update(
+      1,
+      { revertirEtapa: 'preparadoEn', motivoCorreccion: 'pedido equivocado' } as any,
+      7,
+      true,
+    );
+    const data = prisma.pedido.update.mock.calls[0][0].data;
+    expect(data.preparadoEn).toBeNull();
+    expect(data.salioEn).toBeNull();
+    expect(data.entregadoEn).toBeNull();
+    expect(data.ultimoEditadoPorId).toBe(7);
   });
 });
 

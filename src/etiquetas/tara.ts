@@ -6,8 +6,9 @@ function aNumero(texto: string): number {
 }
 
 /**
- * Tara = peso bruto - peso neto, expresada en la misma unidad del peso bruto
- * (KG con 3 decimales, GR sin ceros de más). Devuelve null cuando no se puede
+ * Tara = peso bruto - peso neto, expresada en la misma unidad del peso bruto,
+ * siempre con 3 decimales fijos (sin recortar ceros de más: 0.100, no 0.1) y
+ * con punto como separador decimal. Devuelve null cuando no se puede
  * calcular de forma confiable:
  *  - no hay cantidad neta;
  *  - la cantidad neta es un VOLUMEN (ML/L) y el producto no tiene densidad
@@ -44,7 +45,5 @@ export function calcularTara(
   const taraG = Math.round((brutoG - netoG) * 1000) / 1000;
   if (taraG < 0) return null;
 
-  return unidadBruto === 'KG'
-    ? (taraG / 1000).toFixed(3)
-    : String(Number(taraG.toFixed(3)));
+  return unidadBruto === 'KG' ? (taraG / 1000).toFixed(3) : taraG.toFixed(3);
 }

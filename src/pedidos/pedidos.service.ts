@@ -1,7 +1,15 @@
-import { BadRequestException, ConflictException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  ForbiddenException,
+  Injectable,
+  Logger,
+  NotFoundException,
+} from '@nestjs/common';
 import { randomBytes } from 'crypto';
 import { Prisma } from '../generated/prisma';
 import { PrismaService } from '../prisma/prisma.service';
+import { PushService } from '../notificaciones/push.service';
 import { validarOrdenCronologico } from '../common/validacion/orden-etapas';
 import { CreatePedidoDto } from './dto/create-pedido.dto';
 import { UpdatePedidoDto } from './dto/update-pedido.dto';
@@ -46,7 +54,53 @@ export interface CotizacionRelacionada {
 
 @Injectable()
 export class PedidosService {
-  constructor(private prisma: PrismaService) {}
+  private readonly logger = new Logger(PedidosService.name);
+
+  constructor(
+    private prisma: PrismaService,
+    private push: PushService,
+  ) {}
+
+  // Cuando almacén registra un pedido cuya cotización todavía no tiene el aviso a almacén marcado,
+  // el olvido es evidente en ese mismo momento: se avisa a quienes cotizan (mismos destinatarios
+  // que los recordatorios de Cotizaciones) para que lo registren. Nunca bloquea ni rompe el alta
+  // del pedido: si algo falla acá, el pedido ya está creado y solo se deja el error en el log.
+  private async avisarSiFaltaAvisoAlmacen(pedido: { id: number; numeroProforma: string }) {
+    try {
+      const cotizacion = await this.prisma.cotizacion.findUnique({
+        where: { numeroProforma: pedido.numeroProforma },
+        select: { id: true, avisoAlmacenEn: true, cliente: { select: { nombre: true } } },
+      });
+      if (!cotizacion || cotizacion.avisoAlmacenEn) return;
+
+      const destinatarios = await this.prisma.usuario.findMany({
+        where: {
+          activo: true,
+          OR: [{ esAdmin: true }, { permisos: { some: { recurso: 'COTIZACIONES', puedeEditar: true } } }],
+        },
+        select: { id: true },
+      });
+      const destinatarioIds = destinatarios.map((u) => u.id);
+      if (!destinatarioIds.length) return;
+
+      const mensaje = `Almacén ya registró el pedido de ${cotizacion.cliente.nombre} (${pedido.numeroProforma}) pero la cotización no tiene el aviso a almacén. Regístralo para mantener la secuencia.`;
+      await this.prisma.notificacion.createMany({
+        data: destinatarioIds.map((usuarioId) => ({
+          usuarioId,
+          tipo: 'PEDIDO_RECIBIDO_SIN_AVISO' as const,
+          mensaje,
+          pedidoId: pedido.id,
+          cotizacionId: cotizacion.id,
+        })),
+      });
+      await this.push.enviarA(destinatarioIds, {
+        titulo: 'Falta registrar el aviso a almacén',
+        cuerpo: `${cotizacion.cliente.nombre} (${pedido.numeroProforma}): almacén ya registró el pedido.`,
+      });
+    } catch (error) {
+      this.logger.error(`No se pudo avisar la falta de aviso a almacén del pedido ${pedido.id}`, error as Error);
+    }
+  }
 
   // Misma llave natural que del lado de Cotizacion (numeroProforma de KEYFACIL, sin relación
   // formal en el schema — ver CLAUDE.md), para mostrar en el indicador de Pedidos cuánto tardó
@@ -81,6 +135,7 @@ export class PedidosService {
         },
         include: INCLUDE_PEDIDO,
       });
+      await this.avisarSiFaltaAvisoAlmacen(pedido);
       return { ...pedido, estado: derivarEstado(pedido) };
     } catch (error) {
       // P2002: violación de la restricción única de numeroProforma (dos pedidos no pueden

@@ -1,0 +1,2 @@
+-- AlterEnum
+ALTER TYPE "TipoNotificacion" ADD VALUE 'PEDIDO_RECIBIDO_SIN_AVISO';

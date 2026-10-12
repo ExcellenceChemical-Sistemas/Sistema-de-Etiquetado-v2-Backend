@@ -17,7 +17,7 @@ const PEDIDO_VACIO = {
   entregadoEn: null,
 };
 
-function crearServicio(pedidos: any[], opts: { errorCreate?: Error } = {}) {
+function crearServicio(pedidos: any[], opts: { errorCreate?: Error; cotizacion?: any } = {}) {
   const prisma: any = {
     pedido: {
       findMany: jest.fn(() => Promise.resolve(pedidos)),
@@ -30,9 +30,17 @@ function crearServicio(pedidos: any[], opts: { errorCreate?: Error } = {}) {
     },
     cotizacion: {
       findMany: jest.fn(() => Promise.resolve([])),
+      findUnique: jest.fn(() => Promise.resolve(opts.cotizacion ?? null)),
+    },
+    usuario: {
+      findMany: jest.fn(() => Promise.resolve([{ id: 7 }, { id: 8 }])),
+    },
+    notificacion: {
+      createMany: jest.fn(() => Promise.resolve({ count: 2 })),
     },
   };
-  return { servicio: new PedidosService(prisma), prisma };
+  const push: any = { enviarA: jest.fn(() => Promise.resolve()) };
+  return { servicio: new PedidosService(prisma, push), prisma, push };
 }
 
 describe('estado derivado del pedido', () => {
@@ -233,5 +241,41 @@ describe('regenerarToken', () => {
     const { servicio, prisma } = crearServicio([]);
     await expect(servicio.regenerarToken(99, 7)).rejects.toBeInstanceOf(NotFoundException);
     expect(prisma.pedido.update).not.toHaveBeenCalled();
+  });
+});
+
+
+describe('aviso cuando almacén registra un pedido sin aviso previo en la cotización', () => {
+  const dto: any = { clienteId: 1, numeroProforma: 'PF01-5118' };
+  const COTIZACION = { id: 30, avisoAlmacenEn: null, cliente: { nombre: 'BIOMACRUZ S.A.C.' } };
+
+  it('cotización de esa proforma sin avisoAlmacenEn → notifica a quienes cotizan', async () => {
+    const { servicio, prisma, push } = crearServicio([], { cotizacion: COTIZACION });
+    await servicio.create(dto, 1);
+    expect(prisma.notificacion.createMany).toHaveBeenCalledWith({
+      data: [
+        expect.objectContaining({ usuarioId: 7, tipo: 'PEDIDO_RECIBIDO_SIN_AVISO', cotizacionId: 30 }),
+        expect.objectContaining({ usuarioId: 8, tipo: 'PEDIDO_RECIBIDO_SIN_AVISO', cotizacionId: 30 }),
+      ],
+    });
+    expect(push.enviarA).toHaveBeenCalledWith([7, 8], expect.objectContaining({ titulo: expect.any(String) }));
+  });
+
+  it('si la cotización ya tiene el aviso, no notifica', async () => {
+    const { servicio, prisma } = crearServicio([], { cotizacion: { ...COTIZACION, avisoAlmacenEn: new Date() } });
+    await servicio.create(dto, 1);
+    expect(prisma.notificacion.createMany).not.toHaveBeenCalled();
+  });
+
+  it('si no hay cotización para esa proforma, no notifica', async () => {
+    const { servicio, prisma } = crearServicio([]);
+    await servicio.create(dto, 1);
+    expect(prisma.notificacion.createMany).not.toHaveBeenCalled();
+  });
+
+  it('si falla la notificación, el pedido se crea igual', async () => {
+    const { servicio, prisma } = crearServicio([], { cotizacion: COTIZACION });
+    prisma.notificacion.createMany.mockRejectedValueOnce(new Error('boom'));
+    await expect(servicio.create(dto, 1)).resolves.toMatchObject({ numeroProforma: 'PF01-5118' });
   });
 });

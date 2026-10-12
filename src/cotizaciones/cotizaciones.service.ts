@@ -6,10 +6,15 @@ import { UpdateCotizacionDto } from './dto/update-cotizacion.dto';
 import { AusenciasService } from '../ausencias/ausencias.service';
 import { esDiaNoLaboral } from '../common/fecha/feriados-peru';
 import { validarOrdenCronologico } from '../common/validacion/orden-etapas';
+import { alertaSecuenciaConPedido } from './alerta-secuencia';
 
 export type EstadoCotizacion = 'RECIBIDO' | 'COTIZADO' | 'APROBADO' | 'AVISADO_ALMACEN';
 
-export type TipoAlertaCotizacion = 'FERIADO_O_FIN_DE_SEMANA' | 'AUSENCIA_REGISTRADA' | 'CARGA_TARDIA';
+export type TipoAlertaCotizacion =
+  | 'FERIADO_O_FIN_DE_SEMANA'
+  | 'AUSENCIA_REGISTRADA'
+  | 'CARGA_TARDIA'
+  | 'FUERA_DE_SECUENCIA';
 
 export interface AlertaCotizacion {
   campo: 'requerimientoEn' | 'cotizacionEnviadaEn' | 'pedidoAprobadoEn' | 'avisoAlmacenEn';
@@ -269,6 +274,15 @@ export class CotizacionesService {
     }));
   }
 
+  // La alerta de secuencia necesita el pedido de la misma proforma, que recién está disponible
+  // después de adjuntarPedidosRelacionados (conAlertas corre antes y solo ve la cotización).
+  private conAlertaDeSecuencia<
+    T extends { avisoAlmacenEn: Date | null; alertas: AlertaCotizacion[]; pedidoRelacionado: PedidoRelacionado | null },
+  >(c: T): T {
+    const alerta = alertaSecuenciaConPedido(c, c.pedidoRelacionado);
+    return alerta ? { ...c, alertas: [...c.alertas, alerta] } : c;
+  }
+
   async findAll(estado?: EstadoCotizacion) {
     const cotizaciones = await this.prisma.cotizacion.findMany({
       where: estado ? WHERE_POR_ESTADO[estado] : undefined,
@@ -277,7 +291,7 @@ export class CotizacionesService {
     });
     const conAlertas = await this.conAlertas(cotizaciones);
     const conPedido = await this.adjuntarPedidosRelacionados(conAlertas);
-    return conPedido.map((c) => ({ ...c, estado: derivarEstadoCotizacion(c) }));
+    return conPedido.map((c) => ({ ...this.conAlertaDeSecuencia(c), estado: derivarEstadoCotizacion(c) }));
   }
 
   async findOne(id: number) {
@@ -290,7 +304,7 @@ export class CotizacionesService {
     }
     const [conAlertas] = await this.conAlertas([cotizacion]);
     const [conPedido] = await this.adjuntarPedidosRelacionados([conAlertas]);
-    return { ...conPedido, estado: derivarEstadoCotizacion(cotizacion) };
+    return { ...this.conAlertaDeSecuencia(conPedido!), estado: derivarEstadoCotizacion(cotizacion) };
   }
 
   async update(id: number, dto: UpdateCotizacionDto, editadoPorId: number, esAdmin: boolean) {

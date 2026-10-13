@@ -1,3 +1,5 @@
+import { esFeriadoPeruYMD } from './feriados-peru';
+
 // Horas hábiles de Excellence Chemical: lunes a viernes, 7:30am a 5:30pm, menos el refrigerio. Se
 // usa para medir cuánto tiempo "real de trabajo" pasó desde un evento (ej. AlertasPedidosService),
 // sin contar noches, fines de semana ni el refrigerio, que inflarían el conteo sin que nadie
@@ -61,4 +63,31 @@ export function horasHabilesEntre(inicio: Date, fin: Date, refrigerios: Refriger
   }
 
   return horas;
+}
+
+// Plazo de ENTREGA de pedidos (alerta de 48h): las 48h corren las 24h del día, pero los días no
+// laborables (sábado, domingo y feriados) se descuentan completos. Distinto de horasHabilesEntre,
+// que solo cuenta la jornada 7:30-17:30. Los días se calculan con el reloj de Lima (UTC-5, sin
+// horario de verano) para que el resultado no dependa de la zona horaria del servidor.
+// Ej.: recibido martes 08:09, ahora lunes siguiente 10:32 → 146.4h corridas - 48h (sáb+dom) = 98.4h.
+const LIMA_OFFSET_MS = -5 * 3_600_000;
+const DIA_MS = 24 * 3_600_000;
+
+export function horasCorridasLaborablesEntre(inicio: Date, fin: Date): number {
+  if (fin <= inicio) return 0;
+
+  let ms = fin.getTime() - inicio.getTime();
+  const desde = inicio.getTime() + LIMA_OFFSET_MS;
+  const hasta = fin.getTime() + LIMA_OFFSET_MS;
+
+  for (let dia = Math.floor(desde / DIA_MS) * DIA_MS; dia <= hasta; dia += DIA_MS) {
+    const f = new Date(dia);
+    const diaSemana = f.getUTCDay(); // 0 = domingo ... 6 = sábado
+    const noLaborable =
+      diaSemana === 0 || diaSemana === 6 || esFeriadoPeruYMD(f.getUTCFullYear(), f.getUTCMonth() + 1, f.getUTCDate());
+    if (!noLaborable) continue;
+    const solape = Math.min(hasta, dia + DIA_MS) - Math.max(desde, dia);
+    if (solape > 0) ms -= solape;
+  }
+  return ms / 3_600_000;
 }

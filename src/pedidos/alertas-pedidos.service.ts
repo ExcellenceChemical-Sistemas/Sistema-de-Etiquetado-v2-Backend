@@ -2,14 +2,14 @@ import { Injectable, Logger } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
 import { PrismaService } from '../prisma/prisma.service';
 import { PushService } from '../notificaciones/push.service';
-import { horasHabilesEntre, Refrigerio } from '../common/fecha/horas-habiles';
+import { horasHabilesEntre, horasCorridasLaborablesEntre, Refrigerio } from '../common/fecha/horas-habiles';
 
 const UMBRAL_HORAS_RECIBIDO = 48;
 const UMBRAL_HORAS_SALIO = 24;
-// Cotas baratas para no traer toda la tabla: a 10h hábiles/día como máximo, ningún umbral de
-// arriba se cumple por debajo de estos días calendario. Piso amplio, después se filtra preciso
-// con horasHabilesEntre().
-const DIAS_MINIMOS_RECIBIDO = 4;
+// Cotas baratas para no traer toda la tabla: ningún umbral de arriba se cumple por debajo de
+// estos días calendario (48h corridas = 2 días; la de "salió" sigue en horas de jornada, a 10h
+// hábiles/día como máximo). Piso amplio, después se filtra preciso.
+const DIAS_MINIMOS_RECIBIDO = 2;
 const DIAS_MINIMOS_SALIO = 2;
 
 @Injectable()
@@ -28,7 +28,7 @@ export class AlertasPedidosService {
     const destinatarioIds = await this.destinatariosPedidos();
     if (!destinatarioIds.length) return;
 
-    await this.avisarSinSalir(ahora, refrigerios, destinatarioIds);
+    await this.avisarSinSalir(ahora, destinatarioIds);
     await this.avisarSalioSinEntregar(ahora, refrigerios, destinatarioIds);
   }
 
@@ -59,8 +59,9 @@ export class AlertasPedidosService {
     return destinatarios.map((u) => u.id);
   }
 
-  // Pedido que nunca salió y ya pasó el umbral general desde que se recibió.
-  private async avisarSinSalir(ahora: Date, refrigerios: Refrigerio[], destinatarioIds: number[]) {
+  // Pedido que nunca salió y ya pasó el umbral general desde que se recibió: 48h corridas sin
+  // contar sábados, domingos ni feriados (mismo criterio que el indicador de tiempo de entrega).
+  private async avisarSinSalir(ahora: Date, destinatarioIds: number[]) {
     const cota = new Date(ahora.getTime() - DIAS_MINIMOS_RECIBIDO * 24 * 3_600_000);
     const candidatos = await this.prisma.pedido.findMany({
       where: {
@@ -72,7 +73,7 @@ export class AlertasPedidosService {
       select: { id: true, numeroProforma: true, recibidoEn: true, cliente: { select: { nombre: true } } },
     });
     const vencidos = candidatos.filter(
-      (p) => horasHabilesEntre(p.recibidoEn, ahora, refrigerios) >= UMBRAL_HORAS_RECIBIDO,
+      (p) => horasCorridasLaborablesEntre(p.recibidoEn, ahora) >= UMBRAL_HORAS_RECIBIDO,
     );
     if (!vencidos.length) return;
 
@@ -83,14 +84,14 @@ export class AlertasPedidosService {
           data: destinatarioIds.map((usuarioId) => ({
             usuarioId,
             tipo: 'PEDIDO_VENCIDO' as const,
-            mensaje: `El pedido ${pedido.numeroProforma} (${pedido.cliente.nombre}) lleva más de ${UMBRAL_HORAS_RECIBIDO} horas hábiles sin marcarse como entregado.`,
+            mensaje: `El pedido ${pedido.numeroProforma} (${pedido.cliente.nombre}) lleva más de ${UMBRAL_HORAS_RECIBIDO} horas (sin contar fines de semana ni feriados) sin marcarse como entregado.`,
             pedidoId: pedido.id,
           })),
         }),
       ]);
       await this.push.enviarA(destinatarioIds, {
         titulo: 'Pedido vencido',
-        cuerpo: `El pedido ${pedido.numeroProforma} (${pedido.cliente.nombre}) lleva más de ${UMBRAL_HORAS_RECIBIDO}h hábiles sin entregarse.`,
+        cuerpo: `El pedido ${pedido.numeroProforma} (${pedido.cliente.nombre}) lleva más de ${UMBRAL_HORAS_RECIBIDO}h (sin contar fines de semana ni feriados) sin entregarse.`,
       });
     }
     this.logger.log(`Alerta de ${UMBRAL_HORAS_RECIBIDO}h sin salir: ${vencidos.length} pedido(s) notificados`);

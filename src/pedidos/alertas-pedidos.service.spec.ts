@@ -57,12 +57,12 @@ describe('AlertasPedidosService', () => {
     expect(prisma.pedido.findMany).not.toHaveBeenCalled();
   });
 
-  describe('avisarSinSalir (≥48h hábiles sin salir)', () => {
+  describe('avisarSinSalir (≥48h corridas sin salir, sin contar sábados, domingos ni feriados)', () => {
     it('un pedido que ya superó el umbral dispara la notificación y marca alerta48hEnviadaEn', async () => {
       const pedido = {
         id: 10,
         numeroProforma: 'PF01-1',
-        recibidoEn: new Date('2026-09-08T07:30:00Z'), // martes anterior, jornada completa: ~54.5h hábiles hasta AHORA
+        recibidoEn: new Date('2026-09-08T07:30:00Z'), // martes anterior: más de 48h corridas laborables hasta AHORA
         cliente: { nombre: 'Cliente X' },
       };
       const { servicio, prisma, push } = crearServicio({ sinSalir: [pedido] });
@@ -78,7 +78,7 @@ describe('AlertasPedidosService', () => {
       expect(push.enviarA).toHaveBeenCalledWith([1], expect.objectContaining({ titulo: 'Pedido vencido' }));
     });
 
-    it('un pedido que todavía no llega a 48h hábiles no se notifica ni se marca', async () => {
+    it('un pedido que todavía no llega a 48h no se notifica ni se marca', async () => {
       const pedido = {
         id: 11,
         numeroProforma: 'PF01-2',
@@ -93,14 +93,30 @@ describe('AlertasPedidosService', () => {
       expect(push.enviarA).not.toHaveBeenCalled();
     });
 
-    it('el refrigerio común se descuenta del conteo de horas hábiles', async () => {
-      // Recibido el lunes 2026-09-14 a las 7:30 (jornada completa). Sin refrigerio, a las
-      // 12:00 del martes siguiente ya pasaron 48h hábiles (10h lunes + 10h martes hasta las
-      // 17:30, pero cortamos a las 12:00 del martes = 10h + 4.5h = 14.5h... ver test con rango
-      // más largo). Este test solo verifica que CON refrigerio activo se descuentan horas: un
-      // pedido que sin refrigerio llegaría a 48h, con refrigerio de 1h diario se queda corto.
-      const recibidoEn = new Date('2026-09-08T07:30:00Z'); // martes anterior, jornada completa
-      const pedido = { id: 12, numeroProforma: 'PF01-3', recibidoEn, cliente: { nombre: 'Cliente Z' } };
+    it('los sábados y domingos no cuentan: 91h corridas con un fin de semana en medio son solo 43h', async () => {
+      // Viernes 2026-09-11 12:00 Lima (17:00Z) → martes 2026-09-15 07:00 Lima (AHORA): 91h
+      // corridas, menos 48h de sábado y domingo = 43h, todavía dentro del plazo de 48h.
+      const pedido = {
+        id: 12,
+        numeroProforma: 'PF01-3',
+        recibidoEn: new Date('2026-09-11T17:00:00Z'),
+        cliente: { nombre: 'Cliente Z' },
+      };
+      const { servicio, prisma, push } = crearServicio({ sinSalir: [pedido] });
+      await servicio.avisarPedidosVencidos();
+
+      expect(prisma.pedido.update).not.toHaveBeenCalled();
+      expect(prisma.notificacion.createMany).not.toHaveBeenCalled();
+      expect(push.enviarA).not.toHaveBeenCalled();
+    });
+
+    it('el refrigerio ya no influye en la alerta de 48h: es el mismo resultado con o sin refrigerio', async () => {
+      const pedido = {
+        id: 13,
+        numeroProforma: 'PF01-4',
+        recibidoEn: new Date('2026-09-08T07:30:00Z'), // más de 48h corridas laborables antes de AHORA
+        cliente: { nombre: 'Cliente W' },
+      };
       const sinRefrigerio = crearServicio({ sinSalir: [pedido], editores: [EDITOR_SIN_REFRIGERIO] });
       const conRefrigerio = crearServicio({
         sinSalir: [pedido],
@@ -110,14 +126,8 @@ describe('AlertasPedidosService', () => {
       await sinRefrigerio.servicio.avisarPedidosVencidos();
       await conRefrigerio.servicio.avisarPedidosVencidos();
 
-      // Con refrigerio se descuenta 1h/día hábil transcurrido, así que si sin refrigerio ya
-      // notificó, con refrigerio puede quedar justo por debajo según cuántos días hábiles
-      // pasaron. Lo que importa es que el resultado puede diferir: no son necesariamente iguales.
-      const notificoSinRefrigerio = sinRefrigerio.prisma.notificacion.createMany.mock.calls.length > 0;
-      const notificoConRefrigerio = conRefrigerio.prisma.notificacion.createMany.mock.calls.length > 0;
-      expect(notificoSinRefrigerio).toBe(true);
-      // El refrigerio resta horas, nunca las puede sumar — con refrigerio nunca notifica antes.
-      if (!notificoSinRefrigerio) expect(notificoConRefrigerio).toBe(false);
+      expect(sinRefrigerio.prisma.notificacion.createMany).toHaveBeenCalled();
+      expect(conRefrigerio.prisma.notificacion.createMany).toHaveBeenCalled();
     });
   });
 

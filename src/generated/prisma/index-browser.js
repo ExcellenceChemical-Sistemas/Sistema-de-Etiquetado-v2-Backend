@@ -187,6 +187,7 @@ exports.Prisma.LoteScalarFieldEnum = {
   fechaVencimiento: 'fechaVencimiento',
   fechaVencimientoOrden: 'fechaVencimientoOrden',
   coaUrl: 'coaUrl',
+  detalle: 'detalle',
   productoId: 'productoId',
   fabricanteId: 'fabricanteId',
   createdAt: 'createdAt',

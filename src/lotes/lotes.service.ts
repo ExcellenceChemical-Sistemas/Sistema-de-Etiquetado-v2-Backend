@@ -10,6 +10,12 @@ import { UpdateLoteDto } from './dto/update-lote.dto';
 export class LotesService {
   constructor(private prisma: PrismaService) {}
 
+  // Texto vacío o solo espacios = sin detalle (null en la base).
+  private normalizarDetalle(detalle: string): string | null {
+    const limpio = detalle.trim();
+    return limpio === '' ? null : limpio;
+  }
+
   private async validarRelaciones(productoId: number, fabricanteId: number) {
     const [producto, fabricante] = await Promise.all([
       this.prisma.producto.findUnique({ where: { id: productoId } }),
@@ -33,6 +39,7 @@ export class LotesService {
           fechaFabricacion: dto.fechaFabricacion.trim(),
           fechaVencimiento: dto.fechaVencimiento.trim(),
           fechaVencimientoOrden: parsearFechaVencimiento(dto.fechaVencimiento),
+          detalle: dto.detalle === undefined ? null : this.normalizarDetalle(dto.detalle),
           productoId: dto.productoId,
           fabricanteId: dto.fabricanteId,
         },
@@ -82,6 +89,8 @@ export class LotesService {
             fechaVencimiento: dto.fechaVencimiento.trim(),
             fechaVencimientoOrden: parsearFechaVencimiento(dto.fechaVencimiento),
           }),
+          // A diferencia de los demás, acá "" es válido: significa borrar el detalle.
+          ...(dto.detalle !== undefined && { detalle: this.normalizarDetalle(dto.detalle) }),
           ...(dto.productoId && { productoId: dto.productoId }),
           ...(dto.fabricanteId && { fabricanteId: dto.fabricanteId }),
         },

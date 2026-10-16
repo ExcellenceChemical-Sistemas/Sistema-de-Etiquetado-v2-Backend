@@ -183,6 +183,9 @@ model Lote {
   // ("lotes que vencen este mes") sin tocar el texto original.
   fechaVencimientoOrden DateTime?          @db.Date
   coaUrl                String? // path del objeto en el bucket, ej: "lote-123/coa.pdf"
+  // Comentario interno libre (ej: "Lote para Farmacia Universal"). Opcional.
+  // Es solo para el equipo: no se expone en la página pública del QR ni en la etiqueta.
+  detalle               String?
   productoId            Int
   producto              Producto           @relation(fields: [productoId], references: [id], onDelete: Restrict)
   fabricanteId          Int

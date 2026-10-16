@@ -111,3 +111,39 @@ describe('create', () => {
     await expect(servicio.create(dto as any)).rejects.toBeInstanceOf(ConflictException);
   });
 });
+
+
+describe('detalle — comentario interno del lote', () => {
+  const dtoBase = {
+    numeroLote: 'L-1',
+    fechaFabricacion: '01/2026',
+    fechaVencimiento: '01/2028',
+    productoId: 1,
+    fabricanteId: 1,
+  };
+
+  it('al crear, guarda el detalle sin espacios sobrantes', async () => {
+    const { servicio, prisma } = crearServicio();
+    await servicio.create({ ...dtoBase, detalle: '  Lote para Farmacia Universal  ' });
+    expect(prisma.lote.create.mock.calls[0][0].data.detalle).toBe('Lote para Farmacia Universal');
+  });
+
+  it('al crear sin detalle o con solo espacios, guarda null', async () => {
+    const { servicio, prisma } = crearServicio();
+    await servicio.create(dtoBase);
+    await servicio.create({ ...dtoBase, detalle: '   ' });
+    expect(prisma.lote.create.mock.calls[0][0].data.detalle).toBeNull();
+    expect(prisma.lote.create.mock.calls[1][0].data.detalle).toBeNull();
+  });
+
+  it('al editar, "" borra el detalle y omitirlo no lo toca', async () => {
+    const { servicio, prisma } = crearServicio();
+    prisma.lote.update = jest.fn(({ data }: any) => Promise.resolve({ id: 1, ...data }));
+
+    await servicio.update(1, { detalle: '' });
+    expect(prisma.lote.update.mock.calls[0][0].data.detalle).toBeNull();
+
+    await servicio.update(1, { numeroLote: 'L-2' });
+    expect(prisma.lote.update.mock.calls[1][0].data).not.toHaveProperty('detalle');
+  });
+});

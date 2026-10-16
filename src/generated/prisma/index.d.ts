@@ -9365,6 +9365,7 @@ export namespace Prisma {
     fechaVencimiento: string | null
     fechaVencimientoOrden: Date | null
     coaUrl: string | null
+    detalle: string | null
     productoId: number | null
     fabricanteId: number | null
     createdAt: Date | null
@@ -9378,6 +9379,7 @@ export namespace Prisma {
     fechaVencimiento: string | null
     fechaVencimientoOrden: Date | null
     coaUrl: string | null
+    detalle: string | null
     productoId: number | null
     fabricanteId: number | null
     createdAt: Date | null
@@ -9391,6 +9393,7 @@ export namespace Prisma {
     fechaVencimiento: number
     fechaVencimientoOrden: number
     coaUrl: number
+    detalle: number
     productoId: number
     fabricanteId: number
     createdAt: number
@@ -9418,6 +9421,7 @@ export namespace Prisma {
     fechaVencimiento?: true
     fechaVencimientoOrden?: true
     coaUrl?: true
+    detalle?: true
     productoId?: true
     fabricanteId?: true
     createdAt?: true
@@ -9431,6 +9435,7 @@ export namespace Prisma {
     fechaVencimiento?: true
     fechaVencimientoOrden?: true
     coaUrl?: true
+    detalle?: true
     productoId?: true
     fabricanteId?: true
     createdAt?: true
@@ -9444,6 +9449,7 @@ export namespace Prisma {
     fechaVencimiento?: true
     fechaVencimientoOrden?: true
     coaUrl?: true
+    detalle?: true
     productoId?: true
     fabricanteId?: true
     createdAt?: true
@@ -9544,6 +9550,7 @@ export namespace Prisma {
     fechaVencimiento: string
     fechaVencimientoOrden: Date | null
     coaUrl: string | null
+    detalle: string | null
     productoId: number
     fabricanteId: number
     createdAt: Date
@@ -9576,6 +9583,7 @@ export namespace Prisma {
     fechaVencimiento?: boolean
     fechaVencimientoOrden?: boolean
     coaUrl?: boolean
+    detalle?: boolean
     productoId?: boolean
     fabricanteId?: boolean
     createdAt?: boolean
@@ -9593,6 +9601,7 @@ export namespace Prisma {
     fechaVencimiento?: boolean
     fechaVencimientoOrden?: boolean
     coaUrl?: boolean
+    detalle?: boolean
     productoId?: boolean
     fabricanteId?: boolean
     createdAt?: boolean
@@ -9608,6 +9617,7 @@ export namespace Prisma {
     fechaVencimiento?: boolean
     fechaVencimientoOrden?: boolean
     coaUrl?: boolean
+    detalle?: boolean
     productoId?: boolean
     fabricanteId?: boolean
     createdAt?: boolean
@@ -9623,13 +9633,14 @@ export namespace Prisma {
     fechaVencimiento?: boolean
     fechaVencimientoOrden?: boolean
     coaUrl?: boolean
+    detalle?: boolean
     productoId?: boolean
     fabricanteId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type LoteOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "numeroLote" | "fechaFabricacion" | "fechaVencimiento" | "fechaVencimientoOrden" | "coaUrl" | "productoId" | "fabricanteId" | "createdAt" | "updatedAt", ExtArgs["result"]["lote"]>
+  export type LoteOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "numeroLote" | "fechaFabricacion" | "fechaVencimiento" | "fechaVencimientoOrden" | "coaUrl" | "detalle" | "productoId" | "fabricanteId" | "createdAt" | "updatedAt", ExtArgs["result"]["lote"]>
   export type LoteInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     producto?: boolean | ProductoDefaultArgs<ExtArgs>
     fabricante?: boolean | FabricanteDefaultArgs<ExtArgs>
@@ -9659,6 +9670,7 @@ export namespace Prisma {
       fechaVencimiento: string
       fechaVencimientoOrden: Date | null
       coaUrl: string | null
+      detalle: string | null
       productoId: number
       fabricanteId: number
       createdAt: Date
@@ -10095,6 +10107,7 @@ export namespace Prisma {
     readonly fechaVencimiento: FieldRef<"Lote", 'String'>
     readonly fechaVencimientoOrden: FieldRef<"Lote", 'DateTime'>
     readonly coaUrl: FieldRef<"Lote", 'String'>
+    readonly detalle: FieldRef<"Lote", 'String'>
     readonly productoId: FieldRef<"Lote", 'Int'>
     readonly fabricanteId: FieldRef<"Lote", 'Int'>
     readonly createdAt: FieldRef<"Lote", 'DateTime'>
@@ -26214,6 +26227,7 @@ export namespace Prisma {
     fechaVencimiento: 'fechaVencimiento',
     fechaVencimientoOrden: 'fechaVencimientoOrden',
     coaUrl: 'coaUrl',
+    detalle: 'detalle',
     productoId: 'productoId',
     fabricanteId: 'fabricanteId',
     createdAt: 'createdAt',
@@ -27097,6 +27111,7 @@ export namespace Prisma {
     fechaVencimiento?: StringFilter<"Lote"> | string
     fechaVencimientoOrden?: DateTimeNullableFilter<"Lote"> | Date | string | null
     coaUrl?: StringNullableFilter<"Lote"> | string | null
+    detalle?: StringNullableFilter<"Lote"> | string | null
     productoId?: IntFilter<"Lote"> | number
     fabricanteId?: IntFilter<"Lote"> | number
     createdAt?: DateTimeFilter<"Lote"> | Date | string
@@ -27113,6 +27128,7 @@ export namespace Prisma {
     fechaVencimiento?: SortOrder
     fechaVencimientoOrden?: SortOrderInput | SortOrder
     coaUrl?: SortOrderInput | SortOrder
+    detalle?: SortOrderInput | SortOrder
     productoId?: SortOrder
     fabricanteId?: SortOrder
     createdAt?: SortOrder
@@ -27133,6 +27149,7 @@ export namespace Prisma {
     fechaVencimiento?: StringFilter<"Lote"> | string
     fechaVencimientoOrden?: DateTimeNullableFilter<"Lote"> | Date | string | null
     coaUrl?: StringNullableFilter<"Lote"> | string | null
+    detalle?: StringNullableFilter<"Lote"> | string | null
     productoId?: IntFilter<"Lote"> | number
     fabricanteId?: IntFilter<"Lote"> | number
     createdAt?: DateTimeFilter<"Lote"> | Date | string
@@ -27149,6 +27166,7 @@ export namespace Prisma {
     fechaVencimiento?: SortOrder
     fechaVencimientoOrden?: SortOrderInput | SortOrder
     coaUrl?: SortOrderInput | SortOrder
+    detalle?: SortOrderInput | SortOrder
     productoId?: SortOrder
     fabricanteId?: SortOrder
     createdAt?: SortOrder
@@ -27170,6 +27188,7 @@ export namespace Prisma {
     fechaVencimiento?: StringWithAggregatesFilter<"Lote"> | string
     fechaVencimientoOrden?: DateTimeNullableWithAggregatesFilter<"Lote"> | Date | string | null
     coaUrl?: StringNullableWithAggregatesFilter<"Lote"> | string | null
+    detalle?: StringNullableWithAggregatesFilter<"Lote"> | string | null
     productoId?: IntWithAggregatesFilter<"Lote"> | number
     fabricanteId?: IntWithAggregatesFilter<"Lote"> | number
     createdAt?: DateTimeWithAggregatesFilter<"Lote"> | Date | string
@@ -28792,6 +28811,7 @@ export namespace Prisma {
     fechaVencimiento: string
     fechaVencimientoOrden?: Date | string | null
     coaUrl?: string | null
+    detalle?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     producto: ProductoCreateNestedOneWithoutLotesInput
@@ -28806,6 +28826,7 @@ export namespace Prisma {
     fechaVencimiento: string
     fechaVencimientoOrden?: Date | string | null
     coaUrl?: string | null
+    detalle?: string | null
     productoId: number
     fabricanteId: number
     createdAt?: Date | string
@@ -28819,6 +28840,7 @@ export namespace Prisma {
     fechaVencimiento?: StringFieldUpdateOperationsInput | string
     fechaVencimientoOrden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     coaUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    detalle?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     producto?: ProductoUpdateOneRequiredWithoutLotesNestedInput
@@ -28833,6 +28855,7 @@ export namespace Prisma {
     fechaVencimiento?: StringFieldUpdateOperationsInput | string
     fechaVencimientoOrden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     coaUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    detalle?: NullableStringFieldUpdateOperationsInput | string | null
     productoId?: IntFieldUpdateOperationsInput | number
     fabricanteId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -28847,6 +28870,7 @@ export namespace Prisma {
     fechaVencimiento: string
     fechaVencimientoOrden?: Date | string | null
     coaUrl?: string | null
+    detalle?: string | null
     productoId: number
     fabricanteId: number
     createdAt?: Date | string
@@ -28859,6 +28883,7 @@ export namespace Prisma {
     fechaVencimiento?: StringFieldUpdateOperationsInput | string
     fechaVencimientoOrden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     coaUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    detalle?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -28870,6 +28895,7 @@ export namespace Prisma {
     fechaVencimiento?: StringFieldUpdateOperationsInput | string
     fechaVencimientoOrden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     coaUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    detalle?: NullableStringFieldUpdateOperationsInput | string | null
     productoId?: IntFieldUpdateOperationsInput | number
     fabricanteId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -30687,6 +30713,7 @@ export namespace Prisma {
     fechaVencimiento?: SortOrder
     fechaVencimientoOrden?: SortOrder
     coaUrl?: SortOrder
+    detalle?: SortOrder
     productoId?: SortOrder
     fabricanteId?: SortOrder
     createdAt?: SortOrder
@@ -30706,6 +30733,7 @@ export namespace Prisma {
     fechaVencimiento?: SortOrder
     fechaVencimientoOrden?: SortOrder
     coaUrl?: SortOrder
+    detalle?: SortOrder
     productoId?: SortOrder
     fabricanteId?: SortOrder
     createdAt?: SortOrder
@@ -30719,6 +30747,7 @@ export namespace Prisma {
     fechaVencimiento?: SortOrder
     fechaVencimientoOrden?: SortOrder
     coaUrl?: SortOrder
+    detalle?: SortOrder
     productoId?: SortOrder
     fabricanteId?: SortOrder
     createdAt?: SortOrder
@@ -34849,6 +34878,7 @@ export namespace Prisma {
     fechaVencimiento: string
     fechaVencimientoOrden?: Date | string | null
     coaUrl?: string | null
+    detalle?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     producto: ProductoCreateNestedOneWithoutLotesInput
@@ -34862,6 +34892,7 @@ export namespace Prisma {
     fechaVencimiento: string
     fechaVencimientoOrden?: Date | string | null
     coaUrl?: string | null
+    detalle?: string | null
     productoId: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -34904,6 +34935,7 @@ export namespace Prisma {
     fechaVencimiento?: StringFilter<"Lote"> | string
     fechaVencimientoOrden?: DateTimeNullableFilter<"Lote"> | Date | string | null
     coaUrl?: StringNullableFilter<"Lote"> | string | null
+    detalle?: StringNullableFilter<"Lote"> | string | null
     productoId?: IntFilter<"Lote"> | number
     fabricanteId?: IntFilter<"Lote"> | number
     createdAt?: DateTimeFilter<"Lote"> | Date | string
@@ -34916,6 +34948,7 @@ export namespace Prisma {
     fechaVencimiento: string
     fechaVencimientoOrden?: Date | string | null
     coaUrl?: string | null
+    detalle?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     fabricante: FabricanteCreateNestedOneWithoutLotesInput
@@ -34929,6 +34962,7 @@ export namespace Prisma {
     fechaVencimiento: string
     fechaVencimientoOrden?: Date | string | null
     coaUrl?: string | null
+    detalle?: string | null
     fabricanteId: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -35241,6 +35275,7 @@ export namespace Prisma {
     fechaVencimiento: string
     fechaVencimientoOrden?: Date | string | null
     coaUrl?: string | null
+    detalle?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     producto: ProductoCreateNestedOneWithoutLotesInput
@@ -35254,6 +35289,7 @@ export namespace Prisma {
     fechaVencimiento: string
     fechaVencimientoOrden?: Date | string | null
     coaUrl?: string | null
+    detalle?: string | null
     productoId: number
     fabricanteId: number
     createdAt?: Date | string
@@ -35366,6 +35402,7 @@ export namespace Prisma {
     fechaVencimiento?: StringFieldUpdateOperationsInput | string
     fechaVencimientoOrden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     coaUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    detalle?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     producto?: ProductoUpdateOneRequiredWithoutLotesNestedInput
@@ -35379,6 +35416,7 @@ export namespace Prisma {
     fechaVencimiento?: StringFieldUpdateOperationsInput | string
     fechaVencimientoOrden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     coaUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    detalle?: NullableStringFieldUpdateOperationsInput | string | null
     productoId?: IntFieldUpdateOperationsInput | number
     fabricanteId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -38761,6 +38799,7 @@ export namespace Prisma {
     fechaVencimiento: string
     fechaVencimientoOrden?: Date | string | null
     coaUrl?: string | null
+    detalle?: string | null
     productoId: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -38772,6 +38811,7 @@ export namespace Prisma {
     fechaVencimiento?: StringFieldUpdateOperationsInput | string
     fechaVencimientoOrden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     coaUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    detalle?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     producto?: ProductoUpdateOneRequiredWithoutLotesNestedInput
@@ -38785,6 +38825,7 @@ export namespace Prisma {
     fechaVencimiento?: StringFieldUpdateOperationsInput | string
     fechaVencimientoOrden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     coaUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    detalle?: NullableStringFieldUpdateOperationsInput | string | null
     productoId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -38798,6 +38839,7 @@ export namespace Prisma {
     fechaVencimiento?: StringFieldUpdateOperationsInput | string
     fechaVencimientoOrden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     coaUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    detalle?: NullableStringFieldUpdateOperationsInput | string | null
     productoId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -38810,6 +38852,7 @@ export namespace Prisma {
     fechaVencimiento: string
     fechaVencimientoOrden?: Date | string | null
     coaUrl?: string | null
+    detalle?: string | null
     fabricanteId: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -38821,6 +38864,7 @@ export namespace Prisma {
     fechaVencimiento?: StringFieldUpdateOperationsInput | string
     fechaVencimientoOrden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     coaUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    detalle?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     fabricante?: FabricanteUpdateOneRequiredWithoutLotesNestedInput
@@ -38834,6 +38878,7 @@ export namespace Prisma {
     fechaVencimiento?: StringFieldUpdateOperationsInput | string
     fechaVencimientoOrden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     coaUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    detalle?: NullableStringFieldUpdateOperationsInput | string | null
     fabricanteId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -38847,6 +38892,7 @@ export namespace Prisma {
     fechaVencimiento?: StringFieldUpdateOperationsInput | string
     fechaVencimientoOrden?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     coaUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    detalle?: NullableStringFieldUpdateOperationsInput | string | null
     fabricanteId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string

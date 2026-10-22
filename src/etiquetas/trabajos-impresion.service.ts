@@ -24,6 +24,7 @@ interface DatosEtiqueta {
   unidadNeta: string;
   tara: string | null;
   proforma: string;
+  fechaIngreso?: string | null;
 }
 
 // Lo que el agente necesita para dibujar (y luego imprimir) una etiqueta.
@@ -47,7 +48,7 @@ function datosParaAgente(t: DatosEtiqueta, qrUrl: string | null) {
     coaValidado: !!t.lote.coaUrl,
     proveedor: t.proveedor?.nombre ?? null,
     codigo: t.lote.producto.codigo ?? null,
-    fechaIngreso: null as string | null, // no existe en BD: la plantilla dibuja una línea para llenarla a mano
+    fechaIngreso: t.fechaIngreso ?? null, // si es null, la plantilla dibuja una línea para llenarla a mano
     qrUrl,
   };
 }
@@ -114,6 +115,7 @@ export class TrabajosImpresionService {
         token: randomBytes(12).toString('base64url'),
         proforma: plantilla.archivo === ARCHIVO_COMPLETA ? ' ' : dto.proforma,
         proveedorId: proveedor?.id ?? null,
+        fechaIngreso: plantilla.archivo === ARCHIVO_COMPLETA ? dto.fechaIngreso ?? null : null,
         creadoPorId,
       },
     });
@@ -206,6 +208,7 @@ export class TrabajosImpresionService {
         ),
         proforma: plantilla.archivo === ARCHIVO_COMPLETA ? ' ' : dto.proforma,
         proveedor,
+        fechaIngreso: plantilla.archivo === ARCHIVO_COMPLETA ? dto.fechaIngreso ?? null : null,
       },
       `${process.env.FRONTEND_URL}/e/vista-previa`,
     );

@@ -1,4 +1,4 @@
-import { IsIn, IsInt, IsNotEmpty, IsOptional, IsPositive, IsString, MaxLength } from 'class-validator';
+import { IsIn, IsInt, IsNotEmpty, IsOptional, IsPositive, IsString, MaxLength, Matches } from 'class-validator';
 
 export class GenerarEtiquetaDto {
   @IsInt()
@@ -32,4 +32,9 @@ export class GenerarEtiquetaDto {
   @IsInt()
   @IsPositive()
   proveedorId?: number;
+
+  @IsOptional()
+  @IsString()
+  @Matches(/^\d{2}\/\d{2}\/\d{4}$/, { message: 'fechaIngreso debe tener formato dd/mm/aaaa' })
+  fechaIngreso?: string;
 }

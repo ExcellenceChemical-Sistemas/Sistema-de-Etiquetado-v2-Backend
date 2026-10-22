@@ -255,6 +255,7 @@ model TrabajoImpresion {
   proforma        String
   proveedorId     Int?
   proveedor       Proveedor?             @relation(fields: [proveedorId], references: [id], onDelete: SetNull)
+  fechaIngreso    String?
   imagenPath      String?
   estado          EstadoTrabajoImpresion @default(PENDIENTE)
   mensajeError    String?

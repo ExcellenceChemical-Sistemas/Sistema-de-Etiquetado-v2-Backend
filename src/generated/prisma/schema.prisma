@@ -115,11 +115,12 @@ model Fabricante {
 // Producto; es un catálogo propio.
 // ──────────────────────────────────────────
 model Proveedor {
-  id                Int      @id @default(autoincrement())
-  nombre            String   @unique
-  nombreNormalizado String   @unique
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  id                Int                @id @default(autoincrement())
+  nombre            String             @unique
+  nombreNormalizado String             @unique
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  trabajosImpresion TrabajoImpresion[]
 
   @@map("proveedores")
 }
@@ -252,6 +253,8 @@ model TrabajoImpresion {
   coaDescargas    Int                    @default(0)
   fdsVistas       Int                    @default(0)
   proforma        String
+  proveedorId     Int?
+  proveedor       Proveedor?             @relation(fields: [proveedorId], references: [id], onDelete: SetNull)
   imagenPath      String?
   estado          EstadoTrabajoImpresion @default(PENDIENTE)
   mensajeError    String?

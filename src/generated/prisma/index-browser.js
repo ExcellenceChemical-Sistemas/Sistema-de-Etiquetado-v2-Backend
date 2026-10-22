@@ -219,6 +219,7 @@ exports.Prisma.TrabajoImpresionScalarFieldEnum = {
   coaDescargas: 'coaDescargas',
   fdsVistas: 'fdsVistas',
   proforma: 'proforma',
+  proveedorId: 'proveedorId',
   imagenPath: 'imagenPath',
   estado: 'estado',
   mensajeError: 'mensajeError',

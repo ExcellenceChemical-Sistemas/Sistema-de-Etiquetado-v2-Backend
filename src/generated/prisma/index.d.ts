@@ -2942,6 +2942,37 @@ export namespace Prisma {
 
 
   /**
+   * Count Type ProveedorCountOutputType
+   */
+
+  export type ProveedorCountOutputType = {
+    trabajosImpresion: number
+  }
+
+  export type ProveedorCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    trabajosImpresion?: boolean | ProveedorCountOutputTypeCountTrabajosImpresionArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ProveedorCountOutputType without action
+   */
+  export type ProveedorCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProveedorCountOutputType
+     */
+    select?: ProveedorCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ProveedorCountOutputType without action
+   */
+  export type ProveedorCountOutputTypeCountTrabajosImpresionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TrabajoImpresionWhereInput
+  }
+
+
+  /**
    * Count Type ProductoCountOutputType
    */
 
@@ -7259,6 +7290,8 @@ export namespace Prisma {
     nombreNormalizado?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    trabajosImpresion?: boolean | Proveedor$trabajosImpresionArgs<ExtArgs>
+    _count?: boolean | ProveedorCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["proveedor"]>
 
   export type ProveedorSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -7286,10 +7319,18 @@ export namespace Prisma {
   }
 
   export type ProveedorOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nombre" | "nombreNormalizado" | "createdAt" | "updatedAt", ExtArgs["result"]["proveedor"]>
+  export type ProveedorInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    trabajosImpresion?: boolean | Proveedor$trabajosImpresionArgs<ExtArgs>
+    _count?: boolean | ProveedorCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type ProveedorIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type ProveedorIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
   export type $ProveedorPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Proveedor"
-    objects: {}
+    objects: {
+      trabajosImpresion: Prisma.$TrabajoImpresionPayload<ExtArgs>[]
+    }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       nombre: string
@@ -7690,6 +7731,7 @@ export namespace Prisma {
    */
   export interface Prisma__ProveedorClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    trabajosImpresion<T extends Proveedor$trabajosImpresionArgs<ExtArgs> = {}>(args?: Subset<T, Proveedor$trabajosImpresionArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TrabajoImpresionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7741,6 +7783,10 @@ export namespace Prisma {
      */
     omit?: ProveedorOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProveedorInclude<ExtArgs> | null
+    /**
      * Filter, which Proveedor to fetch.
      */
     where: ProveedorWhereUniqueInput
@@ -7759,6 +7805,10 @@ export namespace Prisma {
      */
     omit?: ProveedorOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProveedorInclude<ExtArgs> | null
+    /**
      * Filter, which Proveedor to fetch.
      */
     where: ProveedorWhereUniqueInput
@@ -7776,6 +7826,10 @@ export namespace Prisma {
      * Omit specific fields from the Proveedor
      */
     omit?: ProveedorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProveedorInclude<ExtArgs> | null
     /**
      * Filter, which Proveedor to fetch.
      */
@@ -7825,6 +7879,10 @@ export namespace Prisma {
      */
     omit?: ProveedorOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProveedorInclude<ExtArgs> | null
+    /**
      * Filter, which Proveedor to fetch.
      */
     where?: ProveedorWhereInput
@@ -7872,6 +7930,10 @@ export namespace Prisma {
      * Omit specific fields from the Proveedor
      */
     omit?: ProveedorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProveedorInclude<ExtArgs> | null
     /**
      * Filter, which Proveedors to fetch.
      */
@@ -7921,6 +7983,10 @@ export namespace Prisma {
      */
     omit?: ProveedorOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProveedorInclude<ExtArgs> | null
+    /**
      * The data needed to create a Proveedor.
      */
     data: XOR<ProveedorCreateInput, ProveedorUncheckedCreateInput>
@@ -7968,6 +8034,10 @@ export namespace Prisma {
      * Omit specific fields from the Proveedor
      */
     omit?: ProveedorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProveedorInclude<ExtArgs> | null
     /**
      * The data needed to update a Proveedor.
      */
@@ -8035,6 +8105,10 @@ export namespace Prisma {
      */
     omit?: ProveedorOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProveedorInclude<ExtArgs> | null
+    /**
      * The filter to search for the Proveedor to update in case it exists.
      */
     where: ProveedorWhereUniqueInput
@@ -8061,6 +8135,10 @@ export namespace Prisma {
      */
     omit?: ProveedorOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProveedorInclude<ExtArgs> | null
+    /**
      * Filter which Proveedor to delete.
      */
     where: ProveedorWhereUniqueInput
@@ -8081,6 +8159,30 @@ export namespace Prisma {
   }
 
   /**
+   * Proveedor.trabajosImpresion
+   */
+  export type Proveedor$trabajosImpresionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TrabajoImpresion
+     */
+    select?: TrabajoImpresionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TrabajoImpresion
+     */
+    omit?: TrabajoImpresionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TrabajoImpresionInclude<ExtArgs> | null
+    where?: TrabajoImpresionWhereInput
+    orderBy?: TrabajoImpresionOrderByWithRelationInput | TrabajoImpresionOrderByWithRelationInput[]
+    cursor?: TrabajoImpresionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TrabajoImpresionScalarFieldEnum | TrabajoImpresionScalarFieldEnum[]
+  }
+
+  /**
    * Proveedor without action
    */
   export type ProveedorDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -8092,6 +8194,10 @@ export namespace Prisma {
      * Omit specific fields from the Proveedor
      */
     omit?: ProveedorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProveedorInclude<ExtArgs> | null
   }
 
 
@@ -11714,6 +11820,7 @@ export namespace Prisma {
     coaVistas: number | null
     coaDescargas: number | null
     fdsVistas: number | null
+    proveedorId: number | null
     creadoPorId: number | null
   }
 
@@ -11725,6 +11832,7 @@ export namespace Prisma {
     coaVistas: number | null
     coaDescargas: number | null
     fdsVistas: number | null
+    proveedorId: number | null
     creadoPorId: number | null
   }
 
@@ -11744,6 +11852,7 @@ export namespace Prisma {
     coaDescargas: number | null
     fdsVistas: number | null
     proforma: string | null
+    proveedorId: number | null
     imagenPath: string | null
     estado: $Enums.EstadoTrabajoImpresion | null
     mensajeError: string | null
@@ -11768,6 +11877,7 @@ export namespace Prisma {
     coaDescargas: number | null
     fdsVistas: number | null
     proforma: string | null
+    proveedorId: number | null
     imagenPath: string | null
     estado: $Enums.EstadoTrabajoImpresion | null
     mensajeError: string | null
@@ -11792,6 +11902,7 @@ export namespace Prisma {
     coaDescargas: number
     fdsVistas: number
     proforma: number
+    proveedorId: number
     imagenPath: number
     estado: number
     mensajeError: number
@@ -11810,6 +11921,7 @@ export namespace Prisma {
     coaVistas?: true
     coaDescargas?: true
     fdsVistas?: true
+    proveedorId?: true
     creadoPorId?: true
   }
 
@@ -11821,6 +11933,7 @@ export namespace Prisma {
     coaVistas?: true
     coaDescargas?: true
     fdsVistas?: true
+    proveedorId?: true
     creadoPorId?: true
   }
 
@@ -11840,6 +11953,7 @@ export namespace Prisma {
     coaDescargas?: true
     fdsVistas?: true
     proforma?: true
+    proveedorId?: true
     imagenPath?: true
     estado?: true
     mensajeError?: true
@@ -11864,6 +11978,7 @@ export namespace Prisma {
     coaDescargas?: true
     fdsVistas?: true
     proforma?: true
+    proveedorId?: true
     imagenPath?: true
     estado?: true
     mensajeError?: true
@@ -11888,6 +12003,7 @@ export namespace Prisma {
     coaDescargas?: true
     fdsVistas?: true
     proforma?: true
+    proveedorId?: true
     imagenPath?: true
     estado?: true
     mensajeError?: true
@@ -11999,6 +12115,7 @@ export namespace Prisma {
     coaDescargas: number
     fdsVistas: number
     proforma: string
+    proveedorId: number | null
     imagenPath: string | null
     estado: $Enums.EstadoTrabajoImpresion
     mensajeError: string | null
@@ -12042,6 +12159,7 @@ export namespace Prisma {
     coaDescargas?: boolean
     fdsVistas?: boolean
     proforma?: boolean
+    proveedorId?: boolean
     imagenPath?: boolean
     estado?: boolean
     mensajeError?: boolean
@@ -12050,6 +12168,7 @@ export namespace Prisma {
     updatedAt?: boolean
     lote?: boolean | LoteDefaultArgs<ExtArgs>
     plantilla?: boolean | PlantillaDefaultArgs<ExtArgs>
+    proveedor?: boolean | TrabajoImpresion$proveedorArgs<ExtArgs>
     creadoPor?: boolean | UsuarioDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["trabajoImpresion"]>
 
@@ -12069,6 +12188,7 @@ export namespace Prisma {
     coaDescargas?: boolean
     fdsVistas?: boolean
     proforma?: boolean
+    proveedorId?: boolean
     imagenPath?: boolean
     estado?: boolean
     mensajeError?: boolean
@@ -12077,6 +12197,7 @@ export namespace Prisma {
     updatedAt?: boolean
     lote?: boolean | LoteDefaultArgs<ExtArgs>
     plantilla?: boolean | PlantillaDefaultArgs<ExtArgs>
+    proveedor?: boolean | TrabajoImpresion$proveedorArgs<ExtArgs>
     creadoPor?: boolean | UsuarioDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["trabajoImpresion"]>
 
@@ -12096,6 +12217,7 @@ export namespace Prisma {
     coaDescargas?: boolean
     fdsVistas?: boolean
     proforma?: boolean
+    proveedorId?: boolean
     imagenPath?: boolean
     estado?: boolean
     mensajeError?: boolean
@@ -12104,6 +12226,7 @@ export namespace Prisma {
     updatedAt?: boolean
     lote?: boolean | LoteDefaultArgs<ExtArgs>
     plantilla?: boolean | PlantillaDefaultArgs<ExtArgs>
+    proveedor?: boolean | TrabajoImpresion$proveedorArgs<ExtArgs>
     creadoPor?: boolean | UsuarioDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["trabajoImpresion"]>
 
@@ -12123,6 +12246,7 @@ export namespace Prisma {
     coaDescargas?: boolean
     fdsVistas?: boolean
     proforma?: boolean
+    proveedorId?: boolean
     imagenPath?: boolean
     estado?: boolean
     mensajeError?: boolean
@@ -12131,20 +12255,23 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type TrabajoImpresionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "loteId" | "plantillaId" | "pesoBruto" | "unidadBruto" | "cantidadNeta" | "unidadNeta" | "tara" | "token" | "escaneos" | "ultimoEscaneoAt" | "coaVistas" | "coaDescargas" | "fdsVistas" | "proforma" | "imagenPath" | "estado" | "mensajeError" | "creadoPorId" | "createdAt" | "updatedAt", ExtArgs["result"]["trabajoImpresion"]>
+  export type TrabajoImpresionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "loteId" | "plantillaId" | "pesoBruto" | "unidadBruto" | "cantidadNeta" | "unidadNeta" | "tara" | "token" | "escaneos" | "ultimoEscaneoAt" | "coaVistas" | "coaDescargas" | "fdsVistas" | "proforma" | "proveedorId" | "imagenPath" | "estado" | "mensajeError" | "creadoPorId" | "createdAt" | "updatedAt", ExtArgs["result"]["trabajoImpresion"]>
   export type TrabajoImpresionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     lote?: boolean | LoteDefaultArgs<ExtArgs>
     plantilla?: boolean | PlantillaDefaultArgs<ExtArgs>
+    proveedor?: boolean | TrabajoImpresion$proveedorArgs<ExtArgs>
     creadoPor?: boolean | UsuarioDefaultArgs<ExtArgs>
   }
   export type TrabajoImpresionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     lote?: boolean | LoteDefaultArgs<ExtArgs>
     plantilla?: boolean | PlantillaDefaultArgs<ExtArgs>
+    proveedor?: boolean | TrabajoImpresion$proveedorArgs<ExtArgs>
     creadoPor?: boolean | UsuarioDefaultArgs<ExtArgs>
   }
   export type TrabajoImpresionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     lote?: boolean | LoteDefaultArgs<ExtArgs>
     plantilla?: boolean | PlantillaDefaultArgs<ExtArgs>
+    proveedor?: boolean | TrabajoImpresion$proveedorArgs<ExtArgs>
     creadoPor?: boolean | UsuarioDefaultArgs<ExtArgs>
   }
 
@@ -12153,6 +12280,7 @@ export namespace Prisma {
     objects: {
       lote: Prisma.$LotePayload<ExtArgs>
       plantilla: Prisma.$PlantillaPayload<ExtArgs>
+      proveedor: Prisma.$ProveedorPayload<ExtArgs> | null
       creadoPor: Prisma.$UsuarioPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -12171,6 +12299,7 @@ export namespace Prisma {
       coaDescargas: number
       fdsVistas: number
       proforma: string
+      proveedorId: number | null
       imagenPath: string | null
       estado: $Enums.EstadoTrabajoImpresion
       mensajeError: string | null
@@ -12573,6 +12702,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     lote<T extends LoteDefaultArgs<ExtArgs> = {}>(args?: Subset<T, LoteDefaultArgs<ExtArgs>>): Prisma__LoteClient<$Result.GetResult<Prisma.$LotePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     plantilla<T extends PlantillaDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PlantillaDefaultArgs<ExtArgs>>): Prisma__PlantillaClient<$Result.GetResult<Prisma.$PlantillaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    proveedor<T extends TrabajoImpresion$proveedorArgs<ExtArgs> = {}>(args?: Subset<T, TrabajoImpresion$proveedorArgs<ExtArgs>>): Prisma__ProveedorClient<$Result.GetResult<Prisma.$ProveedorPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     creadoPor<T extends UsuarioDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UsuarioDefaultArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -12618,6 +12748,7 @@ export namespace Prisma {
     readonly coaDescargas: FieldRef<"TrabajoImpresion", 'Int'>
     readonly fdsVistas: FieldRef<"TrabajoImpresion", 'Int'>
     readonly proforma: FieldRef<"TrabajoImpresion", 'String'>
+    readonly proveedorId: FieldRef<"TrabajoImpresion", 'Int'>
     readonly imagenPath: FieldRef<"TrabajoImpresion", 'String'>
     readonly estado: FieldRef<"TrabajoImpresion", 'EstadoTrabajoImpresion'>
     readonly mensajeError: FieldRef<"TrabajoImpresion", 'String'>
@@ -13022,6 +13153,25 @@ export namespace Prisma {
      * Limit how many TrabajoImpresions to delete.
      */
     limit?: number
+  }
+
+  /**
+   * TrabajoImpresion.proveedor
+   */
+  export type TrabajoImpresion$proveedorArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Proveedor
+     */
+    select?: ProveedorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Proveedor
+     */
+    omit?: ProveedorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProveedorInclude<ExtArgs> | null
+    where?: ProveedorWhereInput
   }
 
   /**
@@ -27404,6 +27554,7 @@ export namespace Prisma {
     coaDescargas: 'coaDescargas',
     fdsVistas: 'fdsVistas',
     proforma: 'proforma',
+    proveedorId: 'proveedorId',
     imagenPath: 'imagenPath',
     estado: 'estado',
     mensajeError: 'mensajeError',
@@ -28092,6 +28243,7 @@ export namespace Prisma {
     nombreNormalizado?: StringFilter<"Proveedor"> | string
     createdAt?: DateTimeFilter<"Proveedor"> | Date | string
     updatedAt?: DateTimeFilter<"Proveedor"> | Date | string
+    trabajosImpresion?: TrabajoImpresionListRelationFilter
   }
 
   export type ProveedorOrderByWithRelationInput = {
@@ -28100,6 +28252,7 @@ export namespace Prisma {
     nombreNormalizado?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    trabajosImpresion?: TrabajoImpresionOrderByRelationAggregateInput
   }
 
   export type ProveedorWhereUniqueInput = Prisma.AtLeast<{
@@ -28111,6 +28264,7 @@ export namespace Prisma {
     NOT?: ProveedorWhereInput | ProveedorWhereInput[]
     createdAt?: DateTimeFilter<"Proveedor"> | Date | string
     updatedAt?: DateTimeFilter<"Proveedor"> | Date | string
+    trabajosImpresion?: TrabajoImpresionListRelationFilter
   }, "id" | "nombre" | "nombreNormalizado">
 
   export type ProveedorOrderByWithAggregationInput = {
@@ -28424,6 +28578,7 @@ export namespace Prisma {
     coaDescargas?: IntFilter<"TrabajoImpresion"> | number
     fdsVistas?: IntFilter<"TrabajoImpresion"> | number
     proforma?: StringFilter<"TrabajoImpresion"> | string
+    proveedorId?: IntNullableFilter<"TrabajoImpresion"> | number | null
     imagenPath?: StringNullableFilter<"TrabajoImpresion"> | string | null
     estado?: EnumEstadoTrabajoImpresionFilter<"TrabajoImpresion"> | $Enums.EstadoTrabajoImpresion
     mensajeError?: StringNullableFilter<"TrabajoImpresion"> | string | null
@@ -28432,6 +28587,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"TrabajoImpresion"> | Date | string
     lote?: XOR<LoteScalarRelationFilter, LoteWhereInput>
     plantilla?: XOR<PlantillaScalarRelationFilter, PlantillaWhereInput>
+    proveedor?: XOR<ProveedorNullableScalarRelationFilter, ProveedorWhereInput> | null
     creadoPor?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
   }
 
@@ -28451,6 +28607,7 @@ export namespace Prisma {
     coaDescargas?: SortOrder
     fdsVistas?: SortOrder
     proforma?: SortOrder
+    proveedorId?: SortOrderInput | SortOrder
     imagenPath?: SortOrderInput | SortOrder
     estado?: SortOrder
     mensajeError?: SortOrderInput | SortOrder
@@ -28459,6 +28616,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     lote?: LoteOrderByWithRelationInput
     plantilla?: PlantillaOrderByWithRelationInput
+    proveedor?: ProveedorOrderByWithRelationInput
     creadoPor?: UsuarioOrderByWithRelationInput
   }
 
@@ -28481,6 +28639,7 @@ export namespace Prisma {
     coaDescargas?: IntFilter<"TrabajoImpresion"> | number
     fdsVistas?: IntFilter<"TrabajoImpresion"> | number
     proforma?: StringFilter<"TrabajoImpresion"> | string
+    proveedorId?: IntNullableFilter<"TrabajoImpresion"> | number | null
     imagenPath?: StringNullableFilter<"TrabajoImpresion"> | string | null
     estado?: EnumEstadoTrabajoImpresionFilter<"TrabajoImpresion"> | $Enums.EstadoTrabajoImpresion
     mensajeError?: StringNullableFilter<"TrabajoImpresion"> | string | null
@@ -28489,6 +28648,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"TrabajoImpresion"> | Date | string
     lote?: XOR<LoteScalarRelationFilter, LoteWhereInput>
     plantilla?: XOR<PlantillaScalarRelationFilter, PlantillaWhereInput>
+    proveedor?: XOR<ProveedorNullableScalarRelationFilter, ProveedorWhereInput> | null
     creadoPor?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
   }, "id" | "token">
 
@@ -28508,6 +28668,7 @@ export namespace Prisma {
     coaDescargas?: SortOrder
     fdsVistas?: SortOrder
     proforma?: SortOrder
+    proveedorId?: SortOrderInput | SortOrder
     imagenPath?: SortOrderInput | SortOrder
     estado?: SortOrder
     mensajeError?: SortOrderInput | SortOrder
@@ -28540,6 +28701,7 @@ export namespace Prisma {
     coaDescargas?: IntWithAggregatesFilter<"TrabajoImpresion"> | number
     fdsVistas?: IntWithAggregatesFilter<"TrabajoImpresion"> | number
     proforma?: StringWithAggregatesFilter<"TrabajoImpresion"> | string
+    proveedorId?: IntNullableWithAggregatesFilter<"TrabajoImpresion"> | number | null
     imagenPath?: StringNullableWithAggregatesFilter<"TrabajoImpresion"> | string | null
     estado?: EnumEstadoTrabajoImpresionWithAggregatesFilter<"TrabajoImpresion"> | $Enums.EstadoTrabajoImpresion
     mensajeError?: StringNullableWithAggregatesFilter<"TrabajoImpresion"> | string | null
@@ -29829,6 +29991,7 @@ export namespace Prisma {
     nombreNormalizado: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    trabajosImpresion?: TrabajoImpresionCreateNestedManyWithoutProveedorInput
   }
 
   export type ProveedorUncheckedCreateInput = {
@@ -29837,6 +30000,7 @@ export namespace Prisma {
     nombreNormalizado: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    trabajosImpresion?: TrabajoImpresionUncheckedCreateNestedManyWithoutProveedorInput
   }
 
   export type ProveedorUpdateInput = {
@@ -29844,6 +30008,7 @@ export namespace Prisma {
     nombreNormalizado?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    trabajosImpresion?: TrabajoImpresionUpdateManyWithoutProveedorNestedInput
   }
 
   export type ProveedorUncheckedUpdateInput = {
@@ -29852,6 +30017,7 @@ export namespace Prisma {
     nombreNormalizado?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    trabajosImpresion?: TrabajoImpresionUncheckedUpdateManyWithoutProveedorNestedInput
   }
 
   export type ProveedorCreateManyInput = {
@@ -30192,6 +30358,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     lote: LoteCreateNestedOneWithoutTrabajosImpresionInput
     plantilla: PlantillaCreateNestedOneWithoutTrabajosImpresionInput
+    proveedor?: ProveedorCreateNestedOneWithoutTrabajosImpresionInput
     creadoPor: UsuarioCreateNestedOneWithoutTrabajosImpresionInput
   }
 
@@ -30211,6 +30378,7 @@ export namespace Prisma {
     coaDescargas?: number
     fdsVistas?: number
     proforma: string
+    proveedorId?: number | null
     imagenPath?: string | null
     estado?: $Enums.EstadoTrabajoImpresion
     mensajeError?: string | null
@@ -30239,6 +30407,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lote?: LoteUpdateOneRequiredWithoutTrabajosImpresionNestedInput
     plantilla?: PlantillaUpdateOneRequiredWithoutTrabajosImpresionNestedInput
+    proveedor?: ProveedorUpdateOneWithoutTrabajosImpresionNestedInput
     creadoPor?: UsuarioUpdateOneRequiredWithoutTrabajosImpresionNestedInput
   }
 
@@ -30258,6 +30427,7 @@ export namespace Prisma {
     coaDescargas?: IntFieldUpdateOperationsInput | number
     fdsVistas?: IntFieldUpdateOperationsInput | number
     proforma?: StringFieldUpdateOperationsInput | string
+    proveedorId?: NullableIntFieldUpdateOperationsInput | number | null
     imagenPath?: NullableStringFieldUpdateOperationsInput | string | null
     estado?: EnumEstadoTrabajoImpresionFieldUpdateOperationsInput | $Enums.EstadoTrabajoImpresion
     mensajeError?: NullableStringFieldUpdateOperationsInput | string | null
@@ -30282,6 +30452,7 @@ export namespace Prisma {
     coaDescargas?: number
     fdsVistas?: number
     proforma: string
+    proveedorId?: number | null
     imagenPath?: string | null
     estado?: $Enums.EstadoTrabajoImpresion
     mensajeError?: string | null
@@ -30326,6 +30497,7 @@ export namespace Prisma {
     coaDescargas?: IntFieldUpdateOperationsInput | number
     fdsVistas?: IntFieldUpdateOperationsInput | number
     proforma?: StringFieldUpdateOperationsInput | string
+    proveedorId?: NullableIntFieldUpdateOperationsInput | number | null
     imagenPath?: NullableStringFieldUpdateOperationsInput | string | null
     estado?: EnumEstadoTrabajoImpresionFieldUpdateOperationsInput | $Enums.EstadoTrabajoImpresion
     mensajeError?: NullableStringFieldUpdateOperationsInput | string | null
@@ -32082,6 +32254,11 @@ export namespace Prisma {
     isNot?: PlantillaWhereInput
   }
 
+  export type ProveedorNullableScalarRelationFilter = {
+    is?: ProveedorWhereInput | null
+    isNot?: ProveedorWhereInput | null
+  }
+
   export type TrabajoImpresionCountOrderByAggregateInput = {
     id?: SortOrder
     loteId?: SortOrder
@@ -32098,6 +32275,7 @@ export namespace Prisma {
     coaDescargas?: SortOrder
     fdsVistas?: SortOrder
     proforma?: SortOrder
+    proveedorId?: SortOrder
     imagenPath?: SortOrder
     estado?: SortOrder
     mensajeError?: SortOrder
@@ -32114,6 +32292,7 @@ export namespace Prisma {
     coaVistas?: SortOrder
     coaDescargas?: SortOrder
     fdsVistas?: SortOrder
+    proveedorId?: SortOrder
     creadoPorId?: SortOrder
   }
 
@@ -32133,6 +32312,7 @@ export namespace Prisma {
     coaDescargas?: SortOrder
     fdsVistas?: SortOrder
     proforma?: SortOrder
+    proveedorId?: SortOrder
     imagenPath?: SortOrder
     estado?: SortOrder
     mensajeError?: SortOrder
@@ -32157,6 +32337,7 @@ export namespace Prisma {
     coaDescargas?: SortOrder
     fdsVistas?: SortOrder
     proforma?: SortOrder
+    proveedorId?: SortOrder
     imagenPath?: SortOrder
     estado?: SortOrder
     mensajeError?: SortOrder
@@ -32173,6 +32354,7 @@ export namespace Prisma {
     coaVistas?: SortOrder
     coaDescargas?: SortOrder
     fdsVistas?: SortOrder
+    proveedorId?: SortOrder
     creadoPorId?: SortOrder
   }
 
@@ -33684,6 +33866,48 @@ export namespace Prisma {
     deleteMany?: LoteScalarWhereInput | LoteScalarWhereInput[]
   }
 
+  export type TrabajoImpresionCreateNestedManyWithoutProveedorInput = {
+    create?: XOR<TrabajoImpresionCreateWithoutProveedorInput, TrabajoImpresionUncheckedCreateWithoutProveedorInput> | TrabajoImpresionCreateWithoutProveedorInput[] | TrabajoImpresionUncheckedCreateWithoutProveedorInput[]
+    connectOrCreate?: TrabajoImpresionCreateOrConnectWithoutProveedorInput | TrabajoImpresionCreateOrConnectWithoutProveedorInput[]
+    createMany?: TrabajoImpresionCreateManyProveedorInputEnvelope
+    connect?: TrabajoImpresionWhereUniqueInput | TrabajoImpresionWhereUniqueInput[]
+  }
+
+  export type TrabajoImpresionUncheckedCreateNestedManyWithoutProveedorInput = {
+    create?: XOR<TrabajoImpresionCreateWithoutProveedorInput, TrabajoImpresionUncheckedCreateWithoutProveedorInput> | TrabajoImpresionCreateWithoutProveedorInput[] | TrabajoImpresionUncheckedCreateWithoutProveedorInput[]
+    connectOrCreate?: TrabajoImpresionCreateOrConnectWithoutProveedorInput | TrabajoImpresionCreateOrConnectWithoutProveedorInput[]
+    createMany?: TrabajoImpresionCreateManyProveedorInputEnvelope
+    connect?: TrabajoImpresionWhereUniqueInput | TrabajoImpresionWhereUniqueInput[]
+  }
+
+  export type TrabajoImpresionUpdateManyWithoutProveedorNestedInput = {
+    create?: XOR<TrabajoImpresionCreateWithoutProveedorInput, TrabajoImpresionUncheckedCreateWithoutProveedorInput> | TrabajoImpresionCreateWithoutProveedorInput[] | TrabajoImpresionUncheckedCreateWithoutProveedorInput[]
+    connectOrCreate?: TrabajoImpresionCreateOrConnectWithoutProveedorInput | TrabajoImpresionCreateOrConnectWithoutProveedorInput[]
+    upsert?: TrabajoImpresionUpsertWithWhereUniqueWithoutProveedorInput | TrabajoImpresionUpsertWithWhereUniqueWithoutProveedorInput[]
+    createMany?: TrabajoImpresionCreateManyProveedorInputEnvelope
+    set?: TrabajoImpresionWhereUniqueInput | TrabajoImpresionWhereUniqueInput[]
+    disconnect?: TrabajoImpresionWhereUniqueInput | TrabajoImpresionWhereUniqueInput[]
+    delete?: TrabajoImpresionWhereUniqueInput | TrabajoImpresionWhereUniqueInput[]
+    connect?: TrabajoImpresionWhereUniqueInput | TrabajoImpresionWhereUniqueInput[]
+    update?: TrabajoImpresionUpdateWithWhereUniqueWithoutProveedorInput | TrabajoImpresionUpdateWithWhereUniqueWithoutProveedorInput[]
+    updateMany?: TrabajoImpresionUpdateManyWithWhereWithoutProveedorInput | TrabajoImpresionUpdateManyWithWhereWithoutProveedorInput[]
+    deleteMany?: TrabajoImpresionScalarWhereInput | TrabajoImpresionScalarWhereInput[]
+  }
+
+  export type TrabajoImpresionUncheckedUpdateManyWithoutProveedorNestedInput = {
+    create?: XOR<TrabajoImpresionCreateWithoutProveedorInput, TrabajoImpresionUncheckedCreateWithoutProveedorInput> | TrabajoImpresionCreateWithoutProveedorInput[] | TrabajoImpresionUncheckedCreateWithoutProveedorInput[]
+    connectOrCreate?: TrabajoImpresionCreateOrConnectWithoutProveedorInput | TrabajoImpresionCreateOrConnectWithoutProveedorInput[]
+    upsert?: TrabajoImpresionUpsertWithWhereUniqueWithoutProveedorInput | TrabajoImpresionUpsertWithWhereUniqueWithoutProveedorInput[]
+    createMany?: TrabajoImpresionCreateManyProveedorInputEnvelope
+    set?: TrabajoImpresionWhereUniqueInput | TrabajoImpresionWhereUniqueInput[]
+    disconnect?: TrabajoImpresionWhereUniqueInput | TrabajoImpresionWhereUniqueInput[]
+    delete?: TrabajoImpresionWhereUniqueInput | TrabajoImpresionWhereUniqueInput[]
+    connect?: TrabajoImpresionWhereUniqueInput | TrabajoImpresionWhereUniqueInput[]
+    update?: TrabajoImpresionUpdateWithWhereUniqueWithoutProveedorInput | TrabajoImpresionUpdateWithWhereUniqueWithoutProveedorInput[]
+    updateMany?: TrabajoImpresionUpdateManyWithWhereWithoutProveedorInput | TrabajoImpresionUpdateManyWithWhereWithoutProveedorInput[]
+    deleteMany?: TrabajoImpresionScalarWhereInput | TrabajoImpresionScalarWhereInput[]
+  }
+
   export type ProductoCreatepictogramasGhsInput = {
     set: string[]
   }
@@ -33885,6 +34109,12 @@ export namespace Prisma {
     connect?: PlantillaWhereUniqueInput
   }
 
+  export type ProveedorCreateNestedOneWithoutTrabajosImpresionInput = {
+    create?: XOR<ProveedorCreateWithoutTrabajosImpresionInput, ProveedorUncheckedCreateWithoutTrabajosImpresionInput>
+    connectOrCreate?: ProveedorCreateOrConnectWithoutTrabajosImpresionInput
+    connect?: ProveedorWhereUniqueInput
+  }
+
   export type UsuarioCreateNestedOneWithoutTrabajosImpresionInput = {
     create?: XOR<UsuarioCreateWithoutTrabajosImpresionInput, UsuarioUncheckedCreateWithoutTrabajosImpresionInput>
     connectOrCreate?: UsuarioCreateOrConnectWithoutTrabajosImpresionInput
@@ -33909,6 +34139,16 @@ export namespace Prisma {
     upsert?: PlantillaUpsertWithoutTrabajosImpresionInput
     connect?: PlantillaWhereUniqueInput
     update?: XOR<XOR<PlantillaUpdateToOneWithWhereWithoutTrabajosImpresionInput, PlantillaUpdateWithoutTrabajosImpresionInput>, PlantillaUncheckedUpdateWithoutTrabajosImpresionInput>
+  }
+
+  export type ProveedorUpdateOneWithoutTrabajosImpresionNestedInput = {
+    create?: XOR<ProveedorCreateWithoutTrabajosImpresionInput, ProveedorUncheckedCreateWithoutTrabajosImpresionInput>
+    connectOrCreate?: ProveedorCreateOrConnectWithoutTrabajosImpresionInput
+    upsert?: ProveedorUpsertWithoutTrabajosImpresionInput
+    disconnect?: ProveedorWhereInput | boolean
+    delete?: ProveedorWhereInput | boolean
+    connect?: ProveedorWhereUniqueInput
+    update?: XOR<XOR<ProveedorUpdateToOneWithWhereWithoutTrabajosImpresionInput, ProveedorUpdateWithoutTrabajosImpresionInput>, ProveedorUncheckedUpdateWithoutTrabajosImpresionInput>
   }
 
   export type UsuarioUpdateOneRequiredWithoutTrabajosImpresionNestedInput = {
@@ -35084,6 +35324,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     lote: LoteCreateNestedOneWithoutTrabajosImpresionInput
     plantilla: PlantillaCreateNestedOneWithoutTrabajosImpresionInput
+    proveedor?: ProveedorCreateNestedOneWithoutTrabajosImpresionInput
   }
 
   export type TrabajoImpresionUncheckedCreateWithoutCreadoPorInput = {
@@ -35102,6 +35343,7 @@ export namespace Prisma {
     coaDescargas?: number
     fdsVistas?: number
     proforma: string
+    proveedorId?: number | null
     imagenPath?: string | null
     estado?: $Enums.EstadoTrabajoImpresion
     mensajeError?: string | null
@@ -35706,6 +35948,7 @@ export namespace Prisma {
     coaDescargas?: IntFilter<"TrabajoImpresion"> | number
     fdsVistas?: IntFilter<"TrabajoImpresion"> | number
     proforma?: StringFilter<"TrabajoImpresion"> | string
+    proveedorId?: IntNullableFilter<"TrabajoImpresion"> | number | null
     imagenPath?: StringNullableFilter<"TrabajoImpresion"> | string | null
     estado?: EnumEstadoTrabajoImpresionFilter<"TrabajoImpresion"> | $Enums.EstadoTrabajoImpresion
     mensajeError?: StringNullableFilter<"TrabajoImpresion"> | string | null
@@ -36247,6 +36490,79 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Lote"> | Date | string
   }
 
+  export type TrabajoImpresionCreateWithoutProveedorInput = {
+    pesoBruto: string
+    unidadBruto: string
+    cantidadNeta?: string | null
+    unidadNeta: string
+    tara?: string | null
+    token?: string | null
+    escaneos?: number
+    ultimoEscaneoAt?: Date | string | null
+    coaVistas?: number
+    coaDescargas?: number
+    fdsVistas?: number
+    proforma: string
+    imagenPath?: string | null
+    estado?: $Enums.EstadoTrabajoImpresion
+    mensajeError?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    lote: LoteCreateNestedOneWithoutTrabajosImpresionInput
+    plantilla: PlantillaCreateNestedOneWithoutTrabajosImpresionInput
+    creadoPor: UsuarioCreateNestedOneWithoutTrabajosImpresionInput
+  }
+
+  export type TrabajoImpresionUncheckedCreateWithoutProveedorInput = {
+    id?: number
+    loteId: number
+    plantillaId: number
+    pesoBruto: string
+    unidadBruto: string
+    cantidadNeta?: string | null
+    unidadNeta: string
+    tara?: string | null
+    token?: string | null
+    escaneos?: number
+    ultimoEscaneoAt?: Date | string | null
+    coaVistas?: number
+    coaDescargas?: number
+    fdsVistas?: number
+    proforma: string
+    imagenPath?: string | null
+    estado?: $Enums.EstadoTrabajoImpresion
+    mensajeError?: string | null
+    creadoPorId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TrabajoImpresionCreateOrConnectWithoutProveedorInput = {
+    where: TrabajoImpresionWhereUniqueInput
+    create: XOR<TrabajoImpresionCreateWithoutProveedorInput, TrabajoImpresionUncheckedCreateWithoutProveedorInput>
+  }
+
+  export type TrabajoImpresionCreateManyProveedorInputEnvelope = {
+    data: TrabajoImpresionCreateManyProveedorInput | TrabajoImpresionCreateManyProveedorInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type TrabajoImpresionUpsertWithWhereUniqueWithoutProveedorInput = {
+    where: TrabajoImpresionWhereUniqueInput
+    update: XOR<TrabajoImpresionUpdateWithoutProveedorInput, TrabajoImpresionUncheckedUpdateWithoutProveedorInput>
+    create: XOR<TrabajoImpresionCreateWithoutProveedorInput, TrabajoImpresionUncheckedCreateWithoutProveedorInput>
+  }
+
+  export type TrabajoImpresionUpdateWithWhereUniqueWithoutProveedorInput = {
+    where: TrabajoImpresionWhereUniqueInput
+    data: XOR<TrabajoImpresionUpdateWithoutProveedorInput, TrabajoImpresionUncheckedUpdateWithoutProveedorInput>
+  }
+
+  export type TrabajoImpresionUpdateManyWithWhereWithoutProveedorInput = {
+    where: TrabajoImpresionScalarWhereInput
+    data: XOR<TrabajoImpresionUpdateManyMutationInput, TrabajoImpresionUncheckedUpdateManyWithoutProveedorInput>
+  }
+
   export type LoteCreateWithoutProductoInput = {
     numeroLote: string
     fechaFabricacion: string
@@ -36319,6 +36635,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     lote: LoteCreateNestedOneWithoutTrabajosImpresionInput
+    proveedor?: ProveedorCreateNestedOneWithoutTrabajosImpresionInput
     creadoPor: UsuarioCreateNestedOneWithoutTrabajosImpresionInput
   }
 
@@ -36337,6 +36654,7 @@ export namespace Prisma {
     coaDescargas?: number
     fdsVistas?: number
     proforma: string
+    proveedorId?: number | null
     imagenPath?: string | null
     estado?: $Enums.EstadoTrabajoImpresion
     mensajeError?: string | null
@@ -36452,6 +36770,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     plantilla: PlantillaCreateNestedOneWithoutTrabajosImpresionInput
+    proveedor?: ProveedorCreateNestedOneWithoutTrabajosImpresionInput
     creadoPor: UsuarioCreateNestedOneWithoutTrabajosImpresionInput
   }
 
@@ -36470,6 +36789,7 @@ export namespace Prisma {
     coaDescargas?: number
     fdsVistas?: number
     proforma: string
+    proveedorId?: number | null
     imagenPath?: string | null
     estado?: $Enums.EstadoTrabajoImpresion
     mensajeError?: string | null
@@ -36632,6 +36952,26 @@ export namespace Prisma {
     create: XOR<PlantillaCreateWithoutTrabajosImpresionInput, PlantillaUncheckedCreateWithoutTrabajosImpresionInput>
   }
 
+  export type ProveedorCreateWithoutTrabajosImpresionInput = {
+    nombre: string
+    nombreNormalizado: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ProveedorUncheckedCreateWithoutTrabajosImpresionInput = {
+    id?: number
+    nombre: string
+    nombreNormalizado: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ProveedorCreateOrConnectWithoutTrabajosImpresionInput = {
+    where: ProveedorWhereUniqueInput
+    create: XOR<ProveedorCreateWithoutTrabajosImpresionInput, ProveedorUncheckedCreateWithoutTrabajosImpresionInput>
+  }
+
   export type UsuarioCreateWithoutTrabajosImpresionInput = {
     supabaseUserId: string
     nombre: string
@@ -36756,6 +37096,32 @@ export namespace Prisma {
     nombre?: StringFieldUpdateOperationsInput | string
     archivo?: StringFieldUpdateOperationsInput | string
     activa?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProveedorUpsertWithoutTrabajosImpresionInput = {
+    update: XOR<ProveedorUpdateWithoutTrabajosImpresionInput, ProveedorUncheckedUpdateWithoutTrabajosImpresionInput>
+    create: XOR<ProveedorCreateWithoutTrabajosImpresionInput, ProveedorUncheckedCreateWithoutTrabajosImpresionInput>
+    where?: ProveedorWhereInput
+  }
+
+  export type ProveedorUpdateToOneWithWhereWithoutTrabajosImpresionInput = {
+    where?: ProveedorWhereInput
+    data: XOR<ProveedorUpdateWithoutTrabajosImpresionInput, ProveedorUncheckedUpdateWithoutTrabajosImpresionInput>
+  }
+
+  export type ProveedorUpdateWithoutTrabajosImpresionInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    nombreNormalizado?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProveedorUncheckedUpdateWithoutTrabajosImpresionInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    nombreNormalizado?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -39356,6 +39722,7 @@ export namespace Prisma {
     coaDescargas?: number
     fdsVistas?: number
     proforma: string
+    proveedorId?: number | null
     imagenPath?: string | null
     estado?: $Enums.EstadoTrabajoImpresion
     mensajeError?: string | null
@@ -39623,6 +39990,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lote?: LoteUpdateOneRequiredWithoutTrabajosImpresionNestedInput
     plantilla?: PlantillaUpdateOneRequiredWithoutTrabajosImpresionNestedInput
+    proveedor?: ProveedorUpdateOneWithoutTrabajosImpresionNestedInput
   }
 
   export type TrabajoImpresionUncheckedUpdateWithoutCreadoPorInput = {
@@ -39641,6 +40009,7 @@ export namespace Prisma {
     coaDescargas?: IntFieldUpdateOperationsInput | number
     fdsVistas?: IntFieldUpdateOperationsInput | number
     proforma?: StringFieldUpdateOperationsInput | string
+    proveedorId?: NullableIntFieldUpdateOperationsInput | number | null
     imagenPath?: NullableStringFieldUpdateOperationsInput | string | null
     estado?: EnumEstadoTrabajoImpresionFieldUpdateOperationsInput | $Enums.EstadoTrabajoImpresion
     mensajeError?: NullableStringFieldUpdateOperationsInput | string | null
@@ -39664,6 +40033,7 @@ export namespace Prisma {
     coaDescargas?: IntFieldUpdateOperationsInput | number
     fdsVistas?: IntFieldUpdateOperationsInput | number
     proforma?: StringFieldUpdateOperationsInput | string
+    proveedorId?: NullableIntFieldUpdateOperationsInput | number | null
     imagenPath?: NullableStringFieldUpdateOperationsInput | string | null
     estado?: EnumEstadoTrabajoImpresionFieldUpdateOperationsInput | $Enums.EstadoTrabajoImpresion
     mensajeError?: NullableStringFieldUpdateOperationsInput | string | null
@@ -40154,6 +40524,101 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type TrabajoImpresionCreateManyProveedorInput = {
+    id?: number
+    loteId: number
+    plantillaId: number
+    pesoBruto: string
+    unidadBruto: string
+    cantidadNeta?: string | null
+    unidadNeta: string
+    tara?: string | null
+    token?: string | null
+    escaneos?: number
+    ultimoEscaneoAt?: Date | string | null
+    coaVistas?: number
+    coaDescargas?: number
+    fdsVistas?: number
+    proforma: string
+    imagenPath?: string | null
+    estado?: $Enums.EstadoTrabajoImpresion
+    mensajeError?: string | null
+    creadoPorId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TrabajoImpresionUpdateWithoutProveedorInput = {
+    pesoBruto?: StringFieldUpdateOperationsInput | string
+    unidadBruto?: StringFieldUpdateOperationsInput | string
+    cantidadNeta?: NullableStringFieldUpdateOperationsInput | string | null
+    unidadNeta?: StringFieldUpdateOperationsInput | string
+    tara?: NullableStringFieldUpdateOperationsInput | string | null
+    token?: NullableStringFieldUpdateOperationsInput | string | null
+    escaneos?: IntFieldUpdateOperationsInput | number
+    ultimoEscaneoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    coaVistas?: IntFieldUpdateOperationsInput | number
+    coaDescargas?: IntFieldUpdateOperationsInput | number
+    fdsVistas?: IntFieldUpdateOperationsInput | number
+    proforma?: StringFieldUpdateOperationsInput | string
+    imagenPath?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: EnumEstadoTrabajoImpresionFieldUpdateOperationsInput | $Enums.EstadoTrabajoImpresion
+    mensajeError?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lote?: LoteUpdateOneRequiredWithoutTrabajosImpresionNestedInput
+    plantilla?: PlantillaUpdateOneRequiredWithoutTrabajosImpresionNestedInput
+    creadoPor?: UsuarioUpdateOneRequiredWithoutTrabajosImpresionNestedInput
+  }
+
+  export type TrabajoImpresionUncheckedUpdateWithoutProveedorInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    loteId?: IntFieldUpdateOperationsInput | number
+    plantillaId?: IntFieldUpdateOperationsInput | number
+    pesoBruto?: StringFieldUpdateOperationsInput | string
+    unidadBruto?: StringFieldUpdateOperationsInput | string
+    cantidadNeta?: NullableStringFieldUpdateOperationsInput | string | null
+    unidadNeta?: StringFieldUpdateOperationsInput | string
+    tara?: NullableStringFieldUpdateOperationsInput | string | null
+    token?: NullableStringFieldUpdateOperationsInput | string | null
+    escaneos?: IntFieldUpdateOperationsInput | number
+    ultimoEscaneoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    coaVistas?: IntFieldUpdateOperationsInput | number
+    coaDescargas?: IntFieldUpdateOperationsInput | number
+    fdsVistas?: IntFieldUpdateOperationsInput | number
+    proforma?: StringFieldUpdateOperationsInput | string
+    imagenPath?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: EnumEstadoTrabajoImpresionFieldUpdateOperationsInput | $Enums.EstadoTrabajoImpresion
+    mensajeError?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoPorId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TrabajoImpresionUncheckedUpdateManyWithoutProveedorInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    loteId?: IntFieldUpdateOperationsInput | number
+    plantillaId?: IntFieldUpdateOperationsInput | number
+    pesoBruto?: StringFieldUpdateOperationsInput | string
+    unidadBruto?: StringFieldUpdateOperationsInput | string
+    cantidadNeta?: NullableStringFieldUpdateOperationsInput | string | null
+    unidadNeta?: StringFieldUpdateOperationsInput | string
+    tara?: NullableStringFieldUpdateOperationsInput | string | null
+    token?: NullableStringFieldUpdateOperationsInput | string | null
+    escaneos?: IntFieldUpdateOperationsInput | number
+    ultimoEscaneoAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    coaVistas?: IntFieldUpdateOperationsInput | number
+    coaDescargas?: IntFieldUpdateOperationsInput | number
+    fdsVistas?: IntFieldUpdateOperationsInput | number
+    proforma?: StringFieldUpdateOperationsInput | string
+    imagenPath?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: EnumEstadoTrabajoImpresionFieldUpdateOperationsInput | $Enums.EstadoTrabajoImpresion
+    mensajeError?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoPorId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type LoteCreateManyProductoInput = {
     id?: number
     numeroLote: string
@@ -40222,6 +40687,7 @@ export namespace Prisma {
     coaDescargas?: number
     fdsVistas?: number
     proforma: string
+    proveedorId?: number | null
     imagenPath?: string | null
     estado?: $Enums.EstadoTrabajoImpresion
     mensajeError?: string | null
@@ -40249,6 +40715,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lote?: LoteUpdateOneRequiredWithoutTrabajosImpresionNestedInput
+    proveedor?: ProveedorUpdateOneWithoutTrabajosImpresionNestedInput
     creadoPor?: UsuarioUpdateOneRequiredWithoutTrabajosImpresionNestedInput
   }
 
@@ -40267,6 +40734,7 @@ export namespace Prisma {
     coaDescargas?: IntFieldUpdateOperationsInput | number
     fdsVistas?: IntFieldUpdateOperationsInput | number
     proforma?: StringFieldUpdateOperationsInput | string
+    proveedorId?: NullableIntFieldUpdateOperationsInput | number | null
     imagenPath?: NullableStringFieldUpdateOperationsInput | string | null
     estado?: EnumEstadoTrabajoImpresionFieldUpdateOperationsInput | $Enums.EstadoTrabajoImpresion
     mensajeError?: NullableStringFieldUpdateOperationsInput | string | null
@@ -40290,6 +40758,7 @@ export namespace Prisma {
     coaDescargas?: IntFieldUpdateOperationsInput | number
     fdsVistas?: IntFieldUpdateOperationsInput | number
     proforma?: StringFieldUpdateOperationsInput | string
+    proveedorId?: NullableIntFieldUpdateOperationsInput | number | null
     imagenPath?: NullableStringFieldUpdateOperationsInput | string | null
     estado?: EnumEstadoTrabajoImpresionFieldUpdateOperationsInput | $Enums.EstadoTrabajoImpresion
     mensajeError?: NullableStringFieldUpdateOperationsInput | string | null
@@ -40313,6 +40782,7 @@ export namespace Prisma {
     coaDescargas?: number
     fdsVistas?: number
     proforma: string
+    proveedorId?: number | null
     imagenPath?: string | null
     estado?: $Enums.EstadoTrabajoImpresion
     mensajeError?: string | null
@@ -40340,6 +40810,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     plantilla?: PlantillaUpdateOneRequiredWithoutTrabajosImpresionNestedInput
+    proveedor?: ProveedorUpdateOneWithoutTrabajosImpresionNestedInput
     creadoPor?: UsuarioUpdateOneRequiredWithoutTrabajosImpresionNestedInput
   }
 
@@ -40358,6 +40829,7 @@ export namespace Prisma {
     coaDescargas?: IntFieldUpdateOperationsInput | number
     fdsVistas?: IntFieldUpdateOperationsInput | number
     proforma?: StringFieldUpdateOperationsInput | string
+    proveedorId?: NullableIntFieldUpdateOperationsInput | number | null
     imagenPath?: NullableStringFieldUpdateOperationsInput | string | null
     estado?: EnumEstadoTrabajoImpresionFieldUpdateOperationsInput | $Enums.EstadoTrabajoImpresion
     mensajeError?: NullableStringFieldUpdateOperationsInput | string | null
@@ -40381,6 +40853,7 @@ export namespace Prisma {
     coaDescargas?: IntFieldUpdateOperationsInput | number
     fdsVistas?: IntFieldUpdateOperationsInput | number
     proforma?: StringFieldUpdateOperationsInput | string
+    proveedorId?: NullableIntFieldUpdateOperationsInput | number | null
     imagenPath?: NullableStringFieldUpdateOperationsInput | string | null
     estado?: EnumEstadoTrabajoImpresionFieldUpdateOperationsInput | $Enums.EstadoTrabajoImpresion
     mensajeError?: NullableStringFieldUpdateOperationsInput | string | null

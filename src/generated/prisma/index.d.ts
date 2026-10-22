@@ -11853,6 +11853,7 @@ export namespace Prisma {
     fdsVistas: number | null
     proforma: string | null
     proveedorId: number | null
+    fechaIngreso: string | null
     imagenPath: string | null
     estado: $Enums.EstadoTrabajoImpresion | null
     mensajeError: string | null
@@ -11878,6 +11879,7 @@ export namespace Prisma {
     fdsVistas: number | null
     proforma: string | null
     proveedorId: number | null
+    fechaIngreso: string | null
     imagenPath: string | null
     estado: $Enums.EstadoTrabajoImpresion | null
     mensajeError: string | null
@@ -11903,6 +11905,7 @@ export namespace Prisma {
     fdsVistas: number
     proforma: number
     proveedorId: number
+    fechaIngreso: number
     imagenPath: number
     estado: number
     mensajeError: number
@@ -11954,6 +11957,7 @@ export namespace Prisma {
     fdsVistas?: true
     proforma?: true
     proveedorId?: true
+    fechaIngreso?: true
     imagenPath?: true
     estado?: true
     mensajeError?: true
@@ -11979,6 +11983,7 @@ export namespace Prisma {
     fdsVistas?: true
     proforma?: true
     proveedorId?: true
+    fechaIngreso?: true
     imagenPath?: true
     estado?: true
     mensajeError?: true
@@ -12004,6 +12009,7 @@ export namespace Prisma {
     fdsVistas?: true
     proforma?: true
     proveedorId?: true
+    fechaIngreso?: true
     imagenPath?: true
     estado?: true
     mensajeError?: true
@@ -12116,6 +12122,7 @@ export namespace Prisma {
     fdsVistas: number
     proforma: string
     proveedorId: number | null
+    fechaIngreso: string | null
     imagenPath: string | null
     estado: $Enums.EstadoTrabajoImpresion
     mensajeError: string | null
@@ -12160,6 +12167,7 @@ export namespace Prisma {
     fdsVistas?: boolean
     proforma?: boolean
     proveedorId?: boolean
+    fechaIngreso?: boolean
     imagenPath?: boolean
     estado?: boolean
     mensajeError?: boolean
@@ -12189,6 +12197,7 @@ export namespace Prisma {
     fdsVistas?: boolean
     proforma?: boolean
     proveedorId?: boolean
+    fechaIngreso?: boolean
     imagenPath?: boolean
     estado?: boolean
     mensajeError?: boolean
@@ -12218,6 +12227,7 @@ export namespace Prisma {
     fdsVistas?: boolean
     proforma?: boolean
     proveedorId?: boolean
+    fechaIngreso?: boolean
     imagenPath?: boolean
     estado?: boolean
     mensajeError?: boolean
@@ -12247,6 +12257,7 @@ export namespace Prisma {
     fdsVistas?: boolean
     proforma?: boolean
     proveedorId?: boolean
+    fechaIngreso?: boolean
     imagenPath?: boolean
     estado?: boolean
     mensajeError?: boolean
@@ -12255,7 +12266,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type TrabajoImpresionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "loteId" | "plantillaId" | "pesoBruto" | "unidadBruto" | "cantidadNeta" | "unidadNeta" | "tara" | "token" | "escaneos" | "ultimoEscaneoAt" | "coaVistas" | "coaDescargas" | "fdsVistas" | "proforma" | "proveedorId" | "imagenPath" | "estado" | "mensajeError" | "creadoPorId" | "createdAt" | "updatedAt", ExtArgs["result"]["trabajoImpresion"]>
+  export type TrabajoImpresionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "loteId" | "plantillaId" | "pesoBruto" | "unidadBruto" | "cantidadNeta" | "unidadNeta" | "tara" | "token" | "escaneos" | "ultimoEscaneoAt" | "coaVistas" | "coaDescargas" | "fdsVistas" | "proforma" | "proveedorId" | "fechaIngreso" | "imagenPath" | "estado" | "mensajeError" | "creadoPorId" | "createdAt" | "updatedAt", ExtArgs["result"]["trabajoImpresion"]>
   export type TrabajoImpresionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     lote?: boolean | LoteDefaultArgs<ExtArgs>
     plantilla?: boolean | PlantillaDefaultArgs<ExtArgs>
@@ -12300,6 +12311,7 @@ export namespace Prisma {
       fdsVistas: number
       proforma: string
       proveedorId: number | null
+      fechaIngreso: string | null
       imagenPath: string | null
       estado: $Enums.EstadoTrabajoImpresion
       mensajeError: string | null
@@ -12749,6 +12761,7 @@ export namespace Prisma {
     readonly fdsVistas: FieldRef<"TrabajoImpresion", 'Int'>
     readonly proforma: FieldRef<"TrabajoImpresion", 'String'>
     readonly proveedorId: FieldRef<"TrabajoImpresion", 'Int'>
+    readonly fechaIngreso: FieldRef<"TrabajoImpresion", 'String'>
     readonly imagenPath: FieldRef<"TrabajoImpresion", 'String'>
     readonly estado: FieldRef<"TrabajoImpresion", 'EstadoTrabajoImpresion'>
     readonly mensajeError: FieldRef<"TrabajoImpresion", 'String'>
@@ -27555,6 +27568,7 @@ export namespace Prisma {
     fdsVistas: 'fdsVistas',
     proforma: 'proforma',
     proveedorId: 'proveedorId',
+    fechaIngreso: 'fechaIngreso',
     imagenPath: 'imagenPath',
     estado: 'estado',
     mensajeError: 'mensajeError',
@@ -28579,6 +28593,7 @@ export namespace Prisma {
     fdsVistas?: IntFilter<"TrabajoImpresion"> | number
     proforma?: StringFilter<"TrabajoImpresion"> | string
     proveedorId?: IntNullableFilter<"TrabajoImpresion"> | number | null
+    fechaIngreso?: StringNullableFilter<"TrabajoImpresion"> | string | null
     imagenPath?: StringNullableFilter<"TrabajoImpresion"> | string | null
     estado?: EnumEstadoTrabajoImpresionFilter<"TrabajoImpresion"> | $Enums.EstadoTrabajoImpresion
     mensajeError?: StringNullableFilter<"TrabajoImpresion"> | string | null
@@ -28608,6 +28623,7 @@ export namespace Prisma {
     fdsVistas?: SortOrder
     proforma?: SortOrder
     proveedorId?: SortOrderInput | SortOrder
+    fechaIngreso?: SortOrderInput | SortOrder
     imagenPath?: SortOrderInput | SortOrder
     estado?: SortOrder
     mensajeError?: SortOrderInput | SortOrder
@@ -28640,6 +28656,7 @@ export namespace Prisma {
     fdsVistas?: IntFilter<"TrabajoImpresion"> | number
     proforma?: StringFilter<"TrabajoImpresion"> | string
     proveedorId?: IntNullableFilter<"TrabajoImpresion"> | number | null
+    fechaIngreso?: StringNullableFilter<"TrabajoImpresion"> | string | null
     imagenPath?: StringNullableFilter<"TrabajoImpresion"> | string | null
     estado?: EnumEstadoTrabajoImpresionFilter<"TrabajoImpresion"> | $Enums.EstadoTrabajoImpresion
     mensajeError?: StringNullableFilter<"TrabajoImpresion"> | string | null
@@ -28669,6 +28686,7 @@ export namespace Prisma {
     fdsVistas?: SortOrder
     proforma?: SortOrder
     proveedorId?: SortOrderInput | SortOrder
+    fechaIngreso?: SortOrderInput | SortOrder
     imagenPath?: SortOrderInput | SortOrder
     estado?: SortOrder
     mensajeError?: SortOrderInput | SortOrder
@@ -28702,6 +28720,7 @@ export namespace Prisma {
     fdsVistas?: IntWithAggregatesFilter<"TrabajoImpresion"> | number
     proforma?: StringWithAggregatesFilter<"TrabajoImpresion"> | string
     proveedorId?: IntNullableWithAggregatesFilter<"TrabajoImpresion"> | number | null
+    fechaIngreso?: StringNullableWithAggregatesFilter<"TrabajoImpresion"> | string | null
     imagenPath?: StringNullableWithAggregatesFilter<"TrabajoImpresion"> | string | null
     estado?: EnumEstadoTrabajoImpresionWithAggregatesFilter<"TrabajoImpresion"> | $Enums.EstadoTrabajoImpresion
     mensajeError?: StringNullableWithAggregatesFilter<"TrabajoImpresion"> | string | null
@@ -30351,6 +30370,7 @@ export namespace Prisma {
     coaDescargas?: number
     fdsVistas?: number
     proforma: string
+    fechaIngreso?: string | null
     imagenPath?: string | null
     estado?: $Enums.EstadoTrabajoImpresion
     mensajeError?: string | null
@@ -30379,6 +30399,7 @@ export namespace Prisma {
     fdsVistas?: number
     proforma: string
     proveedorId?: number | null
+    fechaIngreso?: string | null
     imagenPath?: string | null
     estado?: $Enums.EstadoTrabajoImpresion
     mensajeError?: string | null
@@ -30400,6 +30421,7 @@ export namespace Prisma {
     coaDescargas?: IntFieldUpdateOperationsInput | number
     fdsVistas?: IntFieldUpdateOperationsInput | number
     proforma?: StringFieldUpdateOperationsInput | string
+    fechaIngreso?: NullableStringFieldUpdateOperationsInput | string | null
     imagenPath?: NullableStringFieldUpdateOperationsInput | string | null
     estado?: EnumEstadoTrabajoImpresionFieldUpdateOperationsInput | $Enums.EstadoTrabajoImpresion
     mensajeError?: NullableStringFieldUpdateOperationsInput | string | null
@@ -30428,6 +30450,7 @@ export namespace Prisma {
     fdsVistas?: IntFieldUpdateOperationsInput | number
     proforma?: StringFieldUpdateOperationsInput | string
     proveedorId?: NullableIntFieldUpdateOperationsInput | number | null
+    fechaIngreso?: NullableStringFieldUpdateOperationsInput | string | null
     imagenPath?: NullableStringFieldUpdateOperationsInput | string | null
     estado?: EnumEstadoTrabajoImpresionFieldUpdateOperationsInput | $Enums.EstadoTrabajoImpresion
     mensajeError?: NullableStringFieldUpdateOperationsInput | string | null
@@ -30453,6 +30476,7 @@ export namespace Prisma {
     fdsVistas?: number
     proforma: string
     proveedorId?: number | null
+    fechaIngreso?: string | null
     imagenPath?: string | null
     estado?: $Enums.EstadoTrabajoImpresion
     mensajeError?: string | null
@@ -30474,6 +30498,7 @@ export namespace Prisma {
     coaDescargas?: IntFieldUpdateOperationsInput | number
     fdsVistas?: IntFieldUpdateOperationsInput | number
     proforma?: StringFieldUpdateOperationsInput | string
+    fechaIngreso?: NullableStringFieldUpdateOperationsInput | string | null
     imagenPath?: NullableStringFieldUpdateOperationsInput | string | null
     estado?: EnumEstadoTrabajoImpresionFieldUpdateOperationsInput | $Enums.EstadoTrabajoImpresion
     mensajeError?: NullableStringFieldUpdateOperationsInput | string | null
@@ -30498,6 +30523,7 @@ export namespace Prisma {
     fdsVistas?: IntFieldUpdateOperationsInput | number
     proforma?: StringFieldUpdateOperationsInput | string
     proveedorId?: NullableIntFieldUpdateOperationsInput | number | null
+    fechaIngreso?: NullableStringFieldUpdateOperationsInput | string | null
     imagenPath?: NullableStringFieldUpdateOperationsInput | string | null
     estado?: EnumEstadoTrabajoImpresionFieldUpdateOperationsInput | $Enums.EstadoTrabajoImpresion
     mensajeError?: NullableStringFieldUpdateOperationsInput | string | null
@@ -32276,6 +32302,7 @@ export namespace Prisma {
     fdsVistas?: SortOrder
     proforma?: SortOrder
     proveedorId?: SortOrder
+    fechaIngreso?: SortOrder
     imagenPath?: SortOrder
     estado?: SortOrder
     mensajeError?: SortOrder
@@ -32313,6 +32340,7 @@ export namespace Prisma {
     fdsVistas?: SortOrder
     proforma?: SortOrder
     proveedorId?: SortOrder
+    fechaIngreso?: SortOrder
     imagenPath?: SortOrder
     estado?: SortOrder
     mensajeError?: SortOrder
@@ -32338,6 +32366,7 @@ export namespace Prisma {
     fdsVistas?: SortOrder
     proforma?: SortOrder
     proveedorId?: SortOrder
+    fechaIngreso?: SortOrder
     imagenPath?: SortOrder
     estado?: SortOrder
     mensajeError?: SortOrder
@@ -35317,6 +35346,7 @@ export namespace Prisma {
     coaDescargas?: number
     fdsVistas?: number
     proforma: string
+    fechaIngreso?: string | null
     imagenPath?: string | null
     estado?: $Enums.EstadoTrabajoImpresion
     mensajeError?: string | null
@@ -35344,6 +35374,7 @@ export namespace Prisma {
     fdsVistas?: number
     proforma: string
     proveedorId?: number | null
+    fechaIngreso?: string | null
     imagenPath?: string | null
     estado?: $Enums.EstadoTrabajoImpresion
     mensajeError?: string | null
@@ -35949,6 +35980,7 @@ export namespace Prisma {
     fdsVistas?: IntFilter<"TrabajoImpresion"> | number
     proforma?: StringFilter<"TrabajoImpresion"> | string
     proveedorId?: IntNullableFilter<"TrabajoImpresion"> | number | null
+    fechaIngreso?: StringNullableFilter<"TrabajoImpresion"> | string | null
     imagenPath?: StringNullableFilter<"TrabajoImpresion"> | string | null
     estado?: EnumEstadoTrabajoImpresionFilter<"TrabajoImpresion"> | $Enums.EstadoTrabajoImpresion
     mensajeError?: StringNullableFilter<"TrabajoImpresion"> | string | null
@@ -36503,6 +36535,7 @@ export namespace Prisma {
     coaDescargas?: number
     fdsVistas?: number
     proforma: string
+    fechaIngreso?: string | null
     imagenPath?: string | null
     estado?: $Enums.EstadoTrabajoImpresion
     mensajeError?: string | null
@@ -36529,6 +36562,7 @@ export namespace Prisma {
     coaDescargas?: number
     fdsVistas?: number
     proforma: string
+    fechaIngreso?: string | null
     imagenPath?: string | null
     estado?: $Enums.EstadoTrabajoImpresion
     mensajeError?: string | null
@@ -36629,6 +36663,7 @@ export namespace Prisma {
     coaDescargas?: number
     fdsVistas?: number
     proforma: string
+    fechaIngreso?: string | null
     imagenPath?: string | null
     estado?: $Enums.EstadoTrabajoImpresion
     mensajeError?: string | null
@@ -36655,6 +36690,7 @@ export namespace Prisma {
     fdsVistas?: number
     proforma: string
     proveedorId?: number | null
+    fechaIngreso?: string | null
     imagenPath?: string | null
     estado?: $Enums.EstadoTrabajoImpresion
     mensajeError?: string | null
@@ -36764,6 +36800,7 @@ export namespace Prisma {
     coaDescargas?: number
     fdsVistas?: number
     proforma: string
+    fechaIngreso?: string | null
     imagenPath?: string | null
     estado?: $Enums.EstadoTrabajoImpresion
     mensajeError?: string | null
@@ -36790,6 +36827,7 @@ export namespace Prisma {
     fdsVistas?: number
     proforma: string
     proveedorId?: number | null
+    fechaIngreso?: string | null
     imagenPath?: string | null
     estado?: $Enums.EstadoTrabajoImpresion
     mensajeError?: string | null
@@ -39723,6 +39761,7 @@ export namespace Prisma {
     fdsVistas?: number
     proforma: string
     proveedorId?: number | null
+    fechaIngreso?: string | null
     imagenPath?: string | null
     estado?: $Enums.EstadoTrabajoImpresion
     mensajeError?: string | null
@@ -39983,6 +40022,7 @@ export namespace Prisma {
     coaDescargas?: IntFieldUpdateOperationsInput | number
     fdsVistas?: IntFieldUpdateOperationsInput | number
     proforma?: StringFieldUpdateOperationsInput | string
+    fechaIngreso?: NullableStringFieldUpdateOperationsInput | string | null
     imagenPath?: NullableStringFieldUpdateOperationsInput | string | null
     estado?: EnumEstadoTrabajoImpresionFieldUpdateOperationsInput | $Enums.EstadoTrabajoImpresion
     mensajeError?: NullableStringFieldUpdateOperationsInput | string | null
@@ -40010,6 +40050,7 @@ export namespace Prisma {
     fdsVistas?: IntFieldUpdateOperationsInput | number
     proforma?: StringFieldUpdateOperationsInput | string
     proveedorId?: NullableIntFieldUpdateOperationsInput | number | null
+    fechaIngreso?: NullableStringFieldUpdateOperationsInput | string | null
     imagenPath?: NullableStringFieldUpdateOperationsInput | string | null
     estado?: EnumEstadoTrabajoImpresionFieldUpdateOperationsInput | $Enums.EstadoTrabajoImpresion
     mensajeError?: NullableStringFieldUpdateOperationsInput | string | null
@@ -40034,6 +40075,7 @@ export namespace Prisma {
     fdsVistas?: IntFieldUpdateOperationsInput | number
     proforma?: StringFieldUpdateOperationsInput | string
     proveedorId?: NullableIntFieldUpdateOperationsInput | number | null
+    fechaIngreso?: NullableStringFieldUpdateOperationsInput | string | null
     imagenPath?: NullableStringFieldUpdateOperationsInput | string | null
     estado?: EnumEstadoTrabajoImpresionFieldUpdateOperationsInput | $Enums.EstadoTrabajoImpresion
     mensajeError?: NullableStringFieldUpdateOperationsInput | string | null
@@ -40540,6 +40582,7 @@ export namespace Prisma {
     coaDescargas?: number
     fdsVistas?: number
     proforma: string
+    fechaIngreso?: string | null
     imagenPath?: string | null
     estado?: $Enums.EstadoTrabajoImpresion
     mensajeError?: string | null
@@ -40561,6 +40604,7 @@ export namespace Prisma {
     coaDescargas?: IntFieldUpdateOperationsInput | number
     fdsVistas?: IntFieldUpdateOperationsInput | number
     proforma?: StringFieldUpdateOperationsInput | string
+    fechaIngreso?: NullableStringFieldUpdateOperationsInput | string | null
     imagenPath?: NullableStringFieldUpdateOperationsInput | string | null
     estado?: EnumEstadoTrabajoImpresionFieldUpdateOperationsInput | $Enums.EstadoTrabajoImpresion
     mensajeError?: NullableStringFieldUpdateOperationsInput | string | null
@@ -40587,6 +40631,7 @@ export namespace Prisma {
     coaDescargas?: IntFieldUpdateOperationsInput | number
     fdsVistas?: IntFieldUpdateOperationsInput | number
     proforma?: StringFieldUpdateOperationsInput | string
+    fechaIngreso?: NullableStringFieldUpdateOperationsInput | string | null
     imagenPath?: NullableStringFieldUpdateOperationsInput | string | null
     estado?: EnumEstadoTrabajoImpresionFieldUpdateOperationsInput | $Enums.EstadoTrabajoImpresion
     mensajeError?: NullableStringFieldUpdateOperationsInput | string | null
@@ -40611,6 +40656,7 @@ export namespace Prisma {
     coaDescargas?: IntFieldUpdateOperationsInput | number
     fdsVistas?: IntFieldUpdateOperationsInput | number
     proforma?: StringFieldUpdateOperationsInput | string
+    fechaIngreso?: NullableStringFieldUpdateOperationsInput | string | null
     imagenPath?: NullableStringFieldUpdateOperationsInput | string | null
     estado?: EnumEstadoTrabajoImpresionFieldUpdateOperationsInput | $Enums.EstadoTrabajoImpresion
     mensajeError?: NullableStringFieldUpdateOperationsInput | string | null
@@ -40688,6 +40734,7 @@ export namespace Prisma {
     fdsVistas?: number
     proforma: string
     proveedorId?: number | null
+    fechaIngreso?: string | null
     imagenPath?: string | null
     estado?: $Enums.EstadoTrabajoImpresion
     mensajeError?: string | null
@@ -40709,6 +40756,7 @@ export namespace Prisma {
     coaDescargas?: IntFieldUpdateOperationsInput | number
     fdsVistas?: IntFieldUpdateOperationsInput | number
     proforma?: StringFieldUpdateOperationsInput | string
+    fechaIngreso?: NullableStringFieldUpdateOperationsInput | string | null
     imagenPath?: NullableStringFieldUpdateOperationsInput | string | null
     estado?: EnumEstadoTrabajoImpresionFieldUpdateOperationsInput | $Enums.EstadoTrabajoImpresion
     mensajeError?: NullableStringFieldUpdateOperationsInput | string | null
@@ -40735,6 +40783,7 @@ export namespace Prisma {
     fdsVistas?: IntFieldUpdateOperationsInput | number
     proforma?: StringFieldUpdateOperationsInput | string
     proveedorId?: NullableIntFieldUpdateOperationsInput | number | null
+    fechaIngreso?: NullableStringFieldUpdateOperationsInput | string | null
     imagenPath?: NullableStringFieldUpdateOperationsInput | string | null
     estado?: EnumEstadoTrabajoImpresionFieldUpdateOperationsInput | $Enums.EstadoTrabajoImpresion
     mensajeError?: NullableStringFieldUpdateOperationsInput | string | null
@@ -40759,6 +40808,7 @@ export namespace Prisma {
     fdsVistas?: IntFieldUpdateOperationsInput | number
     proforma?: StringFieldUpdateOperationsInput | string
     proveedorId?: NullableIntFieldUpdateOperationsInput | number | null
+    fechaIngreso?: NullableStringFieldUpdateOperationsInput | string | null
     imagenPath?: NullableStringFieldUpdateOperationsInput | string | null
     estado?: EnumEstadoTrabajoImpresionFieldUpdateOperationsInput | $Enums.EstadoTrabajoImpresion
     mensajeError?: NullableStringFieldUpdateOperationsInput | string | null
@@ -40783,6 +40833,7 @@ export namespace Prisma {
     fdsVistas?: number
     proforma: string
     proveedorId?: number | null
+    fechaIngreso?: string | null
     imagenPath?: string | null
     estado?: $Enums.EstadoTrabajoImpresion
     mensajeError?: string | null
@@ -40804,6 +40855,7 @@ export namespace Prisma {
     coaDescargas?: IntFieldUpdateOperationsInput | number
     fdsVistas?: IntFieldUpdateOperationsInput | number
     proforma?: StringFieldUpdateOperationsInput | string
+    fechaIngreso?: NullableStringFieldUpdateOperationsInput | string | null
     imagenPath?: NullableStringFieldUpdateOperationsInput | string | null
     estado?: EnumEstadoTrabajoImpresionFieldUpdateOperationsInput | $Enums.EstadoTrabajoImpresion
     mensajeError?: NullableStringFieldUpdateOperationsInput | string | null
@@ -40830,6 +40882,7 @@ export namespace Prisma {
     fdsVistas?: IntFieldUpdateOperationsInput | number
     proforma?: StringFieldUpdateOperationsInput | string
     proveedorId?: NullableIntFieldUpdateOperationsInput | number | null
+    fechaIngreso?: NullableStringFieldUpdateOperationsInput | string | null
     imagenPath?: NullableStringFieldUpdateOperationsInput | string | null
     estado?: EnumEstadoTrabajoImpresionFieldUpdateOperationsInput | $Enums.EstadoTrabajoImpresion
     mensajeError?: NullableStringFieldUpdateOperationsInput | string | null
@@ -40854,6 +40907,7 @@ export namespace Prisma {
     fdsVistas?: IntFieldUpdateOperationsInput | number
     proforma?: StringFieldUpdateOperationsInput | string
     proveedorId?: NullableIntFieldUpdateOperationsInput | number | null
+    fechaIngreso?: NullableStringFieldUpdateOperationsInput | string | null
     imagenPath?: NullableStringFieldUpdateOperationsInput | string | null
     estado?: EnumEstadoTrabajoImpresionFieldUpdateOperationsInput | $Enums.EstadoTrabajoImpresion
     mensajeError?: NullableStringFieldUpdateOperationsInput | string | null

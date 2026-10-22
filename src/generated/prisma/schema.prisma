@@ -69,6 +69,8 @@ enum Recurso {
   LOTES
   PRODUCTOS
   FABRICANTES
+  // Panel Proveedores: mismo esquema que Fabricantes (CRUD simple por nombre).
+  PROVEEDORES
   PLANTILLAS
   USUARIOS
   ETIQUETAS
@@ -107,6 +109,22 @@ model Fabricante {
 }
 
 // ──────────────────────────────────────────
+// PROVEEDOR
+// Mismo esquema que Fabricante: nombre único global (vía
+// nombreNormalizado). Por ahora no se relaciona con Lote ni con
+// Producto; es un catálogo propio.
+// ──────────────────────────────────────────
+model Proveedor {
+  id                Int      @id @default(autoincrement())
+  nombre            String   @unique
+  nombreNormalizado String   @unique
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@map("proveedores")
+}
+
+// ──────────────────────────────────────────
 // PRODUCTO
 // Ya NO tiene fabricante fijo: un mismo producto puede tener
 // lotes de distintos fabricantes a lo largo del tiempo (el
@@ -117,6 +135,9 @@ model Producto {
   id                 Int      @id @default(autoincrement())
   nombre             String   @unique
   nombreNormalizado  String   @unique
+  // Código interno del producto (ej. 'QU-0012'). Opcional; si se pone, no se repite
+  // entre productos (Postgres permite varios NULL en un índice único).
+  codigo             String?  @unique
   nfpaSalud          Int? // 0-4
   nfpaInflamabilidad Int? // 0-4
   nfpaReactividad    Int?

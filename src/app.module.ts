@@ -8,6 +8,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PrismaModule } from './prisma/prisma.module';
 import { FabricantesModule } from './fabricantes/fabricantes.module';
+import { ProveedoresModule } from './proveedores/proveedores.module';
 import { ProductosModule } from './productos/productos.module';
 import { LotesModule } from './lotes/lotes.module';
 import { PlantillasModule } from './plantillas/plantillas.module';
@@ -31,6 +32,7 @@ import { NotificacionesModule } from './notificaciones/notificaciones.module';
     ScheduleModule.forRoot(),
     PrismaModule,
     FabricantesModule,
+    ProveedoresModule,
     ProductosModule,
     LotesModule,
     PlantillasModule,

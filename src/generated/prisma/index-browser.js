@@ -153,10 +153,19 @@ exports.Prisma.FabricanteScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.ProveedorScalarFieldEnum = {
+  id: 'id',
+  nombre: 'nombre',
+  nombreNormalizado: 'nombreNormalizado',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.ProductoScalarFieldEnum = {
   id: 'id',
   nombre: 'nombre',
   nombreNormalizado: 'nombreNormalizado',
+  codigo: 'codigo',
   nfpaSalud: 'nfpaSalud',
   nfpaInflamabilidad: 'nfpaInflamabilidad',
   nfpaReactividad: 'nfpaReactividad',
@@ -385,6 +394,7 @@ exports.Recurso = exports.$Enums.Recurso = {
   LOTES: 'LOTES',
   PRODUCTOS: 'PRODUCTOS',
   FABRICANTES: 'FABRICANTES',
+  PROVEEDORES: 'PROVEEDORES',
   PLANTILLAS: 'PLANTILLAS',
   USUARIOS: 'USUARIOS',
   ETIQUETAS: 'ETIQUETAS',
@@ -460,6 +470,7 @@ exports.Prisma.ModelName = {
   Usuario: 'Usuario',
   Permiso: 'Permiso',
   Fabricante: 'Fabricante',
+  Proveedor: 'Proveedor',
   Producto: 'Producto',
   Plantilla: 'Plantilla',
   Lote: 'Lote',

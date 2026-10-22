@@ -6,6 +6,12 @@ export class CreateProductoDto {
   @MaxLength(150)
   nombre: string;
 
+  // Código interno del producto. Opcional; null/'' en el PATCH lo borra.
+  @IsOptional()
+  @IsString()
+  @MaxLength(50)
+  codigo?: string | null;
+
   @IsOptional()
   @IsInt()
   @Min(0)

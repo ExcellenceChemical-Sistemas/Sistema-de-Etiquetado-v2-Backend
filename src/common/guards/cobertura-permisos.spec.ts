@@ -27,6 +27,7 @@ import { EtiquetasController } from '../../etiquetas/etiquetas.controller';
 import { FabricantesController } from '../../fabricantes/fabricantes.controller';
 import { LotesController } from '../../lotes/lotes.controller';
 import { NotificacionesController } from '../../notificaciones/notificaciones.controller';
+import { ProveedoresController } from '../../proveedores/proveedores.controller';
 import { PedidosController } from '../../pedidos/pedidos.controller';
 import { PedidosPublicosController } from '../../pedidos/pedidos-publicos.controller';
 import { PlantillasController } from '../../plantillas/plantillas.controller';
@@ -58,6 +59,7 @@ const CONTROLLERS: any[] = [
   PedidosPublicosController,
   PlantillasController,
   ProductosController,
+  ProveedoresController,
   UsuariosController,
 ];
 

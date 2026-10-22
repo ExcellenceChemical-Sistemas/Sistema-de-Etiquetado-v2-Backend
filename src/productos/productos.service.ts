@@ -15,6 +15,7 @@ export class ProductosService {
         data: {
           nombre: dto.nombre.trim(),
           nombreNormalizado: normalizarTexto(dto.nombre),
+          codigo: dto.codigo?.trim() || null,
           nfpaSalud: dto.nfpaSalud,
           nfpaInflamabilidad: dto.nfpaInflamabilidad,
           nfpaReactividad: dto.nfpaReactividad,
@@ -52,6 +53,8 @@ export class ProductosService {
             nombre: dto.nombre.trim(),
             nombreNormalizado: normalizarTexto(dto.nombre),
           }),
+          // vacío o null limpia el código
+          ...(dto.codigo !== undefined && { codigo: dto.codigo?.trim() || null }),
           ...(dto.nfpaSalud !== undefined && { nfpaSalud: dto.nfpaSalud }),
           ...(dto.nfpaInflamabilidad !== undefined && { nfpaInflamabilidad: dto.nfpaInflamabilidad }),
           ...(dto.nfpaReactividad !== undefined && { nfpaReactividad: dto.nfpaReactividad }),
@@ -118,6 +121,10 @@ export class ProductosService {
 
   private handleDuplicado(error: unknown): never {
     if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
+      const campo = JSON.stringify(error.meta?.target ?? '');
+      if (campo.includes('codigo')) {
+        throw new ConflictException('Ya existe un producto con ese código');
+      }
       throw new ConflictException('Ya existe un producto con ese nombre');
     }
     throw error;

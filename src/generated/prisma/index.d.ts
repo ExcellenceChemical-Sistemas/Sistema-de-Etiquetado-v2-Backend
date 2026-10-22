@@ -29,6 +29,11 @@ export type Permiso = $Result.DefaultSelection<Prisma.$PermisoPayload>
  */
 export type Fabricante = $Result.DefaultSelection<Prisma.$FabricantePayload>
 /**
+ * Model Proveedor
+ * 
+ */
+export type Proveedor = $Result.DefaultSelection<Prisma.$ProveedorPayload>
+/**
  * Model Producto
  * 
  */
@@ -117,6 +122,7 @@ export namespace $Enums {
   LOTES: 'LOTES',
   PRODUCTOS: 'PRODUCTOS',
   FABRICANTES: 'FABRICANTES',
+  PROVEEDORES: 'PROVEEDORES',
   PLANTILLAS: 'PLANTILLAS',
   USUARIOS: 'USUARIOS',
   ETIQUETAS: 'ETIQUETAS',
@@ -402,6 +408,16 @@ export class PrismaClient<
     * ```
     */
   get fabricante(): Prisma.FabricanteDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.proveedor`: Exposes CRUD operations for the **Proveedor** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Proveedors
+    * const proveedors = await prisma.proveedor.findMany()
+    * ```
+    */
+  get proveedor(): Prisma.ProveedorDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.producto`: Exposes CRUD operations for the **Producto** model.
@@ -1012,6 +1028,7 @@ export namespace Prisma {
     Usuario: 'Usuario',
     Permiso: 'Permiso',
     Fabricante: 'Fabricante',
+    Proveedor: 'Proveedor',
     Producto: 'Producto',
     Plantilla: 'Plantilla',
     Lote: 'Lote',
@@ -1043,7 +1060,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "usuario" | "permiso" | "fabricante" | "producto" | "plantilla" | "lote" | "trabajoImpresion" | "cliente" | "pedido" | "notificacion" | "suscripcionPush" | "cotizacion" | "cotizacionHistorial" | "ausencia" | "carpeta" | "archivo" | "accesoIndicador" | "accesoISO" | "registroAuditoria"
+      modelProps: "usuario" | "permiso" | "fabricante" | "proveedor" | "producto" | "plantilla" | "lote" | "trabajoImpresion" | "cliente" | "pedido" | "notificacion" | "suscripcionPush" | "cotizacion" | "cotizacionHistorial" | "ausencia" | "carpeta" | "archivo" | "accesoIndicador" | "accesoISO" | "registroAuditoria"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1266,6 +1283,80 @@ export namespace Prisma {
           count: {
             args: Prisma.FabricanteCountArgs<ExtArgs>
             result: $Utils.Optional<FabricanteCountAggregateOutputType> | number
+          }
+        }
+      }
+      Proveedor: {
+        payload: Prisma.$ProveedorPayload<ExtArgs>
+        fields: Prisma.ProveedorFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ProveedorFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProveedorPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ProveedorFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProveedorPayload>
+          }
+          findFirst: {
+            args: Prisma.ProveedorFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProveedorPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ProveedorFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProveedorPayload>
+          }
+          findMany: {
+            args: Prisma.ProveedorFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProveedorPayload>[]
+          }
+          create: {
+            args: Prisma.ProveedorCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProveedorPayload>
+          }
+          createMany: {
+            args: Prisma.ProveedorCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ProveedorCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProveedorPayload>[]
+          }
+          delete: {
+            args: Prisma.ProveedorDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProveedorPayload>
+          }
+          update: {
+            args: Prisma.ProveedorUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProveedorPayload>
+          }
+          deleteMany: {
+            args: Prisma.ProveedorDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ProveedorUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ProveedorUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProveedorPayload>[]
+          }
+          upsert: {
+            args: Prisma.ProveedorUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProveedorPayload>
+          }
+          aggregate: {
+            args: Prisma.ProveedorAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateProveedor>
+          }
+          groupBy: {
+            args: Prisma.ProveedorGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ProveedorGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ProveedorCountArgs<ExtArgs>
+            result: $Utils.Optional<ProveedorCountAggregateOutputType> | number
           }
         }
       }
@@ -2579,6 +2670,7 @@ export namespace Prisma {
     usuario?: UsuarioOmit
     permiso?: PermisoOmit
     fabricante?: FabricanteOmit
+    proveedor?: ProveedorOmit
     producto?: ProductoOmit
     plantilla?: PlantillaOmit
     lote?: LoteOmit
@@ -6970,6 +7062,1040 @@ export namespace Prisma {
 
 
   /**
+   * Model Proveedor
+   */
+
+  export type AggregateProveedor = {
+    _count: ProveedorCountAggregateOutputType | null
+    _avg: ProveedorAvgAggregateOutputType | null
+    _sum: ProveedorSumAggregateOutputType | null
+    _min: ProveedorMinAggregateOutputType | null
+    _max: ProveedorMaxAggregateOutputType | null
+  }
+
+  export type ProveedorAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type ProveedorSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type ProveedorMinAggregateOutputType = {
+    id: number | null
+    nombre: string | null
+    nombreNormalizado: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ProveedorMaxAggregateOutputType = {
+    id: number | null
+    nombre: string | null
+    nombreNormalizado: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ProveedorCountAggregateOutputType = {
+    id: number
+    nombre: number
+    nombreNormalizado: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ProveedorAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type ProveedorSumAggregateInputType = {
+    id?: true
+  }
+
+  export type ProveedorMinAggregateInputType = {
+    id?: true
+    nombre?: true
+    nombreNormalizado?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ProveedorMaxAggregateInputType = {
+    id?: true
+    nombre?: true
+    nombreNormalizado?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ProveedorCountAggregateInputType = {
+    id?: true
+    nombre?: true
+    nombreNormalizado?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ProveedorAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Proveedor to aggregate.
+     */
+    where?: ProveedorWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Proveedors to fetch.
+     */
+    orderBy?: ProveedorOrderByWithRelationInput | ProveedorOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ProveedorWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Proveedors from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Proveedors.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Proveedors
+    **/
+    _count?: true | ProveedorCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ProveedorAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ProveedorSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ProveedorMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ProveedorMaxAggregateInputType
+  }
+
+  export type GetProveedorAggregateType<T extends ProveedorAggregateArgs> = {
+        [P in keyof T & keyof AggregateProveedor]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateProveedor[P]>
+      : GetScalarType<T[P], AggregateProveedor[P]>
+  }
+
+
+
+
+  export type ProveedorGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProveedorWhereInput
+    orderBy?: ProveedorOrderByWithAggregationInput | ProveedorOrderByWithAggregationInput[]
+    by: ProveedorScalarFieldEnum[] | ProveedorScalarFieldEnum
+    having?: ProveedorScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ProveedorCountAggregateInputType | true
+    _avg?: ProveedorAvgAggregateInputType
+    _sum?: ProveedorSumAggregateInputType
+    _min?: ProveedorMinAggregateInputType
+    _max?: ProveedorMaxAggregateInputType
+  }
+
+  export type ProveedorGroupByOutputType = {
+    id: number
+    nombre: string
+    nombreNormalizado: string
+    createdAt: Date
+    updatedAt: Date
+    _count: ProveedorCountAggregateOutputType | null
+    _avg: ProveedorAvgAggregateOutputType | null
+    _sum: ProveedorSumAggregateOutputType | null
+    _min: ProveedorMinAggregateOutputType | null
+    _max: ProveedorMaxAggregateOutputType | null
+  }
+
+  type GetProveedorGroupByPayload<T extends ProveedorGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ProveedorGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ProveedorGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ProveedorGroupByOutputType[P]>
+            : GetScalarType<T[P], ProveedorGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ProveedorSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    nombre?: boolean
+    nombreNormalizado?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["proveedor"]>
+
+  export type ProveedorSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    nombre?: boolean
+    nombreNormalizado?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["proveedor"]>
+
+  export type ProveedorSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    nombre?: boolean
+    nombreNormalizado?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["proveedor"]>
+
+  export type ProveedorSelectScalar = {
+    id?: boolean
+    nombre?: boolean
+    nombreNormalizado?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type ProveedorOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nombre" | "nombreNormalizado" | "createdAt" | "updatedAt", ExtArgs["result"]["proveedor"]>
+
+  export type $ProveedorPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Proveedor"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      nombre: string
+      nombreNormalizado: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["proveedor"]>
+    composites: {}
+  }
+
+  type ProveedorGetPayload<S extends boolean | null | undefined | ProveedorDefaultArgs> = $Result.GetResult<Prisma.$ProveedorPayload, S>
+
+  type ProveedorCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ProveedorFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ProveedorCountAggregateInputType | true
+    }
+
+  export interface ProveedorDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Proveedor'], meta: { name: 'Proveedor' } }
+    /**
+     * Find zero or one Proveedor that matches the filter.
+     * @param {ProveedorFindUniqueArgs} args - Arguments to find a Proveedor
+     * @example
+     * // Get one Proveedor
+     * const proveedor = await prisma.proveedor.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ProveedorFindUniqueArgs>(args: SelectSubset<T, ProveedorFindUniqueArgs<ExtArgs>>): Prisma__ProveedorClient<$Result.GetResult<Prisma.$ProveedorPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Proveedor that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ProveedorFindUniqueOrThrowArgs} args - Arguments to find a Proveedor
+     * @example
+     * // Get one Proveedor
+     * const proveedor = await prisma.proveedor.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ProveedorFindUniqueOrThrowArgs>(args: SelectSubset<T, ProveedorFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ProveedorClient<$Result.GetResult<Prisma.$ProveedorPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Proveedor that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProveedorFindFirstArgs} args - Arguments to find a Proveedor
+     * @example
+     * // Get one Proveedor
+     * const proveedor = await prisma.proveedor.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ProveedorFindFirstArgs>(args?: SelectSubset<T, ProveedorFindFirstArgs<ExtArgs>>): Prisma__ProveedorClient<$Result.GetResult<Prisma.$ProveedorPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Proveedor that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProveedorFindFirstOrThrowArgs} args - Arguments to find a Proveedor
+     * @example
+     * // Get one Proveedor
+     * const proveedor = await prisma.proveedor.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ProveedorFindFirstOrThrowArgs>(args?: SelectSubset<T, ProveedorFindFirstOrThrowArgs<ExtArgs>>): Prisma__ProveedorClient<$Result.GetResult<Prisma.$ProveedorPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Proveedors that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProveedorFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Proveedors
+     * const proveedors = await prisma.proveedor.findMany()
+     * 
+     * // Get first 10 Proveedors
+     * const proveedors = await prisma.proveedor.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const proveedorWithIdOnly = await prisma.proveedor.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ProveedorFindManyArgs>(args?: SelectSubset<T, ProveedorFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProveedorPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Proveedor.
+     * @param {ProveedorCreateArgs} args - Arguments to create a Proveedor.
+     * @example
+     * // Create one Proveedor
+     * const Proveedor = await prisma.proveedor.create({
+     *   data: {
+     *     // ... data to create a Proveedor
+     *   }
+     * })
+     * 
+     */
+    create<T extends ProveedorCreateArgs>(args: SelectSubset<T, ProveedorCreateArgs<ExtArgs>>): Prisma__ProveedorClient<$Result.GetResult<Prisma.$ProveedorPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Proveedors.
+     * @param {ProveedorCreateManyArgs} args - Arguments to create many Proveedors.
+     * @example
+     * // Create many Proveedors
+     * const proveedor = await prisma.proveedor.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ProveedorCreateManyArgs>(args?: SelectSubset<T, ProveedorCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Proveedors and returns the data saved in the database.
+     * @param {ProveedorCreateManyAndReturnArgs} args - Arguments to create many Proveedors.
+     * @example
+     * // Create many Proveedors
+     * const proveedor = await prisma.proveedor.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Proveedors and only return the `id`
+     * const proveedorWithIdOnly = await prisma.proveedor.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ProveedorCreateManyAndReturnArgs>(args?: SelectSubset<T, ProveedorCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProveedorPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Proveedor.
+     * @param {ProveedorDeleteArgs} args - Arguments to delete one Proveedor.
+     * @example
+     * // Delete one Proveedor
+     * const Proveedor = await prisma.proveedor.delete({
+     *   where: {
+     *     // ... filter to delete one Proveedor
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ProveedorDeleteArgs>(args: SelectSubset<T, ProveedorDeleteArgs<ExtArgs>>): Prisma__ProveedorClient<$Result.GetResult<Prisma.$ProveedorPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Proveedor.
+     * @param {ProveedorUpdateArgs} args - Arguments to update one Proveedor.
+     * @example
+     * // Update one Proveedor
+     * const proveedor = await prisma.proveedor.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ProveedorUpdateArgs>(args: SelectSubset<T, ProveedorUpdateArgs<ExtArgs>>): Prisma__ProveedorClient<$Result.GetResult<Prisma.$ProveedorPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Proveedors.
+     * @param {ProveedorDeleteManyArgs} args - Arguments to filter Proveedors to delete.
+     * @example
+     * // Delete a few Proveedors
+     * const { count } = await prisma.proveedor.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ProveedorDeleteManyArgs>(args?: SelectSubset<T, ProveedorDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Proveedors.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProveedorUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Proveedors
+     * const proveedor = await prisma.proveedor.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ProveedorUpdateManyArgs>(args: SelectSubset<T, ProveedorUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Proveedors and returns the data updated in the database.
+     * @param {ProveedorUpdateManyAndReturnArgs} args - Arguments to update many Proveedors.
+     * @example
+     * // Update many Proveedors
+     * const proveedor = await prisma.proveedor.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Proveedors and only return the `id`
+     * const proveedorWithIdOnly = await prisma.proveedor.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ProveedorUpdateManyAndReturnArgs>(args: SelectSubset<T, ProveedorUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProveedorPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Proveedor.
+     * @param {ProveedorUpsertArgs} args - Arguments to update or create a Proveedor.
+     * @example
+     * // Update or create a Proveedor
+     * const proveedor = await prisma.proveedor.upsert({
+     *   create: {
+     *     // ... data to create a Proveedor
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Proveedor we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ProveedorUpsertArgs>(args: SelectSubset<T, ProveedorUpsertArgs<ExtArgs>>): Prisma__ProveedorClient<$Result.GetResult<Prisma.$ProveedorPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Proveedors.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProveedorCountArgs} args - Arguments to filter Proveedors to count.
+     * @example
+     * // Count the number of Proveedors
+     * const count = await prisma.proveedor.count({
+     *   where: {
+     *     // ... the filter for the Proveedors we want to count
+     *   }
+     * })
+    **/
+    count<T extends ProveedorCountArgs>(
+      args?: Subset<T, ProveedorCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ProveedorCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Proveedor.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProveedorAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ProveedorAggregateArgs>(args: Subset<T, ProveedorAggregateArgs>): Prisma.PrismaPromise<GetProveedorAggregateType<T>>
+
+    /**
+     * Group by Proveedor.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProveedorGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ProveedorGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ProveedorGroupByArgs['orderBy'] }
+        : { orderBy?: ProveedorGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ProveedorGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetProveedorGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Proveedor model
+   */
+  readonly fields: ProveedorFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Proveedor.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ProveedorClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Proveedor model
+   */
+  interface ProveedorFieldRefs {
+    readonly id: FieldRef<"Proveedor", 'Int'>
+    readonly nombre: FieldRef<"Proveedor", 'String'>
+    readonly nombreNormalizado: FieldRef<"Proveedor", 'String'>
+    readonly createdAt: FieldRef<"Proveedor", 'DateTime'>
+    readonly updatedAt: FieldRef<"Proveedor", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Proveedor findUnique
+   */
+  export type ProveedorFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Proveedor
+     */
+    select?: ProveedorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Proveedor
+     */
+    omit?: ProveedorOmit<ExtArgs> | null
+    /**
+     * Filter, which Proveedor to fetch.
+     */
+    where: ProveedorWhereUniqueInput
+  }
+
+  /**
+   * Proveedor findUniqueOrThrow
+   */
+  export type ProveedorFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Proveedor
+     */
+    select?: ProveedorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Proveedor
+     */
+    omit?: ProveedorOmit<ExtArgs> | null
+    /**
+     * Filter, which Proveedor to fetch.
+     */
+    where: ProveedorWhereUniqueInput
+  }
+
+  /**
+   * Proveedor findFirst
+   */
+  export type ProveedorFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Proveedor
+     */
+    select?: ProveedorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Proveedor
+     */
+    omit?: ProveedorOmit<ExtArgs> | null
+    /**
+     * Filter, which Proveedor to fetch.
+     */
+    where?: ProveedorWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Proveedors to fetch.
+     */
+    orderBy?: ProveedorOrderByWithRelationInput | ProveedorOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Proveedors.
+     */
+    cursor?: ProveedorWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Proveedors from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Proveedors.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Proveedors.
+     */
+    distinct?: ProveedorScalarFieldEnum | ProveedorScalarFieldEnum[]
+  }
+
+  /**
+   * Proveedor findFirstOrThrow
+   */
+  export type ProveedorFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Proveedor
+     */
+    select?: ProveedorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Proveedor
+     */
+    omit?: ProveedorOmit<ExtArgs> | null
+    /**
+     * Filter, which Proveedor to fetch.
+     */
+    where?: ProveedorWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Proveedors to fetch.
+     */
+    orderBy?: ProveedorOrderByWithRelationInput | ProveedorOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Proveedors.
+     */
+    cursor?: ProveedorWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Proveedors from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Proveedors.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Proveedors.
+     */
+    distinct?: ProveedorScalarFieldEnum | ProveedorScalarFieldEnum[]
+  }
+
+  /**
+   * Proveedor findMany
+   */
+  export type ProveedorFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Proveedor
+     */
+    select?: ProveedorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Proveedor
+     */
+    omit?: ProveedorOmit<ExtArgs> | null
+    /**
+     * Filter, which Proveedors to fetch.
+     */
+    where?: ProveedorWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Proveedors to fetch.
+     */
+    orderBy?: ProveedorOrderByWithRelationInput | ProveedorOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Proveedors.
+     */
+    cursor?: ProveedorWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Proveedors from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Proveedors.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Proveedors.
+     */
+    distinct?: ProveedorScalarFieldEnum | ProveedorScalarFieldEnum[]
+  }
+
+  /**
+   * Proveedor create
+   */
+  export type ProveedorCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Proveedor
+     */
+    select?: ProveedorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Proveedor
+     */
+    omit?: ProveedorOmit<ExtArgs> | null
+    /**
+     * The data needed to create a Proveedor.
+     */
+    data: XOR<ProveedorCreateInput, ProveedorUncheckedCreateInput>
+  }
+
+  /**
+   * Proveedor createMany
+   */
+  export type ProveedorCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Proveedors.
+     */
+    data: ProveedorCreateManyInput | ProveedorCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Proveedor createManyAndReturn
+   */
+  export type ProveedorCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Proveedor
+     */
+    select?: ProveedorSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Proveedor
+     */
+    omit?: ProveedorOmit<ExtArgs> | null
+    /**
+     * The data used to create many Proveedors.
+     */
+    data: ProveedorCreateManyInput | ProveedorCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Proveedor update
+   */
+  export type ProveedorUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Proveedor
+     */
+    select?: ProveedorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Proveedor
+     */
+    omit?: ProveedorOmit<ExtArgs> | null
+    /**
+     * The data needed to update a Proveedor.
+     */
+    data: XOR<ProveedorUpdateInput, ProveedorUncheckedUpdateInput>
+    /**
+     * Choose, which Proveedor to update.
+     */
+    where: ProveedorWhereUniqueInput
+  }
+
+  /**
+   * Proveedor updateMany
+   */
+  export type ProveedorUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Proveedors.
+     */
+    data: XOR<ProveedorUpdateManyMutationInput, ProveedorUncheckedUpdateManyInput>
+    /**
+     * Filter which Proveedors to update
+     */
+    where?: ProveedorWhereInput
+    /**
+     * Limit how many Proveedors to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Proveedor updateManyAndReturn
+   */
+  export type ProveedorUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Proveedor
+     */
+    select?: ProveedorSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Proveedor
+     */
+    omit?: ProveedorOmit<ExtArgs> | null
+    /**
+     * The data used to update Proveedors.
+     */
+    data: XOR<ProveedorUpdateManyMutationInput, ProveedorUncheckedUpdateManyInput>
+    /**
+     * Filter which Proveedors to update
+     */
+    where?: ProveedorWhereInput
+    /**
+     * Limit how many Proveedors to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Proveedor upsert
+   */
+  export type ProveedorUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Proveedor
+     */
+    select?: ProveedorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Proveedor
+     */
+    omit?: ProveedorOmit<ExtArgs> | null
+    /**
+     * The filter to search for the Proveedor to update in case it exists.
+     */
+    where: ProveedorWhereUniqueInput
+    /**
+     * In case the Proveedor found by the `where` argument doesn't exist, create a new Proveedor with this data.
+     */
+    create: XOR<ProveedorCreateInput, ProveedorUncheckedCreateInput>
+    /**
+     * In case the Proveedor was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ProveedorUpdateInput, ProveedorUncheckedUpdateInput>
+  }
+
+  /**
+   * Proveedor delete
+   */
+  export type ProveedorDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Proveedor
+     */
+    select?: ProveedorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Proveedor
+     */
+    omit?: ProveedorOmit<ExtArgs> | null
+    /**
+     * Filter which Proveedor to delete.
+     */
+    where: ProveedorWhereUniqueInput
+  }
+
+  /**
+   * Proveedor deleteMany
+   */
+  export type ProveedorDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Proveedors to delete
+     */
+    where?: ProveedorWhereInput
+    /**
+     * Limit how many Proveedors to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Proveedor without action
+   */
+  export type ProveedorDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Proveedor
+     */
+    select?: ProveedorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Proveedor
+     */
+    omit?: ProveedorOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Model Producto
    */
 
@@ -7001,6 +8127,7 @@ export namespace Prisma {
     id: number | null
     nombre: string | null
     nombreNormalizado: string | null
+    codigo: string | null
     nfpaSalud: number | null
     nfpaInflamabilidad: number | null
     nfpaReactividad: number | null
@@ -7016,6 +8143,7 @@ export namespace Prisma {
     id: number | null
     nombre: string | null
     nombreNormalizado: string | null
+    codigo: string | null
     nfpaSalud: number | null
     nfpaInflamabilidad: number | null
     nfpaReactividad: number | null
@@ -7031,6 +8159,7 @@ export namespace Prisma {
     id: number
     nombre: number
     nombreNormalizado: number
+    codigo: number
     nfpaSalud: number
     nfpaInflamabilidad: number
     nfpaReactividad: number
@@ -7067,6 +8196,7 @@ export namespace Prisma {
     id?: true
     nombre?: true
     nombreNormalizado?: true
+    codigo?: true
     nfpaSalud?: true
     nfpaInflamabilidad?: true
     nfpaReactividad?: true
@@ -7082,6 +8212,7 @@ export namespace Prisma {
     id?: true
     nombre?: true
     nombreNormalizado?: true
+    codigo?: true
     nfpaSalud?: true
     nfpaInflamabilidad?: true
     nfpaReactividad?: true
@@ -7097,6 +8228,7 @@ export namespace Prisma {
     id?: true
     nombre?: true
     nombreNormalizado?: true
+    codigo?: true
     nfpaSalud?: true
     nfpaInflamabilidad?: true
     nfpaReactividad?: true
@@ -7202,6 +8334,7 @@ export namespace Prisma {
     id: number
     nombre: string
     nombreNormalizado: string
+    codigo: string | null
     nfpaSalud: number | null
     nfpaInflamabilidad: number | null
     nfpaReactividad: number | null
@@ -7239,6 +8372,7 @@ export namespace Prisma {
     id?: boolean
     nombre?: boolean
     nombreNormalizado?: boolean
+    codigo?: boolean
     nfpaSalud?: boolean
     nfpaInflamabilidad?: boolean
     nfpaReactividad?: boolean
@@ -7259,6 +8393,7 @@ export namespace Prisma {
     id?: boolean
     nombre?: boolean
     nombreNormalizado?: boolean
+    codigo?: boolean
     nfpaSalud?: boolean
     nfpaInflamabilidad?: boolean
     nfpaReactividad?: boolean
@@ -7277,6 +8412,7 @@ export namespace Prisma {
     id?: boolean
     nombre?: boolean
     nombreNormalizado?: boolean
+    codigo?: boolean
     nfpaSalud?: boolean
     nfpaInflamabilidad?: boolean
     nfpaReactividad?: boolean
@@ -7295,6 +8431,7 @@ export namespace Prisma {
     id?: boolean
     nombre?: boolean
     nombreNormalizado?: boolean
+    codigo?: boolean
     nfpaSalud?: boolean
     nfpaInflamabilidad?: boolean
     nfpaReactividad?: boolean
@@ -7309,7 +8446,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type ProductoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nombre" | "nombreNormalizado" | "nfpaSalud" | "nfpaInflamabilidad" | "nfpaReactividad" | "densidad" | "pictogramasGhs" | "palabraAdvertencia" | "frasesH" | "frasesP" | "fichaSeguridadUrl" | "fichaTecnicaUrl" | "createdAt" | "updatedAt", ExtArgs["result"]["producto"]>
+  export type ProductoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nombre" | "nombreNormalizado" | "codigo" | "nfpaSalud" | "nfpaInflamabilidad" | "nfpaReactividad" | "densidad" | "pictogramasGhs" | "palabraAdvertencia" | "frasesH" | "frasesP" | "fichaSeguridadUrl" | "fichaTecnicaUrl" | "createdAt" | "updatedAt", ExtArgs["result"]["producto"]>
   export type ProductoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     lotes?: boolean | Producto$lotesArgs<ExtArgs>
     _count?: boolean | ProductoCountOutputTypeDefaultArgs<ExtArgs>
@@ -7326,6 +8463,7 @@ export namespace Prisma {
       id: number
       nombre: string
       nombreNormalizado: string
+      codigo: string | null
       nfpaSalud: number | null
       nfpaInflamabilidad: number | null
       nfpaReactividad: number | null
@@ -7765,6 +8903,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Producto", 'Int'>
     readonly nombre: FieldRef<"Producto", 'String'>
     readonly nombreNormalizado: FieldRef<"Producto", 'String'>
+    readonly codigo: FieldRef<"Producto", 'String'>
     readonly nfpaSalud: FieldRef<"Producto", 'Int'>
     readonly nfpaInflamabilidad: FieldRef<"Producto", 'Int'>
     readonly nfpaReactividad: FieldRef<"Producto", 'Int'>
@@ -26187,10 +27326,22 @@ export namespace Prisma {
   export type FabricanteScalarFieldEnum = (typeof FabricanteScalarFieldEnum)[keyof typeof FabricanteScalarFieldEnum]
 
 
+  export const ProveedorScalarFieldEnum: {
+    id: 'id',
+    nombre: 'nombre',
+    nombreNormalizado: 'nombreNormalizado',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ProveedorScalarFieldEnum = (typeof ProveedorScalarFieldEnum)[keyof typeof ProveedorScalarFieldEnum]
+
+
   export const ProductoScalarFieldEnum: {
     id: 'id',
     nombre: 'nombre',
     nombreNormalizado: 'nombreNormalizado',
+    codigo: 'codigo',
     nfpaSalud: 'nfpaSalud',
     nfpaInflamabilidad: 'nfpaInflamabilidad',
     nfpaReactividad: 'nfpaReactividad',
@@ -26932,6 +28083,60 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Fabricante"> | Date | string
   }
 
+  export type ProveedorWhereInput = {
+    AND?: ProveedorWhereInput | ProveedorWhereInput[]
+    OR?: ProveedorWhereInput[]
+    NOT?: ProveedorWhereInput | ProveedorWhereInput[]
+    id?: IntFilter<"Proveedor"> | number
+    nombre?: StringFilter<"Proveedor"> | string
+    nombreNormalizado?: StringFilter<"Proveedor"> | string
+    createdAt?: DateTimeFilter<"Proveedor"> | Date | string
+    updatedAt?: DateTimeFilter<"Proveedor"> | Date | string
+  }
+
+  export type ProveedorOrderByWithRelationInput = {
+    id?: SortOrder
+    nombre?: SortOrder
+    nombreNormalizado?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ProveedorWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    nombre?: string
+    nombreNormalizado?: string
+    AND?: ProveedorWhereInput | ProveedorWhereInput[]
+    OR?: ProveedorWhereInput[]
+    NOT?: ProveedorWhereInput | ProveedorWhereInput[]
+    createdAt?: DateTimeFilter<"Proveedor"> | Date | string
+    updatedAt?: DateTimeFilter<"Proveedor"> | Date | string
+  }, "id" | "nombre" | "nombreNormalizado">
+
+  export type ProveedorOrderByWithAggregationInput = {
+    id?: SortOrder
+    nombre?: SortOrder
+    nombreNormalizado?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ProveedorCountOrderByAggregateInput
+    _avg?: ProveedorAvgOrderByAggregateInput
+    _max?: ProveedorMaxOrderByAggregateInput
+    _min?: ProveedorMinOrderByAggregateInput
+    _sum?: ProveedorSumOrderByAggregateInput
+  }
+
+  export type ProveedorScalarWhereWithAggregatesInput = {
+    AND?: ProveedorScalarWhereWithAggregatesInput | ProveedorScalarWhereWithAggregatesInput[]
+    OR?: ProveedorScalarWhereWithAggregatesInput[]
+    NOT?: ProveedorScalarWhereWithAggregatesInput | ProveedorScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Proveedor"> | number
+    nombre?: StringWithAggregatesFilter<"Proveedor"> | string
+    nombreNormalizado?: StringWithAggregatesFilter<"Proveedor"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Proveedor"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Proveedor"> | Date | string
+  }
+
   export type ProductoWhereInput = {
     AND?: ProductoWhereInput | ProductoWhereInput[]
     OR?: ProductoWhereInput[]
@@ -26939,6 +28144,7 @@ export namespace Prisma {
     id?: IntFilter<"Producto"> | number
     nombre?: StringFilter<"Producto"> | string
     nombreNormalizado?: StringFilter<"Producto"> | string
+    codigo?: StringNullableFilter<"Producto"> | string | null
     nfpaSalud?: IntNullableFilter<"Producto"> | number | null
     nfpaInflamabilidad?: IntNullableFilter<"Producto"> | number | null
     nfpaReactividad?: IntNullableFilter<"Producto"> | number | null
@@ -26958,6 +28164,7 @@ export namespace Prisma {
     id?: SortOrder
     nombre?: SortOrder
     nombreNormalizado?: SortOrder
+    codigo?: SortOrderInput | SortOrder
     nfpaSalud?: SortOrderInput | SortOrder
     nfpaInflamabilidad?: SortOrderInput | SortOrder
     nfpaReactividad?: SortOrderInput | SortOrder
@@ -26977,6 +28184,7 @@ export namespace Prisma {
     id?: number
     nombre?: string
     nombreNormalizado?: string
+    codigo?: string
     AND?: ProductoWhereInput | ProductoWhereInput[]
     OR?: ProductoWhereInput[]
     NOT?: ProductoWhereInput | ProductoWhereInput[]
@@ -26993,12 +28201,13 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Producto"> | Date | string
     updatedAt?: DateTimeFilter<"Producto"> | Date | string
     lotes?: LoteListRelationFilter
-  }, "id" | "nombre" | "nombreNormalizado">
+  }, "id" | "nombre" | "nombreNormalizado" | "codigo">
 
   export type ProductoOrderByWithAggregationInput = {
     id?: SortOrder
     nombre?: SortOrder
     nombreNormalizado?: SortOrder
+    codigo?: SortOrderInput | SortOrder
     nfpaSalud?: SortOrderInput | SortOrder
     nfpaInflamabilidad?: SortOrderInput | SortOrder
     nfpaReactividad?: SortOrderInput | SortOrder
@@ -27025,6 +28234,7 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"Producto"> | number
     nombre?: StringWithAggregatesFilter<"Producto"> | string
     nombreNormalizado?: StringWithAggregatesFilter<"Producto"> | string
+    codigo?: StringNullableWithAggregatesFilter<"Producto"> | string | null
     nfpaSalud?: IntNullableWithAggregatesFilter<"Producto"> | number | null
     nfpaInflamabilidad?: IntNullableWithAggregatesFilter<"Producto"> | number | null
     nfpaReactividad?: IntNullableWithAggregatesFilter<"Producto"> | number | null
@@ -28614,9 +29824,63 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type ProveedorCreateInput = {
+    nombre: string
+    nombreNormalizado: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ProveedorUncheckedCreateInput = {
+    id?: number
+    nombre: string
+    nombreNormalizado: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ProveedorUpdateInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    nombreNormalizado?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProveedorUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    nombreNormalizado?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProveedorCreateManyInput = {
+    id?: number
+    nombre: string
+    nombreNormalizado: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ProveedorUpdateManyMutationInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    nombreNormalizado?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProveedorUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    nombreNormalizado?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type ProductoCreateInput = {
     nombre: string
     nombreNormalizado: string
+    codigo?: string | null
     nfpaSalud?: number | null
     nfpaInflamabilidad?: number | null
     nfpaReactividad?: number | null
@@ -28636,6 +29900,7 @@ export namespace Prisma {
     id?: number
     nombre: string
     nombreNormalizado: string
+    codigo?: string | null
     nfpaSalud?: number | null
     nfpaInflamabilidad?: number | null
     nfpaReactividad?: number | null
@@ -28654,6 +29919,7 @@ export namespace Prisma {
   export type ProductoUpdateInput = {
     nombre?: StringFieldUpdateOperationsInput | string
     nombreNormalizado?: StringFieldUpdateOperationsInput | string
+    codigo?: NullableStringFieldUpdateOperationsInput | string | null
     nfpaSalud?: NullableIntFieldUpdateOperationsInput | number | null
     nfpaInflamabilidad?: NullableIntFieldUpdateOperationsInput | number | null
     nfpaReactividad?: NullableIntFieldUpdateOperationsInput | number | null
@@ -28673,6 +29939,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     nombre?: StringFieldUpdateOperationsInput | string
     nombreNormalizado?: StringFieldUpdateOperationsInput | string
+    codigo?: NullableStringFieldUpdateOperationsInput | string | null
     nfpaSalud?: NullableIntFieldUpdateOperationsInput | number | null
     nfpaInflamabilidad?: NullableIntFieldUpdateOperationsInput | number | null
     nfpaReactividad?: NullableIntFieldUpdateOperationsInput | number | null
@@ -28692,6 +29959,7 @@ export namespace Prisma {
     id?: number
     nombre: string
     nombreNormalizado: string
+    codigo?: string | null
     nfpaSalud?: number | null
     nfpaInflamabilidad?: number | null
     nfpaReactividad?: number | null
@@ -28709,6 +29977,7 @@ export namespace Prisma {
   export type ProductoUpdateManyMutationInput = {
     nombre?: StringFieldUpdateOperationsInput | string
     nombreNormalizado?: StringFieldUpdateOperationsInput | string
+    codigo?: NullableStringFieldUpdateOperationsInput | string | null
     nfpaSalud?: NullableIntFieldUpdateOperationsInput | number | null
     nfpaInflamabilidad?: NullableIntFieldUpdateOperationsInput | number | null
     nfpaReactividad?: NullableIntFieldUpdateOperationsInput | number | null
@@ -28727,6 +29996,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     nombre?: StringFieldUpdateOperationsInput | string
     nombreNormalizado?: StringFieldUpdateOperationsInput | string
+    codigo?: NullableStringFieldUpdateOperationsInput | string | null
     nfpaSalud?: NullableIntFieldUpdateOperationsInput | number | null
     nfpaInflamabilidad?: NullableIntFieldUpdateOperationsInput | number | null
     nfpaReactividad?: NullableIntFieldUpdateOperationsInput | number | null
@@ -30556,6 +31826,38 @@ export namespace Prisma {
     id?: SortOrder
   }
 
+  export type ProveedorCountOrderByAggregateInput = {
+    id?: SortOrder
+    nombre?: SortOrder
+    nombreNormalizado?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ProveedorAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type ProveedorMaxOrderByAggregateInput = {
+    id?: SortOrder
+    nombre?: SortOrder
+    nombreNormalizado?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ProveedorMinOrderByAggregateInput = {
+    id?: SortOrder
+    nombre?: SortOrder
+    nombreNormalizado?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ProveedorSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
   export type FloatNullableFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel> | null
     in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
@@ -30579,6 +31881,7 @@ export namespace Prisma {
     id?: SortOrder
     nombre?: SortOrder
     nombreNormalizado?: SortOrder
+    codigo?: SortOrder
     nfpaSalud?: SortOrder
     nfpaInflamabilidad?: SortOrder
     nfpaReactividad?: SortOrder
@@ -30605,6 +31908,7 @@ export namespace Prisma {
     id?: SortOrder
     nombre?: SortOrder
     nombreNormalizado?: SortOrder
+    codigo?: SortOrder
     nfpaSalud?: SortOrder
     nfpaInflamabilidad?: SortOrder
     nfpaReactividad?: SortOrder
@@ -30620,6 +31924,7 @@ export namespace Prisma {
     id?: SortOrder
     nombre?: SortOrder
     nombreNormalizado?: SortOrder
+    codigo?: SortOrder
     nfpaSalud?: SortOrder
     nfpaInflamabilidad?: SortOrder
     nfpaReactividad?: SortOrder
@@ -35069,6 +36374,7 @@ export namespace Prisma {
   export type ProductoCreateWithoutLotesInput = {
     nombre: string
     nombreNormalizado: string
+    codigo?: string | null
     nfpaSalud?: number | null
     nfpaInflamabilidad?: number | null
     nfpaReactividad?: number | null
@@ -35087,6 +36393,7 @@ export namespace Prisma {
     id?: number
     nombre: string
     nombreNormalizado: string
+    codigo?: string | null
     nfpaSalud?: number | null
     nfpaInflamabilidad?: number | null
     nfpaReactividad?: number | null
@@ -35195,6 +36502,7 @@ export namespace Prisma {
   export type ProductoUpdateWithoutLotesInput = {
     nombre?: StringFieldUpdateOperationsInput | string
     nombreNormalizado?: StringFieldUpdateOperationsInput | string
+    codigo?: NullableStringFieldUpdateOperationsInput | string | null
     nfpaSalud?: NullableIntFieldUpdateOperationsInput | number | null
     nfpaInflamabilidad?: NullableIntFieldUpdateOperationsInput | number | null
     nfpaReactividad?: NullableIntFieldUpdateOperationsInput | number | null
@@ -35213,6 +36521,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     nombre?: StringFieldUpdateOperationsInput | string
     nombreNormalizado?: StringFieldUpdateOperationsInput | string
+    codigo?: NullableStringFieldUpdateOperationsInput | string | null
     nfpaSalud?: NullableIntFieldUpdateOperationsInput | number | null
     nfpaInflamabilidad?: NullableIntFieldUpdateOperationsInput | number | null
     nfpaReactividad?: NullableIntFieldUpdateOperationsInput | number | null

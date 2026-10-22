@@ -5,7 +5,9 @@ import { PrismaService } from '../prisma/prisma.service';
 import { GenerarEtiquetaDto } from './dto/generar-etiqueta.dto';
 import { ActualizarEstadoTrabajoDto } from './dto/actualizar-estado-trabajo.dto';
 
-const ARCHIVO_COMPLETA = 'completa-rombo.hbs';
+// Plantillas "completa": 10x6 y 10x8.5. Piden proveedor, usan el código del producto y la fecha de ingreso.
+const ARCHIVOS_COMPLETA = ['completa-rombo.hbs', 'completa-rombo-85.hbs'];
+const esCompleta = (archivo: string) => ARCHIVOS_COMPLETA.includes(archivo);
 
 interface DatosEtiqueta {
   lote: {
@@ -62,7 +64,7 @@ export class TrabajosImpresionService {
     codigo: string | null | undefined,
     proveedorId?: number,
   ) {
-    if (archivo !== ARCHIVO_COMPLETA) return null;
+    if (!esCompleta(archivo)) return null;
     if (!codigo?.trim())
       throw new BadRequestException(
         'Este producto no tiene código de producto. Regístralo en Productos antes de imprimir esta plantilla.',
@@ -113,9 +115,9 @@ export class TrabajosImpresionService {
           lote.producto.densidad,
         ),
         token: randomBytes(12).toString('base64url'),
-        proforma: plantilla.archivo === ARCHIVO_COMPLETA ? ' ' : dto.proforma,
+        proforma: esCompleta(plantilla.archivo) ? ' ' : dto.proforma,
         proveedorId: proveedor?.id ?? null,
-        fechaIngreso: plantilla.archivo === ARCHIVO_COMPLETA ? dto.fechaIngreso ?? null : null,
+        fechaIngreso: esCompleta(plantilla.archivo) ? dto.fechaIngreso ?? null : null,
         creadoPorId,
       },
     });
@@ -206,9 +208,9 @@ export class TrabajosImpresionService {
           dto.unidadNeta,
           lote.producto.densidad,
         ),
-        proforma: plantilla.archivo === ARCHIVO_COMPLETA ? ' ' : dto.proforma,
+        proforma: esCompleta(plantilla.archivo) ? ' ' : dto.proforma,
         proveedor,
-        fechaIngreso: plantilla.archivo === ARCHIVO_COMPLETA ? dto.fechaIngreso ?? null : null,
+        fechaIngreso: esCompleta(plantilla.archivo) ? dto.fechaIngreso ?? null : null,
       },
       `${process.env.FRONTEND_URL}/e/vista-previa`,
     );

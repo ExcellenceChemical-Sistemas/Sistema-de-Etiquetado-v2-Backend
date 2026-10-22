@@ -1,9 +1,11 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { randomBytes } from 'crypto';
 import { calcularTara } from './tara';
 import { PrismaService } from '../prisma/prisma.service';
 import { GenerarEtiquetaDto } from './dto/generar-etiqueta.dto';
 import { ActualizarEstadoTrabajoDto } from './dto/actualizar-estado-trabajo.dto';
+
+const ARCHIVO_COMPLETA = 'completa-rombo.hbs';
 
 interface DatosEtiqueta {
   lote: {
@@ -11,10 +13,11 @@ interface DatosEtiqueta {
     fechaFabricacion: string;
     fechaVencimiento: string;
     coaUrl: string | null;
-    producto: { nombre: string; nfpaSalud: number | null; nfpaInflamabilidad: number | null; nfpaReactividad: number | null };
+    producto: { nombre: string; codigo: string | null; nfpaSalud: number | null; nfpaInflamabilidad: number | null; nfpaReactividad: number | null };
     fabricante: { nombre: string };
   };
   plantilla: { archivo: string };
+  proveedor?: { nombre: string } | null;
   pesoBruto: string;
   unidadBruto: string;
   cantidadNeta: string | null;
@@ -42,6 +45,9 @@ function datosParaAgente(t: DatosEtiqueta, qrUrl: string | null) {
     nfpaInflamabilidad: t.lote.producto.nfpaInflamabilidad,
     nfpaReactividad: t.lote.producto.nfpaReactividad,
     coaValidado: !!t.lote.coaUrl,
+    proveedor: t.proveedor?.nombre ?? null,
+    codigo: t.lote.producto.codigo ?? null,
+    fechaIngreso: null as string | null, // no existe en BD: la plantilla dibuja una línea para llenarla a mano
     qrUrl,
   };
 }
@@ -50,11 +56,29 @@ function datosParaAgente(t: DatosEtiqueta, qrUrl: string | null) {
 export class TrabajosImpresionService {
   constructor(private prisma: PrismaService) {}
 
+  private async validarCompleta(
+    archivo: string,
+    codigo: string | null | undefined,
+    proveedorId?: number,
+  ) {
+    if (archivo !== ARCHIVO_COMPLETA) return null;
+    if (!codigo?.trim())
+      throw new BadRequestException(
+        'Este producto no tiene código de producto. Regístralo en Productos antes de imprimir esta plantilla.',
+      );
+    if (!proveedorId)
+      throw new BadRequestException('Selecciona un proveedor para esta plantilla.');
+    const proveedor = await this.prisma.proveedor.findUnique({ where: { id: proveedorId } });
+    if (!proveedor)
+      throw new NotFoundException(`Proveedor con id ${proveedorId} no encontrado`);
+    return proveedor;
+  }
+
   async crear(dto: GenerarEtiquetaDto, creadoPorId: number) {
     const [lote, plantilla] = await Promise.all([
       this.prisma.lote.findUnique({
         where: { id: dto.loteId },
-        include: { producto: { select: { densidad: true } } },
+        include: { producto: { select: { densidad: true, codigo: true } } },
       }),
       this.prisma.plantilla.findUnique({ where: { id: dto.plantillaId } }),
     ]);
@@ -65,6 +89,12 @@ export class TrabajosImpresionService {
       throw new NotFoundException(
         `Plantilla con id ${dto.plantillaId} no encontrada`,
       );
+
+    const proveedor = await this.validarCompleta(
+      plantilla.archivo,
+      lote.producto.codigo,
+      dto.proveedorId,
+    );
 
     const trabajo = await this.prisma.trabajoImpresion.create({
       data: {
@@ -82,7 +112,8 @@ export class TrabajosImpresionService {
           lote.producto.densidad,
         ),
         token: randomBytes(12).toString('base64url'),
-        proforma: dto.proforma,
+        proforma: plantilla.archivo === ARCHIVO_COMPLETA ? ' ' : dto.proforma,
+        proveedorId: proveedor?.id ?? null,
         creadoPorId,
       },
     });
@@ -133,6 +164,7 @@ export class TrabajosImpresionService {
       include: {
         lote: { include: { producto: true, fabricante: true } },
         plantilla: true,
+        proveedor: true,
       },
     });
 
@@ -155,6 +187,8 @@ export class TrabajosImpresionService {
     if (!lote) throw new NotFoundException(`Lote con id ${dto.loteId} no encontrado`);
     if (!plantilla) throw new NotFoundException(`Plantilla con id ${dto.plantillaId} no encontrada`);
 
+    const proveedor = await this.validarCompleta(plantilla.archivo, lote.producto.codigo, dto.proveedorId);
+
     return datosParaAgente(
       {
         lote,
@@ -170,7 +204,8 @@ export class TrabajosImpresionService {
           dto.unidadNeta,
           lote.producto.densidad,
         ),
-        proforma: dto.proforma,
+        proforma: plantilla.archivo === ARCHIVO_COMPLETA ? ' ' : dto.proforma,
+        proveedor,
       },
       `${process.env.FRONTEND_URL}/e/vista-previa`,
     );

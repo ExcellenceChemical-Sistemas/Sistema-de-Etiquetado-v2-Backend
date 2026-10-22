@@ -120,6 +120,7 @@ model Proveedor {
   nombreNormalizado String   @unique
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
+  trabajosImpresion TrabajoImpresion[]
 
   @@map("proveedores")
 }
@@ -252,6 +253,8 @@ model TrabajoImpresion {
   coaDescargas    Int                    @default(0)
   fdsVistas       Int                    @default(0)
   proforma        String
+  proveedorId     Int?
+  proveedor       Proveedor?             @relation(fields: [proveedorId], references: [id], onDelete: SetNull)
   imagenPath      String?
   estado          EstadoTrabajoImpresion @default(PENDIENTE)
   mensajeError    String?

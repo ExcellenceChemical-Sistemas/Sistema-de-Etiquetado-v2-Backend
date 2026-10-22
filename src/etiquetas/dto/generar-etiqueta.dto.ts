@@ -27,4 +27,9 @@ export class GenerarEtiquetaDto {
   @IsNotEmpty()
   @MaxLength(50)
   proforma: string;
+
+  @IsOptional()
+  @IsInt()
+  @IsPositive()
+  proveedorId?: number;
 }

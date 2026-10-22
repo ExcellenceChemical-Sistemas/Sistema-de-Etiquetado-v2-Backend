@@ -5,8 +5,12 @@ import { PrismaService } from '../prisma/prisma.service';
 import { GenerarEtiquetaDto } from './dto/generar-etiqueta.dto';
 import { ActualizarEstadoTrabajoDto } from './dto/actualizar-estado-trabajo.dto';
 
-// Plantillas "completa": 10x6 y 10x8.5. Piden proveedor, usan el código del producto y la fecha de ingreso.
-const ARCHIVOS_COMPLETA = ['completa-rombo.hbs', 'completa-rombo-85.hbs'];
+// Plantillas "completa": 10x6, 10x8.5 y 20x10. Piden proveedor, usan el código del producto y la fecha de ingreso.
+const ARCHIVOS_COMPLETA = [
+  'completa-rombo.hbs',
+  'completa-rombo-85.hbs',
+  'completa-rombo-20x10.hbs',
+];
 const esCompleta = (archivo: string) => ARCHIVOS_COMPLETA.includes(archivo);
 
 interface DatosEtiqueta {
